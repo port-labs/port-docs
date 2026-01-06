@@ -14,8 +14,8 @@ By leveraging AI coding agents like Copilot, you can significantly reduce manual
 
 ## Common use cases
 
-- **Assign issues to Copilot** for automated code generation and assistance
-- **Integrate Copilot with Port workflows** for seamless AI-powered development
+- **Assign issues to Copilot** for automated code generation and assistance.
+- **Integrate Copilot with Port workflows** for seamless AI-powered development.
 
 
 ## Prerequisites
@@ -252,6 +252,12 @@ To add these secrets to your portal:
               "description": "Automatically assign this issue to GitHub Copilot for AI-powered coding assistance",
               "default": false
             },
+            "base_branch": {
+              "icon": "Git",
+              "type": "string",
+              "title": "Base Branch (optional)",
+              "description": "Branch for Copilot to base its work on. If not specified, the repository's default branch will be used."
+            },
             "body": {
               "title": "Issue Body",
               "icon": "DefaultProperty",
@@ -268,6 +274,7 @@ To add these secrets to your portal:
             "title",
             "body",
             "assign_to_copilot",
+            "base_branch",
             "labels"
           ]
         },
@@ -287,7 +294,7 @@ To add these secrets to your portal:
         },
         "body": {
           "title": "{{ .inputs.title }}",
-          "body": "{{ .inputs.body }}",
+          "body": "{{ if .inputs.base_branch then (.inputs.body + \"\n\n> .Base your changes on the `\" + .inputs.base_branch + \"` branch.\") else .inputs.body end }}",
           "labels": "{{ if .inputs.assign_to_copilot then (.inputs.labels + [\"auto_assign\"]) else .inputs.labels end }}"
         }
       },
@@ -297,6 +304,10 @@ To add these secrets to your portal:
     </details>
 
 5. Click `Save` to create the action.
+
+:::info Copilot branch behavior
+By default, Copilot uses the repository's default branch as the base for its work. Use the optional **Base Branch** input to specify a different branch.
+:::
 
 
 ### Assign issue to Copilot action

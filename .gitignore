@@ -28,3 +28,10 @@ yarn-error.log*
 
 # Generated guide metadata
 /src/components/guides-section/guide-metadata.json
+
+# Link check reports
+link-check-report.txt
+external-links.txt
+external-links-map.json
+external-links.txt
+external-links-map.json

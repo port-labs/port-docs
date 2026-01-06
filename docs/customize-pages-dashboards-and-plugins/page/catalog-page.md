@@ -170,7 +170,7 @@ Other properties will be hidden by default.
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 :::
 
-### Description
+<h3>Description</h3>
 
 You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
 This field supports adding links in markdown format: `[link text](https://www.address.com)`.
@@ -183,7 +183,7 @@ The description will be displayed at the top of the page, under the page title:
 
 <img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
-## Performance
+## Filters and performance
 
 Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
 
@@ -199,7 +199,7 @@ To define such a filter, use the `Initial filters` field when creating a page:
 
 <br/><br/>
 
-You can define any [supported rule](/search-and-query/#rules) in JSON format.  
+You can define any [supported rule](/search-and-query/structure-and-syntax#rules) in JSON format.  
 Here is an example that will only display `Deployments` that were updated in the past month:
 
 ```json showLineNumbers
@@ -214,7 +214,7 @@ Here is an example that will only display `Deployments` that were updated in the
 
 #### Dynamic filters
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-properties) of the logged-in user when creating a catalog page.
 
 ### Excluded properties
 
@@ -244,19 +244,23 @@ We highly recommend using these customizations to provide a clean and accurate v
 
 All table customizations are available on the top bar of the table:
 
-![Table operations bar](/img/software-catalog/pages/TableOperationsBar.png)
+<img src='/img/software-catalog/pages/TableOperationsBar.png' width='100%' border='1px' />
 
-### Filter
+### Table filters
+
+:::info Table filters vs initial filters
+Unlike the filters described in the [scection above](#filter-and-performance), this filter does not affect performance. It filters entities that have already been loaded and only affects what is displayed in the table view.
+:::
 
 You can filter the table by using the following menu:
 
-![Table filter menu marked](/img/software-catalog/pages/TableFilterMenu.png)
+<img src='/img/software-catalog/pages/TableFilterMenu.png' width='100%' border='1px' />
 
 You can define any filtering operator with a suitable value.
 
 You can filter one or more values while setting the relation between each field with a `And/Or`.
 
-#### `My Teams` filter
+**`My Teams` filter**
 
 By using the `My Teams` filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
 
@@ -265,21 +269,22 @@ This filter works on:
 - `string` properties with the format `team`.
 - The [meta property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
-![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
+<img src='/img/software-catalog/pages/MyTeamsFilter.png' width='100%' border='1px' />
+<br></br><br></br>
 
-#### `Me` filter
+**`Me` filter**s
 
 By using the `Me` filter you will only see entities that belong to the logged-in user.
 
 This filter works on [`User`](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/user) properties.
 
-![Me Filter](../../../static/img/software-catalog/pages/meFilter.png)
+<img src='/img/software-catalog/pages/meFilter.png' width='90%' border='1px' />
 
 ### Sort
 
 You can sort the table by using the following menu:
 
-![Table sort menu marked](/img/software-catalog/pages/TableSortMenu.png)
+<img src='/img/software-catalog/pages/TableSortMenu.png' width='100%' border='1px' />
 
 You can sort by one or more fields of any kind.
 
@@ -325,9 +330,17 @@ Just create your `group-by` view (and any other table customizations you desire)
 Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
 If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
-![Table search bar marked](/img/software-catalog/pages/TableSearchBar.png)
+<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' style={{border:'1px', borderRadius:'8px'}} />
 
--> [Explore how to control page visibility and permissions](./page-permissions.md)
+Explore how to control [page visibility and permissions](/customize-pages-dashboards-and-plugins/page/page-permissions).
+
+
+## Catalog auto discovery
+
+The **auto discovery** capability uses AI to analyze your existing catalog data and suggests missing entities based on existing relationships and patterns.
+This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations (see common use-cases below).
+
+To learn more about the auto discovery capability, refer to the [catalog auto discovery](/build-your-software-catalog/catalog-auto-discovery) page.
 
 ## Page operations
 
@@ -357,17 +370,17 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 <center>
 
-![Page menu](/img/software-catalog/pages/PageMenu.png)
+<img src='/img/software-catalog/pages/PageMenu.png' width='30%' border='1px' />
 
 </center>
 
-#### Editing pages
+**Editing pages**
 
 Editing a page allows you to change various properties:
 
-![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
+<img src='/img/software-catalog/pages/EditPageForm.png' width='100%' border='1px' />
 
-#### Locking pages
+**Locking pages**
 
 Locking a catalog page disables the option to hide columns or apply filters to modify the displayed data.
 
@@ -375,7 +388,7 @@ Locking pages gives you a way to specifically curate pages to your developers' n
 
 To learn how to lock pages, refer to [page permissions](./page-permissions.md#lock-pages).
 
-#### Deleting pages
+**Deleting pages**
 
 Any page (whether created automatically or manually) can be deleted by clicking the `Delete page` button.
 

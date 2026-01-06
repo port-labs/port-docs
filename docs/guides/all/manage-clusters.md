@@ -20,7 +20,7 @@ This guide provides a step-by-step walkthrough for creating Kubernetes clusters 
 ## Prerequisites
 
 1. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/).
-2. A Control plane that will be used to create clusters and other infrastructure. We will use [crossplane](https://docs.crossplane.io/latest/software/install/).
+2. A Control plane that will be used to create clusters and other infrastructure. We will use [crossplane](https://docs.crossplane.io/latest/get-started/install/).
 3. A GitOps operator for automatically running operations on our cluster based on changes in our manifests repository. We will be using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/).
 4. [Install Helm](https://helm.sh/docs/intro/install/).
 5. A GitHub repository to contain your resources i.e. the github workflow file, port resources, and infrastructure manifests. 
@@ -86,7 +86,7 @@ The API server can then be accessed using https://localhost:8080
 - Create the following Crossplane compositions, in the `crossplane-config` folder, to define the set of resources required to create a new cluster.
 
 :::info What are Crossplane Compositions?
-Compositions are templates for creating multiple managed resources as a single object. Learn more about them [here](https://docs.crossplane.io/latest/concepts/compositions/).
+Compositions are templates for creating multiple managed resources as a single object. Learn more about them [here](https://docs.crossplane.io/latest/composition/compositions/).
 :::
 
 <details>

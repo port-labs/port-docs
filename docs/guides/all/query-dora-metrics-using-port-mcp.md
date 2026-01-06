@@ -308,6 +308,6 @@ Now that you can query DORA metrics using Port MCP, consider these recommendatio
 
 ### Learn more about DORA metrics
 
-- [DORA metrics overview in Port solutions](/solutions/engineering-360/measure-dora-metrics)
-- [Improve lead time strategies](/solutions/engineering-360/improve-lead-time)
-- [Reduce MTTR best practices](/solutions/engineering-360/reduce-mttr)
+- [DORA metrics overview in Port solutions](/solutions/engineering-intelligence/measure-dora-metrics)
+- [Improve lead time strategies](/solutions/engineering-intelligence/improve-lead-time)
+- [Reduce MTTR best practices](/solutions/engineering-intelligence/reduce-mttr)

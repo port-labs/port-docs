@@ -26,7 +26,7 @@ If no provider is specified in your API request, the system uses default values:
 1. **Organization Defaults**: If your organization has configured custom defaults
 2. **System Defaults**: Port's fallback settings:
    - **Default Provider**: `port`
-   - **Default Model**: `claude-haiku-4-5-20251001`
+   - **Default Model**: `claude-sonnet-4-5-20250929`
 
 ## Provider Validation
 
@@ -87,7 +87,7 @@ This error occurs when the model isn't available for the specified provider:
 <details>
 <summary>What happens if I don't specify a provider in my request?</summary>
 
-The system will automatically use your organization's default provider and model. If no organization defaults are set, it falls back to Port's system defaults (`port` provider with `claude-haiku-4-5-20251001` model).
+The system will automatically use your organization's default provider and model. If no organization defaults are set, it falls back to Port's system defaults (`port` provider with `claude-sonnet-4-5-20250929` model).
 
 </details>
 

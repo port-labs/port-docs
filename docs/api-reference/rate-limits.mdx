@@ -22,14 +22,7 @@ Port enforces multiple rate limits to control extensive usage of Port's API.
 Port's rate limits vary based on the API being accessed and may be more lenient for some APIs.  
 Rate limits are enforced at the **Organization level**.
 
-
-## Rate limits table
-
-| Description | Rate limit   |
-|-------------|--------------|
-| Unauthenticated requests | 100 requests per 5 minutes |
-| Entities API requests    | 35,000 requests per 5 minutes |
-| All other API requests   | 15,000 requests per 5 minutes |
+When usage exceeds acceptable thresholds, requests may take longer to be processed.
 
 ## How to avoid getting rate limited
 
@@ -47,6 +40,10 @@ The `x-ratelimit-remaining` header shows how many requests you have left in the 
 When this number gets low, you should reduce your request frequency or implement a backoff strategy.
 
 The `x-ratelimit-reset` header tells you when the rate limit window will reset, which can help you plan when to resume normal request rates.
+
+:::info Rate limit enforcement levels
+Rate limits are enforced at the organization level by default. Service account users are an exception and are rate-limited at the user level.
+:::
 
 ### Use exponential backoff
 

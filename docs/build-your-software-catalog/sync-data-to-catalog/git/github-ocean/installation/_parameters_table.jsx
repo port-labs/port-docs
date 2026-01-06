@@ -74,7 +74,12 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>liveEvents.baseUrl</code></td>
-          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>). Required if you want to enable live-events or actions processing.</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>actionsProcessor.enabled</code></td>
+          <td>when set to true, the integration will be able to process actions and automations.</td>
           <td>❌</td>
         </tr>
         <tr>

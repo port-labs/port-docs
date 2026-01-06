@@ -25,7 +25,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 Here are the API references we used to create those blueprints and app config:
 
-- [Project](https://cloud.google.com/resource-manager/reference/rest/v3/projects#Project)
+- [Project](https://docs.cloud.google.com/resource-manager/reference/rest/v3/projects)
 
 ## Mapping Cloud Resources
 

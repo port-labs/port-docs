@@ -1453,6 +1453,13 @@ export const availableGuides = [
         link: "/guides/all/owasp-top-10-scorecard",
     },
     {
+        title: "PCI DSS code security scorecard",
+        description: "Continuously track compliance with PCI DSS requirements using code scans and vulnerability data",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/setup-pci-dss-code-compliance",
+    },
+    {
         title: "Enforce AI coding security standards",
         description: "Learn how to enforce AI coding security standards in your organization",
         tags: ["Autonomous Ticket Resolution", "AI", "GitHub", "Scorecards"],
@@ -1531,6 +1538,20 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
+        title: "Define scorecards with AI",
+        description: "Design scorecards that AI agents can query to evaluate compliance, security posture, and production readiness",
+        tags: ["AI", "Scorecards"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-scorecards-with-mcp",
+    },
+    {
+        title: "Build your software catalog with MCP",
+        description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
+        tags: ["AI"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-data-model-with-mcp",
+    },
+    {
         title: "Migrate repositories from Bitbucket to GitHub",
         description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
@@ -1559,18 +1580,53 @@ export const availableGuides = [
         link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
     },
     {
-        title: "Setup Port's n8n custom node",
-        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
-        tags: ["n8n", "AI"],
-        logos: ["n8n", "AI"],
-        link: "/guides/all/setup-port-n8n-node",
-    },
-    {
         title: "Automatically resolve tickets with n8n and Port context",
         description: "Automatically resolve tickets with n8n and Port context using Port's AI agents and automations",
         tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
         logos: ["n8n", "Jira", "GitHub"],
         link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
+    },
+    {
+        title: "Build actions and automations with AI",
+        description: "Create self-service actions and automations optimized for MCP, enabling AI agents to execute workflows and chain complex operations",
+        tags: ["AI", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-actions-with-mcp",
+    },
+    {
+        title: "RBAC for AI agents with n8n and Port",
+        description: "Implement role-based access control (RBAC) for multi-agent systems using Port and n8n, enabling dynamic tool access control for AI agents based on user roles and permissions",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
+    },
+    {
+        title: "Gain visibility into delivery performance",
+        description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-and-track-delivery-performance",
+    },
+    {
+        title: "Measure delivery reliability and stability",
+        description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-reliability-and-stability",
+    },
+    {
+        title: 'Track standards adherence',
+        description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-standards",
+    },
+    {
+        title: "Track AI adoption and impact",
+        description: "Track AI adoption and impact across your engineering teams and assess the impact of AI usage on delivery metrics like PR throughput and cycle time",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-adoption-and-impact",
     }
 ]
 

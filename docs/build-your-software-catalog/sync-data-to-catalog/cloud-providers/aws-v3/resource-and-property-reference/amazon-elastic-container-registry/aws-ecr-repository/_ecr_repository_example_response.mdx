@@ -1,0 +1,46 @@
+<details>
+<summary><b>ECR Repository response example (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "Type": "AWS::ECR::Repository",
+  "Properties": {
+    "RepositoryName": "testing-actions",
+    "RepositoryArn": "arn:aws:ecr:us-west-2:123456789012:repository/testing-actions",
+    "RepositoryUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/testing-actions",
+    "RegistryId": "123456789012",
+    "CreatedAt": "2024-05-14T12:12:40.109000+03:00",
+    "ImageTagMutability": "MUTABLE",
+    "ImageScanningConfiguration": {
+      "scanOnPush": false
+    },
+    "EncryptionConfiguration": {
+      "encryptionType": "AES256"
+    },
+    "RepositoryPolicyText": "{\n  \"Version\" : \"2012-10-17\",\n  \"Statement\" : [ {\n    \"Sid\" : \"new statement\",\n    \"Effect\" : \"Allow\",\n    \"Principal\" : {\n      \"AWS\" : \"arn:aws:iam::123456789012:role/admin-access\"\n    },\n    \"Action\" : \"ecr:DescribeRepositories\"\n  } ]\n}",
+    "LifecyclePolicy": {
+      "registryId": "123456789012",
+      "repositoryName": "testing-actions",
+      "lifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"selection\":{\"tagStatus\":\"tagged\",\"tagPatternList\":[\"testimagetag\"],\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":1},\"action\":{\"type\":\"expire\"}}]}",
+      "lastEvaluatedAt": "1970-01-01T03:00:00+03:00"
+    },
+    "Tags": [
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      },
+      {
+        "Key": "Team",
+        "Value": "DevOps"
+      }
+    ]
+  },
+  "__ExtraContext": {
+    "AccountId": "123456789012",
+    "Region": "us-west-2"
+  }
+}
+```
+
+</details>
+
