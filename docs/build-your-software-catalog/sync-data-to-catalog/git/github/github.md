@@ -595,7 +595,7 @@ resources:
 
 #### Examples
 
-For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples#files-and-file-contents) page.
+For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#files-and-file-contents) page.
 
 ## Permissions
 
