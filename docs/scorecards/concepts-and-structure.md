@@ -184,7 +184,7 @@ Conditions are small boolean checks that help when determining the final status 
 
 | Field      | Description  |
 |------------|--------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all [available operators](#available-operators) below).   |
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all available operators below).   |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md). |
 | `value`    | Value to compare to (not required in `isEmpty` and `isNotEmpty` operators).  |
 
@@ -391,7 +391,7 @@ The system enforces several validation rules to maintain data integrity:
 
 <h3>Delayed rule results</h3>
 
-When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
+When creating scorecards, adding new rules, or modifying existing rules for blueprints that affect a large number of entities, the `rule results` sync can take up to 24 hours to complete.
 
 This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
 
@@ -408,9 +408,9 @@ To monitor how many rule result entities you have, you can:
    - Blueprint: `_rule_result`.
    
 If you reach this limit, you can:
-- Contact [Port support](https://support.port.io) for assistance.
+- Reduce the number of entities being evaluated by editing the scorecard entity and applying a [filter](#filter-elements) to limit evaluation to specific entities (e.g., opened pull requests or active services), or by reducing the number of entities in the target blueprints.
 - Review your scorecards to reduce the number of rules.
-- Reduce the number of entities in the blueprints that your scorecards are defined for.
+- Contact [Port support](https://support.port.io) for assistance.
 
 ## Scorecard views
 

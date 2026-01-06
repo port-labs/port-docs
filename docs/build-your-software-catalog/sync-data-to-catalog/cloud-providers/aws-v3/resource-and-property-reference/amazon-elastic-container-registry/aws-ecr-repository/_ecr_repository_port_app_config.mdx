@@ -1,0 +1,34 @@
+<details>
+<summary><b>ECR Repository mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::ECR::Repository
+    selector:
+      query: 'true'
+      includeActions:
+        # Optional: Include additional actions for more properties
+        # - GetRepositoryPolicyAction
+        # - GetLifecyclePolicyAction
+        # - ListTagsForResourceAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.RepositoryArn
+          title: .Properties.RepositoryName
+          blueprint: '"ecrRepository"'
+          properties:
+            repositoryUri: .Properties.RepositoryUri
+            registryId: .Properties.RegistryId
+            createdAt: .Properties.CreatedAt
+            imageTagMutability: .Properties.ImageTagMutability
+            imageScanningConfiguration: .Properties.ImageScanningConfiguration
+            encryptionConfiguration: .Properties.EncryptionConfiguration
+            lifecyclePolicy: .Properties.LifecyclePolicy
+            repositoryPolicyText: .Properties.RepositoryPolicyText
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>

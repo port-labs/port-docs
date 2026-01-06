@@ -245,7 +245,7 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 - These limits reset hourly.
 
 ### Monthly Quota
-- **Default quota**: 50 AI invocations per month.
+- **Default quota**: 500 AI invocations per month.
 - Each interaction with Port AI counts as one request against your quota.
 - Quota resets monthly.
 

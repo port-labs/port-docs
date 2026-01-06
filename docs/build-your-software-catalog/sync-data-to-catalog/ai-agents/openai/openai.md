@@ -374,7 +374,7 @@ The `/models` endpoint returns a list of all available OpenAI models. This is us
 
 ## Customization
 
-If you want to expand beyond the starter resources, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration) to:
+If you want to expand beyond the starter resources, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/build-your-integration) to:
 
 1. Test additional OpenAI endpoints.
 2. Explore the response shape and detected property types.

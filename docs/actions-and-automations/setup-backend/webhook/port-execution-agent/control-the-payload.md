@@ -9,18 +9,16 @@ Port offers two ways to control the payload sent to your backend:
 - In any other case, you can define the payload [directly via Port](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
 :::
 
-Some of the third-party applications that you may want to integrate with may not accept the raw payload incoming from
-Port's self-service actions. The Port agent allows you to control the payload that is sent to every third-party application.
+Some of your internal services may not accept the raw payload incoming from
+Port's self-service actions. You can control the payload sent to your internal services with the Port execution agent.
 
 For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
-You can alter the requests sent to your third-party application by providing a payload mapping config file when
+You can alter the requests sent to your internal services by providing a payload mapping config file when
 deploying the
-Port-agent container.
+Port execution agent.
 
 ### Setting up the mapping
-
-Setting up the mapping depends on how you install the agent.
 
 <Tabs groupId="installationMethod" queryString defaultValue="helm" values={[
   {label: "Helm", value: "helm"},
@@ -54,6 +52,7 @@ controlThePayloadConfig: |
     }
   ]
 ```
+
 </TabItem>
 
 <TabItem value="docker">
@@ -68,39 +67,67 @@ To provide the mapping to the agent, mount the mapping file to the container by 
 
 ### Control the payload mapping
 
-The payload mapping file is a JSON file that specifies how to transform the request sent to the Port agent to the request that is sent to the third-party application.
+The payload mapping file is a JSON file that specifies how to transform the request sent to the Port agent to the request that is sent to your internal service.
 
-The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the CONTROL_THE_PAYLOAD_CONFIG_PATH environment variable. By default, the Port agent will look for the payload mapping file at ~/control_the_payload_config.json.
+The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the `CONTROL_THE_PAYLOAD_CONFIG_PATH` environment variable. By default, the Port agent will look for the payload mapping file in `~/control_the_payload_config.json`.
 
-The payload mapping file is a json file that contains a list of mappings. Each mapping contains the request fields that will be overridden and sent to the third-party application.
+Each of the mapping fields can be constructed with JQ expressions. The agent will evaluate them with the original payload that Port sends, and the result will be sent to your internal service.  
 
-You can see examples showing how to deploy the Port agent with different mapping configurations for various common use cases below.  
+An example mapping file may look like this:
 
-Each of the mapping fields can be constructed by JQ expressions. The JQ expression will be evaluated against the original payload that is sent to the port agent from Port and the result will be sent to the third-party application.  
-
-Here is the mapping file schema:
-
-```showLineNumbers
-[ # Can have multiple mappings. Will use the first one it will find with enabled = True (Allows you to apply mapping over multiple actions at once)
+```json showLineNumbers
+[
   {
-      "enabled": bool || JQ,
-      "url": JQ, # Optional. default is the incoming url from port
-      "method": JQ, # Optional. default is POST. Should return one of the following string values POST / PUT / DELETE / GET
-      "headers": dict[str, JQ], # Optional. default is {}
-      "body": ".body", # Optional. default is the whole payload incoming from Port.
-      "query": dict[str, JQ] # Optional. default is {},
-      "report" { # Optional. Used to report the run status back to Port right after the request is sent to the third-party application
-        "status": JQ, # Optional. Should return the wanted runs status
-        "link": JQ, # Optional. Should return the wanted link or a list of links
-        "summary": JQ, # Optional. Should return the wanted summary
-        "externalRunId": JQ # Optional. Should return the wanted external run id
+      "enabled": true,
+      "url": ".payload.action.invocationMethod.url",
+      "method": ".payload.action.invocationMethod.method // \"POST\"",
+      "headers": {},
+      "body": ".body",
+      "query": {},
+      "report": {
+        "status": "\"SUCCESS\"",
+        "link": ".response.json.link",
+        "summary": ".response.json.summary",
+        "externalRunId": ".response.json.runId"
       },
-      "fieldsToDecryptPaths": ["dot.separated.path"] # Optional. List of dot-separated string paths to fields to decrypt by PORT_CLIENT_SECRET
+      "fieldsToDecryptPaths": [".payload.properties.secret_field"]
   }
 ]
 ```
 
-**The body can be partially constructed by json as follows:**
+:::tip Multiple mappings
+The configuration file can contain multiple mappings. The agent will use the first mapping where `enabled` evaluates to `true`, allowing you to apply different mappings for different actions.
+:::
+
+#### Mapping configuration fields
+
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `enabled` | `bool` or JQ expression | Yes | - | Whether to use this mapping. |
+| `url` | JQ expression | No | Incoming URL from Port | The destination URL for the request. |
+| `method` | JQ expression | No | `POST` | The HTTP method to use (e.g., `POST`, `GET`, `PUT`, `DELETE`). |
+| `headers` | Dictionary of string keys to JQ expressions | No | `{}` | HTTP headers to include in the request. |
+| `body` | JQ expression or JSON object | No | Entire payload from Port | The content to send in the request body. |
+| `query` | Dictionary of string keys to JQ expressions | No | `{}` | URL query parameters for the request. |
+| `report` | Object | No | - | Settings for reporting the run status back to Port. |
+| `report.status` | JQ expression | No | - | The run status (`SUCCESS` or `FAILURE`). |
+| `report.link` | JQ expression | No | - | Link(s) to display for this run in Port. |
+| `report.summary` | JQ expression | No | - | Summary message to display in Port. |
+| `report.externalRunId` | JQ expression | No | - | External run ID for tracking in your service. |
+| `fieldsToDecryptPaths` | Array of strings | No | `[]` | Paths to encrypted fields to decrypt before sending. |
+
+:::tip Forwarding headers
+You can forward headers from the incoming request by using the following JQ expression in the `headers` field:
+
+```json showLineNumbers
+{
+  "headers": ".payload.action.invocationMethod.headers // {}"
+}
+```
+:::
+
+**Objects (e.g., body, headers) can be partially constructed with JSON as follows:**
 
 ```json showLineNumbers
 {
@@ -116,8 +143,7 @@ Here is the mapping file schema:
 
 ### Mapping examples
 
-Below you can find some mapping examples to demonstrate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
-In each mapping, we will show the relevant fields.
+This section shows examples of how to control what the agent sends to your internal service using the mapping configuration.
 
 #### Apply a filter to the mapping
 
@@ -211,7 +237,7 @@ Below is an example for incoming event:
 
 The agent is capable of reporting the action status back to Port using the `report` field in the mapping.
 
-The report request will be sent to the Port API right after the request to the third-party application is sent and update
+The report request will be sent to the Port API right after the request to your internal services is sent and update
 the run status in Port.
 
 The agent uses the JQ in the `report` field to construct the report request body.
@@ -219,27 +245,26 @@ The agent uses the JQ in the `report` field to construct the report request body
 The available fields are:
 
 - `status` - The status of the run. Can be one of the following values: `SUCCESS` / `FAILURE`
-- `link` - A link to the run in the third-party application. Can be a string or a list of strings.
-- `summary` - A string summary of the run.
-- `externalRunId` - The external run id in the third-party application. The external run id is used to allow a search of
-  the action runs in Port by the external run id.
+- `link` - A link to the run in your internal service. Can be a string or a list of strings.
+- `summary` - A summary to display in Port.
+- `externalRunId` - Used to search action runs in Port by the ID of external services.
 
 The report mapping can use the following fields:
 
 `.body` - The incoming message as mentioned [above](#the-incoming-message-to-base-your-mapping-on)
-`.request` - The request that was calculated using the control the payload mapping and sent to the third-party application
-`.response` - The response that was received from the third-party application
+`.request` - The request that was calculated using the control the payload mapping and sent to your internal service
+`.response` - The response that was received from your internal service
 
 The `response` field contains the following fields:
 
 - `statusCode` - The status code of the response
-- `json` - The response body as a json object
+- `json` - The response body as a JSON object
 - `text` - The response body as a string
-- `headers` - The response headers as a json object
+- `headers` - The response headers as a JSON object
 
 ## Decrypting Encrypted Fields
 
-When using `secret` type input fields in your actions such as API keys, tokens, or passwords, the Port agent can automatically decrypt these encrypted values before sending requests to third-party applications.  
+When using `secret` type input fields in your actions such as API keys, tokens, or passwords, the Port agent can automatically decrypt these encrypted values before sending requests to internal services.  
 Use the `fieldsToDecryptPaths` field in your mapping to specify which fields should be decrypted.  
 
 **Important Notes:**

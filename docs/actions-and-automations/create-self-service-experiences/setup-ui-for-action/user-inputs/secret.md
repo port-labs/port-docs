@@ -21,6 +21,8 @@ The secret input type can be used for sensitive information, such as:
 - Passwords
 - API keys
 - Secret tokens
+- SSL/TLS certificates
+- Private keys
 
 ## Secret Input Structure
 
@@ -64,7 +66,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-**Note:** it is unsupported to have the a `format` for secrets inputs.
+**Note:** String secret inputs support the `multi-line` format. See the [Multi-line secret inputs](#multi-line-secret-inputs) section for details.
 
 </TabItem>
 <TabItem value="object">
@@ -85,6 +87,47 @@ A secret input is defined as a regular input, but with the additional `encryptio
 
 </TabItem>
 </Tabs>
+
+## Multi-line secret inputs
+
+For sensitive information that contains line breaks, such as SSL/TLS certificates, private keys, or configuration files, you can combine the multi-line text format with encryption.
+
+Multi-line secret inputs are encrypted using the same AES-256-GCM algorithm as single-line secrets, but they provide a larger text area for input. You can decrypt them using the same methods shown in the [Handling the Payload](#handling-the-payload) section.
+
+This is particularly useful when you need to send certificates to your backend workflows. For example, when configuring SSL certificates for cloud resources or setting up authentication with certificate-based credentials.
+
+:::info Multiline secrets are not masked
+Unlike single-line secret inputs which are masked with asterisks, multi-line secret inputs display the actual text as you type. The value is still encrypted when sent to your backend and is never logged or saved by Port.
+:::
+
+### API definition
+
+```json showLineNumbers
+{
+  "certificateInput": {
+    "title": "SSL certificate",
+    "icon": "Lock",
+    "type": "string",
+    // highlight-start
+    "format": "multi-line",
+    "encryption": "aes256-gcm",
+    // highlight-end
+    "description": "Paste your SSL certificate"
+  }
+}
+```
+
+This configuration creates a multi-line text area where users can paste certificates or other multiline secrets. The value will be encrypted before being sent to your backend.
+
+### Common use cases
+
+Multi-line secret inputs are ideal for:
+
+- SSL/TLS certificates and certificate chains.
+- Private keys (RSA, EC, etc.).
+- JSON or YAML configuration files containing secrets.
+- Multi-line API keys or tokens.
+- SSH keys.
 
 ## Handling the Payload
 
