@@ -705,7 +705,7 @@ The integration provides detailed logging for debugging:
 - Verify that the correct URLs and credentials are being used
 - Monitor for any rate limiting or permission errors
 
-For more detailed troubleshooting, refer to the [Checkmarx One API documentation](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide).
+For more detailed troubleshooting, refer to the [Checkmarx One API documentation](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/3w7wczsazj6pg-introduction).
 
 
 ## Alternative installation via webhook

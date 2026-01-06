@@ -377,7 +377,7 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 <h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
-- [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) >= 2.0.0
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2>Installation</h2>
