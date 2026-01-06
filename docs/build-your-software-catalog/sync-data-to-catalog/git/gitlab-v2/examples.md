@@ -50,6 +50,18 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortGroupsAppConfig/>
 
+#### Group configuration options
+
+The `includeOnlyActiveGroups` selector allows you to filter groups based on whether they are active or not.
+By default, if not specified, all groups will be synced.
+
+```yaml showLineNumbers
+- kind: group
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeOnlyActiveGroups: true
+```
 
 :::tip Learn more
 
@@ -79,6 +91,19 @@ You can use the following Port blueprint definitions and integration configurati
 <MergeRequestBlueprint />
 
 <MergeRequestConfig />
+
+#### Project configuration options
+
+The `includeOnlyActiveProjects` selector allows you to filter projects based on whether they are active or not.
+By default, if not specified, all projects will be synced.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
 
 #### Merge request configuration options
 
@@ -112,7 +137,7 @@ The `updatedAfter` selector allows you to filter merge requests based on when th
 
 The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
 
-:::info Important
+:::info Merge request sync behavior
 The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
 :::
 
@@ -124,6 +149,20 @@ By default, if not specified, it is set to `90` days.
       query: 'true'
       # highlight-next-line
       updatedAfter: 90
+```
+</TabItem>
+
+<TabItem label="Include active groups" value="includeOnlyActiveGroups">
+
+The `includeOnlyActiveGroups` selector allows you to filter merge requests based on whether the parent group is active or not.
+By default, if not specified, all merge requests for the authorized groups will be synced.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeOnlyActiveGroups: true
 ```
 </TabItem>
 
@@ -149,6 +188,119 @@ You can use the following Port blueprint definitions and integration configurati
 
 <IssueConfig />
 
+#### Issues configuration options
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="State" value="state">
+
+The `state` selector allows you to filter issues based on their state. You can specify one of the allowed values to include in the sync.
+
+Allowed values:
+- `opened`: Issues that are currently open.
+- `closed`: Issues that have been closed.
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    state: "closed"
+```
+</TabItem>
+
+<TabItem label="Updated after" value="updatedAfter">
+
+The `updatedAfter` selector allows you to filter issues based on when they were last updated. This helps you focus on recent changes and reduce the amount of historical data being synced.
+
+The value represents the number of days to look back for issues. For example, setting it to `90` will only sync issues that have been updated on or after the last 90 days.
+
+:::info Issue sync behavior
+The `updatedAfter` parameter only affects issues that are not in the "opened" state. Open issues will always be synced regardless of their last update time.
+:::
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      updatedAfter: 90
+```
+</TabItem>
+
+<TabItem label="Include Active Groups" value="includeOnlyActiveGroups">
+
+The `includeOnlyActiveGroups` selector allows you to filter issues based on whether the parent group is active or not.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeOnlyActiveGroups: true
+```
+</TabItem>
+
+<TabItem label="Issue Type" value="issueType">
+
+The `issueType` selector allows you to filter issues based on their type.
+
+Allowed values:
+- `incident`
+- `issue`
+- `test_case`
+- `task`
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      issueType: "incident"
+```
+</TabItem>
+
+<TabItem label="Labels" value="labels">
+
+The `labels` selector allows you to filter issues based on a comma-separated list of labels.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+:::info Label filtering logic
+Issue must have **all labels** to be returned.
+:::
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      labels: "dev,v1"
+```
+</TabItem>
+
+<TabItem label="Include Non-Archived" value="includeNonArchived">
+
+The `includeNonArchived` selector allows you to filter issues from non-archived projects.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      nonArchived: true
+```
+</TabItem>
+
+</Tabs>
 
 :::tip Learn more
 
@@ -285,7 +437,15 @@ You can use the following Port blueprint definitions and integration configurati
 
 <MemberConfig />
 
+To retrieve the members of your **active groups** only, you can use the following syntax in your `port-app-config.yml`:
 
+```yaml showLineNumbers
+- kind: member
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveGroups: true
+```
 
 #### Mapping groups with members
 
@@ -366,6 +526,26 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PipelineJobConfig />
 
+To retrieve the pipelines of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: pipeline
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
+To retrieve the jobs of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: job
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
 :::tip Learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
@@ -385,6 +565,16 @@ You can use the following Port blueprint definitions and integration configurati
 
 <ReleaseConfig />
 
+To retrieve the releases of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: release
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
 :::tip Learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
@@ -401,6 +591,16 @@ You can use the following Port blueprint definitions and integration configurati
 <TagBlueprint />
 
 <TagConfig />
+
+To retrieve the tags of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: tag
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
 
 :::tip Learn more
 
