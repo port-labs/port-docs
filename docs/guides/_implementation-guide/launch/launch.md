@@ -10,7 +10,7 @@ This page will help you prepare for a successful launch by organizing your porta
 
 - Add a detailed homepage to your portal with a [readme](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#markdown) that explains the purpose of the portal, the available self-service actions, and how to use them.
 - Use the homepage to communicate announcements, updates, initiatives, and other important information to your users.
-  This can also be done using a [markdown widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/custom-widgets/#markdown).
+  This can also be done using a [markdown widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/custom-widgets#markdown).
 - Create useful visualizations that display data [relevant for the logged-in user](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#dynamic-filters).
 
 ### Organize the software catalog
