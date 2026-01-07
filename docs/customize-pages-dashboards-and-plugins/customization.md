@@ -72,15 +72,15 @@ Organization admins can upload custom icons to use throughout Port. Once uploade
 
 2. Click on the **Upload icon** button at the top of the icon selection panel.
 
-3. Upload your icon file (supported formats: PNG, SVG, or JPEG) by either:
-   - Selecting a file from your computer.
-   - Copying and pasting the file directly into the upload area.
+3. Upload your icon file (supported formats: PNG, SVG, or JPEG). You can:
+   - Select a file from your computer.
+   - Copy and paste the file directly into the upload area (hover over the upload area first to enable paste).
 
 4. Enter a name for your custom icon (between 1-30 characters).
 
 5. Click **Save**.
 
-Your custom icon is now available throughout your Port organization and will appear in the icon selection panel alongside the default Port icons.
+Your custom icon is now available throughout your Port organization. Custom icons will appear in a dedicated **Custom icons** section at the top of the icon selection panel, above the default Port icons.
 
 **Limitations**
 
