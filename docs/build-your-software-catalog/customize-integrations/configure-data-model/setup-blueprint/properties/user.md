@@ -14,6 +14,10 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 User is a data type used to reference users that exist in Port.
 
+:::info JSON mode only
+User properties can only be added to a blueprint using JSON mode, the API, Terraform, or Pulumi. When using the UI form to edit a blueprint, selecting "User" as a property type will create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) to the `_user` blueprint instead.
+:::
+
 ## Common user usage
 
 The user property type can be used to reference any user that exists in Port, for example:
