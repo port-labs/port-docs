@@ -91,18 +91,13 @@ To export the entire dashboard tab:
 - The dashboard is available to organization admins with enterprise account only.
 - Usage data is not currently available via the API.
 - Entity count data is available from **November 2025** onwards.
-- User activity data is available from **July 2025** onwards.
 
 ## FAQs
 
 <details>
-<summary><b>Why don't I see the complete history for total monthly entities or user activity? (click to expand)</b></summary>
+<summary><b>Why don't I see the complete history for total monthly entities? (click to expand)</b></summary>
 
-Historical data availability varies by metric:
-- **Entity count data** is available from November 2025 onwards.
-- **User activity data** is available from July 2025 onwards.
-
-Data from before these dates is not available in the system.
+Entity count data is available from **November 2025** onwards. Data from before this date is not available in the system.
 
 </details>
 
