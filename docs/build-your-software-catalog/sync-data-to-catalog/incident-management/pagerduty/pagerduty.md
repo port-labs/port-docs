@@ -1368,8 +1368,7 @@ For relevant guides and examples, see the [guides section](https://docs.port.io/
 
 ## Limitations
 
-#AI! improve this
-- There is a technical limitation on Pagerduty’s [pagination](https://developer.pagerduty.com/docs/pagination); when using offset-based pagination, number of resources retrieved can not be more than 10,000.
+- The PagerDuty API uses offset-based pagination, which has a limitation of retrieving a maximum of 10,000 resources. This may affect the integration's ability to sync data if you have more than 10,000 of a specific resource type (e.g., users, services, etc.). Please refer to PagerDuty's [official documentation on pagination](https://developer.pagerduty.com/docs/pagination) for further details.
 
 ## Support
 
