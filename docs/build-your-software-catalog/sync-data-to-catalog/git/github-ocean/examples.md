@@ -59,7 +59,7 @@ import LastContributorAppConfig from './examples/example-branch/\_github_exporte
 import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 import SBOMBlueprint from './examples/example-repository-sbom/_github_exporter_example_sbom_blueprint.mdx'
-import PortRepositorySBOMAppConfig './examples/example-repository-sbom/_github_exporter_example_repository_sbom_port_app_config.mdx'
+import PortRepositorySBOMAppConfig from './examples/example-repository-sbom/_github_exporter_example_repository_sbom_port_app_config.mdx'
 
 # Examples
 
