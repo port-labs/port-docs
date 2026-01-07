@@ -263,6 +263,16 @@ Conditions are small boolean checks that help when determining the final status 
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is not an empty string, array, or object.     |
 
+**Advanced rule capabilities**
+
+Scorecard rules evaluate entity properties against conditions. Note the following capabilities and limitations:
+
+- **Property comparisons**: Rules compare properties against **static values** only. To compare two properties (e.g., check if `deployDate` is after `commitDate`), create a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) that computes the comparison result as a boolean, then check that property in your rule.
+
+- **Rule weighting**: All rules at the same level contribute equally to level progression. There is no support for weighted rules. If certain checks are more important, consider placing them at higher levels or breaking them into separate scorecards.
+
+- **File content inspection**: Scorecard rules can only evaluate data stored in entity properties. To check file contents (e.g., verify a README contains specific sections), use an [integration](/build-your-software-catalog/sync-data-to-catalog/) or [automation](/actions-and-automations/define-automations/) to extract the relevant data into an entity property, then create a rule based on that property.
+
 ### Filter elements
 
 Filters allow you to apply scorecard checks only for entities that meet certain criteria.
