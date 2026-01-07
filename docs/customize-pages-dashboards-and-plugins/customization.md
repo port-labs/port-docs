@@ -5,6 +5,8 @@ sidebar_label: Customization & accessibility
 sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 ---
 
+import EnterpriseFeatureNotice from '/docs/generalTemplates/_enterprise_feature_notice.md'
+
 # Customization & accessibility
 
 Port offers various customization options to help you tailor the developer portal to your organization's branding and style as well as communicate important information to your users.
@@ -58,6 +60,32 @@ To add the banner:
 
 5. Click `Save`.
 
+### Custom icons
+
+<EnterpriseFeatureNotice id="custom-icons" />
+
+Organization admins can upload custom icons to use throughout Port. Once uploaded, they will be available for all users in your organization and can be used for blueprints, properties, actions, etc. Allowing you to align the portal with your organization's branding and visual identity.
+
+**To upload a custom icon:**
+
+1. Navigate to any location in Port where you can select an icon (such as when creating or editing a blueprint, etc).
+
+2. Click on the **Upload icon** button at the top of the icon selection panel.
+
+3. Upload your icon file (supported formats: PNG, SVG, or JPEG) by either:
+   - Selecting a file from your computer.
+   - Copying and pasting the file directly into the upload area.
+
+4. Enter a name for your custom icon (between 1-30 characters).
+
+5. Click **Save**.
+
+Your custom icon is now available throughout your Port organization and will appear in the icon selection panel alongside the default Port icons.
+
+**Limitations**
+
+- **Maximum file size:** 10MB.
+- **Icon name length:** 1-30 characters.
 
 ### Dark mode
 
