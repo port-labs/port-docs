@@ -71,7 +71,11 @@ Under each of these two keys, you can add one or more of the following keys:
   - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
 If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
-If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.  
+If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.
+
+:::tip Removing a policy
+To remove an existing policy, set `"policy": null` in the JSON configuration. Simply deleting the policy content via backspace will not remove it.
+:::
 
 For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
 
