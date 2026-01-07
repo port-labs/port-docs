@@ -71,6 +71,10 @@ The following example shows a condition that will make the action available only
 
 Note that the `combinator` field can be set to `and` or `or`, to define how multiple rules should be combined.
 
+#### Limitations
+
+When filtering by a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) in a condition, note that if the calculation is based on a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property), the query will not work as expected.
+
 ## User form
 
 Port allows you to create a wizard-like experience for your developers by utilizing a variety of input types they will need to fill, while also including input validations.  
