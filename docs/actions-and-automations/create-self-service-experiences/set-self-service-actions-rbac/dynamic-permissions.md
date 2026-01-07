@@ -30,6 +30,11 @@ Examples of useful applications of dynamic permissions:
 - There is no limit to the number of queries you may define for execution and approve policies.
 - For `execution` policies, the condition **must** return a `boolean` value (determining whether or not the requester is allowed to execute the action).
 - For `approve` policies, the condition **must** return an array of strings, which **must** be the email addresses of users who can approve the execution of the action.
+
+:::info Email notifications
+When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. If you need email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
+:::
+
 - In both the `rules` and `conditions` values, you can access the following metadata:
   - `blueprint` - the blueprint tied to the action (if any).
   - `action` - the action object.
