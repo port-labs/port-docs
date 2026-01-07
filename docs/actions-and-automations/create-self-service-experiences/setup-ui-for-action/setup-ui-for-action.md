@@ -73,7 +73,7 @@ Note that the `combinator` field can be set to `and` or `or`, to define how mult
 
 #### Limitations
 
-When filtering by a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) in a condition, note that if the calculation is based on a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property), the query will not work as expected.
+When filtering by a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) that is based on a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property), the condition **will not** work as expected.
 
 ## User form
 
