@@ -1627,6 +1627,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-adoption-and-impact",
+    },
+    {
+        title: "Create an AWS secret",
+        description: "Create a self-service action that creates or updates AWS Secrets Manager secrets using a webhook backend",
+        tags: ["AWS", "Actions", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/create-aws-secret",
     }
 ]
 
