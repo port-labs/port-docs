@@ -488,5 +488,5 @@ The following table lists the identifiers for each data widget type:
 | Number chart | `entities-number-chart` | - |
 | Pie chart | `entities-pie-chart` | - |
 | Line chart | `line-chart` | - |
-| Table | `table-entities-explorer` | `"tableViewMode": "table"` |
-| Board | `table-entities-explorer` | `"tableViewMode": "kanban"`|
+| Table | `table-entities-explorer` | `"dataViewMode": "table"` |
+| Board | `table-entities-explorer` | `"dataViewMode": "board"`|
