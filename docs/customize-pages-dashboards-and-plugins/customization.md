@@ -5,6 +5,8 @@ sidebar_label: Customization & accessibility
 sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 ---
 
+import EnterpriseFeatureNotice from '/docs/generalTemplates/_enterprise_feature_notice.md'
+
 # Customization & accessibility
 
 Port offers various customization options to help you tailor the developer portal to your organization's branding and style as well as communicate important information to your users.
@@ -58,6 +60,36 @@ To add the banner:
 
 5. Click `Save`.
 
+### Custom icons
+
+<EnterpriseFeatureNotice id="custom-icons" />
+
+Organization admins can upload custom icons to use throughout Port. Once uploaded, they will be available for all users in your organization and can be used for blueprints, properties, actions, etc. Allowing you to align the portal with your organization's branding and visual identity.
+
+**To upload a custom icon:**
+
+1. Navigate to any location in Port where you can select an icon (such as when creating or editing a blueprint, etc).
+
+2. Click on the **Upload icon** button at the top of the icon selection panel.
+
+3. Upload your icon file. You can:
+   - Select a file from your computer.
+   - Copy and paste the file directly into the upload area (hover over the upload area first to enable paste).
+   
+   Supported formats: PNG, SVG, or JPEG (maximum dimensions: 512x512 pixels). For SVG files, the dimension is enforced on the viewbox first, then on the width and height properties if there is no usable viewbox.
+
+4. Enter a name for your custom icon (between 1-30 characters).
+
+5. Click **Save**.
+
+Your custom icon is now available throughout your Port organization. Custom icons will appear in a dedicated **Custom icons** section at the top of the icon selection panel, above the default Port icons.
+
+**Limitations**
+
+- **Maximum file size:** 10MB.
+- **Maximum icon dimensions:** 512x512 pixels.
+- **Icon name length:** 1-30 characters.
+- **Platform URL:** Custom icons work reliably when accessing Port via `app.port.io`. While you can upload icons using `app.getport.io`, custom icons currently won't be visible when accessing the platform through that URL.
 
 ### Dark mode
 
