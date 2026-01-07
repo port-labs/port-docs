@@ -243,7 +243,7 @@ Here is an example for `azure-integration.yml` workflow file:
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) >= 2.0.0
 - Azure App Registration Credentials (See below)
 
 <AzureAppRegistration/>

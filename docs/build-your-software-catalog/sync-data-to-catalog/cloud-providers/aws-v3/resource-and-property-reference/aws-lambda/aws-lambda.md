@@ -28,4 +28,4 @@ You can use the following Port blueprint definitions and integration configurati
 
 <LambdaFunctionConfig/>
 
-For more details about Lambda function properties, refer to the [AWS Lambda API documentation](https://docs.aws.amazon.com/lambda/latest/APIReference/Welcome.html).
+For more details about Lambda function properties, refer to the [AWS Lambda API documentation](https://docs.aws.amazon.com/lambda/latest/api/welcome.html).

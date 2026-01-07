@@ -71,49 +71,49 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 
 ### Number chart properties
 
-| Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| `Title`           | `String` | Number Chart title                                                                                                                                                                                                                          | `null`     | `true`   |
-| `Icon`            | `String` | Number Chart Icon                                                                                                                                                                                                                           | `null`     | `false`  |
-| `Description`     | `String` | Number Chart description                                                                                                                                                                                                                    | `null`     | `false`  |
+| Field   | Type   | Description   | Default    | Required |
+| ------- | ------ | ------------- | ---------- | -------- |
+| `Title`   | `String` | Number Chart title   | `null`     | `true`   |
+| `Icon`    | `String` | Number Chart Icon  | `null`     | `false`  |
+| `Description`     | `String` | Number Chart description   | `null`     | `false`  |
 | `Empty state text`      | `String` | Number chart empty state text         | `No data for this widget`  | `false`  |
-| `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
-| `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
+| `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`     | `null` | `true`   |
+| `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from   | `null`     | `true`   |
 | `Display formatting` | `String` | Defines how numbers are displayed. Possible values: `None`, `Round`, `Custom` (allows decimal precision between one to five decimal places) | `null`     | `false`   |
-| `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
+| `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message   | `null`     | `false`   |
 
 **Chart type: display single property** 
 
-| Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| `Entity`       | `String` | The chosen entity from which property data is visualized from                                                                                                                                                                    | `null`     | `true`   |
-| `Property`        | `String` | The number property which will be visualized                                                 | `null`     | `true`   |                                                                                     | `null`     | `true`   |
+| Field    | Type     | Description        | Default    | Required |
+| -------- | -------- | ------------------ | ---------- | -------- |
+| `Entity`   | `String` | The chosen entity from which property data is visualized from   | `null`     | `true`   |
+| `Property`        | `String` | The number property which will be visualized   | `null`     | `true`   |
 
 
 **Chart type: Count entities**
 
-| Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| `Function`        | `String` | `count` and `average` (by time).                                                   | `null`     | `true`   |
+| Field             | Type     | Description    | Default    | Required |
+| ----------------- | -------- | -------------- | ---------- | -------- |
+| `Function`        | `String` | `count` and `average` (by time).       | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week` and `month`. | `null`     | `true`   |
-| `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.                                                                                          | `createdAt`     | `false`  |
-| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)                                                                                                                | []         | `false`  |
-| `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                                                                                                                         | `null`     | `true`   |
-| `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
-| `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
+| `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.  | `createdAt`     | `false`  |
+| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)         | []         | `false`  |
+| `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`   | `null`     | `true`   |
+| `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`  | `null`     | `true`   |
+| `Unit alignment`   | `String` | `left`, `right`, `bottom`.  | `null`     | `true`   |
 
 **Chart type: Aggregate by property** 
 
-| Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
+| Field      | Type     | Description    | Default    | Required |
+| ---------- | -------- | -------------- | ---------- | -------- |
 | `Property`        | `String` | The number chart value will be the selected property's aggregated value (according to the chosen function) | `null`     | `true`   |
 | `Function`        | `String` | `sum`, `min`, `max`, `average` and `median` | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week`, `month` and `total` (divide the sum by the number of entities) | `null`     | `true`   |
-| `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.                                                                                          | `createdAt`     | `false`  |
-| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)                                                                                                                | []         | `false`  |
-| `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                                                                                                                         | `null`     | `true`   |
-| `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
-| `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
+| `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.    | `createdAt`     | `false`  |
+| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)      | []         | `false`  |
+| `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`       | `null`     | `true`   |
+| `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`   | `null`     | `true`   |
+| `Unit alignment`   | `String` | `left`, `right`, `bottom`.   | `null`     | `true`   |
 
 
 
@@ -332,10 +332,10 @@ When creating this type of line chart:
         - The `count` function will count the total entities that week.
         - The `average` function will count the total entities that week and divide it by 7.  
           
-      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
-      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
+      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, `Month` and `Quarter` -  
+      when using the `average` function, the total entity count will be divided by: 60, 24, 7, 30 and 90 respectively.
 
-   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data.  
      Note that the available time ranges differ according to the selected time interval.
 
 For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
