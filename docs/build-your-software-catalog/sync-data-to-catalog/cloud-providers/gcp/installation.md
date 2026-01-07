@@ -198,8 +198,7 @@ The cluster doesn't need to be accessible over the internet.
 <h3> Grant access to Kubernetes workload </h3>
 
 1. Grant the Kubernetes ServiceAccount access to impersonate the IAM service account:
-    # AI! Please add a title to the admonition, this makes the admonition's purpose clearer and increases the chance that readers will not skip it if it's relevant to them.
-   :::tip
+   :::tip Kubernetes ServiceAccount
    The Kubernetes ServiceAccount does not have to exist yet. We'll create it in a later step when we deploy the workload, so just take note of the name you want to use.
    :::
    ```bash showLineNumbers
