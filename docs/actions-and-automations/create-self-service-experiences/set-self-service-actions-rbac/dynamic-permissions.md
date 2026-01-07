@@ -32,7 +32,7 @@ Examples of useful applications of dynamic permissions:
 - For `approve` policies, the condition **must** return an array of strings, which **must** be the email addresses of users who can approve the execution of the action.
 
 :::info Email notifications
-When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. If you need email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
+When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
 :::
 
 - In both the `rules` and `conditions` values, you can access the following metadata:
