@@ -1366,6 +1366,11 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=PagerDuty).
 
+## Limitations
+
+#AI! improve this
+- There is a technical limitation on Pagerduty’s [pagination](https://developer.pagerduty.com/docs/pagination); when using offset-based pagination, number of resources retrieved can not be more than 10,000.
+
 ## Support
 
 For any questions or issues, contact us at [support.port.io](http://support.port.io/) or via our [Community Slack channel](https://port.io/community).
