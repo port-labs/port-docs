@@ -273,6 +273,7 @@ Scorecard rules evaluate entity properties against conditions. Note the followin
 
 - **File content inspection**: Scorecard rules can only evaluate data stored in entity properties. To check file contents (e.g., verify a README contains specific sections), use an [integration](/build-your-software-catalog/sync-data-to-catalog/) or [automation](/actions-and-automations/define-automations/) to extract the relevant data into an entity property, then create a rule based on that property.
 
+
 ### Filter elements
 
 Filters allow you to apply scorecard checks only for entities that meet certain criteria.
