@@ -139,24 +139,21 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
 
 <TabItem value="self-hosted-kubernetes" label="Self-hosted Kubernetes">
 
-### Setting up Kubernetes
+<h3>Prerequisites</h3>
 
 First, let's ensure your cluster meets the following criteria:
 
 - You're running Kubernetes 1.20 or later.
   - Previous versions of Kubernetes used a different ServiceAccount token format that is not compatible with the instructions in this document.
 - You configured `kube-apiserver` so that it supports [ServiceAccount token volume projections](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection).
+- Ensure billing is enabled in your Google Cloud project.
 
 :::info Internet access
 The cluster doesn't need to be accessible over the internet.
 :::
 
 
-### Configure workload identity federation
-
-:::note Billing
-Ensure billing is enabled in your Google Cloud project.
-:::
+<h3> Configure workload identity federation </h3>
 
 1. [Enable](https://console.cloud.google.com/flows/enableapi?apiid=iam.googleapis.com,cloudresourcemanager.googleapis.com,iamcredentials.googleapis.com,sts.googleapis.com&redirect=https://console.cloud.google.com) the IAM, Resource Manager, Service Account Credentials, and Security Token Service APIs.
 
@@ -198,9 +195,10 @@ Ensure billing is enabled in your Google Cloud project.
    - `ISSUER`: the cluster URL we determined earlier.
 
 
-### Grant access to Kubernetes workload
+<h3> Grant access to Kubernetes workload </h3>
 
 1. Grant the Kubernetes ServiceAccount access to impersonate the IAM service account:
+    # AI! Please add a title to the admonition, this makes the admonition's purpose clearer and increases the chance that readers will not skip it if it's relevant to them.
    :::tip
    The Kubernetes ServiceAccount does not have to exist yet. We'll create it in a later step when we deploy the workload, so just take note of the name you want to use.
    :::
@@ -217,7 +215,7 @@ Ensure billing is enabled in your Google Cloud project.
    - `MAPPED_SUBJECT`: the mapped subject for the Kubernetes service account. It should have the format `system:serviceaccount:NAMESPACE:KUBERNETES_SA_NAME`. For example: `system:serviceaccount:default:my-kube-workload-id-serviceaccount`.
 
     
-### Deploy the Kubernetes workload
+<h3>Deploy the Kubernetes workload</h3> 
 
 1. Create a credentials file:
    ```bash showLineNumbers
@@ -233,7 +231,7 @@ Ensure billing is enabled in your Google Cloud project.
    - `SERVICE_ACCOUNT_EMAIL`: the email of your service account.
    - `PROJECT_NUMBER`: the Google Cloud project number (not project ID).
    - `POOL_ID`: the pool ID we created in step 3.
-   - `WORKLOAD_PROVIDER_ID`: the ID of the cluster workload provider we created in step 4 of [configure workload identity federation](#configure-workload-identity-federation).
+   - `WORKLOAD_PROVIDER_ID`: the ID of the cluster workload provider we created in step 4 of `configure workload identity federation`.
    :::note Credential File
    Unlike a [service account key](https://docs.cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys), a credential configuration file doesn't contain a private key and doesn't need to be kept confidential. Details about the credential configuration file are available at https://google.aip.dev/auth/4117.
    :::
