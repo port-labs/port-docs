@@ -35,7 +35,7 @@ This difference happens because the two charts are likely working with different
 
 To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
 
-#### Display formatting
+### Display formatting
 
 You can customize how numbers are displayed in number chart by selecting a formatting function:
 
@@ -69,7 +69,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 
 <img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' style={{border:'1px', borderRadius:'8px'}}/>
 
-### Number chart properties
+<h3> Number chart properties </h3>
 
 | Field   | Type   | Description   | Default    | Required |
 | ------- | ------ | ------------- | ---------- | -------- |
@@ -142,7 +142,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules) | []      | `false`  |
 
-### Pie chart drill down
+<h3> Pie chart drill down </h3>
 
 Hover over a pie chart slice to see the percentage it represents of the total.
 
@@ -364,22 +364,38 @@ Other properties will be hidden by default.
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 :::
 
-### Save table view
+<h3> Save table view </h3>
 
 <SaveTableView />
 
-### Customization
+<h3> Customization </h3>
 
 Just like catalog pages, tables support the following customization options:
 
 - [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 - [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
-### Limitations
+<h3> Limitations </h3>
 
 - Tables are limited to displaying up to **100,000** entities.  
-  All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
-  If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+- All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+- If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+
+## Board
+
+The board widget provides a visual way to organize and manage entities using cards grouped into columns. This view is ideal for tracking workflows, managing tasks, or visualizing entity states. The board view is also available in [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+The board widget works the same as the [table widget](#table), with the following key differences:
+
+- **Group by property**: You must select a property to organize entities into columns. This property must be one of the following types: `Enum`, `Boolean` or `Scorecard`.
+
+- **Drag and drop**: You can move entity cards between columns by dragging and dropping. When you drop a card in a new column, the entity's grouping property is automatically updated to match the target column.
+
+  :::info Editable properties only
+  Drag and drop is only available when the grouping property is editable. If the property is not editable (for example, a read-only property or a scorecard), cards cannot be moved between columns.
+  :::
+
+- **Sorting**: The board view **does not support sorting**. Entities within each column are displayed in their default order.
 
 ## Entity card
 
@@ -467,9 +483,10 @@ You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-
 When creating widgets using [Port's Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page), you need to provide the widget type's identifier in the `type` key.  
 The following table lists the identifiers for each data widget type:
 
-| Widget type | Identifier |
-| ----------- | ---------- |
-| Number chart | `entities-number-chart` |
-| Pie chart | `entities-pie-chart` |
-| Line chart | `line-chart` |
-| Table | `table-entities-explorer` |
+| Widget type | Identifier | Notes |
+| ----------- | ---------- |:-----:|
+| Number chart | `entities-number-chart` | - |
+| Pie chart | `entities-pie-chart` | - |
+| Line chart | `line-chart` | - |
+| Table | `table-entities-explorer` | `"dataViewMode": "table"` |
+| Board | `table-entities-explorer` | `"dataViewMode": "board"`|
