@@ -388,6 +388,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/troubleshooting.svg');
 }
 
+.sidebar-menu-usage-dashboard .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/bar.svg');
+}
+
 .sidebar-menu-resources .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/resources.svg');
 }
