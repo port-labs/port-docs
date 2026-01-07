@@ -337,17 +337,7 @@ const config = {
       },
     }),
   themes: [
-    "docusaurus-theme-openapi-docs", 
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        indexBlog: false,
-        indexDocs: true,
-        docsRouteBasePath: "/",
-        hashed: true,
-        explicitSearchResultPath: true,
-      },
-    ]
+    "docusaurus-theme-openapi-docs"
   ],
 
   plugins: [
@@ -417,15 +407,24 @@ const config = {
       "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nFor tips on how to use the assistant effectively, click [here](https://docs.port.io/docs-ai-assistant).\n\nWe would appreciate your feedback (👍🏽/👎🏽) in order to improve the results 🙏🏽",
       "data-modal-disclaimer-font-size": "0.85rem",
       "data-example-question-button-font-size": "0.85rem",
-      // "data-search-mode-enabled": "true",
-      // "data-modal-search-input-placeholder": "What are you looking for?",
-      // "data-modal-title-search": "Search Port's documentation",
-      // "data-search-result-secondary-text-color": "#000000",
-      // "data-search-result-primary-text-color": "#000000",
+      "data-search-mode-enabled": "true",
+      "data-modal-search-input-placeholder": "What are you looking for?",
+      "data-modal-title-search": "Search Port's documentation",
+      "data-search-result-secondary-text-color": "#000000",
+      "data-search-result-primary-text-color": "#000000",
+      "data-search-ask-ai-cta-hover-text-color": "#000000",
+      "data-search-ask-ai-cta-hover-bg-color": "#FFFFFF",
+      "data-search-ask-ai-cta-text-color": "#000000",
+      "data-search-ask-ai-cta-bg-color": "#FFFFFF",
+      "data-modal-override-open-selector-search": ".kapa-search-trigger",
       async: true,
     },
     {
       src: '/js/embed-mode.js',
+      async: false,
+    },
+    {
+      src: '/js/kapa-search-inject.js',
       async: false,
     }
   ],
