@@ -89,6 +89,7 @@ Your custom icon is now available throughout your Port organization. Custom icon
 - **Maximum file size:** 10MB.
 - **Maximum icon dimensions:** 512x512 pixels.
 - **Icon name length:** 1-30 characters.
+- **Platform URL:** Custom icons work reliably when accessing Port via `app.port.io`. While you can upload icons using `app.getport.io`, custom icons currently won't be visible when accessing the platform through that URL.
 
 ### Dark mode
 
