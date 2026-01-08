@@ -5,8 +5,6 @@ sidebar_label: Customization & accessibility
 sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 ---
 
-import EnterpriseFeatureNotice from '/docs/generalTemplates/_enterprise_feature_notice.md'
-
 # Customization & accessibility
 
 Port offers various customization options to help you tailor the developer portal to your organization's branding and style as well as communicate important information to your users.
@@ -62,9 +60,12 @@ To add the banner:
 
 ### Custom icons
 
-<EnterpriseFeatureNotice id="custom-icons" />
-
 Organization admins can upload custom icons to use throughout Port. Once uploaded, they will be available for all users in your organization and can be used for blueprints, properties, actions, etc. Allowing you to align the portal with your organization's branding and visual identity.
+
+**Prerequisites**
+
+- **Enterprise plan:** This feature is part of Port's Enterprise plan. If you're interested in accessing this feature, please contact [Port's support team](https://support.port.io).
+- **Multi-organization structure:** Your account needs to be migrated to the [multi-organization structure](/sso-rbac/multi-organization). Contact [Port's support team](https://support.port.io) to request account migration.
 
 **To upload a custom icon:**
 
