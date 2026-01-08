@@ -108,7 +108,7 @@ helm install n8n-integration port-labs/port-ocean \
 | `integration.config.pageSize` | Number of items per page. | 100 | ✅ |
 | `integration.config.cursorPath` | JSON path to cursor value in response. | nextCursor | ✅ |
 | `integration.config.hasMorePath` | JSON path to check if more pages exist. | nextCursor | ✅ |
-| `integration.eventListener.type` | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener) | POOLING | ✅ |
+| `integration.eventListener.type` | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener) | POLLING | ✅ |
 | `integration.type` | The integration type (must be `custom` for Ocean Custom Integration). | custom | ✅ |
 | `integration.identifier` | Unique identifier for this integration instance. | n8n-integration | ✅ |
 | `initializePortResources` | Create default blueprints and mappings on first run. | true | ❌ |
