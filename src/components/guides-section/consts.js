@@ -1439,6 +1439,13 @@ export const availableGuides = [
         link: "/guides/all/track-ai-driven-pull-requests",
     },
     {
+        title: "Visualize GitHub Copilot metrics",
+        description: "Create dashboards to monitor GitHub Copilot usage, track acceptance rates, and measure team productivity",
+        tags: ["Engineering Intelligence", "Github Copilot", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-github-copilot-metrics",
+    },
+    {
         title: "Trigger Claude Code from Port",
         description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
         tags: ["Autonomous Ticket Resolution", "Claude Code", "AI", "Actions"],
@@ -1627,6 +1634,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-adoption-and-impact",
+    },
+    {
+        title: "Visualize Cursor metrics",
+        description: "Create dashboards to monitor Cursor AI usage, track adoption, analyze costs, and measure developer productivity",
+        tags: ["Engineering Intelligence", "Dashboards", "AI"],
+        logos: ["Cursor"],
+        link: "/guides/all/visualize-cursor-metrics",
     },
     {
         title: "Visualize Claude metrics",

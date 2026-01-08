@@ -645,3 +645,8 @@ resources:
             git_hub_org: .__organization.login
 ```
 </details>
+
+
+## Related guide
+
+[Visualize GitHub Copilot metrics](/guides/all/visualize-github-copilot-metrics)
