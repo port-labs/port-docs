@@ -202,7 +202,12 @@ This example uses the `branch` kind with `detailed: true` to fetch the latest co
 
 ## Repositories and branch protection rules
 
-The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  
+The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  The example uses the following selector options:
+
+- **`protectionRules: true`**: Required for this example to fetch the branch protection rules used by the `branchProtection` mapping. If the GitHub repo lacks branch protection permissions, `.__protection_rules` may be empty.
+- **`detailed: true`**: Optional. Use it only when you need commit-level fields (it adds additional API calls).
+- **Default branch filter**: This example targets only the default branch with `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
+
 You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
@@ -210,12 +215,6 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <BranchProtectionBlueprint/>
 
 <PortBranchProtectionAppConfig/>
-
-::::info selector options
-- **`protection_rules`**: Set `protection_rules: true` to enrich each branch with `.__protection_rules`. If the GitHub repo lacks branch protection permissions, this field may be empty.
-- **`detailed`**: Set `detailed: true` to fetch the full branch payload per branch (additional API calls). Use it only when you need commit-level fields.
-- **Default branch filter**: This example targets the default branch by using `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
-::::
 
 ## Files and file contents
 
