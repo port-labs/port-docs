@@ -21,7 +21,7 @@ The context lake transforms scattered data across your engineering tools into un
 
 ### Software catalog - your data
 
-The [software catalog](/build-your-software-catalog) is where you define YOUR organization's data model using blueprints (services, environments, teams, deployments, incidents, etc.) and populate it with entities from all your tools. This catalog becomes your organizational semantic layer—teaching Port what "service," "deployment," or "incident" means specifically in your context, providing the schema and structure that gives meaning to your data.
+The [software catalog](/build-your-software-catalog/overview) is where you define YOUR organization's data model using blueprints (services, environments, teams, deployments, incidents, etc.) and populate it with entities from all your tools. This catalog becomes your organizational semantic layer—teaching Port what "service," "deployment," or "incident" means specifically in your context, providing the schema and structure that gives meaning to your data.
 
 ### Business context - holistic view
 
@@ -258,7 +258,7 @@ Port provides a custom n8n node that simplifies integration with Port's AI agent
 
 Building your Context Lake is a natural part of setting up Port:
 
-1. **[Define your data model](/build-your-software-catalog)** - Create blueprints that represent your organization's entities.
+1. **[Define your data model](/build-your-software-catalog/overview)** - Create blueprints that represent your organization's entities.
 2. **[Connect your tools](/build-your-software-catalog/sync-data-to-catalog)** - Ingest data from GitHub, Kubernetes, PagerDuty, and 100+ other integrations.
 3. **[Set up relationships](/build-your-software-catalog/customize-integrations/configure-mapping#relations)** - Define how entities connect to each other.
 4. **[Configure access controls](/sso-rbac/rbac-overview)** - Ensure proper data governance.

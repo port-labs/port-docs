@@ -1177,7 +1177,7 @@ For more details on how the Ocean Custom Integration works, see the [How it work
 
 ## Customization
 
-If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
+If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/build-your-integration).
 
 **The interactive builder helps you:**
 1. Test your Cursor API endpoints with live data.

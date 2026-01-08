@@ -30,6 +30,11 @@ Examples of useful applications of dynamic permissions:
 - There is no limit to the number of queries you may define for execution and approve policies.
 - For `execution` policies, the condition **must** return a `boolean` value (determining whether or not the requester is allowed to execute the action).
 - For `approve` policies, the condition **must** return an array of strings, which **must** be the email addresses of users who can approve the execution of the action.
+
+:::info Email notifications
+When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
+:::
+
 - In both the `rules` and `conditions` values, you can access the following metadata:
   - `blueprint` - the blueprint tied to the action (if any).
   - `action` - the action object.
@@ -67,11 +72,15 @@ Under each of these two keys, you can add one or more of the following keys:
 - A `users` key, which allows you to specify which **users** can execute/approve the action.
 - A `teams` key, which allows you to specify which **teams** can execute/approve the action.
 - A `policy` key, which allows you to use more complex logic using two keys:
-  - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
+  - [`"queries"`](/search-and-query/structure-and-syntax) - a collection of [rules](/search-and-query/structure-and-syntax#rules) you can use to fetch and filter the data you need from your software catalog.
   - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
 If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
-If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.  
+If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.
+
+:::tip Removing a policy
+To remove an existing policy, set `"policy": null` in the JSON configuration. Simply deleting the policy content via backspace will not remove it.
+:::
 
 For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
 

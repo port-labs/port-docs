@@ -184,7 +184,7 @@ Conditions are small boolean checks that help when determining the final status 
 
 | Field      | Description  |
 |------------|--------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all [available operators](#available-operators) below).   |
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all available operators below).   |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md). |
 | `value`    | Value to compare to (not required in `isEmpty` and `isNotEmpty` operators).  |
 
@@ -262,6 +262,16 @@ Conditions are small boolean checks that help when determining the final status 
 | `doesNotBeginsWith` | `String`, `Number`                               | Checks if the rule value does not begin with the entity value.         |
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is not an empty string, array, or object.     |
+
+**Advanced rule capabilities**
+
+Scorecard rules evaluate entity properties against conditions. Note the following capabilities and limitations:
+
+- **Property comparisons**: Rules compare properties against **static values** only. To compare two properties (e.g., check if `deployDate` is after `commitDate`), create a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) that computes the comparison result as a boolean, then check that property in your rule.
+
+- **Rule weighting**: All rules at the same level contribute equally to level progression. There is no support for weighted rules. If certain checks are more important, consider placing them at higher levels or breaking them into separate scorecards.
+
+- **File content inspection**: Scorecard rules can only evaluate data stored in entity properties. To check file contents (e.g., verify a README contains specific sections), use an [integration](/build-your-software-catalog/sync-data-to-catalog/) or [automation](/actions-and-automations/define-automations/) to extract the relevant data into an entity property, then create a rule based on that property.
 
 ### Filter elements
 

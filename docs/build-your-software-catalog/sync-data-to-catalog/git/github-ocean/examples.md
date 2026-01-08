@@ -45,6 +45,8 @@ import PortWfWfrAppConfig from './examples/example-workflow-workflowrun/\_github
 
 import BranchBlueprint from './examples/example-branch/\_git_exporter_example_branch_blueprint.mdx'
 import PortBrAppConfig from './examples/example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import BranchProtectionBlueprint from './examples/example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
+import PortBranchProtectionAppConfig from './examples/example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 
 import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
@@ -197,6 +199,25 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 The last contributor is the author of the last commit in the default branch of the repository.  
 This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity. By default, `detailed` is set to `false`, which returns a lighter branch payload. It should only be set to `true` when you need access to commit-level fields.
 :::
+
+## Repositories and branch protection rules
+
+The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  The example uses the following selector options:
+
+- `protectionRules: true`: Required for this example to fetch the branch protection rules used by the `branchProtection` mapping. If the GitHub repo lacks branch protection permissions, `.__protection_rules` may be empty.
+- `detailed: true`: Optional. Use it only when you need commit-level fields (it adds additional API calls).
+
+:::info Default branch filter
+This example targets only the default branch with `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
+:::
+
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchProtectionBlueprint/>
+
+<PortBranchProtectionAppConfig/>
 
 ## Files and file contents
 

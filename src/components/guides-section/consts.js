@@ -1634,6 +1634,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "Dashboards", "AI"],
         logos: ["Cursor"],
         link: "/guides/all/visualize-cursor-metrics",
+    },
+    {
+        title: "Visualize Claude metrics",
+        description: "Create dashboards to monitor Claude API usage, track costs, analyze model performance, and measure workspace-level metrics",
+        tags: ["Engineering Intelligence", "Dashboards", "Claude Code"],
+        logos: ["Claude Code"],
+        link: "/guides/all/visualize-claude-metrics",
     }
 ]
 

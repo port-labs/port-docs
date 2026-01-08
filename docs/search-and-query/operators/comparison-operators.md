@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Comparison operators
 
-This page details the available comparison operators when writing [rules](/search-and-query/#rules) as part of the search route.
+This page details the available comparison operators when writing [rules](/search-and-query/structure-and-syntax#rules) as part of the search route.
 
 ### = (Equal)
 
@@ -249,7 +249,7 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 ### contains
 
-The `contains` operator checks if the specified value exists within a string property:
+The `contains` operator checks if the specified value exists within a **string** property:
 
 ```json showLineNumbers
 {
