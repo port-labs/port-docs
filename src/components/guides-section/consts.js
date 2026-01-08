@@ -1636,6 +1636,13 @@ export const availableGuides = [
         link: "/guides/all/track-ai-adoption-and-impact",
     },
     {
+        title: "Visualize Cursor metrics",
+        description: "Create dashboards to monitor Cursor AI usage, track adoption, analyze costs, and measure developer productivity",
+        tags: ["Engineering Intelligence", "Dashboards", "AI"],
+        logos: ["Cursor"],
+        link: "/guides/all/visualize-cursor-metrics",
+    },
+    {
         title: "Visualize Claude metrics",
         description: "Create dashboards to monitor Claude API usage, track costs, analyze model performance, and measure workspace-level metrics",
         tags: ["Engineering Intelligence", "Dashboards", "Claude Code"],
