@@ -7,7 +7,7 @@ description: Learn how to build a security analytics dashboard for Okta identity
 
 This guide demonstrates how to build a security analytics dashboard for Okta identity and access management. You'll learn how to visualize security metrics such as admin role exposure, user security posture, group access patterns, and more using Port's **Okta** integration.
 
-<img src="/img/guides/okta-security-insights-dashboard.png" border="1px" width="100%" />
+<img src="/img/guides/okta-security-insights-dashboard.png" width="100%" border="1px" alt="Okta Security Insights Dashboard showing user status, security risk levels, and admin groups" />
 
 ## Common use cases
 
