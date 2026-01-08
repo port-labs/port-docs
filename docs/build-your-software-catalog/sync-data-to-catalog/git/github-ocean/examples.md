@@ -314,6 +314,12 @@ You can now include multiple relationship types in a single repository configura
           githubCollaborators: "[.__collaborators[].login]"
 ```
 
+# Ai! improve just this list
+Accepted options are:
+- teams
+- collaborators 
+- sbom
+
 :::caution Performance consideration
 While you can include multiple relationship types in a single configuration, this may impact resync performance for large repositories. For optimal performance, consider separating into multiple repository blocks:
 
