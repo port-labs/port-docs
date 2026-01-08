@@ -36,17 +36,78 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-You can manage your GitHub integration configuration using Port:
+To ingest GitHub objects, you can use one of the following methods:
+
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your GitHub Ocean configuration using Port:
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Under `Exporters`, click on the installed integration.
-3. A window will open containing the default YAML configuration of your GitHub integration.
-4. Here you can modify the configuration to suit your needs, by adding/removing entries.
-5. When finished, click `Resync` to apply any changes.
+2. Under `Exporters`, click on the installed GitHub Ocean integration.
+3. A window will open containing the default YAML configuration of your integration.
+4. Here you can modify the configuration to suit your needs, by adding or removing entries.
+5. When finished, click **Resync** to apply any changes.
 
-Using this method applies the configuration to all repositories that the GitHub app has permissions to.
+Using this method applies the configuration to all organizations and repositories that the integration has permissions to.
 
 When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using GitHub" value="github">
+
+You can also manage your GitHub Ocean configuration using a config file in GitHub:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on the installed GitHub Ocean integration.
+3. In the configuration panel, set `repoManagedMapping: true` in the integration configuration YAML.
+
+This tells GitHub Ocean to load its mapping from a configuration file in your GitHub organization instead of using the mapping stored in Port (when this feature is enabled in the integration).
+
+With GitHub Ocean, configuration from Git is currently **org-level only**:
+
+- Create a `.github-private` repository in your GitHub organization if it does not already exist.
+- Add a `port-app-config.yml` file to the root of the `.github-private` repository.
+- The file must be present on the **default branch** (usually `main`) to be applied.
+
+Here is a minimal example of an org-level `port-app-config.yml` for GitHub Ocean:
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: organization
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubOrganization"'
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+```
+
+When configuring GitHub Ocean **using GitHub**:
+
+- The `port-app-config.yml` in `.github-private` is treated as the **single global mapping** for the integration.
+- Changes to this file will be picked up on the default branch and applied on the next resync or relevant event processing.
+- Granular configuration (that is, `port-app-config.yml` files that live inside individual repositories rather than `.github-private`) is not yet supported for GitHub Ocean.
+- Multi-organization setups are not supported in this mode: the integration reads the GitHub organization from its configuration or environment, and that organization will always be used even if the mapping file contains multiple orgs.
+
+</TabItem>
+
+</Tabs>
 
 ### Repository type
 

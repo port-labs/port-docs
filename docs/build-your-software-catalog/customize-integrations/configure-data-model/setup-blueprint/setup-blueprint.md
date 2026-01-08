@@ -341,6 +341,8 @@ All available properties are listed in the [properties](./properties/properties.
 
 ### Full icon list
 
+Port provides a wide selection of built-in icons for use in blueprints, properties, actions, action inputs, etc. Enterprise customers can also [upload custom icons](/customize-pages-dashboards-and-plugins/customization#custom-icons) to align with their organization's branding.
+
 <details>
 <summary><b>Full icon list (click to expand)</b></summary>
 

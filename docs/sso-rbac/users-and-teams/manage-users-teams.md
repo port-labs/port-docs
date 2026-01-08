@@ -145,13 +145,14 @@ Similarly, to extend the `Team` blueprint, import it with `terraform import port
 
 ### User status
 
-A user can have one of the following statuses at any given time:
+A user can have one of the following statuses at any given time within the scope of a each Port organization:
 
+- `Staged`- the user exists but hasn't been invited by email.
 - `Active` - the user has logged into Port and can use the portal normally.
 - `Invited` - the user was invited to Port via an invitation email.
-- `Disabled` - the user is disabled and cannot use Port.
+- `Disabled` - the user cannot use this specific Port organization. Contact the organization admin to regain access.
 
-By default, all new users are created with the `Disabled` status (no email invitation is sent).
+By default, all new users are created with the `Staged` status (the user exists but hasn't been invited by email), after login, the user status is set to `Active`.
 
 In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
 Here admins can also change a user's status, and invite new users.
@@ -159,7 +160,6 @@ Here admins can also change a user's status, and invite new users.
 #### Limitations
 
 - Only users with a UI/API origin can invite users and change their status.  
-
 - Users cannot change their own status.
 
 ### Ownership

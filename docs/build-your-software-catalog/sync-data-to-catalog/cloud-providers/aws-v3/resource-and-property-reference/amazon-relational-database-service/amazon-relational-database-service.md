@@ -28,4 +28,4 @@ You can use the following Port blueprint definitions and integration configurati
 
 <RdsDbInstanceConfig/>
 
-For more details about RDS DB instance properties, refer to the [AWS RDS API documentation](https://docs.aws.amazon.com/rds/latest/APIReference/Welcome.html).
+For more details about RDS DB instance properties, refer to the [AWS RDS API documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/ProgrammingGuide.html).
