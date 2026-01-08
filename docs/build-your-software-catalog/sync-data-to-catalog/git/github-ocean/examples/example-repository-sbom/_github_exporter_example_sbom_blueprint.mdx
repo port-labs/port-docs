@@ -1,0 +1,56 @@
+<details>
+<summary><b>SBOM blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubSBOM",
+  "title": "Github Dependency Graph",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "spdxid": {
+        "type": "string",
+        "title": "SPDXID",
+      },
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "license_concluded": {
+        "type": "string",
+        "title": "License"
+      },
+      "copyright_text": {
+        "type": "string",
+        "title": "Copyright"
+      },
+      "external_refs": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      }
+    },
+    "required": [
+      "spdxid"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "githubRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
