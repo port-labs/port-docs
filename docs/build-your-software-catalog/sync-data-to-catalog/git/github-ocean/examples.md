@@ -316,7 +316,7 @@ You can now include multiple relationship types in a single repository configura
 
 The `include` property accepts a list of strings to fetch additional data related to the repository. The accepted values are:
 - `teams`: Ingests the [teams with access to the repository](https://docs.github.com/en/rest/repos/repos#list-repository-teams).
-- `collaborators`: Ingests the [collaborators of the repository](https://docs.github.com/en/rest/repos/collaborators#list-repository-collaborators).
+- `collaborators`: Ingests the [collaborators of the repository](https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators).
 - `sbom`: Ingests the [Software Bill of Materials (SBOM)](https://docs.github.com/en/rest/dependency-graph/sboms#get-a-software-bill-of-materials-sbom-for-a-repository) for the repository.
 
 :::caution Performance consideration
