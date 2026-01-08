@@ -292,13 +292,13 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 ## Repositories with multiple relationships
 
-You can now include multiple relationship types in a single repository configuration. For example:
+You can now include multiple relationship types in a single repository configuration. For example, to include both teams and collaborators:
 
 ```yaml showLineNumbers
 - kind: repository
   selector:
     query: "true"
-    include: ["teams", "collaborators", "sbom"] # Include teams, collaborators, and sbom (dependency graph)
+    include: ["teams", "collaborators"] # Include both teams and collaborators
   port:
     entity:
       mappings:
@@ -309,7 +309,6 @@ You can now include multiple relationship types in a single repository configura
           readme: file://README.md
           url: .html_url
           defaultBranch: .default_branch
-          sbom: .__sbom
         relations:
           githubTeams: "[.__teams[].id | tostring]"
           githubCollaborators: "[.__collaborators[].login]"
