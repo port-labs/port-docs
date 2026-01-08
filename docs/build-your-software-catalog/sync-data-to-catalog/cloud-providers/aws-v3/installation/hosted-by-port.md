@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Installation
+# Hosted by Port installation
 
 
 AWS Hosted by Port is available through [Port's Ocean SaaS framework](https://ocean.getport.io/integrations-library/).  
@@ -25,7 +25,7 @@ AWS Hosted by Port runs on **Port's servers** and connects to your AWS accounts 
 :::tip Why Can't I Use an Existing Role?
 AWS Hosted by Port requires specific OIDC trust relationships and permissions that are automatically configured by the CloudFormation template. Using an existing role would require manual configuration of these complex trust relationships, which is why we provide the CloudFormation template to ensure proper setup.
 
-For detailed information about the IAM role architecture and permissions, see the [IAM Role Architecture](./iam-role-architecture.md) documentation.
+For detailed information about the IAM role architecture and permissions, see the [IAM Role Architecture](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/iam-role-architecture.md) documentation.
 :::
 
 ## Installation methods
@@ -163,7 +163,7 @@ You must run the multi-account installation from your AWS Organizations **manage
 </Tabs>
 
 :::info Region policy
-Configure which AWS regions are queried using `regionPolicy`. See [Querying resources from specific regions](./resource-and-property-reference/resource-and-property-reference.md#querying-resources-from-specific-regions).
+Configure which AWS regions are queried using `regionPolicy`. See [Querying resources from specific regions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/resource-and-property-reference/resource-and-property-reference.md#querying-resources-from-specific-regions).
 :::
 
 ## Troubleshooting
