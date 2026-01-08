@@ -9,6 +9,10 @@ This guide demonstrates how to build a security analytics dashboard for Okta ide
 
 <img src="/img/guides/okta-security-insights-dashboard.png" width="100%" border="1px" alt="Okta Security Insights Dashboard showing user status, security risk levels, and admin groups" />
 
+<img src="/img/guides/okta-security-insights-dashboard-2.png" width="100%" border="1px" alt="Okta Security Insights Dashboard showing groups by type, privileged groups, security risk distribution, and users with admin roles" />
+
+<img src="/img/guides/okta-security-insights-dashboard-3.png" width="100%" border="1px" alt="Okta Security Insights Dashboard showing inactive users, expired passwords, locked users, and admin groups" />
+
 ## Common use cases
 
 - Monitor admin role exposure and privileged access
