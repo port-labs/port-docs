@@ -47,7 +47,7 @@ Dashboards can be created/modified in 3 locations:
 :::tip Static & dynamic filters
 When creating certain widgets, you can define [**static filters**](/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#chart-filters) to exclude specific data.
 
-You can also define [**dynamic filters**](/search-and-query/#dynamic-properties) to display data relevant to the logged-in user.
+You can also define [**dynamic filters**](/search-and-query/structure-and-syntax#dynamic-properties) to display data relevant to the logged-in user.
 :::
 
 ## Next step - create actions & automations
