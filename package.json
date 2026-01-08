@@ -13,8 +13,8 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "prepare": "husky install",
-    "generate-guide-metadata": "node scripts/generate-guide-metadata.js"
+    "generate-guide-metadata": "node scripts/generate-guide-metadata.js",
+    "check-links": "node scripts/extract-links-from-markdown.js && node scripts/check-extracted-links.js; node scripts/format-link-results.js"
   },
   "dependencies": {
     "@docusaurus/core": "^3.9.2",
@@ -24,7 +24,6 @@
     "@docusaurus/plugin-ideal-image": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-live-codeblock": "^3.9.2",
-    "@easyops-cn/docusaurus-search-local": "^0.52.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@kapaai/react-sdk": "^0.9.1",
@@ -49,8 +48,6 @@
     "@docusaurus/module-type-aliases": "^3.9.2",
     "@docusaurus/tsconfig": "^3.9.2",
     "@docusaurus/types": "^3.9.2",
-    "husky": "^9.1.7",
-    "pretty-quick": "^4.2.2",
     "typescript": "~5.9.3"
   },
   "resolutions": {

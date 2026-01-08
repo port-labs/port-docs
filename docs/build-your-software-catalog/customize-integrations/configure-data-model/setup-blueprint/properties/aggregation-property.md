@@ -100,7 +100,7 @@ The `aggregationProperties` contains a key called `numberOfOpenJiraIssues` which
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "entities"` - The calculation will be performed on the **entities** that match the query.
   - `"func": "count"` - is the function we want to use for the calculation.
@@ -142,7 +142,7 @@ The `aggregationProperties` contains a key called `averageDeploymentFrequency` w
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "entities"` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
   - `"func": "average"` - is the function we want to use for the calculation.
@@ -203,7 +203,7 @@ The `aggregationProperties` contains a key called `sumOfStoryPoints` which is th
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "property"` - The calculation will be performed on the property of the entities that match the query (e.g. sum the value of the property of the entities that match the query).
   - `"func": "sum"` is the function we want to use for the calculation.
@@ -247,7 +247,7 @@ The `aggregationProperties` contains a key called `averageCpuUsage` which is the
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. average the value of the property of the entities that match the query).
   - `"func": "average"` - is the function we want to use for the calculation.
@@ -298,7 +298,7 @@ The `aggregationProperties` contains a key called `minAlertSeverity` which is th
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
   - `"func": "min"` - is the function we want to use for the calculation.
@@ -347,7 +347,7 @@ The `aggregationProperties` contains a key called `maxAlertSeverity` which is th
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. maximum value of the property of the entities that match the query).
   - `"func": "max"` - is the function we want to use for the calculation.
@@ -396,7 +396,7 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 
 - `title` - The title of the aggregation property.
 - `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 - `calculationSpec` - The calculation specification.
   - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
   - `"func": "median"` is the function we want to use for the calculation.
@@ -821,7 +821,7 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 You can use the query to filter the entities you want to perform the calculation on.
 
-The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 
 <h4> Query Example </h4>
 
