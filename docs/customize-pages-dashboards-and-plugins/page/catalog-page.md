@@ -395,3 +395,25 @@ Any page (whether created automatically or manually) can be deleted by clicking 
 :::warning Default pages
 When deleting a blueprint from your portal, all pages tied to that blueprint (including the default page that was created for it) will be deleted as well.
 :::
+
+### Export page data
+
+You can export the data displayed in a catalog page table to a file. This is useful for offline analysis, sharing data with stakeholders, or integrating with external tools.
+
+To export data from a catalog page:
+
+1. Click the **Export** button (download icon) in the table toolbar.
+2. Select your preferred format from the dropdown menu.
+
+    <img src='/img/software-catalog/pages/exportPageData.png' width='85%' border='1px' />
+
+<br/><br/>
+
+**Available formats:**
+
+- **Export as CSV** - Downloads the data as a comma-separated values file, suitable for spreadsheet applications like Excel or Google Sheets.
+- **Export as JSON** - Downloads the data as a JSON file, suitable for programmatic processing or integration with other tools.
+
+:::info Export scope
+The export includes all entities currently displayed in the table, respecting any active filters, search queries, or [initial filters](#initial-filters) applied to the page. The exported file contains all visible columns and their values.
+:::
