@@ -203,6 +203,122 @@ kubectl apply -f my-ocean-jira-integration.yaml
 ```
 
 </TabItem>
+
+<TabItem value="azure-container-instance" label="Azure Container Instance" default>
+
+To Install JIRA integration integration using Azure Container Instance:
+
+Navigate to Azure portal homepage, select `Create resource`.
+
+<img src="/img/sync-data-to-catalog/quickstart-portal-create-resource.png" width='50%' border='1px' />
+
+Select containers > Container instances
+
+<img src="/img/sync-data-to-catalog/aci-instance.png" width='50%' border='1px' />
+
+Follow the steps below.
+
+1. Basics
+
+- Select your **Subscription** and **Resource Group** . Create a new resource group if required.
+- Set the **Container name**. Example: `port-ocean-jira`
+- Select your **Region**. Example: `Australia Southeast`
+- Select your **Image type**
+- Select your **Image source**
+   - **Azure Container Registry (ACR)**  
+     - Ensure the Port Ocean Jira image is available in your registry.
+   - **Public registry (recommended for quick setup)**  
+     - Image name:
+       ```
+       ghcr.io/port-labs/port-ocean-jira:latest
+       ```
+- Select **Linux** as the **OS type**
+- Set the **container size**
+   - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
+   - These values can be increased if required.
+
+
+2. Networking
+
+- Set **Networking type** to `Private`
+- Select your **Virtual Network**
+- Select the appropriate **Subnet**
+- Expose **Port 443** using **TCP**
+
+
+3. Insights
+
+- Enable **Container Instance Logs**
+- Select your **Subscription**
+- Select your **Log Analytics Workspace**
+
+
+4. Advanced
+
+- Set **Restart policy** to `On failure`
+- Configure the following **Environment Variables**
+
+Environment Variables
+
+| Mark as Secure | Key                                                     | Value                | Required |
+|----------------|----------------------------------------------------------|----------------------|----------|
+| No             | `OCEAN__PORT__CLIENT_ID`                                | `<PORT_CLIENT_ID>`   | Yes      |
+| Yes            | `OCEAN__PORT__CLIENT_SECRET`                            | `<PORT_CLIENT_SECRET>` | Yes      |
+| No             | `OCEAN__PORT__BASE_URL`                                 | `https://api.port.io`| Yes      |
+| No             | `OCEAN__INITIALIZE_PORT_RESOURCES`                      | `true`               | Yes      |
+| No             | `OCEAN__SEND_RAW_DATA_EXAMPLES`                         | `true`               | Yes      |
+| No             | `OCEAN__EVENT_LISTENER`                                 | `{"type":"POLLING"}` | Yes      |
+| No             | `OCEAN__SCHEDULED_RESYNC_INTERVAL`                      | `30`                 | Yes      |
+| No             | `OCEAN__INTEGRATION__IDENTIFIER`                        | `jira`               | No       |
+| No             | `OCEAN__INTEGRATION__CONFIG__JIRA_HOST`                 | `<JIRA_URL>`         | Yes      |
+| No             | `OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL`      | `<EMAIL>`            | Yes      |
+| Yes            | `OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN`      | `<JIRA_API_TOKEN>`   | Yes      |
+
+
+:::note
+If deploying in a US region, use `https://api.us.port.io` as the base URL.
+:::
+
+6. Tags
+
+- Add any required **Azure tags** for your container instance  
+  (for example: environment, owner, cost center).
+
+7. Review + Create
+
+- Review the configuration carefully.
+- Select **Create** to deploy the container instance.
+- Monitor logs during the first sync to confirm successful setup.
+
+
+Validation & Expected Outcome
+
+**After deployment**:
+
+- The container instance should reach a **Running** state.
+- Logs should indicate:
+   - Successful authentication with Port
+   - Successful authentication with Jira
+   - Initial polling and sync activity
+- In Port:
+   - Jira entities (projects, issues, users, etc.) should begin appearing.
+   - If `OCEAN__INITIALIZE_PORT_RESOURCES` is set to `true`, required blueprints and mappings will be created automatically.
+
+Common Troubleshooting Checks
+
+- **Authentication failures**
+  - Confirm the Atlassian email matches the token owner
+  - Ensure the Jira API token is valid and active
+
+- **No data syncing**
+  - Verify the Jira host URL (cloud vs data center)
+  - Check logs for permission or scope-related errors
+
+- **Connectivity issues**
+  - Ensure outbound HTTPS access on port `443` is allowed from the subnet
+
+</TabItem>
+
 </Tabs>
 
 This table summarizes the available parameters for the installation.

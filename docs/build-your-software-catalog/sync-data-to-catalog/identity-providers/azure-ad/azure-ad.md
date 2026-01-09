@@ -190,6 +190,72 @@ docker run -i --rm --platform=linux/amd64 \
 
 </TabItem>
 
+<TabItem value="azure-container-instance" label="Azure Container Instance">
+To Install Azure Entra ID integration using Azure Container Instance:
+
+Navigate to Azure portal homepage, select `Create resource`.
+
+<img src="/img/sync-data-to-catalog/quickstart-portal-create-resource.png" width='50%' border='1px' />
+
+Select containers > Container instances
+<img src="/img/sync-data-to-catalog/aci-instance.png" width='50%' border='1px' />
+
+Follow the steps below.
+
+1. Basics
+  -	Select the Azure subscription and resource group that will own the container.
+  -	Name the container group (for example, port-ocean-msgraph-custom) so future audits and portal searches clearly identify the workload.
+  -	Choose the Azure region and align it with your Port region and Graph API latency requirements.
+  -	Keep the default Single container image type unless your environment dictates otherwise.
+  -	Point to the integration image:
+    - Use the public image: ghcr.io/port-labs/port-ocean-custom:latest
+    - (Optional) If your org requires it, import the image into ACR and deploy from there.
+  -	Set the OS type to Linux.
+  -	Size: start with 1 vCPU, 1.5 GiB memory, 0 GPUs. Increase only if you see CPU/memory pressure.
+  -	Platform note: your docker command specifies --platform=linux/amd64. Most ACI Linux workloads run fine here; if your subscription/region exposes an architecture setting, choose amd64/x64.
+
+
+
+2. Networking
+  -	Choose Private networking if you need VNet control/egress governance; otherwise Public is fine (Graph + Port are outbound HTTPS).
+  -	Ensure outbound connectivity to:
+    - https://graph.microsoft.com
+    - https://api.getport.io (or your Port region URL)
+  -	Inbound ports: none are required for the ONCE-run ingestion pattern. (If your org requires a port, allow 443/TCP, but it’s typically unnecessary for this container.)
+
+3. Insights
+  - Enable container instance logs so diagnostics flow into Azure Monitor.
+  -	Select the Log Analytics workspace that will receive the logs.
+
+4. Advanced
+  -	Restart policy:
+  -	Use Never if you want a true “run once and stop” behavior.
+  -	Use On failure if you want Azure to retry only when something crashes unexpectedly.
+  -	Enter the environment variables exactly as listed below. Mark secret values as secure where indicated and double-check each entry before leaving the blade.
+
+If you’re using Port’s US region, swap the base URL accordingly (example: https://api.us.port.io).
+
+| Secure | Environment Variable | Value | Description |
+|------|----------------------|-------|-------------|
+| No | `OCEAN__EVENT_LISTENER` | `{"type":"ONCE"}` | Runs the integration once and exits |
+| No | `OCEAN__INITIALIZE_PORT_RESOURCES` | `true` | Automatically creates required Port blueprints and resources |
+| No | `OCEAN__SEND_RAW_DATA_EXAMPLES` | `true` | Sends raw data samples to Port for visibility/debugging |
+| No | `OCEAN__INTEGRATION__CONFIG__BASE_URL` | `https://graph.microsoft.com/v1.0` | Base URL for Microsoft Graph API |
+| No | `OCEAN__INTEGRATION__CONFIG__AUTH_TYPE` | `bearer_token` | Authentication method used for Graph API |
+| Yes | `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | `<YOUR_BEARER_TOKEN>` | Microsoft Graph API bearer token |
+| No | `OCEAN__PORT__CLIENT_ID` | `<YOUR_PORT_CLIENT_ID>` | Port OAuth client ID |
+| Yes | `OCEAN__PORT__CLIENT_SECRET` | `<YOUR_PORT_CLIENT_SECRET>` | Port OAuth client secret |
+| No | `OCEAN__PORT__BASE_URL` | `https://api.getport.io` | Base URL for Port API (adjust for region if needed) |
+
+5. Tags
+
+Apply whatever Azure tags your organization requires (for example, Environment, Owner, CostCenter).
+
+6. Review + Create
+
+Inspect every section, verify the environment variables (especially the secure ones), and click Create. Once provisioning completes, confirm the container’s run state and check logs to ensure the ingestion completed successfully.
+</TabItem>
+
 </Tabs>
 
 
