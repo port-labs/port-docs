@@ -1,21 +1,21 @@
 ---
 displayed_sidebar: null
-description: Learn how to connect GitHub Codeowners with service teams in Port, ensuring seamless collaboration and code ownership.
+description: Learn how to connect GitHub Codeowners with repositories, teams and users in Port, ensuring seamless collaboration and code ownership.
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect GitHub CODEOWNERS with Service, Team & User
+# Connect GitHub CODEOWNERS with Repository, Team & User
 
-This guide demostrates how to map CODEOWNERS file in GitHub repositories to their respective Service, Team and User blueprints in port.
+This guide demostrates how to map CODEOWNERS file in GitHub to their respective GitHub repositories, GitHub teams and GitHub user blueprints in Port.
 
 ## Prerequisites
 - A Port account.
-- Install [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organization or in repositories you are interested in.
+- Install [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#setup) integration in your organization or in repositories you are interested in.
 :::info Default Github Blueprints
-Once you install Port's GitHub app, the following blueprints will be automatically created in your data model: `Repository`, `Pull Request`, `Github User`, `Github Team`.
+Once you install GitHub Ocean, the following blueprints will be automatically created in your data model: `Repository`, `Pull Request`, `Github User`, `Github Team`.
 :::
 
 ## Set up data model
@@ -26,7 +26,7 @@ First, let's create the necessary <PortTooltip id="blueprint">blueprint</PortToo
 
 To add the CODEOWNERS blueprint:
 
-1.  Navigate to your [data model](https://app.getport.io/settings/data-model) page of your portal.
+1. Navigate to your [data model](https://app.getport.io/settings/data-model) page of your portal.
 
 2. Click on the `+ Blueprint` button.
 
@@ -108,54 +108,48 @@ To add the CODEOWNERS blueprint:
     resources:
       - kind: file
         selector:
-          query: .repo.archived == false
+          query: .repository.archived == false
           files:
-            - path: '**/.github/CODEOWNERS'
+            - path: '**/CODEOWNERS'
         port:
-          itemsToParse: >-
-            (. as $root | .file.content | split("\n") | map(trim) |
-            map(select((test("^[[:space:]]*#") | not) and (length > 0))) | map(
-                (split(" ") | map(select(length > 0))) as $tokens
-                | {
-                    scope: ($tokens[0]), 
-                    # Replacing ** and * characters since the identifier can't contain special characters
-                    identifier: ($tokens[0] 
-                              | gsub("\\*\\*"; "doublestar")
-                              | gsub("\\*"; "star")),
-                    # Extracting users and teams to their respective arrays
-                    users: (
-                        $tokens[1:]
-                        | map(select(contains("/") | not)
-                                | gsub("@" ; "")
-                              )
-                      ),
-                    teams: (
-                        $tokens[1:]
+          itemsToParseTopLevelTransform: false
+          itemsToParse: |-
+            (. as $root | (.content // "" | split("\n")
+              | map(gsub("^[[:space:]]+"; "") | gsub("[[:space:]]+$"; ""))
+              | map(select((test("^[[:space:]]*#") | not) and (length > 0)))
+              | map(
+                  (split(" ") | map(select(length > 0))) as $tokens
+                  | {
+                      scope: $tokens[0],
+                      # Replacing ** and * characters since the identifier can't contain special characters
+                      identifier: ($tokens[0]
+                        | gsub("\\*\\*"; "doublestar")
+                        | gsub("\\*"; "star")),
+                      users: ($tokens[1:]
+                        | map(select((contains("/") | not) and (startswith("@")))
+                        | ltrimstr("@"))),
+                      teams: ($tokens[1:]
                         | map(select(test("^@[^ ]+/[^ ]+$"))
-                              | split("/")
-                              | .[-1]
-                  ))
-                }
-                )
-              )
+                        | split("/")
+                        | .[-1]))
+                    })))
           entity:
             mappings:
-              identifier: .repo.full_name + "_" +.item.identifier + "_codeowners"
-              title: .item.scope + " codeowners"
+              identifier: .repository.name + "_" + .item.identifier + "_codeowners"
+              title: .repository.name + " / " + .item.scope
               blueprint: '"githubCodeowners"'
               properties:
                 scope: .item.scope
-                location: .file.path
+                location: .path
               relations:
-                repository: .repo.full_name
-                teams: 
-                  combinator: '''and'''
+                repository: .repository.name
+                teams:
+                  combinator: '"and"'
                   rules:
-                    - property: '"$title"'
+                    - property: '"slug"'
                       value: .item.teams
                       operator: '"in"'
                 users: .item.users
-
     ```
 
     </details>
@@ -169,31 +163,31 @@ For the following `CODEOWNERS` file example:
 
 ``` showLineNumbers
 # Default owner for all files in the repo
-*                @sivanelk97 @sivan27
+*                @SirAnimesh @JavierMendozaGomez
 
 # Backend ownership
-/backend/         @sivanelk97 @sivan-org/backend-team @sivan-org/docs-team
+/backend/         @sumitmukhija @AnimeshLtd/showcase
 
 # Frontend ownership (multiple owners)
-/frontend/        @sivanelk97
+/frontend/        @SirAnimesh
 
 # Specific file
-/README.md        @sivanelk97
+/README.md        @SirAnimesh
 
 # JavaScript files in any folder
-**/*.js           @sivanelk97
+**/*.js           @SirAnimesh @sumitmukhija
 
 # Terraform files anywhere
-**/*.tf          @sivanelk97
+**/*.tf          @JavierMendozaGomez
 
 # CI/CD workflows
-.github/workflows/  @sivanelk97
+.github/workflows/  @JavierMendozaGomez
 
 # Config files named 'config.yaml' in any folder
-**/config.yaml    @sivanelk97
+**/config.yaml    @SirAnimesh
 
 # Markdown documentation files
-*.md              @sivanelk97 @sivan27 @sivan-org/docs-team
+*.md              @SirAnimesh @JavierMendozaGomez @AnimeshLtd/showcase
 ```
 
 </details>
