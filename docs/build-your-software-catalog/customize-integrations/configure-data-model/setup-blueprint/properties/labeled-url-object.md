@@ -65,7 +65,7 @@ Labeled URLs are rendered intelligently based on the URL type:
     "description": "My labeled URL property",
     // highlight-start
     "type": "object",
-    "format": "labeled-url"
+    "format": "labeledUrl"
     // highlight-end
   }
 }
@@ -84,7 +84,7 @@ Labeled URLs are rendered intelligently based on the URL type:
     "type": "array",
     "items": {
       "type": "object",
-      "format": "labeled-url"
+      "format": "labeledUrl"
     }
     // highlight-end
   }
@@ -95,6 +95,339 @@ Labeled URLs are rendered intelligently based on the URL type:
 </Tabs>
 
 <ApiRef />
+
+## Terraform definition
+
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array", value: "array"}
+]}>
+
+<TabItem value="basic">
+
+```hcl showLineNumbers
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    object_props = {
+      "myLabeledUrlProp" = {
+        title       = "My labeled URL"
+        description = "My labeled URL property"
+        format      = "labeledUrl"
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    array_props = {
+      "myLabeledUrlArray" = {
+        title       = "My labeled URL array"
+        description = "My labeled URL array"
+        object_items = {
+          format = "labeledUrl"
+        }
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Pulumi definition
+
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array", value: "array"}
+]}>
+
+<TabItem value="basic">
+
+<Tabs groupId="pulumi-definition-labeledUrl-basic" queryString defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesObjectPropsArgs
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=BlueprintPropertiesArgs(
+        object_props={
+            "myLabeledUrlProp": BlueprintPropertiesStringPropsArgs(
+                title="My labeled URL",
+                required=False,
+                format="labeledUrl",
+            )
+        }
+    ),
+    # highlight-end
+    relations={}
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/port";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: {
+    objectProps: {
+      myLabeledUrlProp: {
+        title: "My labeled URL",
+        required: false,
+        format: "labeledUrl",
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/port");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: {
+    objectProps: {
+      myLabeledUrlProp: {
+        title: "My labeled URL",
+        required: false,
+        format: "labeledUrl",
+      },
+    },
+  },
+  // highlight-end
+  relations: {},
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.Object("myBlueprint"),
+			Title:      pulumi.Object("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertiesArgs{
+				objectProps: port.BlueprintPropertieObjectPropsMap{
+					"myLabeledUrlProp": port.BlueprintPropertiesObjectPropsArgs{
+						Title:    pulumi.Object("My labeled URL"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.Object("labeledUrl"),
+					},
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="array">
+
+<Tabs groupId="pulumi-definition-labeledUrl-array" queryString defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesArrayPropsArgs
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=BlueprintPropertiesArgs(
+        array_props={
+            "myLabeledUrlArray": BlueprintPropertiesArrayPropsArgs(
+                title="My labeled URL array",
+                required=False,
+                object_items={
+                    "format": "labeledUrl"
+                }
+            )
+        }
+    ),
+    # highlight-end
+    relations={}
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/port";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: {
+    arrayProps: {
+      myLabeledUrlArray: {
+        title: "My labeled URL array",
+        required: false,
+        objectItems: {
+          format: "labeledUrl",
+        },
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/port");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: {
+    arrayProps: {
+      myLabeledUrlArray: {
+        title: "My labeled URL array",
+        required: false,
+        objectItems: {
+          format: "labeledUrl",
+        },
+      },
+    },
+  },
+  // highlight-end
+  relations: {},
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.Object("myBlueprint"),
+			Title:      pulumi.Object("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertiesArgs{
+				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+					"myLabeledUrlArray": port.BlueprintPropertiesArrayPropsArgs{
+						Title:    pulumi.Object("My labeled URL array"),
+						Required: pulumi.Bool(false),
+						ObjectItems: port.BlueprintPropertiesArrayPropsObjectItemsArgs{
+							Format: pulumi.Object("labeledUrl"),
+						},
+					},
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+</Tabs>
 
 ## Using labeled URLs in self-service actions
 
@@ -109,7 +442,7 @@ You can use labeled URL properties as user inputs in self-service actions and au
     "description": "Link to the service documentation",
     // highlight-start
     "type": "object",
-    "format": "labeled-url"
+    "format": "labeledUrl"
     // highlight-end
   }
 }
