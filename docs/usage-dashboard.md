@@ -88,7 +88,7 @@ To export the entire dashboard tab:
 ## Limitations
 
 - The dashboard is only available for customers who have completed the migration to the [multi-organization](/sso-rbac/multi-organization) structure.
-- The dashboard is available to organization admins with enterprise account only.
+- The dashboard is available only to organization admins in organizations with enterprise or pro accounts.
 - Usage data is not currently available via the API.
 - User activity data is available from **July 2025** onwards.
 - Entity count data is available from **December 2025** or **January 2026** onwards, depending on the organization.
