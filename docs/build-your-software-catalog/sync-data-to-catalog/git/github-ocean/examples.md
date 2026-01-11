@@ -60,6 +60,9 @@ import LastContributorBranchBlueprint from './examples/example-branch/\_git_expo
 import LastContributorAppConfig from './examples/example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
 import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
+import SBOMBlueprint from './examples/example-repository-sbom/_github_exporter_example_sbom_blueprint.mdx'
+import PortRepositorySBOMAppConfig from './examples/example-repository-sbom/_github_exporter_example_repository_sbom_port_app_config.mdx'
+
 # Examples
 
 This page provides practical examples for mapping various GitHub resources to Port.
@@ -332,6 +335,11 @@ You can now include multiple relationship types in a single repository configura
           githubCollaborators: "[.__collaborators[].login]"
 ```
 
+The `include` property accepts a list of strings to fetch additional data related to the repository. The accepted values are:
+- `teams`: Ingests the [teams with access to the repository](https://docs.github.com/en/rest/repos/repos#list-repository-teams).
+- `collaborators`: Ingests the [collaborators of the repository](https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators).
+- `sbom`: Ingests the [Software Bill of Materials (SBOM)](https://docs.github.com/en/rest/dependency-graph/sboms#get-a-software-bill-of-materials-sbom-for-a-repository) for the repository.
+
 :::caution Performance consideration
 While you can include multiple relationship types in a single configuration, this may impact resync performance for large repositories. For optimal performance, consider separating into multiple repository blocks:
 
@@ -434,6 +442,15 @@ The following example demonstrates how to ingest your GitHub repositories, their
 <ReleaseBlueprint/>
 
 <RepositoryTagReleaseAppConfig/>
+
+## Repositories and software bill of materials (SBOM)
+
+The following example demonstrates how to ingest your GitHub repositories and their software bill of materials (SBOM) to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+<SBOMBlueprint />
+<PortRepositorySBOMAppConfig />
 
 ## Supported resources
 
