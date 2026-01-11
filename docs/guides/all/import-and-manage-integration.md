@@ -146,8 +146,8 @@ const API_URL = "https://api.getport.io/v1";
       }
   };
 
-  const integrationResponse = await axios.post(
-      `${API_URL}/v1/integration/${INSTALLATION_ID}?byField=installationId`, 
+  const integrationResponse = await axios.get(
+      `${API_URL}/integration/${INSTALLATION_ID}?byField=installationId`, 
       config)
 
   await fs.writeFile(
