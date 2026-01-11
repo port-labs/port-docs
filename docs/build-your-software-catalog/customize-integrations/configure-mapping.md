@@ -336,7 +336,18 @@ Searching by property can also be used when using Port's API to [create an entit
 
 ### Limitations
 
-- The search query must return exactly one entity (else the entire request will fail).
+- The search query must return **exactly one entity** (otherwise the entire request will fail).  
+  To avoid failures from duplicate titles across different blueprints, include an additional rule with the `$blueprint` property in mapping search queries, to ensure that the search query is executed on the correct blueprint.  
+  For example:
+
+  ```yaml showLineNumbers
+  combinator: "and"
+  rules:
+    - property: "$blueprint"
+      operator: "="
+      value: "service"
+    # your other rules...
+  ```
 - If the search query returns no entities, a new entity **will not** be created.
 - The query will be executed on the same blueprint from the request’s url.
 - Only the `=` and `in` operators is supported for the search query rule.
