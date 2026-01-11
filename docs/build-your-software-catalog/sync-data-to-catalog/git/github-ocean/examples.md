@@ -121,8 +121,8 @@ Additionally, you can configure your selector to limit the number of closed pull
   selector:
     query: "true"
     states: ["closed"]  # Specifically for closed PRs.
-    maxResults: 50  # Limit closed PRs to 50 capped at 300.
-    since: 60  # Fetch closed PRs within 60 days capped at 90 days.
+    maxResults: 50  # Limit closed PRs to 50. Please note that this flag may cause rate limits.
+    since: 60  # Fetch closed PRs within 60 days. Please note that this flag may cause rate limits.
 ```
 
 You can also choose which GitHub API to use for pull requests. By default, the integration uses the REST API, but you can switch to GraphQL by adding an `api` selector:
