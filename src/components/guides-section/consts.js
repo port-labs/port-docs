@@ -31,6 +31,7 @@ export const tagsCategoryMap = {
         // "Linear",
         // "Opencost",
         "Snyk",
+        "Wiz",
         "Datadog",
         "Dynatrace",
         "New Relic",
