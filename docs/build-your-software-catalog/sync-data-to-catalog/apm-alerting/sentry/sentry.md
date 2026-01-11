@@ -1,9 +1,9 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_sentry-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import SentryCommentsBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_comments_blueprint.mdx";
 import SentryCommentsConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_comment_webhook_configuration.mdx"
 import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_blueprint.mdx"
@@ -37,7 +37,7 @@ The resources that can be ingested from Sentry into Port are listed below. It is
 - [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
 - [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
 - [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
-- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
+- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-for-an-issue/)
 
 ## Setup
 

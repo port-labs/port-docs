@@ -37,15 +37,15 @@ When selecting **Basic properties**, you can filter on the following meta proper
   - Filter entities based on selected team(s).
   - Use the `My Teams` option to dynamically filter entities relevant to the current user.
   - Applies only to blueprints that include an `Owning Team` property.
-- **Title:** Filter entities by their entity title using different [string operators](/search-and-query/comparison-operators).
-- **Identifier:** Filter entities by their identifier using different [string operators](/search-and-query/comparison-operators).
+- **Title:** Filter entities by their entity title using different [string operators](/search-and-query/operators/comparison-operators).
+- **Identifier:** Filter entities by their identifier using different [string operators](/search-and-query/structure-and-syntax).
 
 **Blueprint properties**
 
 When selecting a specific blueprint (e.g., `service`), you can filter on any property defined for that blueprint, including:
 
 - **Owning teams:** Filter entities of that specific blueprint based on selected team(s). This differs from filtering on owning team using basic properties, which applies across all blueprints.
-- **Any other blueprint property:** Filter on any property defined in the selected blueprint using the appropriate [comparison operators](/search-and-query/comparison-operators) for that property type.
+- **Any other blueprint property:** Filter on any property defined in the selected blueprint using the appropriate [comparison operators](/search-and-query/operators/comparison-operators) for that property type.
 
 For example, you can filter on owning team across all dashboard blueprints by selecting **Basic properties → Owning teams**, or you can filter on owning team only for the `service` blueprint by selecting **Service → Owning teams**.
 

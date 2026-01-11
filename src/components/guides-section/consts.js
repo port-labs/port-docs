@@ -1439,6 +1439,13 @@ export const availableGuides = [
         link: "/guides/all/track-ai-driven-pull-requests",
     },
     {
+        title: "Visualize GitHub Copilot metrics",
+        description: "Create dashboards to monitor GitHub Copilot usage, track acceptance rates, and measure team productivity",
+        tags: ["Engineering Intelligence", "Github Copilot", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-github-copilot-metrics",
+    },
+    {
         title: "Trigger Claude Code from Port",
         description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
         tags: ["Autonomous Ticket Resolution", "Claude Code", "AI", "Actions"],
@@ -1451,6 +1458,13 @@ export const availableGuides = [
         tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "PCI DSS code security scorecard",
+        description: "Continuously track compliance with PCI DSS requirements using code scans and vulnerability data",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/setup-pci-dss-code-compliance",
     },
     {
         title: "Enforce AI coding security standards",
@@ -1593,7 +1607,48 @@ export const availableGuides = [
         logos: ["n8n", "Slack"],
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
-
+    {
+        title: "Gain visibility into delivery performance",
+        description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-and-track-delivery-performance",
+    },
+    {
+        title: "Measure delivery reliability and stability",
+        description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-reliability-and-stability",
+    },
+    {
+        title: 'Track standards adherence',
+        description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-standards",
+    },
+    {
+        title: "Track AI adoption and impact",
+        description: "Track AI adoption and impact across your engineering teams and assess the impact of AI usage on delivery metrics like PR throughput and cycle time",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-adoption-and-impact",
+    },
+    {
+        title: "Visualize Cursor metrics",
+        description: "Create dashboards to monitor Cursor AI usage, track adoption, analyze costs, and measure developer productivity",
+        tags: ["Engineering Intelligence", "Dashboards", "AI"],
+        logos: ["Cursor"],
+        link: "/guides/all/visualize-cursor-metrics",
+    },
+    {
+        title: "Visualize Claude metrics",
+        description: "Create dashboards to monitor Claude API usage, track costs, analyze model performance, and measure workspace-level metrics",
+        tags: ["Engineering Intelligence", "Dashboards", "Claude Code"],
+        logos: ["Claude Code"],
+        link: "/guides/all/visualize-claude-metrics",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)

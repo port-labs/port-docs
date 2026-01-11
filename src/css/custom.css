@@ -777,6 +777,49 @@ html[data-theme="dark"] .ask-kapa-button-text {
   align-items: center;
 }
 
+.kapa-search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.5rem;
+  background: var(--ifm-navbar-search-input-background-color);
+  color: var(--ifm-navbar-search-input-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+.kapa-search-trigger:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-navbar-search-input-background-color);
+}
+
+.kapa-search-trigger .navbar__search-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.kapa-search-trigger .navbar__search-text {
+  color: var(--ifm-color-emphasis-600);
+  font-family: var(--ifm-font-family-base);
+}
+
+@media (max-width: 996px) {
+  .kapa-search-trigger {
+    min-width: auto;
+    padding: 0.4rem;
+  }
+  
+  .kapa-search-trigger .navbar__search-text {
+    display: none;
+  }
+}
+
 /* Custom Announcement Bar */
 
 .custom-announcement-bar {
@@ -976,4 +1019,14 @@ img {
   -ms-interpolation-mode: bicubic;
   /* WebKit optimization for better quality when scaling */
   image-rendering: -webkit-optimize-contrast;
+}
+
+/* Sidebar dividers for items within a category */
+
+.sidebar-divider-after::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: var(--ifm-color-emphasis-300);
+  margin: 0.5rem 1rem 0.5rem 0.5rem;
 }

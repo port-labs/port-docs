@@ -43,9 +43,8 @@ It is possible to reference any field that appears in the API responses linked b
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
-- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get)
-
+- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 
 ## Setup
 
@@ -946,6 +945,14 @@ To avoid this, set `createMissingRelatedEntities` to `false`.
 
 
 ## Limitations
+
+### Scoped token limitation for Teams
+
+Fetching team data using Jira **scoped tokens** is currently not supported. This is because the [Atlassian Teams API](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/) requires specific permissions that are unavailable through standard Jira scoped tokens, resulting in `401 Unauthorized` errors.
+
+To ingest Teams data into Port, you can use one of the following methods:
+- Use an **unscoped token** with the [appropriate base URL](#base-urls-for-scoped-and-unscoped-tokens).
+- Configure team ingestion using the [Webhook installation method](#alternative-installation-via-webhook).
 
 ### Getting user emails from Jira
 

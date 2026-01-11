@@ -199,7 +199,7 @@ To define such a filter, use the `Initial filters` field when creating a page:
 
 <br/><br/>
 
-You can define any [supported rule](/search-and-query/#rules) in JSON format.  
+You can define any [supported rule](/search-and-query/structure-and-syntax#rules) in JSON format.  
 Here is an example that will only display `Deployments` that were updated in the past month:
 
 ```json showLineNumbers
@@ -214,7 +214,7 @@ Here is an example that will only display `Deployments` that were updated in the
 
 #### Dynamic filters
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-properties) of the logged-in user when creating a catalog page.
 
 ### Excluded properties
 
@@ -330,9 +330,9 @@ Just create your `group-by` view (and any other table customizations you desire)
 Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
 If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
-<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' border='1px' />
+<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' style={{border:'1px', borderRadius:'8px'}} />
 
--> [Explore how to control page visibility and permissions](./page-permissions.md)
+Explore how to control [page visibility and permissions](/customize-pages-dashboards-and-plugins/page/page-permissions).
 
 
 ## Catalog auto discovery
@@ -394,4 +394,26 @@ Any page (whether created automatically or manually) can be deleted by clicking 
 
 :::warning Default pages
 When deleting a blueprint from your portal, all pages tied to that blueprint (including the default page that was created for it) will be deleted as well.
+:::
+
+### Export page data
+
+You can export the data displayed in a catalog page table to a file. This is useful for offline analysis, sharing data with stakeholders, or integrating with external tools.
+
+To export data from a catalog page:
+
+1. Click the **Export** button (download icon) in the table toolbar.
+2. Select your preferred format from the dropdown menu.
+
+    <img src='/img/software-catalog/pages/exportPageData.png' width='85%' border='1px' />
+
+<br/><br/>
+
+**Available formats:**
+
+- **Export as CSV** - Downloads the data as a comma-separated values file, suitable for spreadsheet applications like Excel or Google Sheets.
+- **Export as JSON** - Downloads the data as a JSON file, suitable for programmatic processing or integration with other tools.
+
+:::info Export scope
+The export includes all entities currently displayed in the table, respecting any active filters, search queries, or [initial filters](#initial-filters) applied to the page. The exported file contains all visible columns and their values.
 :::

@@ -119,6 +119,10 @@ You can use Port's MCP to find the use cases that will be valuable to you. Try u
 
 <MCPInstallation />
 
+:::info Extended session duration
+MCP clients can maintain authenticated sessions for up to 30 days (as long as you're not idle for 15 days). This applies to OAuth-based authentication for interactive use, providing a more seamless experience for long-running integrations.
+:::
+
 ## Connect the server to multiple organizations
 
 Port uses your browser's OAuth session to approve MCP connections. When your MCP client opens the authentication prompt, you approve access in the organization where you are currently logged in. Follow these steps to connect to the correct organization:
@@ -155,6 +159,17 @@ curl -X POST "https://api.getport.io/v1/auth/access_token" \
 
 For complete examples and detailed setup instructions, see our [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
 
+## MCP server headers
+
+The Port MCP Server supports several headers that allow you to customize its behavior:
+
+| Header | Type | Default | Description |
+|--------|------|---------|-------------|
+| `x-read-only-mode` | String | `0` | Controls whether write tools are available. Set to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list. Set to `0` to allow all tools based on your permissions. |
+| `x-allowed-actions-to-run` | String | All actions | Comma-separated list of action identifiers that controls which actions are available through the `run_action` tool. Only the specified actions will be available. If not specified, all actions you have permission to run will be available. If set to an empty string, no actions will be allowed to run. Example: `"create_github_issue,create_incident"`. |
+
+These headers can be configured when setting up your MCP server connection. For token-based authentication examples, see the [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
+
 ## Connecting to AI Agents
 
 To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](/ai-interfaces/port-mcp-server/token-based-authentication).
@@ -181,6 +196,7 @@ Each organization requires a separate connection. Create separate MCP configurat
 You do not need to keep the browser logged in after approval. Your MCP client stays connected to the organization you authorized.
 
 </details>
+
 
 <details>
 <summary><b>What happens if I approve the OAuth prompt in the wrong organization? (Click to expand)</b></summary>
@@ -214,21 +230,6 @@ Refer back to the [setup instructions](#installing-port-mcp) for your specific a
 <summary><b>I completed the connection but nothing happens (Click to expand)</b></summary>
 
 Check that you've followed all the [setup steps](#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
-
-</details>
-
-<details>
-<summary><b>Why do I see an error about too many tools? (Click to expand)</b></summary>
-
-Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
-
-While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
-
-1. **Reduce the number of tools** by customizing which tools are enabled (see [select which tools to use](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)).
-2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions.
-3. **Contact your Port Admin** to review which actions are essential for your workflow.
-
-This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
 
 </details>
 

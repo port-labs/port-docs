@@ -1,0 +1,48 @@
+<details>
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: branch
+    selector:
+      query: .name == .__repository_object.default_branch
+      protectionRules: true
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "_" + .name
+          title: .__repository + " " + .name
+          blueprint: '"githubBranchProtection"'
+          properties:
+            require_approval_count: >-
+              .__protection_rules.required_pull_request_reviews.required_approving_review_count
+            require_code_owner_review: >-
+              .__protection_rules.required_pull_request_reviews.require_code_owner_reviews
+            allow_force_pushes: .__protection_rules.allow_force_pushes.enabled
+            allow_deletions: .__protection_rules.allow_deletions.enabled
+            require_signed_commits: .__protection_rules.required_signatures.enabled
+            require_linear_history: .__protection_rules.required_linear_history.enabled
+            restrict_creations: .__protection_rules.block_creations.enabled
+            restrict_updates: .__protection_rules.restrict_updates.enabled
+            require_conversation_resolution: >-
+              .__protection_rules.required_conversation_resolution.enabled
+            lock_branch: .__protection_rules.lock_branch.enabled
+            block_force_pushes: .__protection_rules.allow_force_pushes.enabled == false
+          relations:
+            repository: .__repository
+```
+</details>
+
