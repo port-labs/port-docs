@@ -26,6 +26,13 @@ It is possible to reference any field that appears in the API responses linked b
  <GitHubResources/>
 
 
+## Prerequisites
+
+To install and configure the GitHub app integration, you need:
+
+- **Admin access** to the GitHub organization where you want to install the app. 
+- **Admin access** to your Port organization.
+
 ## Setup
 
 To install Port's GitHub app, follow these steps:
