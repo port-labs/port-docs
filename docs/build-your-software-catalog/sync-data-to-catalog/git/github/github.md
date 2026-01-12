@@ -600,6 +600,10 @@ resources:
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
 
+**Examples**
+
+For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#files-and-file-contents) page.
+
 ## Permissions
 
 Port's GitHub integration requires the following permissions:
