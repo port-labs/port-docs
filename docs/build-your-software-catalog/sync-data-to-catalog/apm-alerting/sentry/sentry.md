@@ -37,7 +37,7 @@ The resources that can be ingested from Sentry into Port are listed below. It is
 - [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
 - [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
 - [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
-- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
+- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-for-an-issue/)
 
 ## Setup
 

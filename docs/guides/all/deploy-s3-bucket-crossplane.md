@@ -23,10 +23,10 @@ To streamline deployments with this example, ensure you have a GitOps tool confi
 
 - Kubernetes cluster.
 - Crossplane installed in your cluster:
-  - Crossplane [Installation Guide](https://docs.crossplane.io/v1.18/software/install/).
-  - Crossplane [AWS Quickstart Guide](https://docs.crossplane.io/v1.18/getting-started/provider-aws/):
-    - Deploy a Crossplane [Provider](https://docs.crossplane.io/v1.18/getting-started/provider-aws/#install-the-aws-provider).
-    - Deploy a Crossplane [ProviderConfig](https://docs.crossplane.io/v1.18/getting-started/provider-aws/#create-a-providerconfig).
+  - Crossplane [Installation Guide](https://docs.crossplane.io/latest/get-started/install/).
+  - Crossplane [AWS Quickstart Guide](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/):
+    - Deploy a Crossplane Provider.
+    - Deploy a Crossplane ProviderConfig.
 - GitOps mechanism of your choosing which synchronizes files from your Gitlab Project to your Kubernetes cluster.
 
 ## Port Configuration

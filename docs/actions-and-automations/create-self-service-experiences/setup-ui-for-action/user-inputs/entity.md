@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Entity is an input type used to reference existing [entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entities) from the software catalog when triggering actions.
 
-## 💡 Common entity usage
+## Common entity usage
 
 The entity input type can be used to reference any existing entity from the software catalog, for example:
 
@@ -22,27 +22,6 @@ The entity input type can be used to reference any existing entity from the soft
 - Configurations
 
 In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
-
-## Sorting entities
-
-When using the `entity` input type, a user executing the action will see a dropdown list of entities from the specified blueprint.  
-By default, the entities are sorted in **ascending** order based on the **entity's title**.
-
-In some cases, you may have a large number of entities and want to sort them based on a specific property.  
-The entities can be sorted in either **ascending** or **descending** order based on a specified property, provided that the property is not of type `object` or `array`.  
-
-This is done in the action form when creating the entity input, for example:
-
-<img src="/img/self-service-actions/setup-frontend/sortEntityInput.png" width="50%" border="1px" />
-<br/><br/>
-
-When executing the action, the entities will be sorted based on the specified property, in the selected order.  
-In this case, they are sorted by `Last Update`, descending:
-
-<img src="/img/self-service-actions/setup-frontend/sortedEntityInput.png" width="60%" border="1px" />
-<br/><br/>
-
-This can also be done when using Port's API, see the `sort` key in the JSON structure below.
 
 ## Entity input structure
 
@@ -62,6 +41,16 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
       "property": "propertyIdentifier",
       // order should have either "ASC" or "DESC" value
       "order": "ASC/DESC"
+    },
+    "dataset": {
+      "combinator": "and/or",
+      "rules": [
+        {
+          "operator": "=",
+          "property": "propertyIdentifier",
+          "value": "value"
+        }
+      ]
     }
     // highlight-end
   }
@@ -77,6 +66,12 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 | `sort` | Used to specify the sorting order of the entities in the dropdown | Optional. Default is by entity's title, ascending |
 | `sort.property` | The identifier of the property by which to sort the entities | |
 | `sort.order` | Can be either `ASC` (ascending) or `DESC` (descending) | |
+| `dataset` | Used to filter which entities appear in the dropdown based on specific conditions | Optional |
+| `dataset.combinator` | Defines how multiple rules are evaluated. Can be either `and` or `or` | |
+| `dataset.rules` | An array of rule objects that define the filtering conditions | |
+| `dataset.rules[].operator` | The comparison operator (e.g., `=`, `!=`, `>`, `<`, etc.) | |
+| `dataset.rules[].property` | The identifier of the property to filter by | |
+| `dataset.rules[].value` | The value to compare against | |
 
 ## API definition
 
@@ -101,6 +96,16 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
       "property": "propertyIdentifier",
       // order should have either "ASC" or "DESC" value
       "order": "ASC/DESC"
+    },
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "operator": "=",
+          "property": "propertyIdentifier",
+          "value": "value"
+        }
+      ]
     }
     // highlight-end
   }
@@ -121,7 +126,17 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     "items": {
       "type": "string",
       "format": "entity",
-      "blueprint": "myBlueprint"
+      "blueprint": "myBlueprint",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "operator": "=",
+            "property": "propertyIdentifier",
+            "value": "value"
+          }
+        ]
+      }
     }
     // highlight-end
   }
@@ -132,6 +147,64 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 </Tabs>
 
 <ApiRef />
+
+## Sort entities
+
+When using the `entity` input type, a user executing the action will see a dropdown list of entities from the specified blueprint.  
+By default, the entities are sorted in **ascending** order based on the **entity's title**.
+
+In some cases, you may have a large number of entities and want to sort them based on a specific property.  
+The entities can be sorted in either **ascending** or **descending** order based on a specified property, provided that the property is not of type `object` or `array`.  
+
+This is done in the action form when creating the entity input, for example:
+
+<img src="/img/self-service-actions/setup-frontend/sortEntityInput.png" width="50%" border="1px" />
+<br/><br/>
+
+When executing the action, the entities will be sorted based on the specified property, in the selected order.  
+In this case, they are sorted by `Last Update`, descending:
+
+<img src="/img/self-service-actions/setup-frontend/sortedEntityInput.png" width="60%" border="1px" />
+<br/><br/>
+
+This can also be done when using Port's API, see the `sort` key in the JSON structure below.
+
+## Filter entities
+
+:::info JSON mode only
+The `dataset` filtering capability is only available when defining actions in JSON mode (via API or JSON editor). This feature is not supported in the UI action builder.
+:::
+
+When using the `entity` input type in JSON mode, you can filter which entities appear in the dropdown list by adding conditions to the `dataset` key.  
+This allows you to display only entities that match specific criteria based on their properties.
+
+For example, you can filter to show only entities where a specific property has a certain value, or combine multiple conditions to create more complex filters.
+
+The `dataset` key uses a combinator (`and` or `or`) to define how multiple rules should be evaluated, and includes an array of rules that specify the filtering conditions.
+
+The following example filters to show only unlocked services (i.e. entities whose `locked` property is `false`):
+
+```json showLineNumbers
+{
+  "entity": {
+    "type": "string",
+    "title": "entity",
+    "blueprint": "service",
+    "format": "entity",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "operator": "=",
+          "property": "locked",
+          "value": "false"
+        }
+      ]
+    }
+  }
+}
+```
+
 
 ## Terraform definition
 

@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Relation operators
 
-This page details the available relation operators when writing [rules](/search-and-query/#rules) as part of the search route.
+This page details the available relation operators when writing [rules](/search-and-query/structure-and-syntax#rules) as part of the search route.
 
 ## RelatedTo
 
@@ -357,7 +357,7 @@ ___
 
 #### Contextual values
 
-You can combine relation-path filters with [contextual query rules](/search-and-query/#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
+You can combine relation-path filters with [contextual query rules](/search-and-query/structure-and-syntax#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
 
 The following rule filters entities where the owner is derived from a **directly related entity**:
 
