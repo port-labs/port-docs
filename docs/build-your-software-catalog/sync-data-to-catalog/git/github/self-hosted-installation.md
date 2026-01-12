@@ -155,4 +155,4 @@ As this is a self-hosted version, there are some limitations due to security con
 
 - The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration) for more details.
 
-- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/kafka/) configured for your organization;
+- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/kafka/) configured for your organization.
