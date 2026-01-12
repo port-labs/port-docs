@@ -7,6 +7,7 @@ description: Install the Ocean custom integration in your own infrastructure
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanHealthCheck from "/docs/generalTemplates/_ocean_health_check.md"
 
 # Setup
 
@@ -100,6 +101,8 @@ docker run -i --rm \
 </TabItem>
 
 </Tabs>
+
+<OceanHealthCheck/>
 
 ## Configuration parameters
 

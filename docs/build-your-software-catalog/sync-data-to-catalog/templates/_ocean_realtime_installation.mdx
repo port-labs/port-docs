@@ -1,5 +1,7 @@
 {/* When using this template, pass the prop `integration={INTEGRATION_NAME}` */}
 
+import OceanHealthCheck from "/docs/generalTemplates/_ocean_health_check.md"
+
 To install the integration using Helm:
 
 1. Go to the <a href={`https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=${props.integration}`} target="_blank">{props.integration} data source page</a> in your portal.
@@ -60,3 +62,5 @@ If you are deploying the integration at scale and want to decouple the resync pr
   --set scheduledResyncInterval="'*/60 * * * *'"  \
   --set liveEvents.worker.enabled=true
 ```
+
+<OceanHealthCheck/>
