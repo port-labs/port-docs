@@ -155,11 +155,19 @@ The available `entity` object:
 
 The properties of the user that executed the action.
 
-Usage:
+Usage examples:
 
 ```json
 {
+  // Access the user's email
   "jqQuery": ".user.email"
+}
+```
+
+```json
+{
+  // Access the user's team-identifiers
+  "jqQuery": "[.user.teamsIdentifiers[]]"
 }
 ```
 

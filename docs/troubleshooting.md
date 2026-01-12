@@ -164,6 +164,19 @@ If you are still facing issues, reach out to us using chat/Slack/mail to [suppor
 
 ---
 
+#### Does my Ocean integration mapping change when I upgrade to a newer version?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+No, when you upgrade an Ocean integration to a newer version, your existing mapping configuration is preserved and not automatically changed.
+
+The integration will continue using your custom mapping configuration after the upgrade. If you want to adopt new default mappings from the upgraded version, you need to manually update the mapping configuration.
+
+</details>
+
+---
+
 ## Actions
 
 #### After triggering an Action in Port, why is it stuck "in progress" and nothing happens in the Git provider?
