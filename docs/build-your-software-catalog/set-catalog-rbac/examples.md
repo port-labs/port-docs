@@ -159,15 +159,13 @@ Inherited ownership allows you to utilize relations to automatically assign and 
 
 By using inherited ownership, you can configure entities to automatically inherit their ownership from entities they are related to.
 
-Inherited ownership can be configured by setting the `ownership` property in the [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table) with `"type": "Inherited"`. The `path` key represents the relation path to the blueprint whose entity's teams we want to inherit.
-
-:::info Path
+Inherited ownership can be configured by setting the `ownership` property in the [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table) with `"type": "Inherited"`.  
+The `path` key represents the relation path to the blueprint whose entity's teams we want to inherit.
 
 - The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
 - The target blueprint must have `Direct` ownership configured.
 - Inherited ownership can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
 
-:::
 
 For example, the following JSON (added to the **blueprint definition**) will configure the `myBlueprint` blueprint's entities to inherit their ownership from the `myExtraRelatedBlueprint` blueprint's entities:
 
@@ -182,12 +180,17 @@ For example, the following JSON (added to the **blueprint definition**) will con
 }
 ```
 
-:::note
 In the example above, the relation chain is:
-myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
+`myBlueprint` -> `myRelatedBlueprint` -> `myExtraRelatedBlueprint`.
 
 The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
+
+:::warning Conflict with direct team relations
+Defining both `ownership.type: "Inherited"` and a direct relation to the Team blueprint (e.g., `teams`) in the same blueprint will cause the relation to be removed and ownership to fall back to `"Direct"`.
+
+If you need inherited ownership, do not add a direct relation to the Team blueprint.
 :::
+
 
 For more detailed information about ownership configuration, see the [ownership section](/sso-rbac/users-and-teams/manage-users-teams#ownership) in the RBAC documentation.
 
