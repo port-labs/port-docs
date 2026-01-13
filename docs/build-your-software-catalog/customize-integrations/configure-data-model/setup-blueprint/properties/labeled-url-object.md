@@ -65,7 +65,7 @@ Labeled URLs are rendered intelligently based on the URL type:
     "description": "My labeled URL property",
     // highlight-start
     "type": "object",
-    "format": "labeledUrl"
+    "format": "labeled-url"
     // highlight-end
   }
 }
@@ -84,7 +84,7 @@ Labeled URLs are rendered intelligently based on the URL type:
     "type": "array",
     "items": {
       "type": "object",
-      "format": "labeledUrl"
+      "format": "labeled-url"
     }
     // highlight-end
   }
@@ -114,7 +114,7 @@ resource "port_blueprint" "myBlueprint" {
       "myLabeledUrlProp" = {
         title       = "My labeled URL"
         description = "My labeled URL property"
-        format      = "labeledUrl"
+        format      = "labeled-url"
       }
     }
   }
@@ -135,7 +135,7 @@ resource "port_blueprint" "myBlueprint" {
         title       = "My labeled URL array"
         description = "My labeled URL array"
         object_items = {
-          format = "labeledUrl"
+          format = "labeled-url"
         }
       }
     }
@@ -156,7 +156,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-labeledUrl-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-labeled-url-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -181,7 +181,7 @@ blueprint = Blueprint(
             "myLabeledUrlProp": BlueprintPropertiesStringPropsArgs(
                 title="My labeled URL",
                 required=False,
-                format="labeledUrl",
+                format="labeled-url",
             )
         }
     ),
@@ -207,7 +207,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       myLabeledUrlProp: {
         title: "My labeled URL",
         required: false,
-        format: "labeledUrl",
+        format: "labeled-url",
       },
     },
   },
@@ -233,7 +233,7 @@ const entity = new port.Blueprint("myBlueprint", {
       myLabeledUrlProp: {
         title: "My labeled URL",
         required: false,
-        format: "labeledUrl",
+        format: "labeled-url",
       },
     },
   },
@@ -266,7 +266,7 @@ func main() {
 					"myLabeledUrlProp": port.BlueprintPropertiesObjectPropsArgs{
 						Title:    pulumi.Object("My labeled URL"),
 						Required: pulumi.Bool(false),
-						Format:   pulumi.Object("labeledUrl"),
+						Format:   pulumi.Object("labeled-url"),
 					},
 				},
 			},
@@ -289,7 +289,7 @@ func main() {
 
 <TabItem value="array">
 
-<Tabs groupId="pulumi-definition-labeledUrl-array" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-labeled-url-array" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -315,7 +315,7 @@ blueprint = Blueprint(
                 title="My labeled URL array",
                 required=False,
                 object_items={
-                    "format": "labeledUrl"
+                    "format": "labeled-url"
                 }
             )
         }
@@ -343,7 +343,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
         title: "My labeled URL array",
         required: false,
         objectItems: {
-          format: "labeledUrl",
+          format: "labeled-url",
         },
       },
     },
@@ -371,7 +371,7 @@ const entity = new port.Blueprint("myBlueprint", {
         title: "My labeled URL array",
         required: false,
         objectItems: {
-          format: "labeledUrl",
+          format: "labeled-url",
         },
       },
     },
@@ -406,7 +406,7 @@ func main() {
 						Title:    pulumi.Object("My labeled URL array"),
 						Required: pulumi.Bool(false),
 						ObjectItems: port.BlueprintPropertiesArrayPropsObjectItemsArgs{
-							Format: pulumi.Object("labeledUrl"),
+							Format: pulumi.Object("labeled-url"),
 						},
 					},
 				},
@@ -442,7 +442,7 @@ You can use labeled URL properties as user inputs in self-service actions and au
     "description": "Link to the service documentation",
     // highlight-start
     "type": "object",
-    "format": "labeledUrl"
+    "format": "labeled-url"
     // highlight-end
   }
 }
