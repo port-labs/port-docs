@@ -24,8 +24,8 @@ By implementing this monitoring setup, you'll be able to track:
 ## Prerequisites
 
 Before you begin, make sure you have:
-- Self-hosted Ocean integrations installed
-- Port Ocean version v0.22.0 or later
+- Self-hosted Ocean integrations installed.
+- Port Ocean version v0.22.0 or later.
 
 ## Common use cases
 
@@ -263,3 +263,9 @@ After completing these steps:
 1. Trigger your integration sync
 2. Check Port to verify the status updates and metrics
 3. Review your dashboard to ensure all widgets are populated with data
+
+:::info Health check endpoint
+All Ocean integrations expose a health check endpoint at `/docs`. 
+
+For example, if your integration is accessible at `https://your-integration-host:8000`, you can access the health check at `https://your-integration-host:8000/docs`.
+:::

@@ -38,6 +38,11 @@ import Heading from "@theme/Heading";
 
 This route allows you to retrieve historical values for a selected list of an entity's properties over a given time range.<br/><br/>To learn more about entities, check out the [entity documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
 
+:::info Property names format
+When specifying property names in the `propertyNames` array, you must include the `properties.` prefix.  
+For example, use `"properties.uptime_percentage"` instead of just `"uptime_percentage"`.
+:::
+
 <Heading
   id={"request"}
   as={"h2"}

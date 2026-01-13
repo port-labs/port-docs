@@ -681,7 +681,7 @@ resources:
             status: .attributes.status
             disabled: .attributes.disabled
             verified: .attributes.verified
-            createdAt: .attributes.created_at | todate
+            createdAt: .attributes.created_at
 ```
 
 </details>
@@ -767,7 +767,7 @@ resources:
             handle: .attributes.handle
             userCount: .attributes.user_count
             summary: .attributes.summary
-            createdAt: .attributes.created_at | todate
+            createdAt: .attributes.created_at
           relations:
             members: if .__members then [.__members[] | .id] else [] end
 ```
