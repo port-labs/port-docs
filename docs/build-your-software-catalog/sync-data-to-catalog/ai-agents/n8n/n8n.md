@@ -67,24 +67,26 @@ Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIEN
 helm repo add port-labs https://port-labs.github.io/helm-charts
 helm repo update
 
-helm install n8n-integration port-labs/port-ocean-custom \
-  --set eventListener.type=ONCE \
-  --set initializePortResources=true \
-  --set sendRawDataExamples=true \
-  --set integration.identifier=n8n-integration \
-  --set integration.config.baseUrl=https://your-instance.com/api \
-  --set integration.config.authType=api_key \
-  --set integration.config.apiKeyHeader=X-N8N-API-KEY \
-  --set integration.secrets.apiKey=YOUR_N8N_API_KEY \
-  --set integration.config.paginationType=cursor \
-  --set integration.config.paginationParam=cursor \
-  --set integration.config.sizeParam=limit \
-  --set integration.config.pageSize=100 \
-  --set integration.config.cursorPath=nextCursor \
-  --set integration.config.hasMorePath=nextCursor \
-  --set port.clientId=YOUR_PORT_CLIENT_ID \
-  --set port.clientSecret=YOUR_PORT_CLIENT_SECRET \
-  --set port.baseUrl=https://api.getport.io
+helm install n8n-integration port-labs/port-ocean \
+--set initializePortResources=true \
+--set scheduledResyncInterval=120 \
+--set sendRawDataExamples=true \
+--set integration.type="custom" \
+--set integration.eventListener.type="POLLING" \
+--set integration.identifier=n8n-integration \
+--set integration.config.baseUrl=https://your-instance.com/api \
+--set integration.config.authType=api_key \
+--set integration.config.apiKeyHeader=X-N8N-API-KEY \
+--set integration.secrets.apiKey=YOUR_N8N_API_KEY \
+--set integration.config.paginationType=cursor \
+--set integration.config.paginationParam=cursor \
+--set integration.config.sizeParam=limit \
+--set integration.config.pageSize=100 \
+--set integration.config.cursorPath=nextCursor \
+--set integration.config.hasMorePath=nextCursor \
+--set port.clientId=YOUR_PORT_CLIENT_ID \
+--set port.clientSecret=YOUR_PORT_CLIENT_SECRET \
+--set port.baseUrl="https://api.getport.io"
 ```
 
 <PortApiRegionTip/>
@@ -106,7 +108,8 @@ helm install n8n-integration port-labs/port-ocean-custom \
 | `integration.config.pageSize` | Number of items per page. | 100 | ✅ |
 | `integration.config.cursorPath` | JSON path to cursor value in response. | nextCursor | ✅ |
 | `integration.config.hasMorePath` | JSON path to check if more pages exist. | nextCursor | ✅ |
-| `integration.eventListener.type` | Event listener type for the integration. | ONCE | ✅ |
+| `integration.eventListener.type` | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener) | POLLING | ✅ |
+| `integration.type` | The integration type (must be `custom` for Ocean Custom Integration). | custom | ✅ |
 | `integration.identifier` | Unique identifier for this integration instance. | n8n-integration | ✅ |
 | `initializePortResources` | Create default blueprints and mappings on first run. | true | ❌ |
 | `sendRawDataExamples` | Send sample payloads for easier mapping. | true | ❌ |

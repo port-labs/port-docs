@@ -26,6 +26,13 @@ It is possible to reference any field that appears in the API responses linked b
  <GitHubResources/>
 
 
+## Prerequisites
+
+To install and configure the GitHub app integration, you need:
+
+- **Admin access** to the GitHub organization where you want to install the app. 
+- **Admin access** to your Port organization.
+
 ## Setup
 
 To install Port's GitHub app, follow these steps:
@@ -592,6 +599,10 @@ resources:
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
+
+**Examples**
+
+For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#files-and-file-contents) page.
 
 ## Permissions
 
