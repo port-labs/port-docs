@@ -245,11 +245,14 @@ steps:
 
 <TabItem value="gitlab" label="GitLab">
 
+
+
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 <DockerParameters />
 
 <br/>
+
 
 Here is an example for `.gitlab-ci.yml` pipeline file:
 
@@ -295,6 +298,10 @@ ingest_data:
 <TabItem value="docker" label="Docker">
 
 To run the integration using Docker for a one-time sync:
+
+:::note Replace placeholders
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, `YOUR_OKTA_DOMAIN`, and `YOUR_OKTA_API_TOKEN`.
+:::
 
 <DockerParameters />
 
