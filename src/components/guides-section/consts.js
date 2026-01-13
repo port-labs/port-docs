@@ -31,12 +31,14 @@ export const tagsCategoryMap = {
         // "Linear",
         // "Opencost",
         "Snyk",
+        "Wiz",
         "Datadog",
         "Dynatrace",
         "New Relic",
         "ServiceNow",
         "SonarQube",
         "Humanitec",
+        "IncidentIO",
     ]
 };
 
@@ -921,7 +923,7 @@ export const availableGuides = [
         title: "Create an incident.io Incident",
         description: "Create a self-service action that creates an incident.io incident",
         tags: ["Self Healing Incidents", "Actions", "Webhook", "Automations"],
-        logos: ["Webhook"],
+        logos: ["IncidentIO", "Webhook"],
         link: "/guides/all/create-incident-io-incident",
     },
     {

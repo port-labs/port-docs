@@ -1,3 +1,5 @@
+import KafkaRegionTip from "/docs/actions-and-automations/templates/_kafka_brokers_region_tip.mdx"
+
 # Kafka topic
 
 Port manages a Kafka topic per customer that publishes the execution run requests.
@@ -43,6 +45,22 @@ An example flow would be:
 
 To use Kafka as your backend, you need a dedicated Kafka topic.  
 Contact [Port's support team](http://support.port.io/) to receive one.
+
+When Port's support team provisions your Kafka topic, you will receive connection credentials including:
+
+- **Kafka brokers** (EU region):
+  ```
+  b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
+  b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
+  b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
+  ```
+  <KafkaRegionTip />
+
+- **Username and password**: Unique credentials for your organization.
+- **Consumer group name**: Your designated consumer group identifier.
+
+**Ensure that port 9196 is open in your environment.**
+
 
 ## Configuration
 

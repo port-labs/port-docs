@@ -7,6 +7,7 @@ description: Install the Ocean custom integration in your own infrastructure
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanHealthCheck from "/docs/generalTemplates/_ocean_health_check.md"
 
 # Setup
 
@@ -101,6 +102,8 @@ docker run -i --rm \
 
 </Tabs>
 
+<OceanHealthCheck/>
+
 ## Configuration parameters
 
 This table summarizes the available parameters for the installation.
@@ -118,8 +121,8 @@ This table summarizes the available parameters for the installation.
 | `integration.config.timeout`             | Request timeout in seconds (default: 30)                                                                                                                                                                                                                                                       | 30                                | ❌        |
 | `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                           | ✅        |
 | `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                | custom                            | ✅        |
-| `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | 60                                | ❌        |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | true                              | ❌        |
+| `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration) | 60                                | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping.        | true                              | ❌        |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | true                              | ❌        |
 
 ## Ready to build?

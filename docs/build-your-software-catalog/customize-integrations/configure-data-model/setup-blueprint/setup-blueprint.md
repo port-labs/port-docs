@@ -320,6 +320,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `calculationProperties` | Contains the properties defined using [calculation properties](./properties/calculation-property/calculation-property.md). | **Required**                                                                                                            |
 | `mirrorProperties`      | Contains the properties defined using [mirror properties](./properties/mirror-property).                |                                                                                                                         |
 | `schema`                | An object containing two nested fields: `properties` and `required`.                                                      | **Required**. See the schema structure [here](#schema-object).                                                           |
+| `ownership`             | Defines how ownership of entities is determined.                                                | See the[ownership](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#the-ownership-property) section for details.      |
 
 :::tip Available properties
 All available properties are listed in the [properties](./properties/properties.md) page

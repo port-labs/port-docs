@@ -491,7 +491,11 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 - When you omit the `repos` field, the integration searches across all top-most level groups you have access to. Repositories that are not part of any group are excluded from the search, since the integration uses GitLab's group search API.
 
-For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+For a list of known limitations with GitLab's Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+**Examples**
+
+For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/examples/#files-and-file-contents) page.
 
 <MetricsAndSyncStatus/>
 
