@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 <details>
 
 <summary><b>Port port-app-config.yml (click to expand)</b></summary>
@@ -57,3 +60,35 @@ resources:
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Task" value="task">
+
+You can use the `task` selector to filter deployments by task name (for example, `deploy` or `deploy:migrations`).  
+
+```yaml showLineNumbers
+- kind: deployment
+  selector:
+    query: "true"
+    # highlight-next-line
+    task: "deploy"
+```
+
+</TabItem>
+
+<TabItem label="Environment" value="environment">
+
+You can use the `environment` selector to filter deployments by environment name (for example, `staging` or `production`).  
+
+```yaml showLineNumbers
+- kind: deployment
+  selector:
+    query: "true"
+    # highlight-next-line
+    environment: "production"
+```
+
+</TabItem>
+
+</Tabs>

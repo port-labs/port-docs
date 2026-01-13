@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Auto Discovery
+# Auto discovery
 
 Actions auto discovery automates the process of discovering and syncing GitHub workflow actions with Port.
 

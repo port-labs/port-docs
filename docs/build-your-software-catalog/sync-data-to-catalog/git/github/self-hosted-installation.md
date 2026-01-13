@@ -116,7 +116,7 @@ docker run \
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
 | `PORT`               | The port that the GitHub App will listen to                                         |
 | `PORT_API_URL`       | Port's API Base URL                                                                 |
-| `PORT_ORG_ID`        | Your Port org id (Used for [self service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md))                 |
+| `PORT_ORG_ID`        | Your Port org id (Used for [self service actions](/actions-and-automations/setup-backend/kafka/))                 |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
@@ -155,4 +155,4 @@ As this is a self-hosted version, there are some limitations due to security con
 
 - The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration) for more details.
 
-- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;
+- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/kafka/) configured for your organization.

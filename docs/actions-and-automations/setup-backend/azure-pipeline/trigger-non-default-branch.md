@@ -168,7 +168,7 @@ This approach is useful when you need to:
 Here's a complete self-service action that allows users to deploy from different branches:
 
 <details>
-<summary><b>Complete action JSON</b></summary>
+<summary><b>Complete action JSON (click to expand)</b></summary>
 
 ```json showLineNumbers
 {

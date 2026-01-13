@@ -456,8 +456,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/update-organization-details",
-          label: "Update organization details",
+          id: "api-reference/change-organization-details",
+          label: "Change organization details",
           className: "api-method put",
         },
         {
@@ -542,6 +542,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/get-an-integrations-metrics-and-sync-status",
           label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-sync-metadata",
+          label: "Get an integration's sync metadata",
           className: "api-method get",
         },
       ],
@@ -693,6 +699,42 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/delete-a-specific-provider-configuration",
           label: "Delete a specific provider configuration",
           className: "api-method delete",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Catalog auto discovery",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/create-an-auto-discovery-invocation",
+          label: "Create an auto-discovery invocation",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/review-auto-discovery-invocation-suggestions",
+          label: "Review auto-discovery invocation suggestions",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-auto-discovery-invocation-suggestions",
+          label: "Get auto-discovery invocation suggestions",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-latest-auto-discovery-invocation-for-a-blueprint",
+          label: "Get latest auto-discovery invocation for a blueprint",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-auto-discovery-invocation-suggestion",
+          label: "Update auto-discovery invocation suggestion",
+          className: "api-method patch",
         },
       ],
     },

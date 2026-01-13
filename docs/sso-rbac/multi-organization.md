@@ -11,8 +11,8 @@ Multiple organization membership within Port means that users can belong to more
 
 :::info Feature availability
 The **multi-organization feature** is available on request and must be enabled by Port's support team.  
-To group existing organizations under one account, customers need to provide Port with the relevant `OrgIDs` and the SSO connection to use.  
-Organizations can be grouped only if they are in the same region.
+To group existing organizations under one account, customers need to provide Port with the relevant `OrgIDs`, and optionally, one SSO connection to use.  
+Organizations can only be grouped if they are in the same region.
 :::
 
 ## Create an organization
@@ -38,12 +38,16 @@ In order to switch to a different organization:
 2. Click on the logo in the top left corner of the page.
 3. Click on the organization you want to switch to.
 
-:::caution Login behavior and organization switching
+### Login behavior and organization switching
+
 When users log in, they automatically access their **last visited** organization.
 
 If you have active sessions in multiple tabs or browsers, switching organizations in one session will switch all other active sessions to that same organization.
 
 We recommend you verify the active organization before making changes.
+
+:::info Multiple organizations in the same browser not supported
+Logging into two different Port organizations simultaneously in the same browser (either in different tabs or different windows) is **not supported** and may cause unexpected behavior.
 :::
 
 ## Automatic user access

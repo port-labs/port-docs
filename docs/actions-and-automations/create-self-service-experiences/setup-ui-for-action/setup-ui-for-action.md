@@ -46,7 +46,7 @@ If the `Action card button text` field is left empty, the button label will defa
 
 #### Conditions
 
-The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/#rules) to determine which entities the action will be available for.  
+The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/structure-and-syntax#rules) to determine which entities the action will be available for.  
 
 :::info Requirements
 - Since conditions require an existing entity to evaluate, they are only available for actions with `DAY-2` or `DELETE` operations.
@@ -70,6 +70,10 @@ The following example shows a condition that will make the action available only
 ```
 
 Note that the `combinator` field can be set to `and` or `or`, to define how multiple rules should be combined.
+
+#### Limitations
+
+Filtering by a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) that is based on a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) is not supported. Such a condition **will not** be evaluated.
 
 ## User form
 

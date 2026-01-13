@@ -43,7 +43,7 @@ You can load multiple trigger tokens, for different groups and projects in your 
     helm repo add port-labs https://port-labs.github.io/helm-charts
     ```
 
-    :::note Ensure you have the latest charts
+    :::info Ensure you have the latest charts
     If you already added this repo earlier, run `helm repo update` to retrieve
     the latest versions of the charts.  
     You can then run `helm search repo port-labs` to see the charts.
