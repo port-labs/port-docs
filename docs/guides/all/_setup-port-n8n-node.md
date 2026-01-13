@@ -16,7 +16,7 @@ This guide walks you through installing and configuring Port's custom n8n node i
 Before you begin, ensure you have:
 
 - **npm installed** — Required for installing the Port n8n node package. npm comes with Node.js, [install Node.js](https://nodejs.org/) if you don't have it.
-- **A working n8n instance** — Either n8n Cloud or a self-hosted instance. If you don't have one, follow n8n's [guide on using Docker](https://docs.n8n.io/hosting/installation/installation/docker/).
+- **A working n8n instance** — Either n8n Cloud or a self-hosted instance. If you don't have one, follow n8n's [guide on using Docker](https://docs.n8n.io/hosting/installation/docker/).
 - **Port API credentials** — Your Port `Client ID` and `Client Secret`. [Learn how to get them](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - **A Port account with AI features enabled** — Required for using Port AI agents in your workflows.
 - We recommend [creating a dedicated service account](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams/#service-accounts) in Port for each workflow or agent integration. This improves security and makes it easier to manage credentials.

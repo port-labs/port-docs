@@ -222,7 +222,18 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 | `Entity` | `String` | The entity containing the markdown property. Required in dashboards. Not shown in specific entity pages (auto-selected from context). | `null`  | `false`  |
 | `Property` | `String` | The markdown property to display from the selected entity. | `null`  | `true`   |
 
-### Internal markdown links
+### Links in markdown
+
+When displaying markdown content in Port (especially content ingested from Git repositories or other external sources), **relative links will not work**. This is because the markdown is rendered in the context of your Port portal, not the original source location.
+
+For example, links like `[guide](./docs/guide.md)` or `[readme](../README.md)` will not function correctly.
+
+**Solutions:**
+- Use **absolute URLs** instead: `[guide](https://github.com/your-org/your-repo/blob/main/docs/guide.md)`.
+- For links to other pages within your Port portal, use **internal links** (see below).
+
+
+#### Internal Port portal links
 
 When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
 

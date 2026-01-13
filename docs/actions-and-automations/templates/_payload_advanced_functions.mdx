@@ -10,6 +10,12 @@ For example:
 "token": "{{ .secrets.token_name }}"
 ```
 
+Note that if your secret name contains hyphens or special characters, you should use bracket notation, for example:
+
+```json
+"Authorization": "Bearer {{ .secrets["my-api-token"] }}"
+```
+
 #### spreadValue() function
 
 You can use the `spreadValue()` function to add multiple keys to the root of the payload at once. This function will spread all of the keys under a given object.  

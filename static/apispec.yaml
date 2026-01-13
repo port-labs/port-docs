@@ -1834,6 +1834,78 @@ components:
                     type: string
                   type:
                     enum:
+                      - workflow-runs-history-table
+                  query:
+                    type: object
+                  tableConfig:
+                    type: object
+                    properties:
+                      filterSettings:
+                        type: object
+                        properties:
+                          filterBy:
+                            $ref: "#/components/schemas/def-1"
+                        additionalProperties: false
+                        required:
+                          - filterBy
+                      groupSettings:
+                        type: object
+                        properties:
+                          groupBy:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - groupBy
+                      sortSettings:
+                        type: object
+                        properties:
+                          sortBy:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                property:
+                                  type: string
+                                order:
+                                  enum:
+                                    - asc
+                                    - desc
+                              additionalProperties: false
+                              required:
+                                - property
+                                - order
+                        additionalProperties: false
+                      propertiesSettings:
+                        type: object
+                        properties:
+                          hidden:
+                            type: array
+                            items:
+                              type: string
+                          order:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                additionalProperties: false
+                required:
+                  - type
+              - type: object
+                properties:
+                  id:
+                    type: string
+                  updatedAt:
+                    type: string
+                  updatedBy:
+                    type: string
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  type:
+                    enum:
                       - run-info
                   title:
                     type: string
@@ -4335,6 +4407,78 @@ components:
                               action:
                                 type: "null"
                           additionalProperties: false
+                        tableConfig:
+                          type: object
+                          properties:
+                            filterSettings:
+                              type: object
+                              properties:
+                                filterBy:
+                                  $ref: "#/components/schemas/def-1"
+                              additionalProperties: false
+                              required:
+                                - filterBy
+                            groupSettings:
+                              type: object
+                              properties:
+                                groupBy:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                              required:
+                                - groupBy
+                            sortSettings:
+                              type: object
+                              properties:
+                                sortBy:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      order:
+                                        enum:
+                                          - asc
+                                          - desc
+                                    additionalProperties: false
+                                    required:
+                                      - property
+                                      - order
+                              additionalProperties: false
+                            propertiesSettings:
+                              type: object
+                              properties:
+                                hidden:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                      additionalProperties: false
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                        updatedAt:
+                          type: string
+                        updatedBy:
+                          type: string
+                        createdAt:
+                          type: string
+                        createdBy:
+                          type: string
+                        type:
+                          enum:
+                            - workflow-runs-history-table
+                        query:
+                          type: object
                         tableConfig:
                           type: object
                           properties:
@@ -11121,6 +11265,7 @@ paths:
                         - America/Coral_Harbour
                         - America/Cordoba
                         - America/Costa_Rica
+                        - America/Coyhaique
                         - America/Creston
                         - America/Cuiaba
                         - America/Curacao
@@ -26262,7 +26407,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       parameters:
         - schema:
@@ -26321,7 +26466,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       parameters:
         - schema:
@@ -26810,7 +26955,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       parameters:
         - schema:
@@ -27636,7 +27781,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       security:
         - bearer:
@@ -28585,7 +28730,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       parameters:
         - schema:
@@ -33531,9 +33676,10 @@ paths:
       tags:
         - Migrations
       description: This route allows you to create a migration in your Port
-        organization.<br/><br/>You can use this to migrate data from one
-        blueprint to another, or to convert the data type of a property in a
-        blueprint.
+        organization. You can use this to migrate data from one blueprint to another.
+        <br/><br/>**Note** that it is not possible to directly change the data type of an existing property via the UI or the
+        API. The type field setting of a property (**number**, **string**, etc.) is permanent and cannot be changed after creation.<br/><br/>
+        However, you can create a new property with the desired type and migrate the old values to it. Refer to the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#change-a-property-type) for more information on how to change a property's type.
       requestBody:
         content:
           application/json:
@@ -34078,7 +34224,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
         :::
       tags:
         - Integrations
@@ -34513,7 +34659,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
 
         :::
       parameters:
@@ -36691,7 +36837,7 @@ paths:
       description: This route allows you to create an auto-discovery
         invocation.<br></br> To learn more about the auto-discovery feature, see
         the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:
@@ -36784,7 +36930,7 @@ paths:
         invocation. You can accept or reject individual suggestions, or accept
         or reject all suggestions at once.<br></br> To learn more about the
         auto-discovery feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:
@@ -36938,7 +37084,7 @@ paths:
       description: This route allows you to get suggestions for an auto-discovery
         invocation.<br></br> To learn more about the auto-discovery feature, see
         the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       parameters:
@@ -37087,7 +37233,7 @@ paths:
       description: This route allows you to get the latest auto-discovery invocation
         for a blueprint.<br></br> To learn more about the auto-discovery
         feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       parameters:
@@ -37193,7 +37339,7 @@ paths:
         invocation. If a suggestion is not accurate, you can update it with the
         correct information.<br></br> To learn more about the auto-discovery
         feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:

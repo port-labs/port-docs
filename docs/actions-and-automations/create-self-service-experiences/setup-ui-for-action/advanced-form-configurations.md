@@ -155,11 +155,19 @@ The available `entity` object:
 
 The properties of the user that executed the action.
 
-Usage:
+Usage examples:
 
 ```json
 {
+  // Access the user's email
   "jqQuery": ".user.email"
+}
+```
+
+```json
+{
+  // Access the user's team-identifiers
+  "jqQuery": "[.user.teamsIdentifiers[]]"
 }
 ```
 
@@ -812,7 +820,7 @@ And this is how the form would show up for admin users:
 
 ### Filter the dropdown's available options based on a property
 
-This example contains a filter that will only display the namespaces that are [related to](/search-and-query/structure-and-syntax#operators-1) the cluster that was selected in the `Cluster` input:
+This example contains a filter that will only display environments that are not of type `production`:
 
 <Tabs
 defaultValue="api"
