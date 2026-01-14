@@ -480,8 +480,19 @@ To improve performance when fetching team members, we now use GitHub's GraphQL A
 
 This change has two main consequences:
 
-1. The ID for a team may differ depending on whether you are fetching its members. This is due to differences between GitHub's REST and GraphQL APIs.
+1. The team ID you see may differ depending on whether you are fetching team members. This is due to differences between GitHub's REST and GraphQL APIs.
 2. Team members are now located in a `nodes` subarray within the team object.
+
+:::info Team IDs in REST and GraphQL
+The `members` selector defaults to `true` when omitted.
+
+When `members: true`, the integration fetches teams using the GitHub GraphQL API.
+
+- In GraphQL, `id` is a global node ID (string).
+- In GraphQL, `databaseId` is the numeric ID that matches the team `id` returned by the GitHub REST API.
+
+If you need the numeric team ID (for example, to match an existing REST-based identifier), use `databaseId` in your mappings.
+:::
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
@@ -518,7 +529,7 @@ This change has two main consequences:
   port:
     entity:
       mappings:
-        identifier: .id # toString is not neccesary, graphql id is a string
+        identifier: .databaseId | tostring
         title: .name
         blueprint: '"githubTeam"'
         properties:

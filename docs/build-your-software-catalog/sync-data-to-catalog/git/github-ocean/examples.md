@@ -364,6 +364,8 @@ While you can include multiple relationship types in a single configuration, thi
 
 The following shows how we can map teams and team members using the "members" selector.
 
+When `members: true`, teams are fetched using the GitHub GraphQL API, where `id` is a global node ID and `databaseId` is the numeric ID that matches the team `id` returned by the GitHub REST API.
+
 <TeamMemberBlueprint />
 <TeamWithMembersBlueprint />
 <TeamMemberConfig />
