@@ -54,9 +54,7 @@ The form and API endpoint documented below are **deprecated** and should not be 
 <details>
 <summary>Legacy API method (deprecated)</summary>
 
-:::warning Do not use
-This API endpoint is deprecated. Use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) instead.
-:::
+**This API endpoint is deprecated. Use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) instead.**
 
 The legacy method involved:
 
