@@ -1119,6 +1119,702 @@ The `from_blueprint = "cluster"` specifies that the path traversal should start 
 Path filters can affect the performance of aggregation calculations. In general, shorter and more direct paths perform better than long or complex multi-hop paths.
 :::
 
+## Use cases cheatsheet
+
+Below is a collection of real-world aggregation property examples organized by category. Each example includes a description and the JSON definition you can copy directly into your blueprint.
+
+### DevOps & deployments
+
+<details>
+<summary><b>Deployment frequency (weekly average)</b></summary>
+
+Track how often deployments occur per week for each service.
+
+```json showLineNumbers
+{
+  "deploymentFrequency": {
+    "title": "Deployment frequency",
+    "target": "deployment",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "average",
+      "averageOf": "week",
+      "measureTimeBy": "$createdAt"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "SUCCESS"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total deployments count</b></summary>
+
+Count the total number of deployments for a service.
+
+```json showLineNumbers
+{
+  "totalDeployments": {
+    "title": "Total deployments",
+    "target": "deployment",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Failed deployments in the last week</b></summary>
+
+Count deployments that failed in the past 7 days.
+
+```json showLineNumbers
+{
+  "failedDeploymentsLastWeek": {
+    "title": "Failed deployments (last week)",
+    "target": "deployment",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "FAILED"
+        },
+        {
+          "property": "$createdAt",
+          "operator": "between",
+          "value": {
+            "preset": "lastWeek"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total CI/CD pipelines</b></summary>
+
+Count the number of workflows/pipelines associated with a repository.
+
+```json showLineNumbers
+{
+  "totalPipelines": {
+    "title": "Total pipelines",
+    "target": "githubWorkflow",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    }
+  }
+}
+```
+
+</details>
+
+### Pull requests & code review
+
+<details>
+<summary><b>Open pull requests count</b></summary>
+
+Count all open PRs for a service or repository.
+
+```json showLineNumbers
+{
+  "openPullRequests": {
+    "title": "Open pull requests",
+    "target": "githubPullRequest",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "open"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Merged PRs per week</b></summary>
+
+Track the average number of PRs merged per week.
+
+```json showLineNumbers
+{
+  "mergedPRsPerWeek": {
+    "title": "Merged PRs per week",
+    "target": "githubPullRequest",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "average",
+      "averageOf": "week",
+      "measureTimeBy": "mergedAt"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "merged"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Average PR lead time (hours)</b></summary>
+
+Calculate the average time from PR creation to merge.
+
+```json showLineNumbers
+{
+  "averagePRLeadTime": {
+    "title": "Average PR lead time (hours)",
+    "target": "githubPullRequest",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "average",
+      "property": "leadTimeHours",
+      "averageOf": "total",
+      "measureTimeBy": "$createdAt"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "merged"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total lines changed</b></summary>
+
+Sum the total lines added and deleted across all PRs.
+
+```json showLineNumbers
+{
+  "totalLinesChanged": {
+    "title": "Total lines changed",
+    "target": "githubPullRequest",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "sum",
+      "property": "linesChanged"
+    }
+  }
+}
+```
+
+</details>
+
+### Issues & project management
+
+<details>
+<summary><b>Open Jira issues count</b></summary>
+
+Count open issues assigned to a service or team.
+
+```json showLineNumbers
+{
+  "openJiraIssues": {
+    "title": "Open Jira issues",
+    "target": "jiraIssue",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "in",
+          "value": ["To Do", "In Progress", "In Review"]
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total story points (open work)</b></summary>
+
+Sum story points for all open issues.
+
+```json showLineNumbers
+{
+  "totalStoryPoints": {
+    "title": "Total story points (open)",
+    "target": "jiraIssue",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "sum",
+      "property": "storyPoints"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "!=",
+          "value": "Done"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>High-priority bugs count</b></summary>
+
+Count critical and high-priority bugs.
+
+```json showLineNumbers
+{
+  "highPriorityBugs": {
+    "title": "High priority bugs",
+    "target": "jiraIssue",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "issueType",
+          "operator": "=",
+          "value": "Bug"
+        },
+        {
+          "property": "priority",
+          "operator": "in",
+          "value": ["Critical", "High"]
+        },
+        {
+          "property": "status",
+          "operator": "!=",
+          "value": "Done"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+### Security & vulnerabilities
+
+<details>
+<summary><b>Critical vulnerabilities count</b></summary>
+
+Count unresolved critical and high severity vulnerabilities.
+
+```json showLineNumbers
+{
+  "criticalVulnerabilities": {
+    "title": "Critical vulnerabilities",
+    "target": "vulnerability",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "severity",
+          "operator": "in",
+          "value": ["CRITICAL", "HIGH"]
+        },
+        {
+          "property": "status",
+          "operator": "!=",
+          "value": "RESOLVED"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total open vulnerabilities</b></summary>
+
+Count all unresolved vulnerabilities regardless of severity.
+
+```json showLineNumbers
+{
+  "openVulnerabilities": {
+    "title": "Open vulnerabilities",
+    "target": "vulnerability",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "!=",
+          "value": "RESOLVED"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+### Incidents & alerts
+
+<details>
+<summary><b>Open incidents count</b></summary>
+
+Count active incidents for a service.
+
+```json showLineNumbers
+{
+  "openIncidents": {
+    "title": "Open incidents",
+    "target": "incident",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "in",
+          "value": ["triggered", "acknowledged"]
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Mean time to resolve (MTTR)</b></summary>
+
+Calculate the average time to resolve incidents.
+
+```json showLineNumbers
+{
+  "mttr": {
+    "title": "MTTR (hours)",
+    "target": "incident",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "average",
+      "property": "timeToResolveHours",
+      "averageOf": "month",
+      "measureTimeBy": "resolvedAt"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "resolved"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>P1 incidents in the last month</b></summary>
+
+Count high-severity incidents from the past month.
+
+```json showLineNumbers
+{
+  "p1IncidentsLastMonth": {
+    "title": "P1 incidents (last month)",
+    "target": "incident",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "severity",
+          "operator": "=",
+          "value": "P1"
+        },
+        {
+          "property": "$createdAt",
+          "operator": "between",
+          "value": {
+            "preset": "lastMonth"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+### Infrastructure & resources
+
+<details>
+<summary><b>Running pods count</b></summary>
+
+Count pods in running state for a workload.
+
+```json showLineNumbers
+{
+  "runningPods": {
+    "title": "Running pods",
+    "target": "pod",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "Running"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Average CPU usage</b></summary>
+
+Calculate average CPU usage across related resources.
+
+```json showLineNumbers
+{
+  "averageCpuUsage": {
+    "title": "Average CPU usage (%)",
+    "target": "pod",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "average",
+      "property": "cpuUsage",
+      "averageOf": "total",
+      "measureTimeBy": "$updatedAt"
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Total memory allocated</b></summary>
+
+Sum memory allocation across all pods.
+
+```json showLineNumbers
+{
+  "totalMemoryAllocated": {
+    "title": "Total memory allocated (MB)",
+    "target": "pod",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "sum",
+      "property": "memoryAllocatedMB"
+    }
+  }
+}
+```
+
+</details>
+
+### SLOs & compliance
+
+<details>
+<summary><b>Number of SLOs defined</b></summary>
+
+Count how many SLOs are defined for a service.
+
+```json showLineNumbers
+{
+  "numberOfSLOs": {
+    "title": "Number of SLOs",
+    "target": "serviceLevelObjective",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Failing SLOs count</b></summary>
+
+Count SLOs that are currently not meeting their targets.
+
+```json showLineNumbers
+{
+  "failingSLOs": {
+    "title": "Failing SLOs",
+    "target": "serviceLevelObjective",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    },
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "Failed"
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Has PR template (boolean check)</b></summary>
+
+Count PR templates to determine if one exists (use with calculation property to convert to boolean).
+
+```json showLineNumbers
+{
+  "hasPRTemplate": {
+    "title": "Has PR template",
+    "target": "pullRequestTemplate",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    }
+  }
+}
+```
+
+</details>
+
+### Costs & cloud resources
+
+<details>
+<summary><b>Total monthly cost</b></summary>
+
+Sum the cost of all related cloud resources.
+
+```json showLineNumbers
+{
+  "totalMonthlyCost": {
+    "title": "Total monthly cost ($)",
+    "target": "cloudResource",
+    "calculationSpec": {
+      "calculationBy": "property",
+      "func": "sum",
+      "property": "monthlyCost"
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Number of cloud resources</b></summary>
+
+Count cloud resources associated with a service or environment.
+
+```json showLineNumbers
+{
+  "cloudResourceCount": {
+    "title": "Cloud resources",
+    "target": "cloudResource",
+    "calculationSpec": {
+      "calculationBy": "entities",
+      "func": "count"
+    }
+  }
+}
+```
+
+</details>
+
 ## Limitations
 
 - The aggregation property value for all entities of a blueprint will be recalculated **every 15 minutes**.
