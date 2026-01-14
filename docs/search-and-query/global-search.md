@@ -21,7 +21,7 @@ The search opens an interface in the center of the page, displaying relevant res
 
 ## Search results
 
-The search displays the closest search results and returns four different types of them:
+The search displays the most relevant results in four categories:
 
 - **Entities**: Entities whose properties (including title & identifier) match your search query. You can search for entities by their title, identifier, description, or any other [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 - **Tech docs**: Entities that have a `markdown` property whose content contains your search query.
