@@ -365,3 +365,97 @@ For example, the following automation will automatically approve a deployment if
 - The `condition` block checks if the `type` input is set to `Testing`, and will only trigger the automation if this is the case.
 - The backend of the automation directly makes an API call to approve the relevant run.
 - Note that if the `condition` is not met, the automation will not be triggered.
+
+---
+
+## Add to a relation without overwriting existing values
+
+When updating an entity, you may want to add a new related entity while preserving existing relations. This example shows how to use JQ array concatenation to append a value to an existing array.
+
+
+```json showLineNumbers
+{
+  "identifier": "addToNewHiresTeam",
+  "title": "Add user to new hires team on onboarding start",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ANY_ENTITY_CHANGE",
+      "blueprintIdentifier": "onboarding"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.status == \"Started\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "_user",
+    "mapping": {
+      "identifier": "{{ .event.context.entityIdentifier }}",
+      "relations": {
+        // Append "new_hires" to the existing teams array
+        "teams": "{{ .event.diff.after.properties.team + [\"new_hires\"] }}"
+      }
+    }
+  },
+  "publish": true
+}
+```
+
+### Explanation
+
+- The JQ expression `.event.diff.after.properties.team + ["new_hires"]` takes the current `team` array and appends `new_hires` to it.
+- This preserves existing team assignments while adding the new team.
+
+---
+
+## Set a dynamic expiration date
+
+When creating entities with [timer properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/timer), you can set an expiration date relative to when the action was triggered using JQ date arithmetic.
+
+
+The following example sets a TTL of 7 days from entity creation:
+
+```json showLineNumbers
+{
+  "identifier": "createEphemeralResource",
+  "title": "Create ephemeral resource with 7-day TTL",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "blueprintIdentifier": "ephemeralResource",
+    "userInputs": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Resource Name"
+        }
+      }
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "ephemeralResource",
+    "mapping": {
+      "identifier": "{{ .inputs.name }}",
+      "title": "{{ .inputs.name }}",
+      "properties": {
+        "created_by": "{{ .trigger.by.user.email }}",
+        // Set TTL to 7 days (86400 seconds × 7) from trigger time
+        "ttl": "{{ .trigger.at | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601 + (86400*7) | strftime(\"%Y-%m-%dT%H:%M:%S.000Z\") }}"
+      }
+    }
+  },
+  "publish": true
+}
+```
+
+### Explanation
+
+- The JQ expression converts the trigger timestamp to epoch, adds 7 days in seconds (`86400*7`), and formats it back to ISO 8601.
+- For different durations, adjust the calculation: `3600*2` for 2 hours, `86400` for 1 day, `86400*30` for 30 days.
+- You can combine this with the [`TIMER_PROPERTY_EXPIRED`](/actions-and-automations/define-automations/setup-trigger#timer-property-expired) trigger to automatically handle expired resources.

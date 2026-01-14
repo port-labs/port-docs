@@ -31,7 +31,7 @@ Port execution agent.
 To provide the mapping configuration to the agent, run the [installation command](https://docs.port.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/helm#installation) again, and add the following parameter:
 
 ```bash
---set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
+--set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.json
 ```
 
 </TabItem>
