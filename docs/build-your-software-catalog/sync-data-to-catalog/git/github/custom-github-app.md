@@ -169,7 +169,7 @@ The legacy method required:
 :::warning Configuration limitation
 When using a custom GitHub App with self-hosted GitHub Enterprise, the mapping configuration must be included as part of the repository using the `port-app-config.yml` file, and cannot be configured via Port's UI/API.
 
-For more details on configuration options, refer to the [GitHub Ocean configuration documentation](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/github-ocean?method=github#configuration).
+For more details on configuration options, refer to the [GitHub Ocean documentation](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/github-ocean.md).
 :::
 
 ## Limitations
