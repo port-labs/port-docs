@@ -299,7 +299,7 @@ ingest_data:
 
 To run the integration using Docker for a one-time sync:
 
-:::note Replace placeholders
+:::info Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, `YOUR_OKTA_DOMAIN`, and `YOUR_OKTA_API_TOKEN`.
 :::
 
