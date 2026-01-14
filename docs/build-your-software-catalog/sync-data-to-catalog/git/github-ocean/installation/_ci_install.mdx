@@ -74,8 +74,7 @@ pipeline {
                         sh('''
                             #Set Docker image and run the container
                             integration_type="github-ocean"
-                            version="1.2.0-beta"
-                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:latest"
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
@@ -120,8 +119,7 @@ steps:
   - script: |
       # Set Docker image and run the container
       integration_type="github-ocean"
-      version="1.2.0-beta"
-      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:latest"
 
       docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
@@ -159,13 +157,12 @@ default:
 
 variables:
   INTEGRATION_TYPE: github-ocean
-  VERSION: 1.2.0-beta
 stages:
   - ingest
 ingest_data:
   stage: ingest
   variables:
-    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:latest
   script:
     - |
       docker run -i --rm --platform=linux/amd64 \
