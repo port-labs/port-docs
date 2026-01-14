@@ -38,12 +38,12 @@ In order to complete the process you will need to contact Port to deliver and re
    1. `Display Label`: Insert a name of your choice for the Port app, like `Port`.
    2. Add an icon (optional):
 
-   <details>
-   <summary>Port Logo</summary>
+      <details>
+      <summary>Port Logo</summary>
 
-   ![Port's logo](/img/sso/general-assets/PortLogoLarge.png)
+      ![Port's logo](/img/logos/port-logo.svg)
 
-   </details>
+      </details>
 
    3. **(Optional)** In the SSO tab, change the default IDP URL suffix.
       ![JumpCloud initial new application](/img/sso/jumpcloud/JumpcloudNewSSO.png)
