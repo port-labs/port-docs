@@ -182,7 +182,8 @@ For more details on configuration options, refer to the [GitHub Ocean documentat
 
 ### What is a custom GitHub App in Port?
 
-A custom GitHub App is a GitHub integration that you own and manage, instead of using Port's official app. **For new integrations, use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)**, which provides custom GitHub App support via OAuth or manual setup.
+A custom GitHub App is a GitHub integration that you own and manage, instead of using Port's official app.  
+**For new integrations, use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)**, which provides custom GitHub App support via OAuth or manual setup.
 
 ### What can I use a custom GitHub App for?
 
