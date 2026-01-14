@@ -5,7 +5,7 @@ import GitHubResources from './\_github_exporter_supported_resources.mdx'
 # GitHub (Sunset)
 
 :::warning Deprecation Notice
-This integration is now in sunset and will be fully deprecated at July 15th 2026, please use the [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/) integration instead.
+This integration is in sunset and will be fully deprecated on July 15, 2026. Use the [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/) integration instead.
 :::
 
 Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
