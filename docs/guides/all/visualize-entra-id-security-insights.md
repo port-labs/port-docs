@@ -11,6 +11,12 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide demonstrates how to set up a security analytics dashboard to gain visibility into your Microsoft Entra ID (formerly Azure AD) identity security posture. We will see how to visualize identity risks, sign-in activity, application security, and policy gaps using Port's **Microsoft Entra ID** integration.
 
+<img src="/img/guides/entra_id_security_dashboard_1.png" width="100%" border="1px" alt="Entra ID Security Insights Dashboard showing risk detections, user risk levels, and security metrics" />
+
+<img src="/img/guides/entra_id_security_dashboard_2.png" width="100%" border="1px" alt="Entra ID Security Insights Dashboard showing exposed applications, groups, and user account status" />
+
+<img src="/img/guides/entra_id_security_dashboard_3.png" width="100%" border="1px" alt="Entra ID Security Insights Dashboard showing admin users, directory roles, and application security status" />
+
 :::info Licensing requirements
 Some features in this guide require **Microsoft Entra ID Premium P2** licensing, including risk detection (`/identityProtection/riskDetections`), identity risk events, and advanced security analytics. Basic identity monitoring (users, groups, applications, service principals) works with all Entra ID licensing tiers (Free, P1, P2).
 :::
@@ -368,7 +374,7 @@ resources:
             riskState: .riskState
             riskType: .riskType
             ipAddress: .ipAddress
-            location: .location
+            location: 'if .location then [.location.city, .location.state, .location.countryOrRegion] | map(select(. != null)) | join(", ") else "" end'
             userDisplayName: .userDisplayName
             userPrincipalName: .userPrincipalName
             detectedDateTime: .detectedDateTime
@@ -506,18 +512,16 @@ In the new dashboard, create the following widgets:
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter high-risk detections:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"riskLevel",
-                    "operator":"=",
-                    "value":"high"
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"riskLevel",
+                "operator":"=",
+                "value":"high"
+            }
+        ]
+    }
     ```
 6. Click `Save`.
 
@@ -542,18 +546,18 @@ In the new dashboard, create the following widgets:
 3. Choose the **Risk Detection** blueprint.
 4. Add this JSON to the **Additional filters** editor to show only recent risk detections:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"detectedDateTime",
-                    "operator":">=",
-                    "value":"{{ now | date: '%Y-%m-%d' | date_add: -7, 'days' }}"
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"detectedDateTime",
+                "operator":"between",
+                "value":{
+                    "preset":"lastWeek"
                 }
-            ]
-        }
-    ]
+            }
+        ]
+    }
     ```
 5. Click **Save** to add the widget to the dashboard.
 6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
@@ -577,18 +581,16 @@ In the new dashboard, create the following widgets:
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter admin users:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"isAdmin",
-                    "operator":"=",
-                    "value":true
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"isAdmin",
+                "operator":"=",
+                "value":true
+            }
+        ]
+    }
     ```
 6. Click `Save`.
 
@@ -620,18 +622,16 @@ In the new dashboard, create the following widgets:
 4. Under `Breakdown by property`, select the **Display Name** property.
 5. Add this JSON to the **Additional filters** editor to filter privileged roles:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"isPrivileged",
-                    "operator":"=",
-                    "value":true
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"isPrivileged",
+                "operator":"=",
+                "value":true
+            }
+        ]
+    }
     ```
 6. Click **Save**.
 
@@ -646,18 +646,16 @@ In the new dashboard, create the following widgets:
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter applications without owners:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"hasOwners",
-                    "operator":"=",
-                    "value":false
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"hasOwners",
+                "operator":"=",
+                "value":false
+            }
+        ]
+    }
     ```
 6. Click `Save`.
 
@@ -672,18 +670,16 @@ In the new dashboard, create the following widgets:
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter exposed service principals:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"isExposed",
-                    "operator":"=",
-                    "value":true
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"isExposed",
+                "operator":"=",
+                "value":true
+            }
+        ]
+    }
     ```
 6. Click `Save`.
 
@@ -719,18 +715,16 @@ In the new dashboard, create the following widgets:
 3. Choose the **Entra ID Application** blueprint.
 4. Add this JSON to the **Additional filters** editor to filter exposed applications:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"isExposed",
-                    "operator":"=",
-                    "value":true
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"isExposed",
+                "operator":"=",
+                "value":true
+            }
+        ]
+    }
     ```
 5. Click **Save** to add the widget to the dashboard.
 6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
@@ -764,18 +758,16 @@ In the new dashboard, create the following widgets:
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter disabled users:
     ```json showLineNumbers
-    [
-        {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"accountEnabled",
-                    "operator":"=",
-                    "value":false
-                }
-            ]
-        }
-    ]
+    {
+        "combinator":"and",
+        "rules":[
+            {
+                "property":"accountEnabled",
+                "operator":"=",
+                "value":false
+            }
+        ]
+    }
     ```
 6. Click `Save`.
 
