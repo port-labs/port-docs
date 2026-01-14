@@ -169,6 +169,10 @@ Add the `allowAnyoneToViewRuns` field to your action:
 
 By default manual approval notifications are sent via **Email** to users who have [approval permissions](#define-approvers).
 
+::::info Hidden inputs in approval notifications
+Inputs that are hidden in the form using visibility rules (for example via `visible`) are still part of the submitted request and are included in approver notifications by design, to provide full context for review.  
+::::
+
 Port offers two alternatives:
 
 #### Webhook

@@ -155,6 +155,12 @@ For self-hosted GitHub Enterprise instances, additional configuration is require
 2. Provide your GitHub Enterprise host URL (e.g., `github.company.com`).
 3. Your GitHub Enterprise instance must be able to reach Port's self hosted github app webhook endpoints.
 
+:::warning Configuration limitation
+When using a custom GitHub App with self-hosted GitHub Enterprise, the mapping configuration must be included as part of the repository using the `port-app-config.yml` file, and cannot be configured via Port's UI/API. 
+
+For more details on configuration options, refer to the [GitHub configuration documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration).
+:::
+
 ## Limitations
 
 - Custom GitHub Apps must have all the required permissions to function properly.
