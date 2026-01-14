@@ -1138,6 +1138,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-identity-and-access-management",
     },
     {
+        title: "Visualize Okta security insights",
+        description: "Build a security analytics dashboard for Okta identity and access management",
+        tags: ["Security", "Okta", "Dashboards"],
+        logos: ["Okta"],
+        link: "/guides/all/visualize-okta-security-insights",
+    },
+    {
         title: "Auto-label your GitHub PRs with Sonar Scans",
         description: "Create an automation that applies labels to GitHub pull requests based on SonarQube scans",
         tags: ["Security", "GitHub", "SonarQube", "Automations"],
