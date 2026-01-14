@@ -128,10 +128,10 @@ helm upgrade --install aws port-labs/port-ocean \
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
 - [Certificate domain name (Optional)](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
 
-:::warning Live-Events
+:::warning Live events
 This installation guide is for the AWS integration only.
-It does not take into consideration the **live-events** infrastructure **which is optional**.
-The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) are optional and can be removed if not needed.
+It does not take into consideration the **live events** infrastructure **which is optional**.
+The variables referring to live events (such as `live_events_api_key`) are optional and can be removed if not needed. Note that `live_events_api_key` is a secret you define yourself (not an AWS credential) - see the variables table below for details.
 :::
 
 ```bash showLineNumbers
@@ -151,7 +151,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 	integration = {
 		identifier = "my-aws-integration" # Change the identifier to describe your integration
 		config = {
-			live_events_api_key = "$YOUR_CUSTOM_API_KEY" # AWS API Key for custom events, used to validate the event source for real-time event updates.
+			live_events_api_key = "$YOUR_CUSTOM_API_KEY" # A secret you define to secure your live events endpoint. See the variables table below for details.
 		}
 	}
 	event_listener = {
@@ -170,14 +170,14 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 ```
 
 <details>
-<summary>Variables</summary>
+<summary><b>Variables (click to expand)</b></summary>
 | Variable | Description |
 | --- | --- |
 | subnets | List of subnet IDs where the ECS tasks will run.  |
 | port.client_id | The client ID for the Port integration.  |
 | port.client_secret | The client secret for the Port integration.  |
 | integration.identifier | The identifier for the integration.  |
-| integration.config.live_events_api_key | A user-defined API key for authenticating with the live events API, for example "my-secret".  |
+| integration.config.live_events_api_key | A secret string that **you define** to secure incoming requests to your live events endpoint. This is **not** an AWS key. You can use any secure random string (e.g. generate one using `openssl rand -hex 32`). AWS EventBridge will include this key when sending events to your integration, allowing it to validate that requests are legitimate.  |
 | integration.config.organization_role_arn (optional) | ARN of the role used to assume the organization role.  |
 | integration.config.account_read_role_name (optional) | Name of the role used to assume the read role in the account.  |
 | integration.config.maximum_concurrent_accounts (optional) | Maximum number of accounts to sync concurrently. |
@@ -203,10 +203,12 @@ The AWS integration uses the following AWS infrastructure:
 - [AWS EventBridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html).
 
 <details>
-   <summary>Live events diagram</summary>
-   <center style={{'backgroundColor': 'white'}} >
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='60%' border='1px' />
-   </center>
+<summary><b>Live events diagram (click to expand)</b></summary>
+
+<center style={{'backgroundColor': 'white'}} >
+  <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='60%' border='1px' />
+</center>
+
 </details>
 </TabItem>
 <TabItem value="on-prem" label="On Prem (Once)">
@@ -222,7 +224,7 @@ The AWS integration uses the following AWS infrastructure:
 - Add the following environment variables to the Docker container:
 
 <details>
-<summary>Environment Variables</summary>
+<summary><b>Environment variables (click to expand)</b></summary>
 
 | Variable                                             | Description                                                                                                                                                                                                                                                          |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -231,7 +233,7 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for live events, used to validate the event source for real-time event, it's value is completely up to you                                                                                                                                    |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) A secret string that **you define** to secure incoming requests to your live events endpoint. This is **not** an AWS key, you can use any secure random string (e.g. generate one using `openssl rand -hex 32`). AWS EventBridge will include this key when sending events to your integration, allowing it to validate that requests are legitimate.                                                                                                                                    |
 | `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
 | `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
 | `OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS` | (Optional) `Maximum Concurrent Account` controls the maximum number of accounts synced concurrently.                                       |
