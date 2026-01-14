@@ -45,6 +45,8 @@ import PortWfWfrAppConfig from './examples/example-workflow-workflowrun/\_github
 
 import BranchBlueprint from './examples/example-branch/\_git_exporter_example_branch_blueprint.mdx'
 import PortBrAppConfig from './examples/example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import BranchProtectionBlueprint from './examples/example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
+import PortBranchProtectionAppConfig from './examples/example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 
 import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
@@ -57,6 +59,9 @@ import OrganizationAppConfig from './examples/example-organization/\_github_expo
 import LastContributorBranchBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_branch_blueprint.mdx'
 import LastContributorAppConfig from './examples/example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
 import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
+
+import SBOMBlueprint from './examples/example-repository-sbom/_github_exporter_example_sbom_blueprint.mdx'
+import PortRepositorySBOMAppConfig from './examples/example-repository-sbom/_github_exporter_example_repository_sbom_port_app_config.mdx'
 
 # Examples
 
@@ -198,6 +203,25 @@ The last contributor is the author of the last commit in the default branch of t
 This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity. By default, `detailed` is set to `false`, which returns a lighter branch payload. It should only be set to `true` when you need access to commit-level fields.
 :::
 
+## Repositories and branch protection rules
+
+The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  The example uses the following selector options:
+
+- `protectionRules: true`: Required for this example to fetch the branch protection rules used by the `branchProtection` mapping. If the GitHub repo lacks branch protection permissions, `.__protection_rules` may be empty.
+- `detailed: true`: Optional. Use it only when you need commit-level fields (it adds additional API calls).
+
+:::info Default branch filter
+This example targets only the default branch with `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
+:::
+
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchProtectionBlueprint/>
+
+<PortBranchProtectionAppConfig/>
+
 ## Files and file contents
 
 The following example demonstrates ingestion of dependencies from a `package.json` file in your repository into Port: 
@@ -311,6 +335,11 @@ You can now include multiple relationship types in a single repository configura
           githubCollaborators: "[.__collaborators[].login]"
 ```
 
+The `include` property accepts a list of strings to fetch additional data related to the repository. The accepted values are:
+- `teams`: Ingests the [teams with access to the repository](https://docs.github.com/en/rest/repos/repos#list-repository-teams).
+- `collaborators`: Ingests the [collaborators of the repository](https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators).
+- `sbom`: Ingests the [Software Bill of Materials (SBOM)](https://docs.github.com/en/rest/dependency-graph/sboms#get-a-software-bill-of-materials-sbom-for-a-repository) for the repository.
+
 :::caution Performance consideration
 While you can include multiple relationship types in a single configuration, this may impact resync performance for large repositories. For optimal performance, consider separating into multiple repository blocks:
 
@@ -413,6 +442,15 @@ The following example demonstrates how to ingest your GitHub repositories, their
 <ReleaseBlueprint/>
 
 <RepositoryTagReleaseAppConfig/>
+
+## Repositories and software bill of materials (SBOM)
+
+The following example demonstrates how to ingest your GitHub repositories and their software bill of materials (SBOM) to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+<SBOMBlueprint />
+<PortRepositorySBOMAppConfig />
 
 ## Supported resources
 
