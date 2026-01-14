@@ -14,14 +14,14 @@ Port's global search provides a quick way to find <PortTooltip id="entity">entit
 
 You can access the global search in several ways:
 
-- **Keyboard shortcut**: Press `Cmd + K` (Mac) or `Win + K` (Windows);
+- **Keyboard shortcut**: Press `Cmd + K` (Mac) or `Win + K` (Windows).
 - **Click**: Click on the search bar in the top right corner of your [portal](https://app.getport.io/).
 
-The search opens an interface in the center of the page, displaying 3-6 relevant results as you type.
+The search opens an interface in the center of the page, displaying relevant results as you type.
 
 ## Search results
 
-The search displays up to 3-6 results and returns four types of them:
+The search displays the closest search results and returns four different types of them:
 
 - **Entities**: Entities whose properties (including title & identifier) match your search query. You can search for entities by their title, identifier, description, or any other [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 - **Tech docs**: Entities that have a `markdown` property whose content contains your search query.
