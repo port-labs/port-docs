@@ -6,6 +6,111 @@ sidebar_position: 3
 
 This page describes the data ingestion capabilities of Port's GitHub integration.
 
+## Configuration options
+
+This section describes common configuration options you can use across installation methods.
+
+### Repository type
+
+The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
+
+<details>
+<summary><b>Possible values (click to expand)</b></summary>
+
+- `all` (default): All repositories accessible to the provided token.
+- `public`: Public repositories only.
+- `private`: Private repositories only.
+- `forks`: Forked repositories only.
+- `sources`: Non-forked repositories only.
+
+</details>
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+repositoryType: "all"
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: organization
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubOrganization"'
+          properties:
+            login: .login
+            id: .id
+            nodeId: .node_id
+            url: .url
+            reposUrl: .repos_url
+            eventsUrl: .events_url
+            hooksUrl: .hooks_url
+            issuesUrl: .issues_url
+            membersUrl: .members_url
+            publicMembersUrl: .public_members_url
+            avatarUrl: .avatar_url
+            description: if .description then .description else "" end
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            description: if .description then .description else "" end
+            visibility: if .private then "private" else "public" end
+            defaultBranch: .default_branch
+            readme: file://README.md
+            url: .html_url
+            language: if .language then .language else "" end
+          relations:
+            organization: .owner.login
+  - kind: pull-request
+    selector:
+      query: "true"
+      state: "open"
+    port:
+      entity:
+        mappings:
+          identifier: ".head.repo.name + (.id|tostring)"
+          title: ".title"
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: ".user.login"
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: ".state"
+            closedAt: ".closed_at"
+            updatedAt: ".updated_at"
+            mergedAt: ".merged_at"
+            createdAt: ".created_at"
+            prNumber: ".id"
+            link: ".html_url"
+            leadTimeHours: >-
+              (.created_at as $createdAt | .merged_at as $mergedAt |
+              ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
+              ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") |
+              strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp |
+              if $mergedTimestamp == null then null else
+              (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+          relations:
+            repository: .__repository
+```
+
+</details>
+
 ## Ingest Git objects
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.

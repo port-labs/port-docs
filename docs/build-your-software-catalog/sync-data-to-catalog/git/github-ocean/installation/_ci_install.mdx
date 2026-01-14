@@ -1,25 +1,33 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DockerParameters from "../\_github_docker_parameters.mdx"
-import AdvancedConfig from '../../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
-
+import CodeBlock from "@theme/CodeBlock"
+import PatCiEnvVars from "../_github_ocean_ci_env_vars_pat.mdx"
+import CustomAppCiEnvVars from "../_github_ocean_ci_env_vars_custom_app.mdx"
+import AdvancedConfig from "../../../../../generalTemplates/_ocean_advanced_configuration_note.md"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 This workflow/pipeline will run the GitHub integration once and then exit. This is useful for **scheduled** ingestion of data.
+
+{props.showingApp ? (
+  <>Use the Custom GitHub App credentials in your CI secret store.</>
+) : (
+  <>Use a Personal Access Token in your CI secret store.</>
+)}
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
 <TabItem value="github" label="GitHub">
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+Make sure to configure the following [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-<DockerParameters />
+{props.showingApp ? <CustomAppCiEnvVars /> : <PatCiEnvVars />}
 
 <br/>
 
 Here is an example for a `github-integration.yml` workflow file:
 
-```yaml showLineNumbers
-name: Github Exporter Workflow
+{props.showingApp ? (
+<CodeBlock language="yaml" showLineNumbers>
+{`name: Github Exporter Workflow
 on:
   workflow_dispatch:
   schedule:
@@ -32,40 +40,108 @@ jobs:
       - uses: port-labs/ocean-sail@v1
         with:
           type: "github-ocean"
-          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_client_id: \${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: \${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            githubHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
-            githubToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN }}
-            githubOrganization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}
-```
+            githubHost: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
+            githubOrganization: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}
+            githubAppId: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID }}
+            githubAppPrivateKey: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY }}`}
+</CodeBlock>
+) : (
+<CodeBlock language="yaml" showLineNumbers>
+{`name: Github Exporter Workflow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */1 * * *" # Determines the scheduled interval for this workflow. This example runs every hour.
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
+    steps:
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: "github-ocean"
+          port_client_id: \${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: \${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
+          config: |
+            githubHost: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
+            githubToken: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN }}
+            githubOrganization: \${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}`}
+</CodeBlock>
+)}
 
-  </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
+</TabItem>
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+<TabItem value="jenkins" label="Jenkins">
+
+:::tip Docker requirement
+Your Jenkins agent should be able to run Docker commands.
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+Make sure to configure the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
-<DockerParameters />
+{props.showingApp ? <CustomAppCiEnvVars /> : <PatCiEnvVars />}
 
 <br/>
 
 Here is an example for a `Jenkinsfile` groovy pipeline file:
 
-```text showLineNumbers
-pipeline {
+{props.showingApp ? (
+<CodeBlock language="text" showLineNumbers>
+{`pipeline {
     agent any
     stages {
         stage('Run Github Integration') {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_HOST'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="github-ocean"
+                            version="1.2.0-beta"
+                            image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+                            docker run -i --rm --platform=linux/amd64 \\
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$OCEAN__INTEGRATION__CONFIG__GITHUB_HOST \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=$OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=$OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY \\
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \\
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \\
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
+                                $image_name
+                            exit $?
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}`}
+</CodeBlock>
+) : (
+<CodeBlock language="text" showLineNumbers>
+{`pipeline {
+    agent any
+    stages {
+        stage('Run Github Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
@@ -75,17 +151,17 @@ pipeline {
                             #Set Docker image and run the container
                             integration_type="github-ocean"
                             version="1.2.0-beta"
-                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
-                            docker run -i --rm --platform=linux/amd64 \
-                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
-                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \
-                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+                            image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+                            docker run -i --rm --platform=linux/amd64 \\
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$OCEAN__INTEGRATION__CONFIG__GITHUB_HOST \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \\
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \\
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \\
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \\
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
                                 $image_name
                             exit $?
                         ''')
@@ -94,23 +170,25 @@ pipeline {
             }
         }
     }
-}
-```
+}`}
+</CodeBlock>
+)}
 
-  </TabItem>
+</TabItem>
 
-  <TabItem value="azure" label="Azure Devops">
+<TabItem value="azure" label="Azure DevOps">
 
 Make sure to configure the following [Azure DevOps pipeline variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables):
 
-<DockerParameters />
+{props.showingApp ? <CustomAppCiEnvVars /> : <PatCiEnvVars />}
 
 <br/>
 
-Here is an example for a `github-integration.yml` pipeline file:
+Here is an example for an Azure pipeline file:
 
-```yaml showLineNumbers
-trigger:
+{props.showingApp ? (
+<CodeBlock language="yaml" showLineNumbers>
+{`trigger:
   - main
 pool:
   vmImage: "ubuntu-latest"
@@ -123,34 +201,67 @@ steps:
       version="1.2.0-beta"
       image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-      docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-          -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITHUB_HOST) \
-          -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$(OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN) \
-          -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION) \
-          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
-          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
-          -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+      docker run -i --rm --platform=linux/amd64 \\
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITHUB_HOST) \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION) \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=$(OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID) \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=$(OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY) \\
+          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \\
+          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \\
+          -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
           $image_name
       exit $?
-    displayName: "Ingest Data into Port"
-```
+    displayName: "Ingest Data into Port"`}
+</CodeBlock>
+) : (
+<CodeBlock language="yaml" showLineNumbers>
+{`trigger:
+  - main
+pool:
+  vmImage: "ubuntu-latest"
+variables:
+  - group: port-ocean-credentials
+steps:
+  - script: |
+      # Set Docker image and run the container
+      integration_type="github-ocean"
+      version="1.2.0-beta"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-  </TabItem>
-<TabItem value="GitLab" label="GitLab">
+      docker run -i --rm --platform=linux/amd64 \\
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITHUB_HOST) \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$(OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN) \\
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION) \\
+          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \\
+          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \\
+          -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
+          $image_name
+      exit $?
+    displayName: "Ingest Data into Port"`}
+</CodeBlock>
+)}
+
+</TabItem>
+
+<TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
-<DockerParameters/>
+{props.showingApp ? <CustomAppCiEnvVars /> : <PatCiEnvVars />}
 
 <br/>
 
 Here is an example for a `.gitlab-ci.yml` pipeline file:
 
-```yaml showLineNumbers
-default:
+{props.showingApp ? (
+<CodeBlock language="yaml" showLineNumbers>
+{`default:
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
@@ -168,24 +279,62 @@ ingest_data:
     IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
   script:
     - |
-      docker run -i --rm --platform=linux/amd64 \
-        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
-        -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
-        -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
-        -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \
-        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+      docker run -i --rm --platform=linux/amd64 \\
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$OCEAN__INTEGRATION__CONFIG__GITHUB_HOST \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=$OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=$OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY \\
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \\
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \\
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
         $IMAGE_NAME
   rules: # Run only when changes are made to the main branch
     - if: '$CI_COMMIT_BRANCH == "main"'
   schedule: # Run according to a schedule
-    - cron: "0 */3 * * *" # Run every 3 hours
-```
+    - cron: "0 */3 * * *" # Run every 3 hours`}
+</CodeBlock>
+) : (
+<CodeBlock language="yaml" showLineNumbers>
+{`default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
 
-  </TabItem>
+variables:
+  INTEGRATION_TYPE: github-ocean
+  VERSION: 1.2.0-beta
+stages:
+  - ingest
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \\
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \\
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \\
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$OCEAN__INTEGRATION__CONFIG__GITHUB_HOST \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \\
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \\
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \\
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \\
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \\
+        $IMAGE_NAME
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  schedule: # Run according to a schedule
+    - cron: "0 */3 * * *" # Run every 3 hours`}
+</CodeBlock>
+)}
+
+</TabItem>
 </Tabs>
 
 <PortApiRegionTip/>

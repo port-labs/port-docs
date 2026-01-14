@@ -56,7 +56,7 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app).
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is documented in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=github-app-manual) under the Custom GitHub App tab.
 
 :::caution Single organization limitation
 GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization using `githubOrganization`.
@@ -105,9 +105,9 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 
-::::info Organization field in file selectors
+:::info Organization field in file selectors
 The `organization` field is optional when `githubOrganization` is set in the environment variables and it is required when not provided there.
-::::
+:::
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
@@ -416,9 +416,9 @@ resources:
 
 ### Folders
 
-::::info Organization field in folder selectors
+:::info Organization field in folder selectors
 The `organization` field is optional when `githubOrganization` is set in the environment variables and is required when not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
-::::
+:::
 
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 

@@ -252,13 +252,13 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 To retrieve the root folders of your monorepo, use the following syntax in your `port-app-config.yml`:
 
-::::info Organization and repository filtering for folders
+:::info Organization and repository filtering for folders
 Both `organization` and `repos` under `folders` are optional. You can:
 - Specify only `organization`: scan all repositories in that organization for matching folders.
 - Specify only `repos`: scan only those repositories across accessible organizations.
 - Omit both: scan all accessible repositories for matching folders.
 Use `path` and `repositoryType` to scope results and improve performance.
-::::
+:::
 
 ```yaml showLineNumbers
 - kind: folder
