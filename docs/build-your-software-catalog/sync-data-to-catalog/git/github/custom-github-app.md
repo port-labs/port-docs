@@ -9,14 +9,14 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 :::warning Deprecated
 This page documents the legacy custom GitHub App creation method, which is **deprecated**.
 
-**Use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) instead**, which provides:
+**Use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) instead**, which offers:
 
-- Better performance and reliability
-- OAuth-based setup for custom GitHub Apps
-- Enhanced features and capabilities
-- Active support and updates
+- Better performance and reliability.
+- OAuth-based setup for custom GitHub Apps.
+- Enhanced features and capabilities.
+- Active support and updates.
 
-GitHub Ocean uses custom GitHub Apps under the hood, so you get all the benefits of custom apps with a modern, supported integration.
+GitHub Ocean uses custom GitHub Apps under the hood, providing all the benefits of custom apps through a modern, supported integration.
 :::
 
 ## Overview
