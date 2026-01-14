@@ -47,8 +47,8 @@ After completing it, you will get a sense of how it can benefit different person
 **If you already have a CRD that you want to expose in Port, you can skip this step.**
 
 
-If you don't have a CRD and you would like to create one, you can use Crossplane's XRD to create a CRD like we do in this guide or to install any operator that applies CRD into your cluster. You can follow the [Crossplane XRD documentation](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) to create a CRD.
-For this guide, we followed the [AWS DynamoDB composition example](https://docs.crossplane.io/latest/getting-started/provider-aws-part-2/)
+If you don't have a CRD and you would like to create one, you can use Crossplane's XRD to create a CRD like we do in this guide or to install any operator that applies CRD into your cluster. You can follow the [Crossplane XRD documentation](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) to create a CRD.
+For this guide, we followed the [AWS DynamoDB composition example](https://www.eksworkshop.com/docs/automation/controlplanes/crossplane/compositions/creating-a-composition)
 
 ### 2. Install Port's Kubernetes exporter
 
@@ -79,7 +79,7 @@ The `crdsToDiscover` mapping parameter is a JQ pattern to discover and export CR
 
 :::tip Crossplane's XRD
 
-With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
+With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
 :::
 
 After installing the k8s exporter, add the following value to [its configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md#updating-exporter-configuration):
@@ -167,4 +167,4 @@ By leveraging the power of the K8s API extensions, platform engineers can keep u
 - Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime).
 - Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](/actions-and-automations/create-self-service-experiences/create-self-service-experiences.md).
 - [Sync data](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
-- Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](/customize-pages-dashboards-and-plugins/dashboards/dashboards.md).
+- Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](/customize-pages-dashboards-and-plugins/dashboards/overview).

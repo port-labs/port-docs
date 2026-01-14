@@ -119,6 +119,10 @@ You can use Port's MCP to find the use cases that will be valuable to you. Try u
 
 <MCPInstallation />
 
+:::info Extended session duration
+MCP clients can maintain authenticated sessions for up to 30 days (as long as you're not idle for 15 days). This applies to OAuth-based authentication for interactive use, providing a more seamless experience for long-running integrations.
+:::
+
 ## Connect the server to multiple organizations
 
 Port uses your browser's OAuth session to approve MCP connections. When your MCP client opens the authentication prompt, you approve access in the organization where you are currently logged in. Follow these steps to connect to the correct organization:
@@ -128,6 +132,20 @@ Port uses your browser's OAuth session to approve MCP connections. When your MCP
 - Continue using the MCP client; changing your browser session afterward does not change the connected organization.
 
 To connect another organization from the same MCP client, add a second configuration and repeat the flow while logged in to the other organization. Each configuration keeps its own OAuth approval, so you can work with multiple organizations in parallel.
+
+## Connecting the server when SSO is enabled
+
+If your organization uses SSO (Single Sign-On) and you see an error like the one below when trying to connect to the MCP Server:
+
+<img src="/img/ai-agents/PortAIMCPServerSSOEreror.png" width="80%" border="1px" />
+
+This error occurs because the SSO connection needs to be configured for domain-level authentication to work with the MCP Server's OAuth flow.
+
+*Why this happens* - When SSO is initially configured in Port, the authentication connection starts as a standard type. For the MCP Server to authenticate users through SSO, the connection needs to be upgraded to "domain level" mode, which enables Dynamic Client Registration (DCR). This configuration change can only be made by Port on the backend.
+
+*How to resolve* - Contact our support team and let them know you're experiencing an SSO authentication error when connecting to the MCP Server. The support team will update your SSO connection configuration to enable domain-level authentication, which will allow the MCP Server OAuth flow to work correctly with your SSO provider.
+
+Once the configuration is updated, retry the MCP Server connection and the authentication should work as expected.
 
 ## Token-based authentication
 
@@ -140,6 +158,17 @@ curl -X POST "https://api.getport.io/v1/auth/access_token" \
 ```
 
 For complete examples and detailed setup instructions, see our [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
+
+## MCP server headers
+
+The Port MCP Server supports several headers that allow you to customize its behavior:
+
+| Header | Type | Default | Description |
+|--------|------|---------|-------------|
+| `x-read-only-mode` | String | `0` | Controls whether write tools are available. Set to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list. Set to `0` to allow all tools based on your permissions. |
+| `x-allowed-actions-to-run` | String | All actions | Comma-separated list of action identifiers that controls which actions are available through the `run_action` tool. Only the specified actions will be available. If not specified, all actions you have permission to run will be available. If set to an empty string, no actions will be allowed to run. Example: `"create_github_issue,create_incident"`. |
+
+These headers can be configured when setting up your MCP server connection. For token-based authentication examples, see the [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
 
 ## Connecting to AI Agents
 
@@ -168,6 +197,7 @@ You do not need to keep the browser logged in after approval. Your MCP client st
 
 </details>
 
+
 <details>
 <summary><b>What happens if I approve the OAuth prompt in the wrong organization? (Click to expand)</b></summary>
 
@@ -181,3 +211,34 @@ Disconnect the MCP client or remove its credentials, then reconnect while logged
 Use token-based authentication when you are in CI/CD or another non-interactive environment. Generate a token with your client credentials and configure the MCP client with that token instead of signing in through the browser.
 
 </details>
+
+<details>
+<summary><b>Why do I get an error when trying to connect with SSO enabled? (Click to expand)</b></summary>
+
+If your organization uses SSO and you see an authentication error when connecting to the MCP Server, your SSO connection may need to be configured for domain-level authentication. This is a one-time configuration change that enables the MCP Server's OAuth flow to work with your SSO provider. Contact [Port support](https://www.getport.io/community) to have this enabled for your organization. See the [Connecting the server when SSO is enabled](#connecting-the-server-when-sso-is-enabled) section for more details.
+
+</details>
+
+<details>
+<summary><b>How can I connect to the MCP? (Click to expand)</b></summary>
+
+Refer back to the [setup instructions](#installing-port-mcp) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+
+</details>
+
+<details>
+<summary><b>I completed the connection but nothing happens (Click to expand)</b></summary>
+
+Check that you've followed all the [setup steps](#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+
+</details>
+
+:::tip Getting help
+If you continue to experience issues, please reach out to Port support with:
+- Your IDE/application version.
+- The specific error messages you're seeing.
+- Your Port region (EU/US).
+- Steps you've already tried.
+
+This information will help us provide more targeted assistance.
+:::

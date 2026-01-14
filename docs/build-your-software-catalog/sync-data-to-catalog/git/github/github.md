@@ -2,21 +2,22 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub
+# GitHub (Sunset)
+
+:::warning Deprecation Notice
+This integration is in sunset and will be fully deprecated on July 15, 2026. Use the [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/) integration instead.
+:::
 
 Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
-
 
 ## Overview
 
 This integration allows you to:
 
-
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
 - Trigger GitHub workflows directly from Port.
-
 
 ### Supported resources
 
@@ -25,6 +26,12 @@ It is possible to reference any field that appears in the API responses linked b
 
  <GitHubResources/>
 
+## Prerequisites
+
+To install and configure the GitHub app integration, you need:
+
+- **Admin access** to the GitHub organization where you want to install the app.
+- **Admin access** to your Port organization.
 
 ## Setup
 
@@ -38,11 +45,9 @@ To install Port's GitHub app, follow these steps:
 
 4. Within the selected organization, choose the repositories in which to install the app.
 
-
 5. Click on the `Install` button.
 
 6. Once the installation has finished, you will be redirected to Port.
-
 
 ## Configuration
 
@@ -54,8 +59,6 @@ To enable this behavior, use the [closedPullRequests parameter](https://docs.por
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
-
-
 
 To ingest GitHub objects, use one of the following methods:
 
@@ -117,115 +120,114 @@ deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
 resources:
-- kind: repository
-  selector:
-    query: 'true'
-    teams: true
-  port:
-    entity:
-      mappings:
-        identifier: .full_name
-        title: .name
-        blueprint: '"githubRepository"'
-        properties:
-          readme: file://README.md
-          url: .html_url
-          defaultBranch: .default_branch
-        relations:
-          githubTeams: '[.teams[].id | tostring]'
-- kind: pull-request
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id|tostring
-        title: .title
-        blueprint: '"githubPullRequest"'
-        properties:
-          status: .status
-          closedAt: .closed_at
-          updatedAt: .updated_at
-          mergedAt: .merged_at
-          createdAt: .created_at
-          prNumber: .number
-          link: .html_url
-          branch: .head.ref
-          leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
-- kind: user
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .login
-        title: .login
-        blueprint: '"githubUser"'
-- kind: pull-request
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .user.login
-        title: .user.login
-        blueprint: '"githubUser"'
-- kind: pull-request
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id|tostring
-        blueprint: '"githubPullRequest"'
-        relations:
-          repository: .head.repo.full_name
-          git_hub_assignees: '[.assignees[].login]'
-          git_hub_reviewers: '[.requested_reviewers[].login]'
-          git_hub_creator: .user.login
-          creator:
-            combinator: '"and"'
-            rules:
-            - property: '"git_hub_username"'
-              operator: '"="'
-              value: .user.login
-          service:
-            combinator: '"and"'
-            rules:
-            - property: '"repo_id"'
-              operator: '"="'
-              value: .head.repo.full_name
-          reviewers:
-            combinator: '"and"'
-            rules:
-            - property: '"git_hub_username"'
-              operator: '"in"'
-              value: '[.requested_reviewers[].login]'
-          assignees:
-            combinator: '"and"'
-            rules:
-            - property: '"git_hub_username"'
-              operator: '"in"'
-              value: '[.assignees[].login]'
-- kind: team
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id | tostring
-        title: .name
-        blueprint: '"githubTeam"'
-        properties:
-          slug: .slug
-          description: .description
-          link: .html_url
-          permission: .permission
-          notification_setting: .notification_setting
+  - kind: repository
+    selector:
+      query: "true"
+      teams: true
+    port:
+      entity:
+        mappings:
+          identifier: .full_name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            githubTeams: "[.teams[].id | tostring]"
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id|tostring
+          title: .title
+          blueprint: '"githubPullRequest"'
+          properties:
+            status: .status
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            mergedAt: .merged_at
+            createdAt: .created_at
+            prNumber: .number
+            link: .html_url
+            branch: .head.ref
+            leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubUser"'
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .user.login
+          title: .user.login
+          blueprint: '"githubUser"'
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id|tostring
+          blueprint: '"githubPullRequest"'
+          relations:
+            repository: .head.repo.full_name
+            git_hub_assignees: "[.assignees[].login]"
+            git_hub_reviewers: "[.requested_reviewers[].login]"
+            git_hub_creator: .user.login
+            creator:
+              combinator: '"and"'
+              rules:
+                - property: '"git_hub_username"'
+                  operator: '"="'
+                  value: .user.login
+            service:
+              combinator: '"and"'
+              rules:
+                - property: '"repo_id"'
+                  operator: '"="'
+                  value: .head.repo.full_name
+            reviewers:
+              combinator: '"and"'
+              rules:
+                - property: '"git_hub_username"'
+                  operator: '"in"'
+                  value: "[.requested_reviewers[].login]"
+            assignees:
+              combinator: '"and"'
+              rules:
+                - property: '"git_hub_username"'
+                  operator: '"in"'
+                  value: "[.assignees[].login]"
+  - kind: team
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            slug: .slug
+            description: .description
+            link: .html_url
+            permission: .permission
+            notification_setting: .notification_setting
 ```
 
 </details>
-
 
 ## Capabilities
 
@@ -252,11 +254,11 @@ The following configuration fetches all `package.json` files from "MyRepo" and "
 resources:
   - kind: file
     selector:
-      query: 'true'
+      query: "true"
       files:
         # Note that glob patterns are supported, so you can use wildcards to match multiple files
-        - path: '**/package.json'
-        # The `repos` key can be used to filter the repositories from which the files will be fetched
+        - path: "**/package.json"
+          # The `repos` key can be used to filter the repositories from which the files will be fetched
           repos:
             - "MyRepo"
             - "MyOtherRepo"
@@ -273,12 +275,13 @@ resources:
 ```
 
 :::tip Test your mapping
-After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.  
+After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.
 
-This will help you see what data is available to use in your `jq` expressions.   
+This will help you see what data is available to use in your `jq` expressions.  
 Click on the `Test mapping` button to test your mapping against the example data.
 
 In any case, the structure of the available data looks like this:
+
 <details>
 <summary><b>Available data example (click to expand)</b></summary>
 
@@ -452,11 +455,7 @@ In any case, the structure of the available data looks like this:
         "typescript": "~5.5.3"
       },
       "browserslist": {
-        "production": [
-          ">0.5%",
-          "not dead",
-          "not op_mini all"
-        ],
+        "production": [">0.5%", "not dead", "not op_mini all"],
         "development": [
           "last 1 chrome version",
           "last 1 firefox version",
@@ -469,6 +468,7 @@ In any case, the structure of the available data looks like this:
   }
 }
 ```
+
 </details>
 :::
 
@@ -485,10 +485,10 @@ The following configuration fetches a `package.json` file from a specific reposi
 resources:
   - kind: file
     selector:
-      query: 'true'
+      query: "true"
       files:
-        - path: '**/package.json'
-        # Note that in this case we are fetching from a specific repository
+        - path: "**/package.json"
+          # Note that in this case we are fetching from a specific repository
           repos:
             - "MyRepo"
     port:
@@ -516,7 +516,7 @@ For multi-document YAML files (a single file containing multiple YAML documents 
 
 You can use one of these methods to ingest multi-document YAML files:
 
-1. Use the `itemsToParse` key to create multiple entities from such a file (see example above). 
+1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
 2. Map the result to an `array` property.
 
 :::tip Mixed YAML types
@@ -525,6 +525,7 @@ If you have both single-document and multi-document YAML files in your repositor
 ```yaml
 itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
+
 :::
 
 #### Dry-run for file changes
@@ -544,8 +545,7 @@ resources:
           validationCheck: true
     port:
       entity:
-        mappings:
-          // the rest of your mapping configuration
+        mappings: // the rest of your mapping configuration
 ```
 
 When a PR modifies a matching file, you will see a new check in your PR with the validation results.
@@ -561,7 +561,7 @@ Example for a failed validation:
 #### Ingest raw file content
 
 If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
-This is useful when you want to store the file content as a string or YAML property.  
+This is useful when you want to store the file content as a string or YAML property.
 
 When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
 
@@ -571,7 +571,7 @@ Here's an example that ingests the raw content of a `values.yaml` file into the 
 resources:
   - kind: file
     selector:
-      query: 'true'
+      query: "true"
       files:
         - path: values.yaml
           skipParsing: true
@@ -593,12 +593,15 @@ resources:
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
 
+**Examples**
+
+For practical examples of using the `file` kind, see the [file kind examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#files-and-file-contents) page.
+
 ## Permissions
 
 Port's GitHub integration requires the following permissions:
 
 - Repository permissions:
-
   - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
   - **Administration:** Readonly (for exporting repository teams)
   - **Checks:** Read and Write (for validating `port.yml`).
@@ -612,7 +615,6 @@ Port's GitHub integration requires the following permissions:
   - **Code scanning alerts:** Readonly.
 
 - Organization permissions:
-
   - **Members:** Readonly (for exporting organization teams).
   - **Administration:** Readonly (for exporting organization users).
 
@@ -633,7 +635,7 @@ Port's GitHub integration requires the following permissions:
 :::info Default permissions
 You will be prompted to confirm the above listed permissions when first installing the App.
 
-Permissions can be given to selected repositories in your organization, or to all repositories.   
+Permissions can be given to selected repositories in your organization, or to all repositories.  
 You can reconfigure the app at any time, giving it access to new repositories, or removing access.
 
 :::

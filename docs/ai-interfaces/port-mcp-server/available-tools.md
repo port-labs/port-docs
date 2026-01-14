@@ -40,6 +40,23 @@ By default, when you open a chat with Port MCP, all available tools (based on yo
 
 For example, if you only want to query data from Port without building or modifying anything, you can limit the tools to just the read-only ones. This helps reduce complexity and ensures you don't accidentally make changes.
 
+### Using headers to control tool availability
+
+You can use headers when configuring your MCP server connection to control which tools are available:
+
+**Read-only mode** - The `x-read-only-mode` header controls whether write tools are available. Set it to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list. Set it to `0` (default) to allow all tools based on your permissions.
+
+**Control actions** - The `x-allowed-actions-to-run` header controls which actions are available through the `run_action` tool. This header accepts a comma-separated list of action identifiers. Only the specified actions will be available. If the header is not specified, all actions you have permission to run will be available. If set to an empty string, no actions will be allowed to run.
+
+Examples:
+- `x-allowed-actions-to-run: "create_github_issue,create_incident"` - Allows only the specified GitHub and incident actions.
+- `x-allowed-actions-to-run: "create_service,deploy_to_production"` - Allows only the specified deployment actions.
+- `x-allowed-actions-to-run: ""` - No actions will be allowed to run.
+
+See the [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication) for examples of how to configure these headers.
+
+### Using client UI to select tools
+
 <Tabs groupId="tool-selection" queryString>
 <TabItem value="cursor" label="Cursor">
 

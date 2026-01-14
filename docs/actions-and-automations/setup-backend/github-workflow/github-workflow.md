@@ -42,7 +42,7 @@ By default, the integration will look for the workflow in the `main` branch of t
 
 To use a different branch, simply pass the `ref` key in the `Configure the invocation payload` section (or `invocationMethod.workflowInputs` in the JSON object) with the desired branch name as the value:
 
-```json
+```json showLineNumbers
 {
   "ref": "my-branch-name"
 }

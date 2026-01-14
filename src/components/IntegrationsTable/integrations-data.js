@@ -163,6 +163,13 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Sentry.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry',
   },
+  {
+    name: 'Prometheus',
+    category: 'monitoring',
+    icon: '/img/guides/icons/Security.svg',
+    darkIcon: '/img/guides/icons/Security.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/prometheus',
+  },
   // Security & Quality
   {
     name: 'Snyk',
@@ -251,11 +258,26 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow',
   },
   {
+    name: 'Rootly',
+    category: 'incident',
+    icon: '/img/guides/icons/Rootly.svg',
+    darkIcon: '/img/guides/icons/dark/Rootly.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/incident-management/rootly',
+  },
+  {
     name: 'Dynatrace',
     category: 'monitoring',
     icon: '/img/guides/icons/Dynatrace.svg',
     darkIcon: '/img/guides/icons/dark/Dynatrace.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace',
+  },
+  {
+    name: 'Azure Monitor',
+    category: 'monitoring',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/azure-monitor',
   },
   // Cloud Cost
   {
@@ -346,11 +368,12 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
   },
   {
-    name: 'Codex',
+    name: 'OpenAI',
     category: 'ai-agents',
-    icon: '/img/guides/icons/Codex.svg',
-    darkIcon: '/img/guides/icons/dark/Codex.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
+    iconName: 'OpenAI',
+    icon: '/img/guides/icons/OpenAI.svg',
+    darkIcon: '/img/guides/icons/OpenAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
   },
   {
     name: 'n8n',

@@ -17,7 +17,7 @@ Each [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-cat
 
 ## Overview
 
-The overview tab is a dashboard, used to display [widgets](/customize-pages-dashboards-and-plugins/dashboards/) related to the entity.
+The overview tab is a dashboard, used to display [widgets](/customize-pages-dashboards-and-plugins/dashboards/overview) related to the entity.
 
 By default, each entity will have a `Details` widget, which displays the entity's properties and their values, and other metadata.
 
@@ -82,7 +82,7 @@ You can switch to a JSON editor using the `Edit JSON` button to define the datas
 
 The filters visual editor doesn't support nested queries so in the case of nested queries, use the JSON editor to define the dataset.
 
-The dataset follows this structure based on the [search and query syntax](https://docs.port.io/search-and-query):
+The dataset follows this structure based on the [search and query syntax](https://docs.port.io/search-and-query/overview):
 
 ```json showLineNumbers
 {
@@ -366,7 +366,7 @@ You can also use regular relations (not self-relations) in your paths:
 ```
 
 :::info The fromBlueprint property
-The `fromBlueprint` property is only needed when the path starts from the current page's blueprint and ends with the entities listed in the tab. For more information about relation paths  see the [Relation operators](https://docs.port.io/search-and-query/#relation-operators) documentation.
+The `fromBlueprint` property is only needed when the path starts from the current page's blueprint and ends with the entities listed in the tab. For more information about relation paths  see the [Relation operators](https://docs.port.io/search-and-query/operators/relation-operators) documentation.
 :::
 
 

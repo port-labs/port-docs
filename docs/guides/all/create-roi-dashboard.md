@@ -624,10 +624,10 @@ We will be using the following terms throughout the guide:
 
 ### Connect the blueprints
 
-After setting up both `Action Run` and `Action` blueprint, add the following relation and mirror properties to the `Action blueprint`.
+After setting up both `Action Run` and `Action` blueprint, add the following relation and mirror properties to the `Action Run blueprint`.
 
 <details>
-<summary><b>Action run blueprint (click to expand)</b></summary>
+<summary><b>Action Run blueprint (click to expand)</b></summary>
 
     ``` json showLineNumbers
         "mirrorProperties": {

@@ -203,7 +203,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/runs/list-stages?view=azure-devops-rest-7.1&tabs=HTTP#stage) for the Azure DevOps pipeline-stage object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/runs/get?view=azure-devops-rest-7.1) for the Azure DevOps pipeline-stage object structure.
 
 :::
 

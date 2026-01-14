@@ -207,13 +207,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
 - [Jira Server webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/#alternative-option---using-the-webhook-integration)
 - [Initiate scorecards handling with Jira issues](/scorecards/manage-using-3rd-party-apps/jira)
-- [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
 ## Kafka
 
 - [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
-- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md)
+- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/kafka/)
 
 ## Kratix (by Syntasso)
 - [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
@@ -249,7 +248,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## New Relic
 
-- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
+- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic/newrelic.md)
 - [Embed dashboards from New Relic](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## Octopus Deploy
@@ -269,7 +268,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md)
 - [Ensure production readiness](/guides/all/ensure-production-readiness.md)
-- [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 - [Self-service action to escalate a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
 - [Self-service action to trigger a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/interact-with-pagerduty-incidents)
 - [Self-service action to change a PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
@@ -295,7 +293,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Sentry
 
-- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
+- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry/sentry.md)
 
 ## Slack
 

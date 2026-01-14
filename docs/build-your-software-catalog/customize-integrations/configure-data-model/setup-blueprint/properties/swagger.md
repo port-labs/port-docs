@@ -31,11 +31,13 @@ The following is an example of a `Swagger UI` tab in an entity page:
 
 When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
 
-:::note
+:::tip CORS configuration
 
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`.
+When using URL for the `open-api` display, make sure that your server allows cross-origin (CORS) requests from Port:
+- EU region: `app.getport.io`
+- US region: `app.us.port.io`
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+To serve the OpenAPI spec from an AWS S3 bucket, add a CORS policy to the bucket that allows requests from both `app.getport.io` and `app.us.port.io`. Check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
@@ -208,11 +210,13 @@ Here is how the Swagger tab in the specific entity page appears when an OpenAPI 
 
 When using the URL format, Port will query the provided URL for the AsyncAPI spec and expects a JSON AsyncAPI spec
 
-:::note
+:::tip CORS configuration
 
-When using URL for the `async-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+When using URL for the `async-api` display, make sure that your server allows cross-origin (CORS) requests from Port:
+- EU region: `app.getport.io`
+- US region: `app.us.port.io`
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+To serve the AsyncAPI spec from an AWS S3 bucket, add a CORS policy to the bucket that allows requests from both `app.getport.io` and `app.us.port.io`. Check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
