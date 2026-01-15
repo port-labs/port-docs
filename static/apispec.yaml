@@ -11022,7 +11022,8 @@ paths:
                 - measureTimeBy
                 - aggregationType
               oneOf:
-                - title: Aggregate property
+                - type: object
+                  title: Aggregate property
                   properties:
                     blueprint:
                       type: string
@@ -11104,7 +11105,8 @@ paths:
                       timeInterval:
                         enum:
                           - quarter
-                - title: Count entities
+                - type: object
+                  title: Count entities
                   properties:
                     blueprint:
                       type: string
