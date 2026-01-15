@@ -5,11 +5,14 @@ description: Learn how to connect GitHub Codeowners with service teams in Port, 
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "@site/docs/guides/templates/github/_github_integration_tabs_intro";
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub CODEOWNERS with Service, Team & User
 
 This guide demostrates how to map CODEOWNERS file in GitHub repositories to their respective Service, Team and User blueprints in port.
+
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
 ## Prerequisites
 - A Port account.
