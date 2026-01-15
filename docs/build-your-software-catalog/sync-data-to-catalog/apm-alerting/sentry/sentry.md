@@ -851,6 +851,24 @@ resources:
 
 </details>
 
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Archived" value="include_archived">
+
+You can use the `includeArchived` selector to filter archived/ignored issues
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeArchived: false
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Project Environment
 
 <details>
