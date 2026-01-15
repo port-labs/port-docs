@@ -855,7 +855,7 @@ resources:
 
 <TabItem label="Include Archived" value="include_archived">
 
-You can use the `includeArchived` selector to filter archived/ignored issues
+You can use the `includeArchived` selector to filter archived/ignored issues. By default, this selector is set to `true`
 
 ```yaml showLineNumbers
 - kind: issue
