@@ -30,7 +30,8 @@ Before you begin, ensure you have:
 
 ## Set up n8n instance
 
-If you don't have an n8n instance running, you can set one up using one of the options below. The location where you mount the n8n data directory is important; this is where you will install the Port n8n node package.
+If you don't have an n8n instance running, you can set one up using one of the options below.  
+The location where you mount the n8n data directory is important - this is where the Port n8n node package will be installed.
 
 <Tabs groupId="n8n-setup" queryString>
 <TabItem value="npm" label="npm">
