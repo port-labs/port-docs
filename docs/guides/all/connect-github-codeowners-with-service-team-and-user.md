@@ -5,7 +5,7 @@ description: Learn how to connect GitHub Codeowners with service teams in Port, 
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import IntegrationTabsIntro from "@site/docs/guides/templates/github/_github_integration_tabs_intro";
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub CODEOWNERS with Service, Team & User
