@@ -75,7 +75,9 @@ jobs:
                     "mcp-remote",
                     "${{ env.PORT_MCP_URL }}",
                     "--header",
-                    "Authorization: Bearer ${{ steps.port-auth.outputs.access_token }}"
+                    "Authorization: Bearer ${{ steps.port-auth.outputs.access_token }}",
+                    "--header",
+                    "x-read-only-mode: 0"
                   ]
                 }
               }
@@ -90,11 +92,18 @@ jobs:
 
 1. **Authentication** – The `port-auth` step exchanges your Port client credentials for a short-lived access token using the Client Credentials flow
 2. **MCP Connection** – Claude Code connects to the remote MCP server using the `mcp-remote` package, passing the access token in the Authorization header
-3. **Tool Access** – Claude Code can invoke only the specific Port tools listed in `allowed_tools`, ensuring controlled access to your Port instance
-4. **Execution** – The AI agent executes the provided prompt using the available Port tools to query your software catalog
+3. **Read-only Mode** – The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list
+4. **Action Filtering** – The `x-allowed-actions-to-run` header (optional) allows you to control which actions are available through the `run_action` tool. It accepts a comma-separated list of action identifiers. For example, `x-allowed-actions-to-run: "create_github_issue,create_incident"` restricts access to only the specified actions
+5. **Tool Access** – Claude Code can invoke only the specific Port tools listed in `allowed_tools`, ensuring controlled access to your Port instance
+6. **Execution** – The AI agent executes the provided prompt using the available Port tools to query your software catalog
 
 :::tip Customize your integration
-For read-only workflows, limit `allowed_tools` to just the query operations you need.
+For read-only workflows, you can change the `x-read-only-mode` header from `0` to `1` to restrict tools to read-only operations, or limit `allowed_tools` to just the query operations you need.
+
+To control which actions are available, use the `x-allowed-actions-to-run` header with a comma-separated list of action identifiers. For example:
+- `x-allowed-actions-to-run: "create_github_issue,merge_github_pr"` - Only the specified GitHub actions.
+- `x-allowed-actions-to-run: "create_incident,send_notification"` - Only incident and notification actions.
+
 Choose the appropriate MCP URL for your Port region (EU: `https://mcp.port.io/v1`, US: `https://mcp.us.port.io/v1`)
 :::
 

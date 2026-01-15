@@ -9,6 +9,7 @@ import CiInstallMethod from "./\_ci_install.mdx"
 import DockerInstallMethod from "./_docker_install.mdx"
 import ParametersTable from "./_parameters_table.jsx"
 import Base64Tip from "./\_base_64_tip.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 
@@ -24,6 +25,12 @@ ___
 Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation integration="GithubOcean" />
+
+</TabItem>
 
 <TabItem value="real-time-self-hosted" label="Kubernetes">
 
@@ -69,9 +76,13 @@ Install the Helm chart:
     secrets:
       githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
 
-  # uncomment to enable live events
+  # uncomment to enable live events or to support actions processing
   # liveEvents:
-  #  baseUrl: "<your-domain>"
+  #   baseUrl: "<your-domain>"
+
+  # uncomment to enable actions processing
+  # actionsProcessor:
+  #   enabled: true
 
   initializePortResources: true
   sendRawDataExamples: true
@@ -123,7 +134,7 @@ Install the Helm chart:
 
 </TabItem>
 
-<TabItem value="argocd" label="ArgoCD" default>
+<TabItem value="argocd" label="ArgoCD">
 To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
@@ -239,7 +250,7 @@ kubectl apply -f my-ocean-github-integration.yaml
 The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
 For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
 
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.port.io/developing-an-integration/trigger-your-integration) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
 <OceanSaasLiveEventsDescription id="GithubOcean" />
@@ -261,7 +272,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="docker" label="Docker" default>
+<TabItem value="docker" label="Docker">
     <DockerInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 

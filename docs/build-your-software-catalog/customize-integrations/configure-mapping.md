@@ -134,6 +134,17 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: ...
   ```
 
+:::tip JQ syntax for identifiers with hyphens
+When using JQ to reference identifiers or property names that contain hyphens, you must wrap them in double quotes and use bracket notation.
+
+For example, use `.["my-property"]` instead of `.my-property`, which JQ would interpret as subtraction.
+
+This applies to secrets, properties, and any other identifiers containing hyphens:
+- Secrets: `.secrets["zendesk-api-token"]`
+- Properties: `.properties["my-custom-field"]`
+- Relations: `.relations["parent-service"]`
+:::
+
 ### Additional options
 
 Several more advanced options are available in the mapping configuration:
@@ -251,7 +262,7 @@ To achieve this, we have two options:
 
 In the example above we map a relation using a direct reference to the related entity's `identifier`.  
 
-Port also allows you to use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
+Port also allows you to use a [search query rule](/search-and-query/structure-and-syntax#rules) to map relations based on a **property** of the related entity.  
 This is useful in cases where you don't have the identifier of the related entity, but you do have one of its properties.
 
 For example, consider the following scenario:  
@@ -304,7 +315,7 @@ This is especially useful when patching entities whose identifiers are not known
 - Then, in the `PagerDuty` integration mapping, we can use this property to map each `PagerDuty service` to the relevant `service`.  
 - This way, we would not need to have a separate blueprint for `PagerDuty services`, since the integration maps directly to the `service` blueprint.
 
-Mapping by property is done using a [search query rule](/search-and-query/#rules) in the following format:
+Mapping by property is done using a [search query rule](/search-and-query/structure-and-syntax#rules) in the following format:
 
 ```yaml showLineNumbers
 resources:
@@ -336,7 +347,18 @@ Searching by property can also be used when using Port's API to [create an entit
 
 ### Limitations
 
-- The search query must return exactly one entity (else the entire request will fail).
+- The search query must return **exactly one entity** (otherwise the entire request will fail).  
+  To avoid failures from identical values of a property across different blueprints, include an additional rule with the `$blueprint` property in mapping search queries, to ensure that the search query is executed on the correct blueprint.  
+  For example:
+
+  ```yaml showLineNumbers
+  combinator: "and"
+  rules:
+    - property: "$blueprint"
+      operator: "="
+      value: "service"
+    # your other rules...
+  ```
 - If the search query returns no entities, a new entity **will not** be created.
 - The query will be executed on the same blueprint from the request’s url.
 - Only the `=` and `in` operators is supported for the search query rule.
@@ -344,24 +366,18 @@ Searching by property can also be used when using Port's API to [create an entit
 
 ## Create multiple entities from an array API object
 
-In some cases, an application's API returns an array of objects that you want to map to multiple entities in Port.  
-To achieve this, Port provides you with the `itemsToParse` key, its value should be a JQ query that returns an array.  
-In order to reference an array item attribute, use `.item` in your JQ expression.  
+When an application's API returns an array of objects that you want to map to multiple entities in Port, you can use the `itemsToParse` configuration option. This allows you to iterate over an array and create a separate entity for each item.
 
-In some cases, the response from an application's API contains an object with `item` key on the top level. In such cases, to prevent ambiguous access and unexpected results, Port provides the `itemsToParseName` key. Its value should be a string that can be referenced in your mapping properties instead of the default `.item`.
+### `itemsToParse`
 
-:::warning Limitations
-- The `itemsToParseName` key is not supported on Github, Kubernetes and Webhook integrations.
-- When the key is enabled, you cannot use the "test mapping" option in Port's UI.
-:::
+The `itemsToParse` key specifies a JQ query that returns an array. Port will iterate over each item in this array and create a separate entity for each one. Within your mapping properties, you can reference the current array item using `.item`.
 
-
-Here is an example mapping configuration of a Jira `issue`, where we want to map each of the issue's `comments` to a separate `comment` entity:
+**Example:**
 
 ```yaml showLineNumbers
 - kind: issue
   selector:
-    query: .item.name != 'test-item' and .issueType == 'Bug' 
+    query: .issueType == 'Bug'
   port:
     # highlight-next-line
     itemsToParse: .fields.comments
@@ -373,30 +389,100 @@ Here is an example mapping configuration of a Jira `issue`, where we want to map
         properties:
           # highlight-next-line
           text: .item.text
+          author: .item.author.name
         relations:
-            issue: .key
+          issue: .key
 ```
 
-or with the `itemsToParseName`: 
+In this example, Port will iterate over each comment in the `comments` array and create a separate `comment` entity for each one. The `.item` reference allows you to access properties of the current comment being processed.
+
+### `itemsToParseName`
+
+By default, Port uses `.item` to reference the current array item. However, if your API response already contains an `item` key at the top level, this can cause ambiguous access. The `itemsToParseName` key allows you to specify a custom name to reference array items instead of the default `.item`.
+
+**Example:**
+
 ```yaml showLineNumbers
 - kind: issue
   selector:
-    query: .myItem.name != 'test-item' and .issueType == 'Bug' 
+    query: .issueType == 'Bug'
   port:
-    # highlight-next-line
     itemsToParse: .fields.comments
-    itemsToParseName: 'myItem'
+    # highlight-next-line
+    itemsToParseName: 'comment'
     entity:
       mappings:
         # highlight-next-line
-        identifier: .myItem.id
+        identifier: .comment.id
         blueprint: '"comment"'
         properties:
           # highlight-next-line
-          text: .myItem.text
+          text: .comment.text
+          author: .comment.author.name
         relations:
-            issue: .key
+          issue: .key
 ```
+
+In this example, we use `comment` instead of `item` to reference each array element, avoiding conflicts with any top-level `item` property in the API response.
+
+### `itemsToParseTopLevelTransform`
+
+By default, Port removes the target array specified in `itemsToParse` from the original payload to improve parsing performance. The `itemsToParseTopLevelTransform` flag controls this behavior:
+
+- When set to `true` (default): The target array is removed from the payload, and you can only access array items via `.item` (or your custom `itemsToParseName`).
+- When set to `false`: The target array remains in the payload, allowing you to access both the original array and individual items.
+
+**Example with `itemsToParseTopLevelTransform: true` (default):**
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: .issueType == 'Bug'
+  port:
+    itemsToParse: .fields.comments
+    # highlight-next-line
+    itemsToParseTopLevelTransform: true
+    entity:
+      mappings:
+        identifier: .item.id
+        blueprint: '"comment"'
+        properties:
+          text: .item.text
+          # highlight-next-line
+          issueKey: .key  # Can access top-level properties
+        relations:
+          issue: .key
+```
+
+**Example with `itemsToParseTopLevelTransform: false`:**
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: .issueType == 'Bug'
+  port:
+    itemsToParse: .fields.comments
+    # highlight-next-line
+    itemsToParseTopLevelTransform: false
+    entity:
+      mappings:
+        identifier: .item.id
+        blueprint: '"comment"'
+        properties:
+          text: .item.text
+          # highlight-next-line
+          totalComments: .fields.comments | length  # Can access the original array
+          issueKey: .key
+        relations:
+          issue: .key
+```
+
+When `itemsToParseTopLevelTransform` is `false`, you can access the original array (e.g., `.fields.comments`) in addition to individual items via `.item`.
+
+:::warning Limitations
+- The `itemsToParseName` key is not supported in non-Ocean integrations: [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/), [Kubernetes](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) and [Webhook integrations](/build-your-software-catalog/custom-integration/webhook/).
+- When `itemsToParseName` is enabled, you cannot use the "test mapping" option in Port's UI.
+:::
 
 The object returned from Jira for which we would apply this mapping might look like this (note the `comments` array):
 

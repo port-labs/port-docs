@@ -2,7 +2,7 @@
 sidebar_position: 13
 title: Troubleshooting
 sidebar_label: Troubleshooting
-sidebar_class_name: custom-sidebar-item sidebar-menu-troubleshooting
+sidebar_class_name: hidden
 ---
 
 # Troubleshooting
@@ -159,6 +159,19 @@ If you are facing issues after installing an Ocean integration, follow these ste
     :::
 
 If you are still facing issues, reach out to us using chat/Slack/mail to [support.port.io](http://support.port.io/), and we will help you resolve the issue.
+
+</details>
+
+---
+
+#### Does my Ocean integration mapping change when I upgrade to a newer version?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+No, when you upgrade an Ocean integration to a newer version, your existing mapping configuration is preserved and not automatically changed.
+
+The integration will continue using your custom mapping configuration after the upgrade. If you want to adopt new default mappings from the upgraded version, you need to manually update the mapping configuration.
 
 </details>
 

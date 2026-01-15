@@ -102,7 +102,7 @@ To learn more about this backend type, refer to the [Azure pipeline backend](/ac
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `payload`              | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs.                                                              |
 
-To learn more about this backend type, refer to the [Kafka backend](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) documentation.
+To learn more about this backend type, refer to the [Kafka backend](/actions-and-automations/setup-backend/kafka/) documentation.
 
 </TabItem>
 

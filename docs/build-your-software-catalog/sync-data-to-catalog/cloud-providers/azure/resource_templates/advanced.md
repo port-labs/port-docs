@@ -118,10 +118,10 @@ The Service Bus resources have a hierarchical relationship. The Namespace relate
 
 Here are the API references we used to create those blueprints and app config:
 
-- [Service Bus Namespace](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/namespaces/list-by-subscription)
-- [Service Bus Queue](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/queues/list-by-namespace)
-- [Service Bus Topic](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/topics/list-by-namespace)
-- [Service Bus Subscription](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/subscriptions/list-by-topic)
+- [Service Bus Namespace](https://learn.microsoft.com/en-us/rest/api/servicebus/controlplane/namespaces/list?view=rest-servicebus-controlplane-2024-01-01&tabs=HTTP)
+- [Service Bus Queue](https://learn.microsoft.com/en-us/rest/api/servicebus/controlplane/queues/list-by-namespace?view=rest-servicebus-controlplane-2024-01-01&tabs=HTTP)
+- [Service Bus Topic](https://learn.microsoft.com/en-us/rest/api/servicebus/controlplane/topics/list-by-namespace?view=rest-servicebus-controlplane-2024-01-01&tabs=HTTP)
+- [Service Bus Subscription](https://learn.microsoft.com/en-us/rest/api/servicebus/controlplane/subscriptions/list-by-topic?view=rest-servicebus-controlplane-2024-01-01&tabs=HTTP)
 
 ## Mapping application insights
 
@@ -155,7 +155,7 @@ Key Vault has a relation to the Resource Group, so creation of the [Resource Gro
 
 Here are the API references we used to create those blueprints and app config:
 
-- [Key Vault](https://learn.microsoft.com/en-us/rest/api/keyvault/vaults/list-by-subscription)
+- [Key Vault](https://learn.microsoft.com/en-us/rest/api/keyvault/keyvault/vaults/list-by-subscription?view=rest-keyvault-keyvault-2024-11-01&tabs=HTTP)
 
 :::info Mapping extra resources
 The resources in this page are only few of the resources that the Azure Exporter supports.

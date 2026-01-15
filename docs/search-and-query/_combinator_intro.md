@@ -7,7 +7,7 @@ There are two available combinators:
 If you only have a single rule in your query, the combinator has no effect. But keep in mind that it still needs to be included to adhere to the query structure.
 
 <details>
-<summary>Single rule query example</summary>
+<summary><b>Single rule query example (click to expand)</b></summary>
 
 In the following example, only a single rule appears in the `rules` array, so the `combinator` field has no effect:
 

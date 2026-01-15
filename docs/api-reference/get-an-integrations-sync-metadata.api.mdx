@@ -1,0 +1,83 @@
+---
+id: get-an-integrations-sync-metadata
+title: "Get an integration's sync metadata"
+description: "This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates."
+sidebar_label: "Get an integration's sync metadata"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV1Fv2zYQ/iuE9tAmsC0nSIdBbwE6BMZQIEizh8ENYFo6W2wkUiUpu56h/77vKNlWEhtpX7YC64sjiXfH7777eMdsIy+XLkqm0UR7WlrpldEuehhEGbnUqorfoyS6z5UT1tSehCwKs3ZiY2rhjViSF1ILdfB+44Tb6FSU5GUmvRyIda7SHCZpUSOq8DkFCxhO3g+E89LTQKSWgjuiZaKQzou6gjsJ/nGjT/qTviNfWw0cxO5OLKwpQ7RgfgXLjRsIY8O3d2NRGny2lJL2wuguSJIka2m10ktxS7ZUzvGmlr7UylIJU8dW90bUjhAIaZPOKoMEByHnskbQXK5AhJiVJiNkbeyMt53JrFR6Bp4KQrpsbsWtsdjdLqVWf4cER138ggADGC0izcFsQJ2pxYIsA+YgLpBR7WEiuwpuAGYJZsw/O00zk9YMPcR/eJt7X7kkjvHZjSrsP1Imds4M7VymMfKybojAQ0+ydHEptVzSsP0cPv0S9h4OexufBdSTRaBAFqhVtulY0IK+KucDoZyrTFNTM1uBvB6xYq2KQswJhC6MTSnj0tvgeH7+QVpo5DefD8Tl+PLX8/NdsaJBVEkroSbgg1C3kUtzKmWUbCO/qQjidN4iSNQMIsVaraTP4aXhg7eeMlniVstikmG5A5ZFibc1vdQ7QZzCLALBvRiBgLVENiDfVFx9grhG2P11ZDloI3vAdl373NhOF08wLWThXoD6i/V0fTvB1o+kR+K+PX4KXC8N4wmCm/arcBCDrKq9Fs5w3AqVPobkZqPRaCbmtfdGc9FI9xdvSLc57vfd2QZtpqbaBMNlZ5d14KIGPcRRWlvlN6Fsc+gdySfTB17CGa6gK3LM1uV4zH+eZvueFrIuvLjrLMFPalAI7dkW6QBkIC7+7NjhCP1m/plSzwqyXCqv2u3MY89mbiB2qblGgbHekq7LORBjhftYb0FaKzcIqzyV7vX9aAXQEN0xXXAn+8gd8OhqaIqUXfuXq4MIh6iUWGF0NPQKkoJL2zW/w6Xp6266B9uH1gfS3wF1lFmmuAiyuO3lHOTbPA8N3nckd5S+GgARrsYXP4I4yFpjjxapJOfQQY+sHcu/jfNtiV/9PxN/92O0g3878RAYAwGeEfp6GHyYZEkUry7i3giKt0dnWhOHW9GH7trFB5jsajc0a1vwANoPA7UbBmFwvVyt3cGg18k/Mqctbbt+fuiKlfqDNqenW38ENmEkLkxwV75g+zC3MGZgyrDbsl+Mxsx4hascLips3kW/efXiGT2bn9uDYH7eZ3/eZ/+7+2x3Xjx99XFVSBW6TTiC2+7IT6PVRTgxexXiLTl1lX167nFacwiFg2y3c5D7py2ahj9/qcnyXQyPK2mVnPOxQ2/IlOPnE9fO/rF5e9c1tzPx/TfkE4nvuofm1rGSRc1veHxELzl1fW8e4Ni1Es6gtb1OU6p8L8qLqcCtbN9jb36/h62smfB+E3sMTax74OhHET7vbi0E/uWGetRlu21bJKqxs2+XTnrs/2HYkcGZN80/ntKEDQ==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration's sync metadata"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{integrationInternalId}/syncsMetadata"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.
+
+Returns resyncs from the last 4 days, or the 50 most recent ones.
+
+:::warning Permission requirements
+
+To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+
+If you already have an existing Port account, this requirement will be enforced starting **March 8th, 2026**.
+
+:::
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"integrationInternalId","required":true,"description":"The ID of the integration you want to operate on."},{"schema":{"type":"string"},"in":"header","name":"Authorization","required":false,"description":"Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"count":{"type":"number"},"data":{"type":"array","items":{"type":"object","properties":{"eventId":{"type":"string"},"syncState":{"type":"string"},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["eventId","syncState","createdAt","updatedAt"],"additionalProperties":false}}},"required":["ok","count","data"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

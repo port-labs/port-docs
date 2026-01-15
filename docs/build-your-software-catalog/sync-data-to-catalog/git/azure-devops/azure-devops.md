@@ -648,6 +648,12 @@ You can use one of these methods to ingest multi-document YAML files:
 1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
 2. Map the result to an `array` property.
 
+**Limitation:**
+
+Port does not support nested `itemsToParse` operations. When you have a multi-document YAML file (documents separated by `---`), the parsing engine automatically treats each document as a separate item in an array. This automatic splitting acts as an implicit `itemsToParse`, which means you cannot add an explicit `itemsToParse` to iterate over the documents.
+
+As a result, you cannot iterate over each YAML document in the multi-document file to create separate entities. Your only option is to ingest the entire multi-document file's content as a whole into a `string`, `markdown`, `json`, or `array` property.
+
 :::tip Mixed YAML types
 If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
 
