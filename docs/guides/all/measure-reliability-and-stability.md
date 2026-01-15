@@ -3,6 +3,8 @@ displayed_sidebar: null
 description: Learn how to measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration.
 ---
 
+import MCPCapabilitiesHint from '/docs/guides/templates/ai/_mcp_capabilities_hint.mdx'
+
 # Measure delivery reliability and stability
 
 Measuring delivery reliability and stability provides visibility into how consistently software changes move from commit to production, and where breakdowns disrupt engineering flow. By making failures, delays, and recovery patterns observable, teams can distinguish isolated issues from systemic instability that affects delivery outcomes.
@@ -16,6 +18,10 @@ This guide helps engineering managers, platform engineers, and product leaders a
 - **Impact on delivery**: How frequently do failing workflows block pull requests and slow down delivery?
 
 By the end of this guide, you'll have a working dashboard that tracks key reliability and stability metrics, enabling you to identify unstable workflows, measure the impact of failures on delivery, and prioritize improvements to your CI/CD infrastructure.
+
+:::tip AI-powered insights
+This guide includes configuration for a **Reliability Agent** that provides AI-powered insights into your system reliability and resilience. Ask natural language questions like "What needs attention right now?" or "What are the top 3 actions we should take to improve MTTR?" and receive data-driven recommendations that connect delivery behavior to production outcomes.
+:::
 
 <img src="/img/guides/reliability-dashboard-1.png" border="1px" width="100%" />
 <img src="/img/guides/reliability-dashboard-2.png" border="1px" width="100%" />
@@ -396,6 +402,51 @@ If you already have mappings for repositories and pull requests, make sure to ad
 
 4. Click `Save & Resync` to apply the mapping.
 
+## Configure AI agent
+
+To help Platform Engineering teams understand, assess, and improve the reliability and resilience of software systems using operational and delivery signals stored in Port's Context Lake, we'll configure an AI agent that provides objective insights and prioritized, actionable recommendations.
+
+<img src="/img/guides/eif-reliability-ai-agent.png" border="1px" width="100%" />
+
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
+4. Copy and paste the following JSON configuration:
+
+    <details>
+    <summary><b>Reliability Agent configuration (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "reliability_agent",
+      "title": "Reliability Agent",
+      "icon": "Details",
+      "team": [],
+      "properties": {
+        "description": "AI agent to provide insights about workflow reliability",
+        "status": "active",
+        "tools": [
+          "^(list|get|search|track|describe)_.*"
+        ],
+        "prompt": "You are the Reliability Insights Agent.\n\nYour purpose is to help Platform Engineering understand, assess, and improve the reliability and resilience of software systems using operational and delivery signals stored in Port's Context Lake. You provide objective insights and prioritised, actionable recommendations that reduce risk, improve stability, and increase confidence in production systems.\n\nAvailable Data\n\nUse any relevant blueprints and properties available in the Context Lake (for example: Services, Repositories, Deployments, Workflow Runs, Incidents, Alerts, Environments, SLOs, Error Rates, and future reliability signals).\nDo not assume a fixed schema. Use only available data.\n\nYour Task\n\nInterpret the user's question and determine scope (service, domain, environment, or organisation).\n\nAnalyse reliability signals such as:\n\nDeployment success and rollback rates\n\nChange failure rate and incident correlation\n\nMTTR, incident frequency, and recovery patterns\n\nCI/CD reliability, flaky workflows, and failed checks\n\nError trends, availability, and SLO/SLA adherence\n\nSurface risk patterns, regressions, and systemic weaknesses.\n\nWhen improvement opportunities exist, include recommendations in a structured table.\n\nHow to Think\n\nBe data-driven and risk-aware.\n\nPrefer systemic patterns over one-off incidents.\n\nConnect delivery behaviour to production outcomes.\n\nAvoid speculation; rely only on available signals.\n\nIf the question is unclear, ask one targeted follow-up.\n\nOutput Format\n\nDirect Answer\nShort, factual response focused on reliability or risk.\n\nSupporting Insights\nKey patterns, trends, or correlations explaining the reliability posture.\n\nRecommendations (Table)\nInclude when relevant:\n\nRecommendation\tPriority\tExpected Impact\tImplementation Complexity\tRelated Entities\nActionable reliability improvement\tHigh / Medium / Low\tReduced failures, faster recovery, higher stability\tLow / Medium / High\tURLs to relevant entities if available (otherwise N/A)\n\nRelevant Port Guides (Optional)\nWhen applicable, reference Port guides that help implement the recommendation (for example: scorecards, reliability dashboards, automation, or guardrails).\nInclude only guides that are directly actionable; omit if none apply.\n\nBe concise, accurate, and aligned with Engineering Intelligence principles: reliability, risk visibility, platform guardrails, and actionable clarity.",
+        "execution_mode": "Approval Required",
+        "conversation_starters": [
+          "What needs attention right now?",
+          "What are the top 3 actions we should take to improve MTTR?",
+          "What are the top recurring reliability issues?",
+          "What single improvement will give us the biggest reliability gain?"
+        ]
+      },
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click on `Create` to save the agent.
+
+<MCPCapabilitiesHint/>
+
 ## Visualize metrics
 
 Once the GitHub data is synced, we can create a dedicated dashboard in Port to monitor and analyze reliability and stability metrics using customizable widgets.
@@ -413,6 +464,16 @@ We now have a blank dashboard where we can start adding widgets to visualize rel
 ### Add widgets
 
 In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Reliability Agent (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **AI Agent**.
+2. Title: `Reliability Agent`.
+3. Choose the **Reliability Agent** we created earlier.
+4. Click **Save**.
+
+</details>
 
 <details>
 <summary><b>Workflow failure rate (last 7 days) (click to expand)</b></summary>
@@ -619,6 +680,6 @@ In the new dashboard, create the following widgets:
 
 ## Related guides
 
-- [Visualize your GitHub repository activity](/guides/all/visualize-your-github-repository-activity)
+- [Gain visibility into delivery performance](/guides/all/measure-and-track-delivery-performance)
 - [Visualize and manage GitHub deployments](/guides/all/visualize-and-manage-github-deployments)
 - [Visualize your GitHub Dependabot alerts](/guides/all/visualize-your-github-dependabot-alerts)

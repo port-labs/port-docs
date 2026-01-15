@@ -23,6 +23,20 @@ After creating a secret, you will be able to view its value only once.
 Afterwards, you will be able to delete the secret or edit its value, but not to view it.
 :::
 
+## Referencing secrets
+
+To reference a secret in your action or automation payloads, use the following syntax:
+
+```json
+"token": "{{ .secrets.MY_SECRET_NAME }}"
+```
+
+Note that if your secret name contains hyphens or special characters, use bracket notation:
+
+```json
+"token": "{{ .secrets["my-secret-name"] }}"
+```
+
 ## Security
 
 - Port secrets reside in Port's infrastructure (hosted on AWS), **per organization**, meaning that no other organization has any access to your secrets.

@@ -7,6 +7,7 @@ description: Install the Ocean custom integration in your own infrastructure
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanHealthCheck from "/docs/generalTemplates/_ocean_health_check.md"
 
 # Setup
 
@@ -56,7 +57,7 @@ helm install ocean-custom port-labs/port-ocean \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.yourcompany.com" \
   --set integration.config.authType="bearer_token" \
-  --set integration.secrets.authValue="<YOUR_API_TOKEN>" \
+  --set integration.secrets.apiToken="<YOUR_API_TOKEN>" \
   --set integration.config.paginationType="page" \
   --set integration.config.pageSize=100
 ```
@@ -89,7 +90,7 @@ docker run -i --rm \
   -e OCEAN__EVENT_LISTENER='{"type":"POLLING"}' \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://api.yourcompany.com" \
   -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer_token" \
-  -e OCEAN__INTEGRATION__SECRETS__AUTH_VALUE="<YOUR_API_TOKEN>" \
+  -e OCEAN__INTEGRATION__CONFIG__API_TOKEN="<YOUR_API_TOKEN>" \
   -e OCEAN__INTEGRATION__CONFIG__PAGINATION_TYPE="page" \
   -e OCEAN__INTEGRATION__CONFIG__PAGE_SIZE=100 \
   ghcr.io/port-labs/port-ocean-custom:latest
@@ -100,6 +101,8 @@ docker run -i --rm \
 </TabItem>
 
 </Tabs>
+
+<OceanHealthCheck/>
 
 ## Configuration parameters
 
@@ -112,14 +115,14 @@ This table summarizes the available parameters for the installation.
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.config.baseUrl`             | The root URL of your API (e.g., `https://api.yourcompany.com`)                                                                                                                                                                                                                                 | https://api.yourcompany.com       | ✅        |
 | `integration.config.authType`            | Authentication type: `bearer_token`, `api_key`, `basic_auth`, or `none`                                                                                                                                                                                                                       | bearer_token                      | ✅        |
-| `integration.secrets.authValue`          | Authentication value (token, API key, or base64-encoded username:password for basic auth)                                                                                                                                                                                                     |                                  | ✅        |
+| `integration.secrets.apiToken`           | Bearer token for authentication (required when `authType` is `bearer_token`)                                                                                                                                                                                                                  |                                  | ❌        |
 | `integration.config.paginationType`      | Pagination type: `offset`, `page`, `cursor`, or `none`                                                                                                                                                                                                                                        | page                              | ❌        |
 | `integration.config.pageSize`            | Number of items per page (for offset/page pagination)                                                                                                                                                                                                                                        | 100                               | ❌        |
 | `integration.config.timeout`             | Request timeout in seconds (default: 30)                                                                                                                                                                                                                                                       | 30                                | ❌        |
 | `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                           | ✅        |
 | `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                | custom                            | ✅        |
-| `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | 60                                | ❌        |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | true                              | ❌        |
+| `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration) | 60                                | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping.        | true                              | ❌        |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | true                              | ❌        |
 
 ## Ready to build?
