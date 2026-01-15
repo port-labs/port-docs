@@ -2069,6 +2069,7 @@ components:
                           - day
                           - isoWeek
                           - month
+                          - quarter
                       timeRange:
                         type: object
                         properties:
@@ -2084,6 +2085,8 @@ components:
                               - last3Months
                               - last6Months
                               - last12Months
+                              - last2Years
+                              - last3Years
                         required:
                           - preset
                         additionalProperties: false
@@ -2105,6 +2108,22 @@ components:
                       - entity
                       - properties
                     additionalProperties: false
+                    if:
+                      type: object
+                      properties:
+                        timeRange:
+                          type: object
+                          properties:
+                            preset:
+                              enum:
+                                - last2Years
+                                - last3Years
+                    then:
+                      type: object
+                      properties:
+                        timeInterval:
+                          enum:
+                            - quarter
                   - properties:
                       id:
                         type: string
@@ -2139,6 +2158,7 @@ components:
                           - day
                           - isoWeek
                           - month
+                          - quarter
                       timeRange:
                         type: object
                         properties:
@@ -2154,6 +2174,8 @@ components:
                               - last3Months
                               - last6Months
                               - last12Months
+                              - last2Years
+                              - last3Years
                         required:
                           - preset
                         additionalProperties: false
@@ -2187,6 +2209,22 @@ components:
                       - measureTimeBy
                       - properties
                     additionalProperties: false
+                    if:
+                      type: object
+                      properties:
+                        timeRange:
+                          type: object
+                          properties:
+                            preset:
+                              enum:
+                                - last2Years
+                                - last3Years
+                    then:
+                      type: object
+                      properties:
+                        timeInterval:
+                          enum:
+                            - quarter
                   - properties:
                       id:
                         type: string
@@ -2221,6 +2259,7 @@ components:
                           - day
                           - isoWeek
                           - month
+                          - quarter
                       timeRange:
                         type: object
                         properties:
@@ -2236,6 +2275,8 @@ components:
                               - last3Months
                               - last6Months
                               - last12Months
+                              - last2Years
+                              - last3Years
                         required:
                           - preset
                         additionalProperties: false
@@ -2261,6 +2302,22 @@ components:
                       - func
                       - measureTimeBy
                     additionalProperties: false
+                    if:
+                      type: object
+                      properties:
+                        timeRange:
+                          type: object
+                          properties:
+                            preset:
+                              enum:
+                                - last2Years
+                                - last3Years
+                    then:
+                      type: object
+                      properties:
+                        timeInterval:
+                          enum:
+                            - quarter
               - type: object
                 properties:
                   id:
@@ -4711,6 +4768,7 @@ components:
                                 - day
                                 - isoWeek
                                 - month
+                                - quarter
                             timeRange:
                               type: object
                               properties:
@@ -4726,6 +4784,8 @@ components:
                                     - last3Months
                                     - last6Months
                                     - last12Months
+                                    - last2Years
+                                    - last3Years
                               required:
                                 - preset
                               additionalProperties: false
@@ -4747,6 +4807,22 @@ components:
                             - entity
                             - properties
                           additionalProperties: false
+                          if:
+                            type: object
+                            properties:
+                              timeRange:
+                                type: object
+                                properties:
+                                  preset:
+                                    enum:
+                                      - last2Years
+                                      - last3Years
+                          then:
+                            type: object
+                            properties:
+                              timeInterval:
+                                enum:
+                                  - quarter
                         - properties:
                             id:
                               type: string
@@ -4781,6 +4857,7 @@ components:
                                 - day
                                 - isoWeek
                                 - month
+                                - quarter
                             timeRange:
                               type: object
                               properties:
@@ -4796,6 +4873,8 @@ components:
                                     - last3Months
                                     - last6Months
                                     - last12Months
+                                    - last2Years
+                                    - last3Years
                               required:
                                 - preset
                               additionalProperties: false
@@ -4829,6 +4908,22 @@ components:
                             - measureTimeBy
                             - properties
                           additionalProperties: false
+                          if:
+                            type: object
+                            properties:
+                              timeRange:
+                                type: object
+                                properties:
+                                  preset:
+                                    enum:
+                                      - last2Years
+                                      - last3Years
+                          then:
+                            type: object
+                            properties:
+                              timeInterval:
+                                enum:
+                                  - quarter
                         - properties:
                             id:
                               type: string
@@ -4863,6 +4958,7 @@ components:
                                 - day
                                 - isoWeek
                                 - month
+                                - quarter
                             timeRange:
                               type: object
                               properties:
@@ -4878,6 +4974,8 @@ components:
                                     - last3Months
                                     - last6Months
                                     - last12Months
+                                    - last2Years
+                                    - last3Years
                               required:
                                 - preset
                               additionalProperties: false
@@ -4903,6 +5001,22 @@ components:
                             - func
                             - measureTimeBy
                           additionalProperties: false
+                          if:
+                            type: object
+                            properties:
+                              timeRange:
+                                type: object
+                                properties:
+                                  preset:
+                                    enum:
+                                      - last2Years
+                                      - last3Years
+                          then:
+                            type: object
+                            properties:
+                              timeInterval:
+                                enum:
+                                  - quarter
                     - type: object
                       properties:
                         id:
@@ -10156,6 +10270,12 @@ paths:
             type: boolean
             default: false
           in: query
+          name: attach_identifier_to_title_mirror_properties
+          required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
           name: allow_partial_results
           required: false
           description: When enabled allows some of the blueprint searches to fail without
@@ -10922,6 +11042,8 @@ paths:
                             - last3Months
                             - last6Months
                             - last12Months
+                            - last2Years
+                            - last3Years
                         timeZone:
                           type: string
                       required:
@@ -10934,6 +11056,7 @@ paths:
                         - day
                         - isoWeek
                         - month
+                        - quarter
                     query:
                       $ref: "#/components/schemas/def-1"
                       description: A [search query](https://docs.getport.io/search-and-query/overview) used to
@@ -10965,6 +11088,22 @@ paths:
                     - func
                     - properties
                   additionalProperties: false
+                  if:
+                    type: object
+                    properties:
+                      timeRange:
+                        type: object
+                        properties:
+                          preset:
+                            enum:
+                              - last2Years
+                              - last3Years
+                  then:
+                    type: object
+                    properties:
+                      timeInterval:
+                        enum:
+                          - quarter
                 - title: Count entities
                   properties:
                     blueprint:
@@ -10985,6 +11124,8 @@ paths:
                             - last3Months
                             - last6Months
                             - last12Months
+                            - last2Years
+                            - last3Years
                         timeZone:
                           type: string
                       required:
@@ -10997,6 +11138,7 @@ paths:
                         - day
                         - isoWeek
                         - month
+                        - quarter
                     query:
                       $ref: "#/components/schemas/def-1"
                       description: A [search query](https://docs.getport.io/search-and-query/overview) used to
@@ -11020,6 +11162,22 @@ paths:
                   required:
                     - func
                   additionalProperties: false
+                  if:
+                    type: object
+                    properties:
+                      timeRange:
+                        type: object
+                        properties:
+                          preset:
+                            enum:
+                              - last2Years
+                              - last3Years
+                  then:
+                    type: object
+                    properties:
+                      timeInterval:
+                        enum:
+                          - quarter
         required: true
       security:
         - bearer:
@@ -11158,6 +11316,7 @@ paths:
                     - day
                     - isoWeek
                     - month
+                    - quarter
                 timeRange:
                   type: object
                   properties:
@@ -11173,6 +11332,8 @@ paths:
                         - last3Months
                         - last6Months
                         - last12Months
+                        - last2Years
+                        - last3Years
                     timeZone:
                       type: string
                       enum:
@@ -11603,6 +11764,22 @@ paths:
                 - entityIdentifier
                 - blueprintIdentifier
                 - propertyNames
+              if:
+                type: object
+                properties:
+                  timeRange:
+                    type: object
+                    properties:
+                      preset:
+                        enum:
+                          - last2Years
+                          - last3Years
+              then:
+                type: object
+                properties:
+                  timeInterval:
+                    enum:
+                      - quarter
         required: true
       security:
         - bearer:
@@ -11840,6 +12017,7 @@ paths:
                                       - team
                                       - timer
                                       - proto
+                                      - labeled-url
                                     description: The type's
                                       [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                   spec:
@@ -11939,6 +12117,7 @@ paths:
                                   - user
                                   - team
                                   - proto
+                                  - labeled-url
                                 description: The format of the property.
                               spec:
                                 enum:
@@ -12021,6 +12200,7 @@ paths:
                                       - team
                                       - timer
                                       - proto
+                                      - labeled-url
                             required:
                               - calculation
                               - type
@@ -12468,6 +12648,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                             description: The type's
                               [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                           spec:
@@ -12565,6 +12746,7 @@ paths:
                           - user
                           - team
                           - proto
+                          - labeled-url
                         description: The format of the property.
                       spec:
                         enum:
@@ -12647,6 +12829,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                     required:
                       - calculation
                       - type
@@ -13054,6 +13237,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -13153,6 +13337,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -13235,6 +13420,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -13737,6 +13923,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -13836,6 +14023,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -13918,6 +14106,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -14364,6 +14553,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                             description: The type's
                               [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                           spec:
@@ -14461,6 +14651,7 @@ paths:
                           - user
                           - team
                           - proto
+                          - labeled-url
                         description: The format of the property.
                       spec:
                         enum:
@@ -14543,6 +14734,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                     required:
                       - calculation
                       - type
@@ -14947,6 +15139,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -15046,6 +15239,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -15128,6 +15322,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -15604,6 +15799,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                             description: The type's
                               [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                           spec:
@@ -15699,6 +15895,7 @@ paths:
                           - user
                           - team
                           - proto
+                          - labeled-url
                         description: The format of the property.
                       spec:
                         enum:
@@ -15781,6 +15978,7 @@ paths:
                               - team
                               - timer
                               - proto
+                              - labeled-url
                     required:
                       - calculation
                       - type
@@ -16181,6 +16379,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -16280,6 +16479,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -16362,6 +16562,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -16993,6 +17194,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -17092,6 +17294,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -17174,6 +17377,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -17694,6 +17898,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -17793,6 +17998,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -17875,6 +18081,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -18397,6 +18604,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
                                 spec:
@@ -18496,6 +18704,7 @@ paths:
                                 - user
                                 - team
                                 - proto
+                                - labeled-url
                               description: The format of the property.
                             spec:
                               enum:
@@ -18578,6 +18787,7 @@ paths:
                                     - team
                                     - timer
                                     - proto
+                                    - labeled-url
                           required:
                             - calculation
                             - type
@@ -19026,6 +19236,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -19156,6 +19367,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -19291,6 +19503,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -19891,6 +20104,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -20021,6 +20235,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -20156,6 +20371,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -21031,6 +21247,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -21161,6 +21378,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -21296,6 +21514,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -21896,6 +22115,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -22026,6 +22246,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
@@ -22161,6 +22382,7 @@ paths:
                                           - proto
                                           - markdown
                                           - multi-line
+                                          - labeled-url
                                         title: Format
                                         description: The format of the input.
                                       blueprint:
