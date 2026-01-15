@@ -10,7 +10,7 @@ import N8nOperationsList from '@site/src/components/N8nOperationsList'
 
 <BetaFeatureNotice id="ai-form" />
 
-Port provides a custom n8n node ([n8n-nodes-portio-experimental]((https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental))) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
+Port provides a custom n8n node ([n8n-nodes-portio-experimental](https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental)) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
 
 This guide walks you through installing and configuring Port's custom n8n node in your n8n instance.
 
