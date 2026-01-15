@@ -26624,7 +26624,7 @@ paths:
       summary: Get all integrations meta-data (member view)
       tags:
         - Integrations
-      description: This route allows members to fetch meta-data on all integrations in their Port organization.
+      description: This route allows members to fetch meta-data on all integrations in their Port organization.<br></br>The response includes each integration's identifier, installation ID, integration type, and last update timestamp.
       security:
         - bearer:
             - read:integrations
@@ -29139,7 +29139,7 @@ paths:
       summary: Get all webhooks meta-data (member view)
       tags:
         - Webhook
-      description: This route allows members to fetch meta-data on all webhooks in their Port organization.
+      description: This route allows members to fetch meta-data on all webhooks in their Port organization.<br></br>The response includes each webhook's identifier, title, icon, and last update timestamp.
       security:
         - bearer:
             - read:integrations
