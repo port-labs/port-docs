@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
+description: A secret input encrypts its value before sending it to your backend and never stores or logs it. Choose Port-managed encryption or your own public key.
 sidebar_class_name: "custom-sidebar-item sidebar-property-secret"
 ---
 
@@ -11,9 +11,14 @@ import TabItem from "@theme/TabItem"
 
 # Secret
 
-Secret input is an input type used to pass secrets and sensitive information to action backends, the values sent via the secret input go through an additional layer of encryption using your private key. In addition, the values sent via the secret input are not logged or saved by Port.
+Use secret inputs to pass sensitive data to action backends. An extra processing layer encrypts the values, ensuring Port never logs or stores them.
 
-## 💡 Common Secret Usage
+Port offers two encryption options:
+
+- **Port-managed encryption** - Uses your organization's client secret as the encryption key.
+- **Client-side encryption** - Gives you full control over key management by using your own RSA key pair.
+
+## 💡 Common secret usage
 
 The secret input type can be used for sensitive information, such as:
 
@@ -24,9 +29,20 @@ The secret input type can be used for sensitive information, such as:
 - SSL/TLS certificates
 - Private keys
 
-## Secret Input Structure
+## Secret input structure
 
-A secret input is defined as a regular input, but with the additional `encryption` field which specifies the encryption algorithm to use:
+A secret input is defined as a regular input with the additional `encryption` field that specifies the encryption method.
+
+### Encryption options
+
+<Tabs groupId="encryption-type" queryString defaultValue="port-managed" values={[
+{label: "Port-managed encryption", value: "port-managed"},
+{label: "Client-side encryption", value: "client-key"}
+]}>
+
+<TabItem value="port-managed">
+
+Port-managed encryption uses the [AES-256-GCM](https://www.nist.gov/publications/advanced-encryption-standard-aes) algorithm with your organization's client secret as the encryption key.
 
 ```json showLineNumbers
 {
@@ -37,14 +53,78 @@ A secret input is defined as a regular input, but with the additional `encryptio
     // highlight-start
     "encryption": "aes256-gcm",
     // highlight-end
-    "description": "My entity input"
+    "description": "My secret input"
   }
 }
 ```
 
-- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+The encrypted value is formatted as: `[IV (16 bytes)][ciphertext][MAC (16 bytes)]`, encoded in base64. The encryption key is the first 32 bytes of your organization's [Client Secret](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 
-### Supported Types
+</TabItem>
+
+<TabItem value="client-key">
+
+Client-side encryption gives you full control over key management by allowing you to use your own RSA key pair. This is ideal for organizations that prefer to manage their own encryption keys.
+
+:::info API execution guardrails
+You can provide secret input values through the API, but Port includes guardrails to prevent doing so unintentionally in plaintext. If you need API execution for an action with a client-side encryption secret input, contact [Port support](https://www.getport.io/community).
+:::
+
+#### Example configuration
+
+```json showLineNumbers
+{
+  "mySecretInput": {
+    "title": "My secret input",
+    "icon": "My icon",
+    "type": "string",
+    // highlight-start
+    "encryption": {
+      "algorithm": "client-side",
+      "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...\n-----END PUBLIC KEY-----"
+    },
+    // highlight-end
+    "description": "My secret input"
+  }
+}
+```
+
+#### How it works
+
+Client-side encryption uses a hybrid approach that combines RSA and AES encryption:
+
+1. A random AES-256 key is generated in the browser
+2. Your data is encrypted using AES-256-GCM with this random key
+3. The AES key is then encrypted (wrapped) using your RSA public key with OAEP padding and SHA-256
+
+This approach allows encrypting data of any size while leveraging the security benefits of asymmetric encryption.
+
+#### Payload format
+
+The encrypted payload is base64-encoded with the following structure:
+
+| Component | Size | Description |
+|-----------|------|-------------|
+| IV | 12 bytes | Initialization vector for AES-GCM |
+| Wrapped key | 256 bytes | The AES key encrypted with your RSA public key |
+| Ciphertext | Variable | Your data encrypted with AES-256-GCM (includes 16-byte auth tag) |
+
+#### Key requirements
+
+- **Algorithm**: RSA with OAEP padding and SHA-256 hash
+- **Key size**: 2048-bit RSA key (minimum recommended)
+- **Format**: PEM-encoded public key with `-----BEGIN PUBLIC KEY-----` and `-----END PUBLIC KEY-----` markers
+
+:::tip When to use client-side encryption
+Use client-side encryption when you need complete control over key management, or when you want to ensure that only your backend (which holds the private key) can decrypt the values.
+:::
+
+</TabItem>
+</Tabs>
+
+### Supported types
+
+Secret inputs support both `string` and `object` types. You can use either encryption method with both types.
 
 <Tabs groupId="supported-types" queryString defaultValue="string" values={[
 {label: "String Secret", value: "string"},
@@ -57,16 +137,12 @@ A secret input is defined as a regular input, but with the additional `encryptio
   "mySecretInput": {
     "title": "My secret input",
     "icon": "My icon",
-    // highlight-start
     "type": "string",
-    // highlight-end
     "encryption": "aes256-gcm",
-    "description": "My entity input"
+    "description": "My secret input"
   }
 }
 ```
-
-**Note:** String secret inputs support the `multi-line` format. See the [Multi-line secret inputs](#multi-line-secret-inputs) section for details.
 
 </TabItem>
 <TabItem value="object">
@@ -76,11 +152,9 @@ A secret input is defined as a regular input, but with the additional `encryptio
   "mySecretInput": {
     "title": "My secret input",
     "icon": "My icon",
-    // highlight-start
     "type": "object",
-    // highlight-end
     "encryption": "aes256-gcm",
-    "description": "My entity input"
+    "description": "My secret input"
   }
 }
 ```
@@ -92,15 +166,13 @@ A secret input is defined as a regular input, but with the additional `encryptio
 
 For sensitive information that contains line breaks, such as SSL/TLS certificates, private keys, or configuration files, you can combine the multi-line text format with encryption.
 
-Multi-line secret inputs are encrypted using the same AES-256-GCM algorithm as single-line secrets, but they provide a larger text area for input. You can decrypt them using the same methods shown in the [Handling the Payload](#handling-the-payload) section.
+Multi-line secret inputs provide a larger text area for input and support both encryption methods. You can decrypt them using the same methods shown in the [Handling the Payload](#handling-the-payload) section.
 
 This is particularly useful when you need to send certificates to your backend workflows. For example, when configuring SSL certificates for cloud resources or setting up authentication with certificate-based credentials.
 
 :::info Multiline secrets are not masked
 Unlike single-line secret inputs which are masked with asterisks, multi-line secret inputs display the actual text as you type. The value is still encrypted when sent to your backend and is never logged or saved by Port.
 :::
-
-### API definition
 
 ```json showLineNumbers
 {
@@ -129,30 +201,31 @@ Multi-line secret inputs are ideal for:
 - Multi-line API keys or tokens.
 - SSH keys.
 
-## Handling the Payload
+## Handling the payload
 
-The payload sent to your infrastructure will contain the encrypted value of your secret property inputs. To make use of your secret inputs, you will need to decrypt them:
+The payload sent to your infrastructure will contain the encrypted value of your secret property inputs. To make use of your secret inputs, you will need to decrypt them.
 
 ### Examples
 
 <Tabs groupId="algorithm" queryString defaultValue="aes256-gcm" values={[
-{label: "AES 256 GCM", value: "aes256-gcm"},
+{label: "Port-managed (AES-256-GCM)", value: "aes256-gcm"},
+{label: "Client-side (RSA-OAEP-SHA256 + AES-256-GCM)", value: "client-side"},
 ]}>
 
 <TabItem value="aes256-gcm">
 
-Examples for decrypting properties encrypted with the `aes256-gcm` algorithm.
+Examples for decrypting properties encrypted with Port-managed `aes256-gcm` encryption.
 
 <Tabs groupId="language" queryString defaultValue="aes256-gcm-python" values={[
 {label: "Python Webhook", value: "aes256-gcm-python"},
-{label: "NodeJs Webhook", value: "aes256-gcm-nodeJs"}
+{label: "Node.js Webhook", value: "aes256-gcm-node-js"}
 ]}>
 
 <TabItem value="aes256-gcm-python">
 
 The following example uses the `flask` and `pycryptodome` packages:
 
-```python showLineNumbersimport base64
+```python showLineNumbers
 import base64
 import json
 import os
@@ -161,7 +234,7 @@ from flask import Flask, request
 from Crypto.Cipher import AES
 
 PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
-PROPERY_IS_JSON = False # whether the property is defined as json or not (string otherwise)
+PROPERTY_IS_JSON = False # whether the property is defined as json or not (string otherwise)
 
 app = Flask(__name__)
 
@@ -181,7 +254,7 @@ def webhook():
 
     # decrypt the property
     decrypted_property_value = cipher.decrypt_and_verify(ciphertext, mac)
-    property_value = json.loads(decrypted_property_value) if PROPERY_IS_JSON else decrypted_property_value
+    property_value = json.loads(decrypted_property_value) if PROPERTY_IS_JSON else decrypted_property_value
 
     return property_value # this is the original value the user sent
 
@@ -194,7 +267,7 @@ if __name__ == '__main__':
 ```
 
 </TabItem>
-<TabItem value="aes256-gcm-nodeJs">
+<TabItem value="aes256-gcm-node-js">
 
 The following example uses the `express` package and node's built-in crypto module:
 
@@ -204,7 +277,7 @@ const bodyParser = require("body-parser");
 const crypto = require("node:crypto");
 
 const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
-const PROPERY_IS_JSON = false; // whether the property is defined as json or not (string otherwise)
+const PROPERTY_IS_JSON = false; // whether the property is defined as json or not (string otherwise)
 
 const port = 80;
 
@@ -242,7 +315,7 @@ app.post("/", bodyParser.json(), (req, res) => {
 
   // encode the value
   const decrypted_property_value = decrypted_property_buffer.toString(ENCODING);
-  const property_value = PROPERY_IS_JSON
+  const property_value = PROPERTY_IS_JSON
     ? JSON.parse(decrypted_property_value)
     : decrypted_property_value;
 
@@ -256,6 +329,210 @@ app.listen(port, () => {
 
 </TabItem>
 </Tabs>
+
+</TabItem>
+
+<TabItem value="client-side">
+
+Examples for decrypting properties encrypted with `client-side` hybrid encryption.
+
+The decryption process involves two steps:
+1. Decrypt (unwrap) the AES key using your RSA private key
+2. Decrypt the data using the unwrapped AES key
+
+<Tabs groupId="language" queryString defaultValue="client-side-python" values={[
+{label: "Python Webhook", value: "client-side-python"},
+{label: "Node.js Webhook", value: "client-side-node-js"}
+]}>
+
+<TabItem value="client-side-python">
+
+The following example uses the `flask` and `pycryptodome` packages:
+
+```python showLineNumbers
+import os
+import json
+from base64 import b64decode
+
+from flask import Flask, request, jsonify
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP, AES
+from Crypto.Hash import SHA256
+
+# Config
+PROPERTY_KEY = "secret-property"
+PROPERTY_IS_JSON = False
+
+PORT = int(os.getenv("PORT", "80"))
+
+IV_LENGTH = 12          # AES-GCM recommended IV size
+GCM_TAG_LENGTH = 16     # GCM auth tag length
+
+# Load RSA private key + derive wrapped AES key length (bytes)
+with open("private.pem", "rb") as f:
+    PRIVATE_KEY = RSA.import_key(f.read())
+RSA_KEY_BYTES = PRIVATE_KEY.size_in_bytes()  # modulus length in bytes
+
+app = Flask(__name__)
+
+def decrypt(encrypted_base64: str) -> str:
+    if not isinstance(encrypted_base64, str) or not encrypted_base64:
+        raise ValueError(f"Missing '{PROPERTY_KEY}'")
+
+    payload = b64decode(encrypted_base64)
+
+    min_len = IV_LENGTH + RSA_KEY_BYTES + GCM_TAG_LENGTH + 1
+    if len(payload) < min_len:
+        raise ValueError(f"Encrypted payload too short (min {min_len} bytes)")
+
+    iv = payload[:IV_LENGTH]
+    encrypted_aes_key = payload[IV_LENGTH : IV_LENGTH + RSA_KEY_BYTES]
+    ciphertext = payload[IV_LENGTH + RSA_KEY_BYTES :]
+
+    if len(ciphertext) <= GCM_TAG_LENGTH:
+        raise ValueError("Ciphertext too short")
+
+    encrypted_data = ciphertext[:-GCM_TAG_LENGTH]
+    auth_tag = ciphertext[-GCM_TAG_LENGTH:]
+
+    # RSA-OAEP unwrap AES key (SHA-256)
+    oaep = PKCS1_OAEP.new(PRIVATE_KEY, hashAlgo=SHA256)
+    aes_key = oaep.decrypt(encrypted_aes_key)
+
+    # AES-256-GCM decrypt
+    cipher = AES.new(aes_key, AES.MODE_GCM, nonce=iv)
+    plaintext = cipher.decrypt_and_verify(encrypted_data, auth_tag)
+
+    return plaintext.decode("utf-8")
+
+def parse_maybe_json(value: str, is_json: bool):
+    try:
+        return json.loads(value) if is_json else value
+    except Exception:
+        raise ValueError("Decrypted value is not valid JSON")
+
+@app.post("/")
+def handler():
+    try:
+        body = request.get_json(silent=True) or {}
+        decrypted_str = decrypt(body.get(PROPERTY_KEY))
+        value = parse_maybe_json(decrypted_str, PROPERTY_IS_JSON)
+        return jsonify(value=value)
+    except Exception as e:
+        return jsonify(error=str(e)), 400
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=PORT)
+```
+
+</TabItem>
+<TabItem value="client-side-node-js">
+
+The following example uses the `fastify` package and node's built-in `crypto` module:
+
+```js showLineNumbers
+"use strict";
+
+const fastify = require("fastify")({ logger: true });
+const crypto = require("node:crypto");
+const fs = require("node:fs")
+
+const privateKeyPem = fs.readFileSync("private.pem", "utf8");
+
+const PROPERTY_KEY = "secret-property";
+const PROPERTY_IS_JSON = false;
+
+const PORT = Number(process.env.PORT || 80);
+
+// Hybrid encryption constants
+const IV_LENGTH = 12; // AES-GCM recommended IV size
+const GCM_TAG_LENGTH = 16;
+
+function decrypt(encryptedBase64) {
+	const payload = Buffer.from(encryptedBase64, "base64");
+
+	// Determine RSA key size to know encrypted AES key length
+	const privateKey = crypto.createPrivateKey(privateKeyPem);
+	const keyDetails = privateKey.asymmetricKeyDetails;
+	const rsaKeyBytes = keyDetails.modulusLength / 8; // e.g., 2048 bits = 256 bytes
+
+	const iv = payload.subarray(0, IV_LENGTH);
+	const encryptedAesKey = payload.subarray(IV_LENGTH, IV_LENGTH + rsaKeyBytes);
+	const ciphertext = payload.subarray(IV_LENGTH + rsaKeyBytes);
+
+	// Decrypt AES key using RSA-OAEP
+	const aesKey = crypto.privateDecrypt(
+		{
+			key: privateKey,
+			oaepHash: "sha256",
+			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+		},
+		encryptedAesKey,
+	);
+
+	// Decrypt ciphertext using AES-256-GCM
+	const encryptedData = ciphertext.subarray(0, ciphertext.length - GCM_TAG_LENGTH);
+	const authTag = ciphertext.subarray(ciphertext.length - GCM_TAG_LENGTH);
+
+	const decipher = crypto.createDecipheriv("aes-256-gcm", aesKey, iv);
+	decipher.setAuthTag(authTag);
+
+	const decrypted = Buffer.concat([decipher.update(encryptedData), decipher.final()]);
+
+	return decrypted.toString("utf8");
+}
+
+function parseMaybeJson(value, isJson) {
+  try {
+    return isJson ? JSON.parse(value) : value;
+  } catch {
+    throw new Error("Decrypted value is not valid JSON");
+  }
+}
+
+fastify.post(
+  "/",
+  async (request, reply) => {
+    try {
+      const decryptedStr = decrypt(request.body?.[PROPERTY_KEY]).toString("utf8");
+
+      const value = parseMaybeJson(decryptedStr, PROPERTY_IS_JSON);
+
+      // Return the original value the user sent (decrypted)
+      return reply.send({ value });
+    } catch (err) {
+      request.log.error({ err }, "Failed to decrypt secret input");
+      return reply.code(400).send({ error: err.message });
+    }
+  }
+);
+
+fastify.listen({ port: PORT, host: "0.0.0.0" }).catch((err) => {
+  fastify.log.error(err);
+  process.exit(1);
+});
+```
+
+</TabItem>
+</Tabs>
+
+#### Generating an RSA key pair
+
+To use client-side encryption, you need to generate an RSA key pair. Here's how to generate one using OpenSSL:
+
+```bash
+# Generate a 2048-bit RSA private key
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+
+# Extract the public key from the private key
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+```
+
+Use the contents of `public_key.pem` in your action's user input configuration. Keep `private_key.pem` secure in your backend for decryption.
+
+:::warning Keep your private key secure
+The private key should never be shared or exposed. Store it securely in your backend infrastructure, such as in a secrets manager.
+:::
 
 </TabItem>
 </Tabs>
