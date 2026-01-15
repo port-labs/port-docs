@@ -48,7 +48,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Sentry"/>
 
 </TabItem>
 
@@ -80,6 +80,7 @@ To install the integration using ArgoCD:
 
 :::note
 Remember to replace the placeholders for `SENTRY_HOST` `SENTRY_ORGANIZATION` and `SENTRY_TOKEN`.
+`SENTRY_WEBHOOK_SECRET` is only required if you plan to use webhooks.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -95,8 +96,10 @@ integration:
     sentryOrganization: SENTRY_ORGANIZATION
   // highlight-end
   secrets:
-  // highlight-next-line
+  // highlight-start
     sentryToken: SENTRY_TOKEN
+    sentryWebhookSecret: SENTRY_WEBHOOK_SECRET
+  // highlight-end
 ```
 <br/>
 
@@ -174,6 +177,7 @@ Note the parameters specific to this integration, they are last in the table.
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
 | `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Member`, `Team`, `Organization`, `Project` and `Issue & Event` | ✅        |
+| `integration.secrets.sentryWebhookSecret` | The [custom internal integration](https://docs.sentry.io/organization/integrations/integration-platform/) client secret. This requires `read` permissions for `Issue & Event`                                                                      | ❌        |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
 | `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
 
@@ -225,6 +229,7 @@ jobs:
           port_base_url: https://api.getport.io
           config: |
             sentry_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }}
+            sentry_webhook_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET }}
             sentry_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }}
             sentry_organization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }}
 ```
@@ -254,6 +259,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
@@ -268,6 +274,7 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -319,6 +326,7 @@ steps:
        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$(OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN) \
+      -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$(OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET) \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$(OCEAN__INTEGRATION__CONFIG__SENTRY_HOST) \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION) \
       -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
@@ -369,6 +377,7 @@ ingest_data:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
