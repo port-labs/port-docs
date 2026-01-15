@@ -3,6 +3,8 @@ sidebar_position: 8
 title: Port n8n node
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 import N8nOperationsList from '@site/src/components/N8nOperationsList'
 
@@ -10,7 +12,7 @@ import N8nOperationsList from '@site/src/components/N8nOperationsList'
 
 <BetaFeatureNotice id="ai-form" />
 
-Port provides a custom n8n node (`n8n-nodes-portio`) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
+Port provides a custom n8n node ([n8n-nodes-portio-experimental](https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental)) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
 
 This guide walks you through installing and configuring Port's custom n8n node in your n8n instance.
 
@@ -28,9 +30,30 @@ Before you begin, ensure you have:
 
 ## Set up n8n instance
 
-If you don't have an n8n instance running, you can set one up using Docker. The location where you mount the n8n data directory is important; this is where you will install the Port n8n node package.
+If you don't have an n8n instance running, you can set one up using one of the options below.  
+The location where you mount the n8n data directory is important - this is where the Port n8n node package will be installed.
 
-### Using Docker (bind mount)
+<Tabs groupId="n8n-setup" queryString>
+<TabItem value="npm" label="npm">
+
+If you prefer running n8n directly with npm, install it globally and start it from your terminal.
+
+1. **Install n8n**:
+
+   ```bash
+   npm install n8n -g
+   ```
+
+2. **Start n8n**:
+
+   ```bash
+   n8n start
+   ```
+
+3. **Open n8n** — Visit `http://localhost:5678`.
+
+</TabItem>
+<TabItem value="docker" label="Docker">
 
 Using a bind mount allows the container to read/write directly to your local filesystem, making it easier to install and manage the Port n8n node package.
 
@@ -65,7 +88,8 @@ Using a bind mount allows the container to read/write directly to your local fil
 
 3. **Access n8n** — Open your browser and navigate to `http://localhost:5678`.
 
-### Using Docker Compose
+</TabItem>
+<TabItem value="docker-compose" label="Docker compose">
 
 If you prefer using Docker Compose, create a `docker-compose.yml` file:
 
@@ -99,11 +123,28 @@ docker compose pull
 docker compose up -d
 ```
 
+</TabItem>
+</Tabs>
+
 ## Install Port's n8n node
 
-Now that you have n8n running, let's install Port's custom node using npm.
+Now that you have n8n running, let's install Port's custom node using one of the options below:
 
-### Install the npm package
+<Tabs groupId="port-node-installation" queryString>
+<TabItem value="community-node" label="Install from n8n browser UI">
+
+1. In your n8n instance, go to **Settings**.
+
+2. Select **Community Nodes**.
+
+3. Click **Install**.
+
+4. Enter `@port-labs/n8n-nodes-portio-experimental` as the npm package name.
+
+5. Click **Install** to finish the setup.
+
+</TabItem>
+<TabItem value="terminal" label="Install from terminal">
 
 1. **Navigate to your n8n data directory** (the `$n8n_HOME` directory you created earlier):
 
@@ -129,6 +170,9 @@ Now that you have n8n running, let's install Port's custom node using npm.
    :::caution Restart required
    n8n needs to be restarted after installing community packages so it can discover and load them. Make sure `N8N_COMMUNITY_PACKAGES_ENABLED=true` is set in your Docker configuration.
    :::
+
+</TabItem>
+</Tabs>
 
 The Port n8n node package is available on npm at [@port-labs/n8n-nodes-portio-experimental](https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental). The package is currently in experimental status.
 
