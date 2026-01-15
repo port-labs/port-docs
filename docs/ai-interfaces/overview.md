@@ -81,6 +81,18 @@ The MCP Server provides AI machine interface capabilities that are compatible wi
 
 **[Set up MCP Server →](/ai-interfaces/port-mcp-server/overview-and-installation)**
 
+### MCP Connectors
+
+Connect Port AI to external MCP servers like Notion, Linear, Slack, GitLab, and Jira or your custom MCPs. Platform engineers configure which external tools are available and which capabilities are exposed. Developers and AI agents access everything through Port's unified interface.
+
+**Use MCP Connectors to:**
+* Search external documentation and knowledge bases.
+* Query third-party tools without leaving Port.
+* Extend AI agent capabilities with external data sources.
+* Maintain governance over which external tools are accessible.
+
+**[Learn about MCP Connectors →](/ai-interfaces/mcp-connectors)**
+
 ### Slack App
 Interact with Port's AI capabilities directly from Slack. Ask questions, run actions, and get insights without leaving your team communication platform.
 
@@ -102,24 +114,29 @@ Explore **AI Agents** to build sophisticated, customized AI workflows tailored t
 ### For IDE Integration
 Set up the **MCP Server** to bring Port's AI capabilities directly into your development environment.
 
+### For External Tool Access
+Configure **MCP Connectors** to give Port AI access to external tools like Notion, Linear, and Jira while maintaining governance controls.
+
 ### For Team Collaboration
 Use the **Slack App** to make AI insights available to your entire team in your communication platform.
 
 ## Feature Support Matrix
 
+{/* TODO: Verify with Stav that the "External MCP Tools" column is accurate for each interface */}
+
 The following table shows which capabilities are supported across Port's AI interfaces:
 
 <div style={{overflowX: 'auto'}}>
 
-| Feature | Context Lake Query | Run Actions | Manage Blueprints | Manage Entities | Manage Scorecards | Manage Actions | Reuse Prompts | Invoke AI Agents | Manage Pages & Widgets | Manage Integrations | Manage Data Mapping |
-|--------------------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|
-| **Port MCP Server** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| **Port AI Invocation** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Port AI Agents** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Port AI Chat Widget** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Port Slack App** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Port AI Assistant** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Port n8n node** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| Feature | Context Lake Query | Run Actions | Manage Blueprints | Manage Entities | Manage Scorecards | Manage Actions | Reuse Prompts | Invoke AI Agents | External MCP Tools | Manage Pages & Widgets | Manage Integrations | Manage Data Mapping |
+|--------------------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|
+| **Port MCP Server** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **Port AI Invocation** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **Port AI Agents** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **Port AI Chat Widget** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Port Slack App** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **Port AI Assistant** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Port n8n node** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
 
 </div>
 
@@ -163,6 +180,7 @@ For team collaboration, try the **Slack App** to bring AI insights into your com
 
 - **Port AI Assistant**: Open beta - available to all users.
 - **MCP Server**: Open beta - available to all users.
+- **MCP Connectors**: Open beta - available to all users.
 - **AI Agents**: Open beta - available to all users.
 - **Slack App**: Open beta - available to all users.
 - **Port n8n node**: Open beta - available to all users.

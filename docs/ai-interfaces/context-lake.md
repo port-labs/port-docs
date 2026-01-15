@@ -177,6 +177,10 @@ The Context Lake unifies all these sources so AI agents, workflows, and dashboar
 
 Context Lake data becomes actionable through multiple interfaces: **[AI Interfaces](/ai-interfaces/overview)** where AI agents and assistants query through [Port MCP Server](/ai-interfaces/port-mcp-server/overview-and-installation) to understand your organization, **[API](/api-reference/port-api)** for programmatic access, and **[Interface Designer](/customize-pages-dashboards-and-plugins/dashboards/overview)** with dashboards and visualizations that surface insights to your teams—providing multiple ways to query, visualize, and act on your organizational context.
 
+### External data via MCP Connectors
+
+While the Context Lake provides structured organizational knowledge, [MCP Connectors](/ai-interfaces/mcp-connectors) complement it by giving Port AI access to external tools like Notion, Linear, Jira, and other MCP servers. The Context Lake provides the modeled data (blueprints, entities, scorecards), while MCP Connectors provide real-time access to external data you wouldn't typically model like documentation, tickets, logs, and other just-in-time information. Together, they give AI agents both structured context and dynamic external data for more accurate responses.
+
 ## Why the context lake matters
 
 <Tabs groupId="context-lake-value" queryString>
