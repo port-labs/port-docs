@@ -79,9 +79,7 @@ After the SSO connection is successfully established, you can configure the foll
 
 2. **Block social login for domains** - Your configured domains are displayed here. You can toggle social login blocking per domain. When enabled for a domain, users with email addresses from that domain must sign in through your SSO provider and cannot use social login methods (such as Google or GitHub sign-in). To add more domains, use `Edit Connection`.
 
-3. **Session settings** - Click `Session Settings` to configure session timeout settings for your SSO users. You can set the following:
-   - **Max session TTL** - The maximum session duration in minutes.
-   - **Idle session TTL** - The idle timeout duration in minutes before a session expires due to inactivity.
+3. **Session settings** - Click `Session Settings` to configure the maximum session duration (in minutes) for your SSO users.
 
 4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection as well as managing the client secret.
 
