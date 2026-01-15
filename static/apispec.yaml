@@ -26619,6 +26619,50 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
+  /v1/integration/metadata:
+    get:
+      summary: Get all integrations meta-data (member view)
+      tags:
+        - Integrations
+      description: This route allows members to fetch meta-data on all integrations in their Port organization.
+      security:
+        - bearer:
+            - read:integrations
+      responses:
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
   /v1/integration:
     get:
       summary: Get all integrations
@@ -29090,6 +29134,50 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
+  /v1/webhooks/metadata:
+    get:
+      summary: Get all webhooks meta-data (member view)
+      tags:
+        - Webhook
+      description: This route allows members to fetch meta-data on all webhooks in their Port organization.
+      security:
+        - bearer:
+            - read:integrations
+      responses:
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
   /v1/audit-log:
     get:
       summary: Get audit logs
