@@ -28,10 +28,6 @@ Choose the installation method that best suits your needs:
 {props.setupName !== "app" && (
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-:::caution Single organization limitation
-GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
-:::
-
 <OceanSaasInstallation integration="GithubOcean" showSelfHostedTip={false} dataSourceName="Github" />
 
 
