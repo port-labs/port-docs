@@ -15,7 +15,7 @@ This guide demostrates how to map CODEOWNERS file in GitHub repositories to thei
 - A Port account.
 
 <Tabs groupId="github-codeowners" queryString="integration">
-<TabItem value="github" label="GitHub">
+<TabItem value="github" label="GitHub (Legacy)">
 
 - Install [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organization or in repositories you are interested in.
 
@@ -24,7 +24,7 @@ Once you install Port's GitHub app, the following blueprints will be automatical
 :::
 
 </TabItem>
-<TabItem value="github-ocean" label="GitHub ocean">
+<TabItem value="github-ocean" label="GitHub (Ocean)">
 
 - Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 
@@ -109,7 +109,7 @@ To add the CODEOWNERS blueprint:
 ### Set up mapping configuration
 
 <Tabs groupId="github-codeowners" queryString="integration">
-<TabItem value="github" label="GitHub">
+<TabItem value="github" label="GitHub (Legacy)">
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
@@ -181,7 +181,7 @@ To add the CODEOWNERS blueprint:
     </details>
 
 </TabItem>
-<TabItem value="github-ocean" label="GitHub ocean">
+<TabItem value="github-ocean" label="GitHub (Ocean)">
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
