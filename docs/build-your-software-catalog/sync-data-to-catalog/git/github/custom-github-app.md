@@ -155,7 +155,7 @@ Query parameters:
 ## Using with Self-Hosted GitHub Enterprise
 
 :::warning Deprecated
-For self-hosted GitHub Enterprise instances, use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app) instead, which provides proper support for self-hosted GitHub Enterprise.
+For self-hosted GitHub Enterprise instances, use [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=custom-github-app) instead, which provides proper support for self-hosted GitHub Enterprise.
 :::
 
 The legacy method required:

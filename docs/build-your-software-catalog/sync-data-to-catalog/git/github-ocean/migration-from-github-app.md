@@ -56,7 +56,7 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is documented in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=github-app-manual) under the Custom GitHub App tab.
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is documented in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=custom-github-app) under the Custom GitHub App tab.
 
 :::caution Single organization limitation
 GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization using `githubOrganization`.
