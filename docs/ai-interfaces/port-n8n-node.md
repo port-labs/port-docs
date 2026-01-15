@@ -10,7 +10,7 @@ import N8nOperationsList from '@site/src/components/N8nOperationsList'
 
 <BetaFeatureNotice id="ai-form" />
 
-Port provides a custom n8n node (`n8n-nodes-portio`) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
+Port provides a custom n8n node ([n8n-nodes-portio-experimental]((https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental))) that simplifies integration with Port's AI agents and API. Instead of making manual HTTP requests for authentication, invocation, and response retrieval, the Port node handles all of this automatically, making it easy to build powerful automation workflows that leverage Port's Context Lake.
 
 This guide walks you through installing and configuring Port's custom n8n node in your n8n instance.
 
@@ -28,7 +28,25 @@ Before you begin, ensure you have:
 
 ## Set up n8n instance
 
-If you don't have an n8n instance running, you can set one up using Docker. The location where you mount the n8n data directory is important; this is where you will install the Port n8n node package.
+If you don't have an n8n instance running, you can set one up using Docker or npm. The location where you mount the n8n data directory is important; this is where you will install the Port n8n node package.
+
+### Using npm
+
+If you prefer running n8n directly with npm, install it globally and start it from your terminal.
+
+1. **Install n8n**:
+
+   ```bash
+   npm install n8n -g
+   ```
+
+2. **Start n8n**:
+
+   ```bash
+   n8n start
+   ```
+
+3. **Open n8n** — Visit `http://localhost:5678`.
 
 ### Using Docker (bind mount)
 
@@ -101,9 +119,22 @@ docker compose up -d
 
 ## Install Port's n8n node
 
-Now that you have n8n running, let's install Port's custom node using npm.
+Now that you have n8n running, let's install Port's custom node using any of the options below:
 
-### Install the npm package
+### Install via n8n community node
+
+1. In your n8n instance, go to **Settings**.
+
+2. Select **Community Nodes**.
+
+3. Click **Install**.
+
+4. Enter `@port-labs/n8n-nodes-portio-experimental` as the npm package name.
+
+5. Click **Install** to finish the setup.
+
+
+### Install via terminal
 
 1. **Navigate to your n8n data directory** (the `$n8n_HOME` directory you created earlier):
 
