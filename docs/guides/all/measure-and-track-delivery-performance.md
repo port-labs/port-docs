@@ -67,7 +67,7 @@ We will create several blueprints to model your data. The `service` blueprint sh
 
 <TabItem value="github" label="GitHub">
 
-### Create the GitHub user blueprint
+<h3> Create the GitHub user blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -102,7 +102,7 @@ We will create several blueprints to model your data. The `service` blueprint sh
 
 5. Click `Save` to create the blueprint.
 
-### Create the GitHub repository blueprint
+<h3> Create the GitHub repository blueprint </h3>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -165,7 +165,7 @@ We will create several blueprints to model your data. The `service` blueprint sh
 
 5. Click `Save` to create the blueprint.
 
-### Create or update the GitHub pull request blueprint
+<h3> Create or update the GitHub pull request blueprint </h3>
 
 If you already have a pull request blueprint, you need to add the following properties to it. Otherwise, create a new one.
 
@@ -304,7 +304,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 4. Click `Save` to create or update the blueprint.
 
-### Create the deployment blueprint
+<h3> Create the deployment blueprint </h3>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -382,7 +382,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 <TabItem value="azure-devops" label="Azure DevOps">
 
-### Create the Azure DevOps project blueprint
+<h3> Create the Azure DevOps project blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -444,7 +444,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 5. Click `Save` to create the blueprint.
 
-### Create the Azure DevOps repository blueprint
+<h3> Create the Azure DevOps repository blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -542,7 +542,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 5. Click `Save` to create the blueprint.
 
-### Create the Azure DevOps user blueprint
+<h3> Create the Azure DevOps user blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -582,7 +582,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 5. Click `Save` to create the blueprint.
 
-### Create or update the Azure DevOps pull request blueprint
+<h3> Create or update the Azure DevOps pull request blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. If you have an existing Azure DevOps pull request blueprint, hover over it, click on the `...` button, and select `Edit JSON`. Otherwise, click on `+ Blueprint` and then `Edit JSON`.
@@ -745,7 +745,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 4. Click `Save` to create or update the blueprint.
 
-### Create the Azure DevOps environment blueprint
+<h3> Create the Azure DevOps environment blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -803,7 +803,7 @@ If you already have a pull request blueprint, you need to add the following prop
 
 5. Click `Save` to create the blueprint.
 
-### Create the Azure DevOps pipeline deployment blueprint
+<h3> Create the Azure DevOps pipeline deployment blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
