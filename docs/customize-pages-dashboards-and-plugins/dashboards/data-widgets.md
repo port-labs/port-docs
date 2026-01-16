@@ -11,7 +11,7 @@ Data widgets are visualization widgets that display data from your software cata
 
 ## Number chart
 
-Number charts display a number value related to an entity and its properties.
+Number charts display a number value related to an entity and its properties. Number charts support [drill down](#chart-drill-down).
 
 You can choose one of these chart types:
 * **Display single property** - display a property from a specific entity.
@@ -380,8 +380,9 @@ The following widgets support drill down:
 
 - [Pie chart](#pie-chart) - click a slice to view its entities.
 - [Bar chart](#bar-chart) - click a bar to view its entities.
+- [Number chart](#number-chart) - click the number to view all entities that contribute to the displayed value.
 
-Hover over a segment to see the percentage it represents of the total. For example, in a chart showing programming languages used by services, clicking the JavaScript slice (or bar) shows all services where the language is JavaScript.
+For pie and bar charts, hover over a segment to see the percentage it represents of the total. For example, in a chart showing programming languages used by services, clicking the JavaScript slice (or bar) shows all services where the language is JavaScript.
 
 In this entity view, you can:
 
