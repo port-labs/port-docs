@@ -80,8 +80,9 @@ helm upgrade --install my-ocean-slack-integration port-labs/port-ocean \
   --set integration.config.authType="bearer_token" \
   --set integration.config.apiToken="YOUR_SLACK_BOT_TOKEN" \
   --set integration.config.paginationType="cursor" \
+  --set integration.config.paginationParam="cursor" \
   --set integration.config.cursorPath="response_metadata.next_cursor" \
-  --set integration.config.hasMorePath="response_metadata.next_cursor != null"
+  --set integration.config.hasMorePath="response_metadata.next_cursor"
 ```
 
 <PortApiRegionTip/>
@@ -99,8 +100,9 @@ This table summarizes the available parameters for the installation.
 | `integration.config.authType`   | The authentication type for the API (use `bearer_token` for Slack)                                                                                                                                                                         | bearer_token                                  | ✅        |
 | `integration.config.apiToken`   | Your Slack Bot User OAuth Token (starts with `xoxb-`)                                                                                                                                                                         | xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                  | ✅        |
 | `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, or none)                                                                                                                                                                         | cursor                                  | ✅        |
+| `integration.config.paginationParam` | The query parameter name for the cursor (Slack API uses `cursor`)                                                                                                                                                                         | cursor                                  | ✅        |
 | `integration.config.cursorPath` | JQ expression pointing to the cursor field in the response                                                                                                                                                                         | response_metadata.next_cursor                                  | ✅        |
-| `integration.config.hasMorePath` | JQ expression to determine if there are more pages                                                                                                                                                                         | response_metadata.next_cursor != null                                  | ✅        |
+| `integration.config.hasMorePath` | Path to check if there are more pages.                                                                                                                                                                         | response_metadata.next_cursor                                  | ✅        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                                  | ✅        |
 | `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration)                                                                                                                                                                                                                                                                | custom                                  | ✅        |
 | `integration.identifier`          | Unique identifier for the integration instance                                                                                                                                                                         | my-ocean-slack-integration                                  | ✅        |
@@ -131,8 +133,9 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer_token" \
   -e OCEAN__INTEGRATION__CONFIG__API_TOKEN="YOUR_SLACK_BOT_TOKEN" \
   -e OCEAN__INTEGRATION__CONFIG__PAGINATION_TYPE="cursor" \
+  -e OCEAN__INTEGRATION__CONFIG__PAGINATION_PARAM="cursor" \
   -e OCEAN__INTEGRATION__CONFIG__CURSOR_PATH="response_metadata.next_cursor" \
-  -e OCEAN__INTEGRATION__CONFIG__HAS_MORE_PATH="response_metadata.next_cursor != null" \
+  -e OCEAN__INTEGRATION__CONFIG__HAS_MORE_PATH="response_metadata.next_cursor" \
   -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
   -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
@@ -413,6 +416,10 @@ Slack API responses typically follow this structure:
 
 The actual data array is usually at the root level (e.g., `members`, `channels`, `usergroups`), and pagination information is in `response_metadata.next_cursor`.
 
+:::info User Groups require include_users parameter
+The Slack API's `usergroups.list` endpoint does not return the `users` field by default. To populate the `members` relation, you must include `include_users: "true"` in the `query_params` section of your mapping configuration.
+:::
+
 **To configure the mappings:**
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
@@ -501,6 +508,8 @@ The actual data array is usually at the root level (e.g., `members`, `channels`,
         selector:
           query: 'true'
           data_path: '.usergroups'
+          query_params:
+            include_users: "true"
         port:
           entity:
             mappings:
