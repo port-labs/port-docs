@@ -357,6 +357,17 @@ const config = {
       },
     ],
     [
+      '@signalwire/docusaurus-plugin-llms-txt',
+      {
+        siteTitle: 'Port Documentation',
+        siteDescription: 'Comprehensive guide to Port',
+        depth: 3,
+        content: {
+          enableLlmsFullTxt: true 
+        }
+      },
+    ],
+    [
       "docusaurus-plugin-openapi-docs",
       {
         id: "api",
