@@ -68,7 +68,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 <TabItem value="github" label="GitHub">
 
-### Create the GitHub workflow blueprint
+<h3> Create the GitHub workflow blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -145,7 +145,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 5. Click `Save` to create the blueprint.
 
-### Create the GitHub workflow run blueprint
+<h3> Create the GitHub workflow run blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -286,7 +286,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 5. Click `Save` to create the blueprint.
 
-### Create the workflow state blueprint
+<h3> Create the workflow state blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -345,7 +345,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 <TabItem value="azure-devops" label="Azure DevOps">
 
-### Create the Azure DevOps project blueprint
+<h3> Create the Azure DevOps project blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -407,7 +407,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 5. Click `Save` to create the blueprint.
 
-### Create the Azure DevOps repository blueprint
+<h3> Create the Azure DevOps repository blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -505,7 +505,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 5. Click `Save` to create the blueprint.
 
-### Create the Azure DevOps build blueprint
+<h3> Create the Azure DevOps build blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -600,7 +600,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 
 5. Click `Save` to create the blueprint.
 
-### Create the workflow state blueprint
+<h3> Create the workflow state blueprint </h3>
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
