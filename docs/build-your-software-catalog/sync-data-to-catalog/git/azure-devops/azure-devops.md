@@ -616,7 +616,7 @@ resources:
         repos:
           - group/my-project
     port:
-      itemsToParse: .file.content.dependencies | to_entries
+      itemsToParse: .file.content.parsed.dependencies | to_entries
       entity:
         mappings:
           # Since identifier cannot contain special characters, we are using jq to remove them
@@ -631,17 +631,62 @@ resources:
           relations: {}
 ```
 
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file.  
+The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file.
 In this case, we are parsing the `dependencies` object from the `package.json` file.
+
+:::info File content structure
+When Port ingests JSON or YAML files, the content is available in two forms:
+- **`.file.content.raw`** - The original file content as a string
+- **`.file.content.parsed`** - The parsed JSON/YAML structure
+
+Always use `.file.content.parsed` when accessing structured data from JSON or YAML files.
+:::
 
 Once the object is parsed, we can use the `item` key to refer to each key-value pair within it — where the key is the dependency name, and the value is the version.
 
 This allows us to create an entity for each dependency dynamically.
 
+#### Parsing a JSON array file
+
+If your file contains a JSON array (rather than an object), you can iterate over it directly.
+
+For example, if you have a `services.json` file:
+```json
+[
+  { "name": "api-gateway", "port": 8080, "team": "platform" },
+  { "name": "auth-service", "port": 3000, "team": "security" }
+]
+```
+
+You can create an entity for each service using:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: '**/services.json'
+        repos:
+          - group/my-project
+    port:
+      itemsToParse: .file.content.parsed[]
+      entity:
+        mappings:
+          identifier: .item.name
+          title: .item.name
+          blueprint: '"service"'
+          properties:
+            port: .item.port
+            team: .item.team
+          relations: {}
+```
+
+Since `.file.content.parsed` is already an array, we use `.file.content.parsed[]` to iterate over each element.
 
 ### Multi-document YAML files
 
-For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content` will not resolve to an object, but to an array of objects.
+For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content.parsed` will not resolve to an object, but to an array of objects.
 
 You can use one of these methods to ingest multi-document YAML files:
 
@@ -658,7 +703,7 @@ As a result, you cannot iterate over each YAML document in the multi-document fi
 If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
 
 ```yaml
-itemsToParse: .file.content | if type== "object" then [.] else . end
+itemsToParse: .file.content.parsed | if type== "object" then [.] else . end
 ```
 :::
 
