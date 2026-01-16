@@ -1633,7 +1633,7 @@ export const availableGuides = [
     {
         title: 'Track standards adherence',
         description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
-        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
     },
