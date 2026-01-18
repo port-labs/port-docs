@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 <details>
 <summary><b>Port port-app-config.yml (click to expand)</b></summary>
 
@@ -33,3 +36,21 @@ resources:
             repository: .__repository
 ```
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="branchNames" value="branch-names">
+
+Use `branchNames` to ingest only specific branches. When you set it, the integration fetches those branches explicitly instead of listing all branches using pagination.
+
+```yaml showLineNumbers
+- kind: branch
+  selector:
+    query: "true"
+    # highlight-next-line
+    branchNames: ["main", "develop"]
+```
+
+</TabItem>
+
+</Tabs>
