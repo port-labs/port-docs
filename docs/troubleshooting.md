@@ -250,7 +250,7 @@ If your integration is running but entities are not appearing in your catalog as
    X transformations of batch failed due to empty, null or missing values
    ```
 
-3. **Incorrect property paths**: Ensure the JQ paths in your mapping match the actual structure of the source data. If a path doesn't exist, you'll see:
+3. **Incorrect property paths**: Ensure the JQ paths in your mapping match the actual structure of the source data. If a path doesn't exist, you will see:
    ```
    Unable to find valid data for: {foo:.bar} (null, missing, or misconfigured)
    ```
