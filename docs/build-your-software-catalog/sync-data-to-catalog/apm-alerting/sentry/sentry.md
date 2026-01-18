@@ -410,17 +410,17 @@ In order for the Sentry integration to update the data in Port on real-time chan
 
 ### Create a webhook in Sentry
 
-1. Log in to Sentry with your organization's credentials;
-2. Click the gear icon (Setting) at the left sidebar of the page;
-3. Choose **Developer Settings**;
-4. At the upper corner of this page, click on **Create New Integration**;
-5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button;
+1. Log in to Sentry with your organization's credentials.
+2. Click the gear icon (Setting) at the left sidebar of the page.
+3. Choose **Developer Settings**.
+4. At the upper corner of this page, click on **Create New Integration**.
+5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button.
 6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Webhook URL` - enter the [appropriate URL](#webhook-url-configuration);
-   3. `Overview` - enter a description for the webhook;
-   4. `Permissions` - Grant your webhook **Read** permissions for the **Issue & Event** category;
-   5. `Webhooks` - Under this section, enable the issues checkbox to allow Sentry to report issue events to Port;
+   - `Name` - use a meaningful name such as "Port Webhook".
+   - `Webhook URL` - enter the [appropriate URL](#webhook-url-configuration).
+   - `Overview` - enter a description for the webhook.
+   -`Permissions` - Grant your webhook **Read** permissions for the **Issue & Event** category.
+   5. `Webhooks` - Under this section, enable the issues checkbox to allow Sentry to report issue events to Port.
 7. Click **Save Changes** at the bottom of the page.
 
 :::tip
