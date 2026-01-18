@@ -2,7 +2,7 @@ const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
 
-    "Solutions": ["Security", "Autonomous Ticket Resolution", "Self Healing Incidents", "Engineering Intelligence", "Agentic Work Management"],
+    "Solutions": ["Security", "Engineering Intelligence", "Autonomous Ticket Resolution", "Self Healing Incidents", "Agentic Work Management"],
     "Use-cases": ["K8s for devs", "IaC for devs", "Cloud access management", "Feature flag management", /*"Cloud cost",*/ "Dev environments", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access controls"],
 
