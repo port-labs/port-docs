@@ -211,14 +211,13 @@ This example uses the `branch` kind with `detailed: true` to fetch the latest co
 
 ## Repositories and branch protection rules
 
-The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  The example uses the following selector options:
+The following example demonstrates how to ingest your GitHub repositories and branch protection rules to Port. The example uses the following selector options:
 
-- `protectionRules: true`: Required for this example to fetch the branch protection rules used by the `branchProtection` mapping. If the GitHub repo lacks branch protection permissions, `.__protection_rules` may be empty.
-- `detailed: true`: Optional. Use it only when you need commit-level fields (it adds additional API calls).
+- `protectionRules: true`: Required. Enables fetching branch protection rules, which are needed for the `branchProtection` mapping. If your integration user lacks branch protection permissions, the field `.__protection_rules` will be empty.
 
-:::info Default branch filter
-This example targets only the default branch with `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
-:::
+- `detailed: true`: Optional. Fetches detailed commit data for the branch (such as the last commit and author). If you only need branch protection data, you can omit this for improved performance.
+
+- `branchNames`: Optional[Recommended]. Use to ingest only specific branches by name. When set, the integration fetches those branches explicitly instead of listing all branches using pagination. This reduces API usage and helps avoid performance and memory issues when syncing branch protection rules across many branches.
 
 You can use the following Port blueprint definitions and `port-app-config.yml`:
 

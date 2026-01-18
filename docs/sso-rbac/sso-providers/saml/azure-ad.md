@@ -28,17 +28,27 @@ In order to complete the process you will need to contact us to receive the info
 2. Click on `Enterprise Applications` and create a new application.
 3. Click on `Create your own application` and select `Integrate any other application you don't find in the gallery (Non-gallery)`.
 4. In the getting started section, select the `Set up Single Sign On` button, and choose the SAML method.
-5. Edit the Basic SAML Configuration (step 1) and add the following information (Reach out to Port to receive your `{CONNECTION_NAME}` value):
-    ![AD first step](/img/sso/azure-saml/azure-saml-first-step.png)
-    * Identifier (Entity ID): `urn:auth0:port-prod:{CONNECTION_NAME}`
-    * Reply URL (Assertion Consumer Service URL): `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
-    * Logout URL (This is optional): `https://auth.getport.io/logout`
+5. Edit the Basic SAML Configuration (step 1) and add the following information:
 
-:::info
-The details listed are for organizations hosted in EU.
+   :::note Connection name
+   Reach out to Port to receive your `{CONNECTION_NAME}` value. Replace all occurrences of `{CONNECTION_NAME}` below with the provided value.
+   :::
 
-For US, you will need to use `https://auth.us.getport.io/login/callback?connection={CONNECTION_NAME}` and `https://auth.us.getport.io/logout`.
-:::
+   1. Under **Identifier (Entity ID)**, set: `urn:auth0:port-prod:{CONNECTION_NAME}`.
+
+   2. Under **Reply URL (Assertion Consumer Service URL)**, set: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`.
+
+   3. Under **Logout URL** (optional), set: `https://auth.getport.io/logout`.
+
+   ![AD first step](/img/sso/azure-saml/azure-saml-first-step.png)
+
+   :::info US region
+   The details listed above are for organizations hosted in the EU region.
+
+   For US, use the following URLs instead:
+   - **Reply URL**: `https://auth.us.getport.io/login/callback?connection={CONNECTION_NAME}`
+   - **Logout URL**: `https://auth.us.getport.io/logout`
+   :::
 6. In the `Single sign-on` tab, head to the 2nd section (Attributes & Claims), Click on `Edit` and add a new claim:
     - `Name`: `email_verified`
     - `Source attribute`: `user.accountenabled`

@@ -127,52 +127,23 @@ The `rbacRole` blueprint represents user roles. Each role can have multiple allo
 
 4. Click **Save** to create the blueprint.
 
-<h3> Create the user blueprint </h3>
+<h3> Update the user blueprint </h3>
 
-The `rbacUser` blueprint represents users in your system. Each user can have multiple roles, and through mirror properties, we automatically compute which tools each user is allowed to access.
+The `_user` blueprint is the existing system users blueprint in Port. Each user can have multiple roles, and through mirror properties, we automatically compute which tools each user is allowed to access.
 
-1. Click the **+ Blueprint** button again to create another blueprint.
-2. Click on the **Edit JSON** button.
-3. Copy the definition below and paste it in the editor:
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Search for the `User` blueprint (the system `_user` blueprint).
+3. Click on `{...} Edit JSON`.
+4. Copy and paste the following JSON snippet into the `relations` object:
 
     <details>
-    <summary><b>RBAC User blueprint (Click to expand)</b></summary>
+    <summary><b>RBAC role relation (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
-      "identifier": "rbacUser",
-      "title": "RBAC User",
-      "icon": "User",
-      "schema": {
-        "properties": {
-          "email": {
-            "type": "string",
-            "title": "Email"
-          },
-          "full_name": {
-            "type": "string",
-            "title": "Full Name"
-          },
-          "is_active": {
-            "type": "boolean",
-            "title": "Is Active"
-          }
-        },
-        "required": [
-          "email"
-        ]
-      },
-      "mirrorProperties": {
-        "allowed_tools": {
-          "title": "Allowed Tools",
-          "path": "roles.allowed_tools.runtime_name"
-        }
-      },
-      "calculationProperties": {},
-      "aggregationProperties": {},
       "relations": {
         "roles": {
-          "title": "Roles",
+          "title": "Agent Roles",
           "target": "rbacRole",
           "required": false,
           "many": true
@@ -183,7 +154,62 @@ The `rbacUser` blueprint represents users in your system. Each user can have mul
 
     </details>
 
+5. Copy and paste the following JSON snippet into the `mirrorProperties` object:
+
+    <details>
+    <summary><b>RBAC allowed tools mirror property (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "mirrorProperties": {
+        "allowed_tools": {
+          "title": "Allowed Tools",
+          "path": "roles.allowed_tools.runtime_name"
+        }
+      }
+    }
+    ```
+
+    </details>
+
+6. Click **Save** to create the blueprint.
+
+<h3> Create the region blueprint </h3>
+
+This blueprint stores AWS Region entries (for example, `us-east-1`). The agent uses these entries when it gets tasks related to creating AWS resources such as S3 buckets.
+
+1. Click the **+ Blueprint** button again to create another blueprint.
+2. Click on the **Edit JSON** button.
+3. Copy the definition below and paste it in the editor:
+
+    <details>
+    <summary><b>AWS Region blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "awsRegion",
+      "title": "AWS Region",
+      "icon": "Cloud",
+      "schema": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+
+    </details>
+
 4. Click **Save** to create the blueprint.
+
 
 ### Populate the data model
 
@@ -192,6 +218,7 @@ After creating the blueprints, you need to populate them with your users, roles,
 1. **Create tools** — Navigate to each tool entity and create entries for the tools your AI agents can use (e.g., `calculator`, `wikipedia`, `Create_an_incident_in_PagerDuty`, `Create_a_bucket_in_AWS_S3`).
 2. **Create roles** — Create roles like `admin`, `developer`, `viewer`, and link them to their allowed tools via the `allowed_tools` relation.
 3. **Create users** — Create user entities with their email addresses and link them to their roles via the `roles` relation.
+4. **Create regions** — Create entries like `us-east-1`, `eu-west-1`, and `ap-south-1` so the agent can resolve AWS Region data for resource creation tasks.
 
 
 ## Create n8n workflow
@@ -210,7 +237,7 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
 
     ```json showLineNumbers
     {
-      "name": "Access Control for AI Agents (RBAC) using Port and Slack",
+      "name": "Control AI agent tool access with Port RBAC and Slack mentions",
       "nodes": [
         {
           "parameters": {
@@ -222,18 +249,18 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             },
             "options": {}
           },
-          "id": "f1ef483e-4f84-40c7-957d-191a54ffb80e",
+          "id": "5c4ceb24-7ccd-4b90-b2d7-14d723d08c74",
           "name": "OpenAI Chat Model",
           "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
           "position": [
-            1376,
-            720
+            2448,
+            896
           ],
           "typeVersion": 1.2,
           "credentials": {
             "openAiApi": {
-              "id": "gmbaMvIDGsggs5I9",
-              "name": "OpenAi account"
+              "id": "bJtkwjUh5ICoAtil",
+              "name": "OpenAi account 2"
             }
           }
         },
@@ -260,12 +287,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
               ]
             }
           },
-          "id": "c6ba00c9-8ca2-4cf0-9e2c-24ead9eb7c1b",
+          "id": "132461b5-bd6f-4e68-b623-eaea4c536e3c",
           "name": "Check permissions",
           "type": "@n8n/n8n-nodes-langchain.code",
           "position": [
-            1808,
-            704
+            2880,
+            880
           ],
           "typeVersion": 1,
           "notes": "A tool to check user's allowed tools and permissions"
@@ -291,28 +318,34 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
                   "name": "allowed_tools",
                   "type": "array",
                   "value": "={{ $json.entity.properties.allowed_tools || [] }}"
+                },
+                {
+                  "id": "26d0f442-4cd3-4930-a80b-fc471226dd36",
+                  "name": "regions",
+                  "value": "={{ $('Get Regions from Port').item.json.entities.map(e => e.identifier) }}",
+                  "type": "array"
                 }
               ]
             },
             "options": {}
           },
-          "id": "3df9b9f5-c0a2-4905-95aa-285b492f2ec0",
+          "id": "0a041ea8-f282-4120-8c4e-5e86df4373d2",
           "name": "Set input",
           "type": "n8n-nodes-base.set",
           "position": [
-            1504,
-            448
+            2576,
+            624
           ],
           "typeVersion": 3.4
         },
         {
           "parameters": {},
-          "id": "76529936-80ea-4f94-9a06-bae3b6ea0ce3",
+          "id": "5e15aaad-cf19-401b-a96a-97b9d028d177",
           "name": "calculator",
           "type": "@n8n/n8n-nodes-langchain.toolCalculator",
           "position": [
-            1856,
-            960
+            2928,
+            1136
           ],
           "typeVersion": 1
         },
@@ -341,12 +374,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             },
             "options": {}
           },
-          "id": "eae759d7-fa4a-4993-bbcf-cc430f2dfa60",
+          "id": "a5c4e743-3894-45c7-a3b9-fbf42ac3eed1",
           "name": "Unknown user",
           "type": "n8n-nodes-base.if",
           "position": [
-            1152,
-            320
+            2224,
+            496
           ],
           "typeVersion": 2.2
         },
@@ -357,12 +390,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "width": 380,
             "color": 7
           },
-          "id": "7d24fc8e-36e7-4087-88cc-7f1c725ce814",
+          "id": "966a41d6-68b0-4629-84f3-0d925b6e88e3",
           "name": "Sticky Note2",
           "type": "n8n-nodes-base.stickyNote",
           "position": [
-            1728,
-            656
+            2800,
+            832
           ],
           "typeVersion": 1
         },
@@ -373,12 +406,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "width": 380,
             "color": 7
           },
-          "id": "885b0117-bae1-4aac-a91f-e140259b32e2",
+          "id": "9394b13a-262f-49fa-9b3e-99f1a17766a3",
           "name": "Sticky Note4",
           "type": "n8n-nodes-base.stickyNote",
           "position": [
-            1664,
-            384
+            2736,
+            560
           ],
           "typeVersion": 1
         },
@@ -389,12 +422,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "width": 220,
             "color": 7
           },
-          "id": "25f17f39-a777-4386-b14d-1ed7db3c54f4",
+          "id": "b9cf7ecf-5372-4e75-be15-eebbd79a458f",
           "name": "Sticky Note5",
           "type": "n8n-nodes-base.stickyNote",
           "position": [
-            1440,
-            384
+            2512,
+            560
           ],
           "typeVersion": 1
         },
@@ -405,12 +438,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "width": 220,
             "color": 7
           },
-          "id": "b82c9149-e583-4c98-a6d8-c92080fd44ba",
+          "id": "f307100d-d57d-42a8-bc1f-d93a6cc62a82",
           "name": "Sticky Note11",
           "type": "n8n-nodes-base.stickyNote",
           "position": [
-            256,
-            240
+            1120,
+            416
           ],
           "typeVersion": 1
         },
@@ -418,15 +451,15 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
           "parameters": {
             "content": "Checks if the user was found in Port",
             "height": 240,
-            "width": 220,
+            "width": 428,
             "color": 7
           },
-          "id": "b74fcbc1-aa66-440a-9a75-340858bba6c5",
+          "id": "1be0d592-609b-45b6-9970-ad7d49f43e96",
           "name": "Sticky Note12",
           "type": "n8n-nodes-base.stickyNote",
           "position": [
-            1088,
-            256
+            1952,
+            432
           ],
           "typeVersion": 1
         },
@@ -437,24 +470,24 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             ],
             "channelId": {
               "__rl": true,
-              "value": "C09QD4FU16C",
+              "value": "channelId",
               "mode": "id"
             },
             "options": {}
           },
-          "type": "n8n-nodes-base.slackTrigger",
-          "typeVersion": 1,
-          "position": [
-            304,
-            320
-          ],
-          "id": "2878f211-03fb-4d45-9f1e-00b3b56feded",
+          "id": "e1f41863-12e5-4d35-8d6c-2f14884fb4ad",
           "name": "Slack Trigger",
-          "webhookId": "cfc69683-8076-4e60-9cf3-c0b5f3d8df8b",
+          "type": "n8n-nodes-base.slackTrigger",
+          "position": [
+            1168,
+            496
+          ],
+          "webhookId": "a95a0f15-3d4d-4e26-b320-e6a285c63dc6",
+          "typeVersion": 1,
           "credentials": {
             "slackApi": {
-              "id": "RR34a44wNzvSSqhd",
-              "name": "Slack account"
+              "id": "bmLMktmeZdmPlgBG",
+              "name": "Slack account 2"
             }
           }
         },
@@ -463,60 +496,61 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "select": "channel",
             "channelId": {
               "__rl": true,
-              "value": "C09QD4FU16C",
+              "value": "={{ $('Slack Trigger').item.json.channel }}",
               "mode": "id"
             },
-            "text": "hello test",
+            "text": "User not found in Port. Please contact your administrator.",
             "otherOptions": {}
           },
-          "type": "n8n-nodes-base.slack",
-          "typeVersion": 2.3,
-          "position": [
-            1504,
-            208
-          ],
-          "id": "302b2338-f9b9-4f58-a012-4a4318ef95e9",
+          "id": "0204fb6e-05b1-46c4-8d09-d7b8a8666b01",
           "name": "Send a message",
-          "webhookId": "95e8694f-4e9d-4e1a-a629-398749463b51",
+          "type": "n8n-nodes-base.slack",
+          "position": [
+            2576,
+            384
+          ],
+          "webhookId": "1a280ab3-5b22-40cf-9355-73e33596d505",
+          "typeVersion": 2.3,
           "credentials": {
             "slackApi": {
-              "id": "RR34a44wNzvSSqhd",
-              "name": "Slack account"
+              "id": "bmLMktmeZdmPlgBG",
+              "name": "Slack account 2"
             }
           }
         },
         {
           "parameters": {
-            "url": "=https://api.port.io/v1/blueprints/rbacUser/entities/{{ $('Get user\\'s slack profile').item.json.email }}",
-            "authentication": "genericCredentialType",
-            "genericAuthType": "httpBearerAuth",
+            "url": "=https://api.port.io/v1/blueprints/_user/entities/{{ $('Get user\\'s slack profile').item.json.email }}",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "={{ $('Get Port access token').item.json.tokenType }} {{ $('Get Port access token').item.json.accessToken }}"
+                }
+              ]
+            },
             "options": {}
           },
-          "type": "n8n-nodes-base.httpRequest",
-          "typeVersion": 4.3,
-          "position": [
-            944,
-            320
-          ],
-          "id": "0299184e-ccb8-4f76-8eab-46e37dc5e218",
+          "id": "2b119903-8698-4d05-b6ed-d50ed3f40fd0",
           "name": "Get user permission from Port",
-          "credentials": {
-            "httpBearerAuth": {
-              "id": "JJ4pn8WYRmSewFW8",
-              "name": "Bearer Auth account"
-            }
-          }
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [
+            2016,
+            496
+          ],
+          "typeVersion": 4.3
         },
         {
           "parameters": {},
+          "id": "76183718-358b-443d-af04-4b7cef4130b7",
+          "name": "Wikipedia",
           "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
-          "typeVersion": 1,
           "position": [
-            1984,
-            976
+            3056,
+            1152
           ],
-          "id": "56caebec-0e6f-4eae-8361-012632e11022",
-          "name": "Wikipedia"
+          "typeVersion": 1
         },
         {
           "parameters": {
@@ -525,22 +559,22 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "resource": "incident",
             "operation": "create",
             "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
-            "serviceId": "P94D8C0",
+            "serviceId": "PUKOVRM",
             "email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email', ``, 'string') }}",
             "additionalFields": {},
             "conferenceBridgeUi": {}
           },
-          "type": "n8n-nodes-base.pagerDutyTool",
-          "typeVersion": 1,
-          "position": [
-            2176,
-            960
-          ],
-          "id": "686117ca-1cd3-4c69-bb51-8b8b5afabf68",
+          "id": "4f99e983-0ca3-4e79-8e55-bf4745531bf0",
           "name": "Create an incident in PagerDuty",
+          "type": "n8n-nodes-base.pagerDutyTool",
+          "position": [
+            3248,
+            1136
+          ],
+          "typeVersion": 1,
           "credentials": {
             "pagerDutyApi": {
-              "id": "dnfKYneoVaktq8V6",
+              "id": "LNKkdnqHKHFCQsm6",
               "name": "PagerDuty account"
             }
           }
@@ -548,22 +582,22 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
         {
           "parameters": {
             "resource": "bucket",
-            "name": "=test-isaac-n8n-buckets-v2",
+            "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BucketName', ``, 'string') }}",
             "additionalFields": {
               "region": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Region', ``, 'string') }}"
             }
           },
-          "type": "n8n-nodes-base.awsS3Tool",
-          "typeVersion": 2,
-          "position": [
-            1696,
-            960
-          ],
-          "id": "c65a5d76-3a58-4c6e-bdfd-95129a64c8a2",
+          "id": "60a35b13-fa61-4b86-91e6-3e0b849b930f",
           "name": "Create a bucket in AWS S3",
+          "type": "n8n-nodes-base.awsS3Tool",
+          "position": [
+            2768,
+            1136
+          ],
+          "typeVersion": 2,
           "credentials": {
             "aws": {
-              "id": "ZK1qXiYwwiKipKkj",
+              "id": "ymYqVmcWvZ3QARX6",
               "name": "AWS (IAM) account"
             }
           }
@@ -574,23 +608,23 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "operation": "getProfile",
             "user": {
               "__rl": true,
-              "value": "={{ $json.user }}",
-              "mode": "id"
+              "mode": "id",
+              "value": "={{ $json.user }}"
             }
           },
-          "type": "n8n-nodes-base.slack",
-          "typeVersion": 2.3,
-          "position": [
-            528,
-            320
-          ],
-          "id": "8114fb43-7c55-4a6e-85b5-3d9f2d6e73e3",
+          "id": "2a538a0c-3539-4511-8ea9-63002a6e7c2a",
           "name": "Get user's slack profile",
-          "webhookId": "4c089606-a548-4756-948e-12b22f6b78cb",
+          "type": "n8n-nodes-base.slack",
+          "position": [
+            1392,
+            496
+          ],
+          "webhookId": "f72543b5-4a1a-4776-9d40-c6537aa8d835",
+          "typeVersion": 2.3,
           "credentials": {
             "slackApi": {
-              "id": "RR34a44wNzvSSqhd",
-              "name": "Slack account"
+              "id": "bmLMktmeZdmPlgBG",
+              "name": "Slack account 2"
             }
           }
         },
@@ -603,26 +637,26 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "jsonBody": "{\n  \"clientId\": \"REPLACE WITH CLIENT ID\",\n  \"clientSecret\": \"REPLACE WITH CLIENT SECRET\"\n}",
             "options": {}
           },
+          "id": "50b8dda9-26c5-41ac-8f47-a88f688d8b81",
+          "name": "Get Port access token",
           "type": "n8n-nodes-base.httpRequest",
-          "typeVersion": 4.3,
           "position": [
-            736,
-            320
+            1600,
+            496
           ],
-          "id": "bd91d8a6-5ab8-4329-aa84-ffafc34e5688",
-          "name": "Get Port access token"
+          "typeVersion": 4.3
         },
         {
           "parameters": {
             "sessionIdType": "customKey",
             "sessionKey": "={{ $json.name}}"
           },
-          "id": "77771654-bfb9-4c34-b644-d4d6eeb15d37",
+          "id": "bcad96f3-3279-465c-8378-08656dd71e88",
           "name": "Chat Memory",
           "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
           "position": [
-            1568,
-            720
+            2640,
+            896
           ],
           "typeVersion": 1.3
         },
@@ -631,64 +665,98 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             "select": "channel",
             "channelId": {
               "__rl": true,
-              "value": "={{ $('Slack Trigger').item.json.channel }}",
-              "mode": "id"
+              "mode": "id",
+              "value": "={{ $('Slack Trigger').item.json.channel }}"
             },
             "text": "={{ $json.output }}",
             "otherOptions": {}
           },
-          "type": "n8n-nodes-base.slack",
-          "typeVersion": 2.3,
-          "position": [
-            2112,
-            448
-          ],
-          "id": "b75f26a7-5b16-4bac-b3ef-0f54420af8c0",
+          "id": "74000745-d221-4b0c-97fa-25b1f9c1a0f8",
           "name": "Send output message",
-          "webhookId": "5df57b85-2869-4290-9a90-60575aa15186",
+          "type": "n8n-nodes-base.slack",
+          "position": [
+            3184,
+            624
+          ],
+          "webhookId": "080cefa9-f770-407e-88b6-6880dee871fb",
+          "typeVersion": 2.3,
           "credentials": {
             "slackApi": {
-              "id": "RR34a44wNzvSSqhd",
-              "name": "Slack account"
+              "id": "bmLMktmeZdmPlgBG",
+              "name": "Slack account 2"
             }
           }
         },
         {
           "parameters": {
-            "content": "## AI Agent Access Control (Port + Slack)\n\nThis workflow enables dynamic tool access control for AI agents based on user roles and tool definitions.\n\n### How it works\n1. Listen for Slack mentions and fetch the user’s Slack profile to identify who sent the request.\n2. Request a Port access token and fetch the user entity to read roles and allowed_tools.\n3. Build the agent input and run a permission check that replaces any unauthorized tool with a fixed \\\"not authorized\\\" tool.\n4. Run the agent (with chat memory and the OpenAI model) so it can call only allowed tools (Wikipedia, PagerDuty, S3, calculator, etc.) and produce a validated response.\n5. Send the agent’s final output back to the Slack channel or perform allowed actions (create incidents, create buckets) only when permitted.\n\n### Setup\n- [ ] Connect your Slack account and set the bot to listen to mentions in the target channel.\n- [ ] Add OpenAI API key (or LangChain model credentials).\n- [ ] Register for a free account with Port.io\n- [ ] Connect your Port.io account and add the API key/credentials.\n- [ ] Configure RBAC entries in Port: set allowed_tools for each user or role.\n- [ ] Connect external tool accounts used by the agent (PagerDuty, AWS S3, etc.).\n- [ ] Verify the Slack channel ID and invite the bot to the channel.",
+            "content": "## AI Agent Access Control (Port + Slack)\n\nThis workflow adds role-based access control to AI agents. Users @mention the bot in Slack, and the workflow checks their permissions in Port before letting the agent use any tools.\n\n### How it works\n1. Slack trigger picks up @mentions and gets the user's email.\n2. Authenticates with Port and looks up the user in the _user blueprint.\n3. If the user exists, reads their allowed_tools array.\n4. The LangChain code node filters tools at runtime, swapping any unauthorized tool with a \"not authorized\" stub.\n5. AI agent runs with only permitted tools, then posts the response back to Slack.\n\n### Setup\n- [ ] Connect your Slack account and set the channel ID.\n- [ ] Add your OpenAI API key.\n- [ ] Get a free Port account at port.io.\n- [ ] Create the [rbac blueprints](https://docs.port.io/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port/#set-up-the-port-data-model) in Port with an allowed_tools property (string array).\n- [ ] Add user entities with their email as identifier and allowed tools listed.\n- [ ] Replace the Port client ID and secret in the \"Get Port access token\" node.\n- [ ] Connect any tool credentials you want to use (PagerDuty, AWS, etc.).\n- [ ] Invite the bot to your Slack channel.",
             "height": 576,
             "width": 688
           },
+          "id": "fffead23-643d-48ef-9e17-ca894ee75967",
+          "name": "Sticky Note",
           "type": "n8n-nodes-base.stickyNote",
-          "typeVersion": 1,
           "position": [
-            -496,
-            64
+            368,
+            240
           ],
-          "id": "97af7be9-a451-4f68-8f49-7cc327b41633",
-          "name": "Sticky Note"
+          "typeVersion": 1
         },
         {
           "parameters": {
             "promptType": "define",
             "text": "={{ $('Slack Trigger').item.json.text }}",
             "options": {
-              "systemMessage": "=You are a personal assistant. The name of the current user is \"{{ $json.name }}\"\nYou MUST only use the provided tools to process any user input. Never use general knowledge to answer questions. If you can't use a tool, tell the user why.\n\nBelow are the list of allowed tools for this user:\n{{ $json.allowed_tools }}",
+              "systemMessage": "=You are a personal assistant. The name of the current user is \"{{ $json.name }}\"\nYou MUST only use the provided tools to process any user input. Never use general knowledge to answer questions. If you can't use a tool, tell the user why.\n\nBelow are the list of allowed tools for this user:\n{{ $json.allowed_tools }}\n\nRegions available to use when interacting with AWS: {{ $json.regions }}",
               "returnIntermediateSteps": true
             }
           },
-          "id": "623328d8-e9ad-431e-b3ca-df0cdbcb7430",
+          "id": "a5396cc8-81f7-454d-9e0f-fe5bf9d87652",
           "name": "AI Agent",
           "type": "@n8n/n8n-nodes-langchain.agent",
           "position": [
-            1728,
-            448
+            2800,
+            624
           ],
           "typeVersion": 1.8
+        },
+        {
+          "parameters": {
+            "url": "https://api.port.io/v1/blueprints/region/entities",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "value": "={{ $('Get Port access token').item.json.tokenType }} {{ $('Get Port access token').item.json.accessToken }}"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1792,
+            496
+          ],
+          "id": "076909ce-1054-41ef-8cf7-a3d85a56c493",
+          "name": "Get Regions from Port"
         }
       ],
       "pinData": {},
       "connections": {
+        "AI Agent": {
+          "main": [
+            [
+              {
+                "node": "Send output message",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
         "Set input": {
           "main": [
             [
@@ -700,12 +768,34 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             ]
           ]
         },
+        "Wikipedia": {
+          "ai_tool": [
+            [
+              {
+                "node": "Check permissions",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
         "calculator": {
           "ai_tool": [
             [
               {
                 "node": "Check permissions",
                 "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Chat Memory": {
+          "ai_memory": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_memory",
                 "index": 0
               }
             ]
@@ -723,6 +813,17 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             [
               {
                 "node": "Set input",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Slack Trigger": {
+          "main": [
+            [
+              {
+                "node": "Get user's slack profile",
                 "type": "main",
                 "index": 0
               }
@@ -751,56 +852,12 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             ]
           ]
         },
-        "Slack Trigger": {
+        "Get Port access token": {
           "main": [
             [
               {
-                "node": "Get user's slack profile",
+                "node": "Get Regions from Port",
                 "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Get user permission from Port": {
-          "main": [
-            [
-              {
-                "node": "Unknown user",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Wikipedia": {
-          "ai_tool": [
-            [
-              {
-                "node": "Check permissions",
-                "type": "ai_tool",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Create an incident in PagerDuty": {
-          "ai_tool": [
-            [
-              {
-                "node": "Check permissions",
-                "type": "ai_tool",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Create a bucket in AWS S3": {
-          "ai_tool": [
-            [
-              {
-                "node": "Check permissions",
-                "type": "ai_tool",
                 "index": 0
               }
             ]
@@ -817,7 +874,40 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
             ]
           ]
         },
-        "Get Port access token": {
+        "Create a bucket in AWS S3": {
+          "ai_tool": [
+            [
+              {
+                "node": "Check permissions",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get user permission from Port": {
+          "main": [
+            [
+              {
+                "node": "Unknown user",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Create an incident in PagerDuty": {
+          "ai_tool": [
+            [
+              {
+                "node": "Check permissions",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get Regions from Port": {
           "main": [
             [
               {
@@ -827,41 +917,20 @@ We will create an n8n workflow that uses Port as the RBAC source of truth. The w
               }
             ]
           ]
-        },
-        "Chat Memory": {
-          "ai_memory": [
-            [
-              {
-                "node": "AI Agent",
-                "type": "ai_memory",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "AI Agent": {
-          "main": [
-            [
-              {
-                "node": "Send output message",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
         }
       },
       "active": false,
       "settings": {
-        "executionOrder": "v1"
+        "executionOrder": "v1",
+        "availableInMCP": false
       },
-      "versionId": "d43fce48-7be5-473d-a216-14cc4d2a4d37",
+      "versionId": "0cd92b77-2f77-46e0-aa63-5424cc642de2",
       "meta": {
-        "templateId": "3988",
+        "templateId": "12062",
         "templateCredsSetupCompleted": true,
-        "instanceId": "cf1d54a0176ed58dce866451207aa20b247a40741885568f562f6c544c560a67"
+        "instanceId": "ece285d5f6d021267c1bf415cc6f43f61f89e93c51704a3846513e293fe52759"
       },
-      "id": "syjUyGUQ4jjp7UCh",
+      "id": "JxGoWSeBkNUoBvTc",
       "tags": []
     }
     ```
