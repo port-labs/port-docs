@@ -35,9 +35,9 @@ Some examples include:
   - A dashboard for **R&D managers** to track the performance of APIs and services.
   - A dashboard for **security teams** to track access control and security policies.
   - Port's live demo contains many dashboards that you can use as inspiration, for example:
-    - The demo's [homepage](https://showcase.port.io/organization/home).
-    - A developer's ["Plan my day" dashboard](https://showcase.port.io/plan_my_day).
-    - A security ["Code alerts" dashboard](https://showcase.port.io/code_alerts).
+    - The demo's [homepage](https://demo.port.io/organization/home).
+    - A developer's ["Plan my day" dashboard](https://demo.port.io/plan_my_day).
+    - A security ["Code alerts" dashboard](https://demo.port.io/code_alerts).
 
 Dashboards can be created/modified in 3 locations:
   - Your portal's homepage.

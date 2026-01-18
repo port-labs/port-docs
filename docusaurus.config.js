@@ -245,7 +245,7 @@ const config = {
               },
               {
                 label: "Demo",
-                href: "https://showcase.port.io",
+                href: "https://demo.port.io",
               },
               {
                 label: "GitHub",

@@ -15,7 +15,7 @@ This is done using two powerful tools:
 Actions are executable pieces of logic that developers or AI agents can run. You can create a wide range of personalized, controlled actions to scaffold a service, provision a cloud resource, or any other logic that serves your organization. Actions drive developer productivity by providing a consistent and repeatable way to perform common tasks, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 :::tip Live demo
-For real-world examples of self-service actions, check out our [live demo](https://showcase.port.io/self-serve).
+For real-world examples of self-service actions, check out our [live demo](https://demo.port.io/self-serve).
 :::
 
 For more information and instructions for creating self-service actions, click [here](/actions-and-automations/create-self-service-experiences).
