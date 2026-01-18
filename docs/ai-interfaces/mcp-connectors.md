@@ -64,9 +64,9 @@ Once your admin has configured MCP connectors, you need to authenticate your per
 
 1. Click your **avatar** in the top-right corner of Port.
 2. Select **MCP Servers**.
-3. In the modal, select the **External MCP servers** tab.
+3. In the modal, select the **MCP External** tab.
 4. You will see the MCP servers your admin has made available.
-5. Click on one and complete the OAuth authentication flow.
+5. Click **Connect** on one and complete the OAuth authentication flow.
 6. The MCP server is now available in all Port AI interfaces.
 
 ### From Port AI chat
@@ -89,6 +89,8 @@ After authenticating, you can toggle which tools are active for your account:
 You can only toggle tools that your admin has enabled. Tools not added by the admin will not appear.
 
 ### From your IDE
+
+{/* TODO: Talk with Stav about this flow */}
 
 When using MCP clients (Cursor, Claude Desktop, VS Code):
 
