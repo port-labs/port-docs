@@ -126,7 +126,7 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 ## Pie chart
 
-Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
+Pie charts illustrate data from entities in your software catalog divided by categories and entity properties. Pie charts support [drill down](#chart-drill-down).
 
 <img src='/img/software-catalog/widgets/pieChartExample.png' width='60%' style={{border:'1px', borderRadius:'6px'}}/>
 
@@ -142,30 +142,13 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules) | []      | `false`  |
 
-### Pie chart drill down
-
-Hover over a pie chart slice to see the percentage it represents of the total.
-
-Click a slice to open a temporary entity view listing the entities included in that slice. For example, in a chart showing programming languages used by services, clicking the JavaScript slice shows all services where the language is JavaScript.
-
-In this entity view, you can:
-
-- Add filters to further refine the displayed entities.
-- Group entities by other properties.
-- Customize the table (for example, columns and sorting).
-
-:::info Temporary view
-The entity view opened from a pie chart slice is temporary and can not be saved. Any filters, grouping, or table customizations you apply are lost when you leave this view.
-:::
-
 <h3>Limitations</h3>
 
-- Pie charts can display **up to 14 slices**. If the breakdown contains more than 14 values, the remaining values are grouped into `Other`.
-- Drill down is not available when the breakdown property is a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/), [scorecard](/scorecards/concepts-and-structure), or [scorecard rule](/scorecards/concepts-and-structure). In these cases, clicking a slice will open an empty view.
+Pie charts can display **up to 14 slices**. If the breakdown contains more than 14 values, the remaining values are grouped into `Other`.
 
 ## Bar chart
 
-Bar charts illustrate data from entities in your software catalog divided by categories and entity properties, displayed as vertical bars.
+Bar charts illustrate data from entities in your software catalog divided by categories and entity properties, displayed as vertical bars. Bar charts support [drill down](#chart-drill-down).
 
 <img src='/img/software-catalog/widgets/barChartWidgetExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 
@@ -183,7 +166,7 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 
 **Limitations**
 
-- Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
+Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
 
 ## Line chart
 
@@ -388,6 +371,31 @@ This widget displays information about a specific entity, including its properti
 Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
 
 <img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
+
+## Chart drill down
+
+Drill down lets you select a segment in a chart to view the individual entities that comprise that data point.
+
+The following widgets support drill down:
+
+- [Pie chart](#pie-chart) - click a slice to view its entities.
+- [Bar chart](#bar-chart) - click a bar to view its entities.
+
+Hover over a segment to see the percentage it represents of the total. For example, in a chart showing programming languages used by services, clicking the JavaScript slice (or bar) shows all services where the language is JavaScript.
+
+In this entity view, you can:
+
+- Add filters to further refine the displayed entities.
+- Group entities by other properties.
+- Customize the table (for example, columns and sorting).
+
+:::info Temporary view
+The entity view opened from drill down is temporary and cannot be saved. Any filters, grouping, or table customizations you apply are lost when you leave this view.
+:::
+
+<h3>Limitations</h3>
+
+Drill down is not available when the breakdown property is a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/), [scorecard](/scorecards/concepts-and-structure), or [scorecard rule](/scorecards/concepts-and-structure). In these cases, clicking an element will open an empty view.
 
 ## Custom empty state
 

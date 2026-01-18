@@ -491,18 +491,17 @@ jobs:
       # Checkout the workflow's repository
       - uses: actions/checkout@v4
       
-      # Extract repository name
+      # Extract repository name from the service's repository property
       - name: Extract repository name
         id: repo-name
         run: |
-          entity="${{ fromJson(inputs.port_context).entity }}"
-          repo_name=${entity#*/}  # Remove everything before the first '/'
-          echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
+          repository="${{ fromJson(inputs.port_context).entity.properties.repository }}"
+          echo "repo_name=$repository" >> $GITHUB_OUTPUT
           
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{ steps.repo-name.outputs.repo_name }}"
+          repository: "${{ steps.repo-name.outputs.repo_name }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           
