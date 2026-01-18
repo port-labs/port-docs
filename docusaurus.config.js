@@ -361,7 +361,7 @@ const config = {
       {
         siteTitle: 'Port Documentation',
         siteDescription: 'Comprehensive guide to Port',
-        depth: 3,
+        depth: 4,
         content: {
           enableLlmsFullTxt: true 
         }
