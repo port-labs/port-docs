@@ -125,6 +125,12 @@ Additionally, you can configure your selector to limit the number of closed pull
     since: 60  # Fetch closed PRs within 60 days. Please note that this flag may cause rate limits.
 ```
 
+:::caution Pull request performance impact
+
+To prevent rate limits and/or performance degradation, if you intend to ingest closed pull requests, you must add a filtering criteria such as `since` and/or `maxResults` to limit the number of items ingested. The example above demonstrates this by retrieving 50 results from pull requests closed within the last 60 days.
+
+:::
+
 You can also choose which GitHub API to use for pull requests. By default, the integration uses the REST API, but you can switch to GraphQL by adding an `api` selector:
 
 ```yaml showLineNumbers
