@@ -18,7 +18,7 @@ Port offers two encryption options:
 - **Port-managed encryption** - Uses your organization's client secret as the encryption key.
 - **Client-side encryption** - Gives you full control over key management by using your own RSA key pair.
 
-## 💡 Common secret usage
+## Common secret usage
 
 The secret input type can be used for sensitive information, such as:
 
@@ -58,7 +58,7 @@ Port-managed encryption uses the [AES-256-GCM](https://www.nist.gov/publications
 }
 ```
 
-The encrypted value is formatted as: `[IV (16 bytes)][ciphertext][MAC (16 bytes)]`, encoded in base64. The encryption key is the first 32 bytes of your organization's [Client Secret](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+The encrypted value is formatted as: `[IV (16 bytes)][ciphertext][MAC (16 bytes)]`, encoded in base64. The encryption key is the first 32 bytes of your organization's [client secret](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 
 </TabItem>
 
@@ -166,7 +166,7 @@ Secret inputs support both `string` and `object` types. You can use either encry
 
 For sensitive information that contains line breaks, such as SSL/TLS certificates, private keys, or configuration files, you can combine the multi-line text format with encryption.
 
-Multi-line secret inputs provide a larger text area for input and support both encryption methods. You can decrypt them using the same methods shown in the [Handling the Payload](#handling-the-payload) section.
+Multi-line secret inputs provide a larger text area for input and support both encryption methods. You can decrypt them using the same methods shown in the [handling the payload](#handling-the-payload) section.
 
 This is particularly useful when you need to send certificates to your backend workflows. For example, when configuring SSL certificates for cloud resources or setting up authentication with certificate-based credentials.
 
@@ -337,8 +337,9 @@ app.listen(port, () => {
 Examples for decrypting properties encrypted with `client-side` hybrid encryption.
 
 The decryption process involves two steps:
-1. Decrypt (unwrap) the AES key using your RSA private key
-2. Decrypt the data using the unwrapped AES key
+
+1. Decrypt (unwrap) the AES key using your RSA private key.
+2. Decrypt the data using the unwrapped AES key.
 
 <Tabs groupId="language" queryString defaultValue="client-side-python" values={[
 {label: "Python Webhook", value: "client-side-python"},
