@@ -155,7 +155,7 @@ For example, to create a filter that applies only to actions with the `GitLab` m
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
 ```
 
-#### Deploying multiple agents across clusters
+#### Deploy multiple agents across clusters
 
 If you have multiple clusters without network connectivity between them, you can deploy a separate port-agent on each cluster. All agents consume from the same Kafka topic, but each agent uses a different `enabled` filter to process only the actions relevant to its cluster.
 
