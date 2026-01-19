@@ -10,6 +10,7 @@ import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-inte
 import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import LiveEventsNote from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_live_events_note.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
@@ -48,13 +49,15 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Sentry" showLiveEventsGuide={true}/>
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+<LiveEventsNote />
 
 
 <h2> Prerequisites </h2>
@@ -78,8 +81,9 @@ To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-sentry-integration` in your git repository with the content:
 
-:::note
+:::note Update the integration configuration
 Remember to replace the placeholders for `SENTRY_HOST` `SENTRY_ORGANIZATION` and `SENTRY_TOKEN`.
+`SENTRY_WEBHOOK_SECRET` is only required if you plan to use webhooks.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -95,8 +99,10 @@ integration:
     sentryOrganization: SENTRY_ORGANIZATION
   // highlight-end
   secrets:
-  // highlight-next-line
+  // highlight-start
     sentryToken: SENTRY_TOKEN
+    sentryWebhookSecret: SENTRY_WEBHOOK_SECRET
+  // highlight-end
 ```
 <br/>
 
@@ -174,6 +180,7 @@ Note the parameters specific to this integration, they are last in the table.
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
 | `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Member`, `Team`, `Organization`, `Project` and `Issue & Event` | ✅        |
+| `integration.secrets.sentryWebhookSecret` | The [custom internal integration](https://docs.sentry.io/organization/integrations/integration-platform/) client secret. This requires `read` permissions for `Issue & Event`                                                                      | ❌        |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
 | `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
 
@@ -225,6 +232,7 @@ jobs:
           port_base_url: https://api.getport.io
           config: |
             sentry_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }}
+            sentry_webhook_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET }}
             sentry_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }}
             sentry_organization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }}
 ```
@@ -254,6 +262,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
@@ -268,6 +277,7 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -319,6 +329,7 @@ steps:
        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$(OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN) \
+      -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$(OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET) \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$(OCEAN__INTEGRATION__CONFIG__SENTRY_HOST) \
       -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION) \
       -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
@@ -369,6 +380,7 @@ ingest_data:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__SENTRY_WEBHOOK_SECRET \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
         -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -392,6 +404,37 @@ ingest_data:
 </Tabs>
 
 
+## Live events
+
+In order for the Sentry integration to update the data in Port on real-time changes in Sentry, you need to create a webhook in Sentry.
+
+### Create a webhook in Sentry
+
+1. Log in to Sentry with your organization's credentials.
+2. Click the gear icon (Setting) at the left sidebar of the page.
+3. Choose **Developer Settings**.
+4. At the upper corner of this page, click on **Create New Integration**.
+5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button.
+6. Input the following details:
+   - `Name` - use a meaningful name such as "Port Webhook".
+   - `Webhook URL` - enter the [appropriate URL](#webhook-url-configuration).
+   - `Overview` - enter a description for the webhook.
+   -`Permissions` - Grant your webhook **Read** permissions for the **Issue & Event** category.
+   5. `Webhooks` - Under this section, enable the issues checkbox to allow Sentry to report issue events to Port.
+7. Click **Save Changes** at the bottom of the page.
+
+:::tip Update the webhook secret in your integration configuration
+Now that the webhook is created, you can take the secret value generated by Sentry and use it to update the `sentryWebhookSecret` in your integration configuration. For more details on setting up internal integrations in Sentry, see the [Sentry documentation](https://docs.sentry.io/organization/integrations/integration-platform/#internal-integrations).
+:::
+
+#### Webhook URL configuration
+
+Depending on your installation method, the webhook URL will be different:
+
+- **Hosted by Port**: The webhook URL is provided in the Port UI after you created the integration.
+- **Self-hosted**: The webhook URL is the address where your integration instance is reachable, followed by `/ingress`. For example: `https://sentry-integration.yourdomain.com/ingress`.
+- **Alternative installation via webhook**: The webhook URL is the `url` key you received after creating the webhook configuration in Port.
+
 ## Configuration
 
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
@@ -403,7 +446,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration for this integration:
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 deleteDependentEntities: true
@@ -505,7 +548,7 @@ Examples of blueprints and the relevant integration configurations:
 ### User
 
 <details>
-<summary>User blueprint</summary>
+<summary><b>User blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -570,7 +613,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -600,7 +643,7 @@ resources:
 ### Team
 
 <details>
-<summary>Team blueprint</summary>
+<summary><b>Team blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -650,7 +693,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 :::tip Enable Team Members
 The `includeMembers` flag is used to decide enrich the teams response with details about the members of the team. To turn this feature off, set it to `false`.
@@ -685,7 +728,7 @@ resources:
 ### Project
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -730,7 +773,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -757,7 +800,7 @@ resources:
 ### Issue
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Issue blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -816,7 +859,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -842,10 +885,28 @@ resources:
 
 </details>
 
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Archived" value="include_archived">
+
+You can use the `includeArchived` selector to filter archived/ignored issues. By default, this selector is set to `true`
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeArchived: false
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Project Environment
 
 <details>
-<summary>Project environment blueprint</summary>
+<summary><b>Project environment blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -897,7 +958,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 :::tip Environment tags
 The`selector.tag` key in the `project-tag` kind defines which Sentry tag data is synced to Port. In the configuration provided below, you will ingest all `environment` tag from your Sentry account to Port. For instance, if a Sentry project has 3 environments namely development, staging and production, this configuration will create 3 entities in the `Sentry Project Environment` catalog. You will then use the `issue-tag` kind to connect each issue to its environment.
@@ -959,7 +1020,7 @@ This section includes a sample response data from Sentry. In addition, it includ
 Here is an example of the payload structure from Sentry:
 
 <details>
-<summary> User response data</summary>
+<summary><b>User response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1017,7 +1078,7 @@ Here is an example of the payload structure from Sentry:
 </details>
 
 <details>
-<summary> Team response data</summary>
+<summary><b>Team response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1223,7 +1284,7 @@ Here is an example of the payload structure from Sentry:
 </details>
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1300,7 +1361,7 @@ Here is an example of the payload structure from Sentry:
 </details>
 
 <details>
-<summary> Issue response data</summary>
+<summary><b>Issue response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1366,7 +1427,7 @@ Here is an example of the payload structure from Sentry:
 </details>
 
 <details>
-<summary> Project environment response data</summary>
+<summary><b>Project environment response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1449,7 +1510,7 @@ Here is an example of the payload structure from Sentry:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> User entity in Port</summary>
+<summary><b>User entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1477,7 +1538,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Team entity in Port</summary>
+<summary><b>Team entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1510,7 +1571,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1536,7 +1597,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary><b>Issue entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1564,7 +1625,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Project environment entity in Port</summary>
+<summary><b>Project environment entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1609,7 +1670,7 @@ Create the following blueprint definition:
 
 <details>
 
-<summary>Sentry issue blueprint</summary>
+<summary><b>Sentry issue blueprint (click to expand)</b></summary>
 <SentryIssuesBluePrint/>
 
 </details>
@@ -1618,7 +1679,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 <details>
 
-<summary>Sentry issue webhook configuration</summary>
+<summary><b>Sentry issue webhook configuration (click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Sentry issue mapper`;
@@ -1636,29 +1697,18 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 </details>
 
-:::tip
+:::tip Update the webhook configuration
 We have left out the `secret` field from the security object in the webhook configuration because the secret value is generated by Sentry when creating the webhook.
-So when following this example, please first create the webhook configuration in Port. Use the webhook URL from the response and create the webhook in Sentry.
+So when following this example, please first create the webhook configuration in Port. Use the webhook URL from the response and create the webhook in Sentry following the [Live events](#live-events) instructions.
 After getting the secret from Sentry, you can go back to Port and update the [webhook configuration](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints) with the secret.
 :::
 
 <h2>Create a webhook in Sentry</h2>
 
-1. Log in to Sentry with your organization's credentials;
-2. Click the gear icon (Setting) at the left sidebar of the page;
-3. Choose **Developer Settings**;
-4. At the upper corner of this page, click on **Create New Integration**;
-5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button;
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   3. `Overview` - enter a description for the webhook;
-   4. `Permissions` - Grant your webhook **Read** permissions for the **Issue & Event** category;
-   5. `Webhooks` - Under this section, enable the issues checkbox to allow Sentry to report issue events to Port;
-7. Click **Save Changes** at the bottom of the page.
+To set up the webhook in Sentry, follow the steps in the [Live events](#live-events) section. Use the URL you received from Port as the `Webhook URL`.
 
-:::tip
-Now that the webhook is created, you can take the secret value generated by Sentry and use it to update the `security` object in your Port webhook configuration
+:::tip Update the Port webhook security object
+Now that the webhook is created, you can take the secret value generated by Sentry and use it to update the `security` object in your Port webhook configuration.
 :::
 
 <h2>Relate comments to Issues</h2>
@@ -1676,7 +1726,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 <details>
 
-<summary>Sentry comments webhook configuration</summary>
+<summary><b>Sentry comments webhook configuration (click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Sentry comment mapper`;
@@ -1709,7 +1759,7 @@ This section includes a sample webhook event sent from Sentry when an issue or c
 Here is an example of the payload structure sent to the webhook URL when a Sentry issue or comment is created:
 
 <details>
-<summary> Sentry issue webhook event payload</summary>
+<summary><b>Sentry issue webhook event payload (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1773,7 +1823,7 @@ Here is an example of the payload structure sent to the webhook URL when a Sentr
 </details>
 
 <details>
-<summary> Sentry comment webhook event payload</summary>
+<summary><b>Sentry comment webhook event payload (click to expand)</b></summary>
 
 ```json showLineNumbers
 {

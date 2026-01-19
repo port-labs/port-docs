@@ -313,6 +313,13 @@ export const liveEvents = {
     \n\n**Group Membership:** \
     \n- group.user_membership.add \
     \n- group.user_membership.remove",
+  Sentry:
+    "**Issue & Issue Tag:** \
+    \n- created \
+    \n- resolved \
+    \n- ignored \
+    \n- unresolved \
+    \n- assigned"
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
