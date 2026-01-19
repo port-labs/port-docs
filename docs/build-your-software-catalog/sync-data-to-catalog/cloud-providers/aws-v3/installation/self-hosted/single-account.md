@@ -7,20 +7,25 @@ import TabItem from "@theme/TabItem"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
-# IAM user
+# Single account installation
 
 <IntegrationVersion integration="aws-v3" />
 
-We'll walk you through deploying the AWS integration with IAM user authentication to sync resources from a single AWS account.
+We'll walk you through deploying the AWS integration to sync resources from a single AWS account.
 
 ## Prerequisites
 
 Before installing the integration, ensure you have:
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) (`PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`).
+
+<Tabs groupId="single-account-auth" queryString="single-account-auth" defaultValue="iam-user">
+
+<TabItem value="iam-user" label="IAM User">
+
+## Prerequisites
+
 - Permissions to create IAM users.
-- For Helm: [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0 and a Kubernetes cluster.
-- For Docker: [Docker](https://www.docker.com/get-started) installed.
 
 ## Set up IAM user
 
@@ -41,11 +46,15 @@ Never commit access keys to version control. Use environment variables or secret
 
 Choose your deployment method:
 
-<Tabs groupId="deployment-method" queryString="deployment-method" defaultValue="helm">
+<Tabs groupId="deployment-method-iam" queryString="deployment-method-iam" defaultValue="helm">
 
 <TabItem value="helm" label="Helm (Scheduled)">
 
 Deploy the AWS integration using Helm on your Kubernetes cluster. This deployment supports scheduled resyncs of resources from AWS to Port.
+
+**Prerequisites:**
+- [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0.
+- Kubernetes cluster to deploy the integration.
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -69,6 +78,9 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
 <TabItem value="docker" label="Docker (One-time)">
 
 For one-time data synchronization or testing, you can run the integration using Docker.
+
+**Prerequisites:**
+- [Docker](https://www.docker.com/get-started) installed.
 
 <details>
 <summary><b>Environment variables (click to expand)</b></summary>
@@ -106,8 +118,6 @@ docker run -i --rm --platform=linux/amd64 \
 
 </Tabs>
 
-<PortApiRegionTip/>
-
 ## Troubleshooting
 
 ### Common installation issues
@@ -132,3 +142,102 @@ docker run -i --rm --platform=linux/amd64 \
 - Check Docker logs for error messages.
 - Verify all required environment variables are set.
 - Ensure the Port API credentials are valid.
+
+</TabItem>
+
+<TabItem value="irsa" label="IRSA">
+
+## Prerequisites
+
+- [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0.
+- Amazon EKS cluster with OIDC provider configured.
+- Permissions to create IAM roles and deploy Kubernetes resources.
+
+## Set up IRSA
+
+Set up [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) for authentication:
+
+1. **Create an IAM role** with the following configuration:
+   - Go to **AWS Console → IAM → Roles → Create role**.
+   - Select **Web identity** as the trust entity type.
+   - Choose your EKS cluster's OIDC provider as the identity provider.
+   - Set the audience to `sts.amazonaws.com`.
+   - Name the role `port-ocean-aws-v3-role`.
+
+2. **Attach permissions**:
+   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+
+3. **Note the role ARN** - you'll need it later: `arn:aws:iam::ACCOUNT_ID:role/port-ocean-aws-v3-role`
+
+4. **Create a Kubernetes service account** and link it to the IAM role:
+
+<details>
+<summary><b>Create service account (Click to expand)</b></summary>
+
+```bash showLineNumbers
+# Create the namespace (if it doesn't exist)
+kubectl create namespace port-ocean
+
+# Create the service account
+kubectl create serviceaccount port-ocean-aws-v3 -n port-ocean
+
+# Annotate it with your IAM role ARN
+kubectl annotate serviceaccount port-ocean-aws-v3 \
+  eks.amazonaws.com/role-arn=arn:aws:iam::ACCOUNT_ID:role/port-ocean-aws-v3-role \
+  -n port-ocean
+```
+
+</details>
+
+Refer to the [AWS guide for associating an IAM role to a service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html).
+
+## Deploy the integration
+
+Deploy the integration with the following configuration:
+
+```bash showLineNumbers
+helm repo add --force-update port-labs https://port-labs/github.io/helm-charts
+helm upgrade --install aws-v3 port-labs/port-ocean \
+  --create-namespace --namespace port-ocean \
+  --set port.clientId="$PORT_CLIENT_ID" \
+  --set port.clientSecret="$PORT_CLIENT_SECRET" \
+  --set port.baseUrl="https://api.getport.io" \
+  --set initializePortResources=true \
+  --set sendRawDataExamples=true \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws-v3" \
+  --set integration.type="aws-v3" \
+  --set integration.eventListener.type="POLLING" \
+  --set podServiceAccount.name="port-ocean-aws-v3" \
+  --set integration.config.accountRoleArns='["arn:aws:iam::ACCOUNT_ID:role/port-ocean-aws-v3-role"]'
+```
+
+<PortApiRegionTip/>
+
+## Troubleshooting
+
+### Common installation issues
+
+**Error**: `No resources discovered`
+
+**Solutions**:
+- Verify the IAM role has `ReadOnlyAccess` policy attached.
+- Check that the regions you want to query are not blocked by `regionPolicy`.
+- Ensure the integration has network access to AWS APIs.
+
+**Error**: `Unable to assume role`
+
+**Solutions**:
+- Verify the service account annotation matches the IAM role ARN.
+- Ensure the OIDC provider is correctly configured for your EKS cluster.
+- Check that the IAM role trust policy allows the service account to assume it.
+
+**Error**: `Service account not found`
+
+**Solutions**:
+- Verify the service account exists in the `port-ocean` namespace.
+- Ensure the service account name matches the `podServiceAccount.name` value in your Helm configuration.
+
+</TabItem>
+
+</Tabs>
