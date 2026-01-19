@@ -1126,7 +1126,7 @@ Below is a collection of real-world aggregation property examples organized by c
 ### DevOps & deployments
 
 <details>
-<summary><b>Deployment frequency (weekly average)</b></summary>
+<summary><b>Deployment frequency (weekly average) (click to expand)</b></summary>
 
 Track how often deployments occur per week for each service.
 
