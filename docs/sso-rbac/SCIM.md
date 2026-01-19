@@ -22,12 +22,6 @@ SCIM automates the process of creating, updating, and deleting users in Port bas
 - Reduced manual user management overhead.
 - Automatic synchronization of user attributes from your IdP.
 
-## How SCIM works
-
-SCIM works by receiving events from your identity provider when user changes occur. These events are processed automatically to keep your Port user directory in sync.
-
-<img src="/img/sso/scimFlowChart.svg" border="1px" style={{borderRadius:'8px'}} width='80%' />
-
 ## Setup
 
 To set up SCIM for your organization:
@@ -208,9 +202,8 @@ Port's API includes protection logic to prevent conflicts between SCIM and manua
 If a user is assigned in your IdP but not appearing in Port:
 
 1. Verify SCIM is enabled for your SSO connection.
-2. Check that the user's email domain is not in the `MaxSeatsDomains` exclusion list.
-3. Ensure the SCIM endpoint is correctly configured in your IdP.
-4. Contact Port support if the issue persists.
+2. Ensure the SCIM endpoint is correctly configured in your IdP.
+3. Contact [Port support](http://support.port.io/) if the issue persists.
 
 **User updates not syncing**
 
