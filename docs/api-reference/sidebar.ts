@@ -504,6 +504,12 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/get-all-integrations-meta-data-member-view",
+          label: "Get all integrations meta-data (member view)",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-an-integrations-audit-logs",
           label: "Get an integration's audit logs",
           className: "api-method get",
@@ -556,6 +562,12 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Webhook",
       items: [
+        {
+          type: "doc",
+          id: "api-reference/get-all-webhooks-meta-data-member-view",
+          label: "Get all webhooks meta-data (member view)",
+          className: "api-method get",
+        },
         {
           type: "doc",
           id: "api-reference/create-a-webhook",
