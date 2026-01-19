@@ -19,7 +19,7 @@ To connect Cursor to Port's remote MCP, follow these steps:
 
    Add the appropriate configuration for your Port region:
 
-<Tabs>
+<Tabs groupId="region" queryString>
 <TabItem value="eu" label="EU">
 
 ```json showLineNumbers
@@ -99,7 +99,7 @@ If you encounter errors:
 2. Search for "MCP: Open user configuration" (or follow the instructions on a workspace installation)
 3. Add the server configuration using the appropriate configuration for your region:
 
-<Tabs>
+<Tabs groupId="region" queryString>
 <TabItem value="eu" label="EU">
 
 ```json showLineNumbers
@@ -142,6 +142,29 @@ If you encounter errors:
 </TabItem>
 </Tabs>
 
+:::tip WSL Users
+If you are running VS Code on Windows with WSL, you may need to explicitly specify `wsl` as the command and provide the full path to `npx` (run `which npx` in your WSL terminal to find the path). For example:
+
+```json showLineNumbers
+{
+  "mcpServers": {
+    "port-vscode": {
+      "command": "wsl",
+      "args": [
+        "/usr/bin/npx",
+        "-y",
+        "mcp-remote",
+        "https://mcp.port.io/v1",
+        "--header",
+        "x-read-only-mode: 0"
+      ]
+    }
+  }
+}
+```
+Make sure to replace the URL with `https://mcp.us.port.io/v1` if you are in the US region.
+:::
+
    :::tip Read-only mode
    The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools. When set to `1`, write tools are completely hidden from the available tools list, ensuring you can only query data without making modifications.
    :::
@@ -176,7 +199,7 @@ To connect Claude to Port's remote MCP, you need to create a custom connector. T
 
 When prompted for the remote MCP server URL, use the appropriate URL for your region:
 
-<Tabs>
+<Tabs groupId="region" queryString>
 <TabItem value="eu" label="EU">
 
 ```
