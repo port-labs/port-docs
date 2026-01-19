@@ -27,7 +27,7 @@ The URL property type can be used to store a link to any web resource, for examp
 When creating a URL property in the UI, you can enable the **Custom display text** toggle to show custom text rather than the full URL. This is useful when you want to display a human-readable label (such as "Production Dashboard" or "API Documentation") instead of the raw URL.
 
 - **Toggle off (default)**: The property stores a simple URL string.
-- **Toggle on**: The property is defined as a [labeled URL object](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/labeled-url-object) with both a URL and display text.
+- **Toggle on**: The property is defined as a [labeled URL object](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/labeled-url-object) with both a URL and display text. See the linked page for implementation details.
 
 :::info Toggle cannot be modified after saving
 Once a URL property is saved, the custom display text toggle cannot be changed.
