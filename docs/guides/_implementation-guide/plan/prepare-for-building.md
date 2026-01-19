@@ -32,7 +32,7 @@ Read more about roles and permissions [here](https://docs.port.io/sso-rbac/users
 
 ## Configure SSO
 
-Follow the SSO configuration steps in the [manage your SSO connection](/sso-rbac/self-serve-sso) documentation to set it up.
+Follow the SSO configuration steps in the [manage your SSO connection](/sso-rbac/sso-and-scim/self-serve-sso) documentation to set it up.
 
 :::info Enterprise feature
 Note that SSO support is an enterprise feature. If you are using the free tier, you can skip this step.

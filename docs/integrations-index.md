@@ -53,7 +53,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Azure
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
-- [Azure Active Directory (AD) SSO](/sso-rbac/self-serve-sso)
+- [Azure Active Directory (AD) SSO](/sso-rbac/sso-and-scim/self-serve-sso)
 - [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
 - [Add tags to Azure resources](/guides/all/tag-azure-resource)
 
@@ -318,7 +318,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SSO
 
-- [Manage your SSO connection](/sso-rbac/self-serve-sso)
+- [Manage your SSO connection](/sso-rbac/sso-and-scim/self-serve-sso)
 
 ## StackHawk
 

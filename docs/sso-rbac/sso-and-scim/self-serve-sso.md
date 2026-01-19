@@ -1,6 +1,6 @@
 ---
 title: "Manage your SSO connection"
-sidebar_position: 4
+sidebar_position: 1
 description: Set up and manage SSO for your organization directly from the portal
 ---
 
