@@ -1119,9 +1119,9 @@ The `from_blueprint = "cluster"` specifies that the path traversal should start 
 Path filters can affect the performance of aggregation calculations. In general, shorter and more direct paths perform better than long or complex multi-hop paths.
 :::
 
-## Use cases cheatsheet
+## Examples
 
-Below is a collection of real-world aggregation property examples organized by category. Each example includes a description and the JSON definition you can copy directly into your blueprint.
+Below is a collection of real-world aggregation property use cases organized by category. Each includes a description of the use case and the JSON definition you can copy directly into your blueprint.
 
 ### DevOps & deployments
 
