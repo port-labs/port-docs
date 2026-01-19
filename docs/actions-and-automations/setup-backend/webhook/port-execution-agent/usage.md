@@ -40,7 +40,6 @@ The default and recommended streamer mechanism that uses Kafka for real-time eve
 
 **When to use:**
 - Where higher latency is acceptable
-- When you need support for both action runs and changelog destinations
 
 Install the agent with Kafka streamer:
 ```bash showLineNumbers
@@ -64,7 +63,6 @@ An alternative streamer mechanism that polls the Port API via HTTP to retrieve p
 
 **Considerations:**
 - **Polling-based:** Not suitable for time-sensitive operations requiring immediate execution
-- **Action runs only:** Does not support changelog destinations
 
 **Configuration:**
 
@@ -85,7 +83,6 @@ Note: POLLING streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
 | Latency | Polling-based | Real-time |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
-| Changelog support | ❌ No | ✅ Yes |
 
 ## Self-signed certificate configuration
 
