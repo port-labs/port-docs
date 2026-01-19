@@ -21,6 +21,10 @@ We value your contributions and want to make the process as easy as possible.
 4.  Run `npm start` to preview your changes locally.
 5.  Submit a **Pull Request**.
 
+## Legal
+
+By contributing to this repository, you agree to the terms of the [Contributor License Agreement](./contributor-license-agreement.txt).
+
 ## Questions?
 
 If you have any questions, feel free to open an issue or reach out to us.
