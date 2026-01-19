@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 <details>
 <summary><b>Port port-app-config.yml (click to expand)</b></summary>
 
@@ -18,7 +21,8 @@ resources:
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: .name == .__repository_object.default_branch
+      query: "true"
+      branchNames: ["main", "develop"]
       protectionRules: true
     port:
       entity:

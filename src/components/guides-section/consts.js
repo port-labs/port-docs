@@ -2,7 +2,7 @@ const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
 
-    "Solutions": ["Security", "Autonomous Ticket Resolution", "Self Healing Incidents", "Engineering Intelligence", "Agentic Work Management"],
+    "Solutions": ["Security", "Engineering Intelligence", "Autonomous Ticket Resolution", "Self Healing Incidents", "Agentic Work Management"],
     "Use-cases": ["K8s for devs", "IaC for devs", "Cloud access management", "Feature flag management", /*"Cloud cost",*/ "Dev environments", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access controls"],
 
@@ -1136,6 +1136,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-identity-and-access-management",
+    },
+    {
+        title: "Visualize Okta security insights",
+        description: "Build a security analytics dashboard for Okta identity and access management",
+        tags: ["Security", "Okta", "Dashboards"],
+        logos: ["Okta"],
+        link: "/guides/all/visualize-okta-security-insights",
     },
     {
         title: "Auto-label your GitHub PRs with Sonar Scans",
