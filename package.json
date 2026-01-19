@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start --port 4000",
+    "start": "npm run generate-guide-metadata && docusaurus start --port 4000",
     "build": "npm run generate-guide-metadata && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
