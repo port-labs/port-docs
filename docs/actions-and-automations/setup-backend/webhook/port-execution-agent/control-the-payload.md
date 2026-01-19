@@ -97,14 +97,6 @@ An example mapping file may look like this:
 
 :::tip Multiple mappings
 The configuration file can contain multiple mappings. The agent will use the first mapping where `enabled` evaluates to `true`, allowing you to apply different mappings for different actions.
-
-**Deploying multiple agents across clusters:** If you have multiple clusters without network connectivity between them, you can deploy a separate port-agent on each cluster. All agents consume from the same Kafka topic, but each agent uses a different `enabled` filter to process only the actions relevant to its cluster.
-
-For example, if your actions include a `target_cluster` property:
-- Agent on Cluster A: `"enabled": ".payload.properties.target_cluster == \"cluster-a\""`
-- Agent on Cluster B: `"enabled": ".payload.properties.target_cluster == \"cluster-b\""`
-
-Each agent will ignore actions that don't match its filter, ensuring that only the appropriate agent processes each action.
 :::
 
 #### Mapping configuration fields
@@ -162,6 +154,16 @@ For example, to create a filter that applies only to actions with the `GitLab` m
 ```text showLineNumbers
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
 ```
+
+#### Deploying multiple agents across clusters
+
+If you have multiple clusters without network connectivity between them, you can deploy a separate port-agent on each cluster. All agents consume from the same Kafka topic, but each agent uses a different `enabled` filter to process only the actions relevant to its cluster.
+
+For example, if your actions include a `target_cluster` property:
+- Agent on Cluster A: `"enabled": ".payload.properties.target_cluster == \"cluster-a\""`
+- Agent on Cluster B: `"enabled": ".payload.properties.target_cluster == \"cluster-b\""`
+
+Each agent will ignore actions that don't match its filter, ensuring that only the appropriate agent processes each action.
 
 #### Create a URL based on a property
 
