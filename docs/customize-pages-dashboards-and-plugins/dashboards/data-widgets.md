@@ -395,7 +395,7 @@ The board widget works the same as the [table widget](#table), with the followin
   Drag and drop is only available when the grouping property is editable. If the property is not editable (for example, a read-only property or a scorecard), cards cannot be moved between columns.
   :::
 
-- **Sorting**: The board view **does not support sorting**. Entities within each column are displayed in their default order.
+- **Sorting**: The board view sorts entities by their `createdAt` property by default. When you drag and drop cards within a column, the board switches to custom sorting, preserving your manual arrangement.
 
 ## Entity card
 
