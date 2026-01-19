@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub Ocean (Beta)
+# GitHub Ocean
 
 Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 

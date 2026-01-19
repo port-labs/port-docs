@@ -6,22 +6,25 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Global search
 
-In the top right corner of your [portal](https://app.getport.io/), you can find the global search bar.  
+Port's global search provides a quick way to find <PortTooltip id="entity">entities</PortTooltip>, actions, blueprints, and more across your software catalog.
 
-<img src='/img/software-catalog/search-in-port/globalSearchBar.png' width='80%' border='1px' />
+<img src='/img/software-catalog/search-in-port/globalSearchBar.png' width='60%' border='1px' style={{borderRadius:'6px'}}/>
 
-<br/><br/>
+## Accessing the search
 
-The search bar allows you to search for <PortTooltip id="entity">entities</PortTooltip> in your software catalog.  
-You can search for entities by their title, description, or any other [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
+You can access the global search in several ways:
 
+- **Keyboard shortcut**: Press `Cmd + K` (Mac) or `Win + K` (Windows).
+- **Click**: Click on the search bar in the top right corner of your [portal](https://app.getport.io/).
+
+The search opens an interface in the center of the page, displaying relevant results as you type.
 
 ## Search results
 
-The search bar will return four types of results:
+The search displays the most relevant results in four categories:
 
-- **Entities**: Entities whose properties (including title & identifier) match your search query. 
-- **Tech Docs**: Entities that have a `markdown` property whose content contains your search query. 
+- **Entities**: Entities whose properties (including title & identifier) match your search query. You can search for entities by their title, identifier, description, or any other [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
+- **Tech docs**: Entities that have a `markdown` property whose content contains your search query.
 - **Actions**: Actions whose title or identifier match your search query.
 - **Blueprints**: Blueprints whose title or identifier match your search query.
 

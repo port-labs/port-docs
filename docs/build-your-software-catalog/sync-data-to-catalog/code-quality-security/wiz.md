@@ -29,12 +29,15 @@ This integration allows you to:
 
 ### Supported resources
 
-The resources that can be ingested from Wiz into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+The resources that can be ingested from Wiz into Port are listed below.  
+It is possible to reference any field that appears in the API responses of the GET requests for these resources in the mapping configuration.
 
-- [`Project`](https://integrate.wiz.io/reference/pull-projects)
-- [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
-- [`Control`](https://integrate.wiz.io/docs/welcome#controls)
-- [`Service ticket`](https://integrate.wiz.io/reference/issues-query#:~:text=string-,serviceTickets,-array)
+Note that Wiz's API documentation is restricted to the authenticated [Wiz Documentation Portal](https://docs.wiz.io/), which requires a Wiz account to access.
+
+- `Project`
+- `Issue`
+- `Control`
+- `Service ticket`
 
 
 ## Prerequisites
