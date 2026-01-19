@@ -121,9 +121,15 @@ Additionally, you can configure your selector to limit the number of closed pull
   selector:
     query: "true"
     states: ["closed"]  # Specifically for closed PRs.
-    maxResults: 50  # Limit closed PRs to 50 capped at 300.
-    since: 60  # Fetch closed PRs within 60 days capped at 90 days.
+    maxResults: 50  # Limit closed PRs to 50. Please note that this flag may cause rate limits.
+    since: 60  # Fetch closed PRs within 60 days. Please note that this flag may cause rate limits.
 ```
+
+:::caution Pull request performance impact
+
+To prevent rate limits and/or performance degradation, if you intend to ingest closed pull requests, you must add a filtering criteria such as `since` and/or `maxResults` to limit the number of items ingested. The example above demonstrates this by retrieving 50 results from pull requests closed within the last 60 days.
+
+:::
 
 You can also choose which GitHub API to use for pull requests. By default, the integration uses the REST API, but you can switch to GraphQL by adding an `api` selector:
 
@@ -205,14 +211,13 @@ This example uses the `branch` kind with `detailed: true` to fetch the latest co
 
 ## Repositories and branch protection rules
 
-The following example demonstrates how to ingest your GitHub repositories and the protection rules for their default branch to Port.  The example uses the following selector options:
+The following example demonstrates how to ingest your GitHub repositories and branch protection rules to Port. The example uses the following selector options:
 
-- `protectionRules: true`: Required for this example to fetch the branch protection rules used by the `branchProtection` mapping. If the GitHub repo lacks branch protection permissions, `.__protection_rules` may be empty.
-- `detailed: true`: Optional. Use it only when you need commit-level fields (it adds additional API calls).
+- `protectionRules: true`: Required. Enables fetching branch protection rules, which are needed for the `branchProtection` mapping. If your integration user lacks branch protection permissions, the field `.__protection_rules` will be empty.
 
-:::info Default branch filter
-This example targets only the default branch with `query: .name == .__repository_object.default_branch`. Update the query if you want to ingest protection rules for additional branches.
-:::
+- `detailed: true`: Optional. Fetches detailed commit data for the branch (such as the last commit and author). If you only need branch protection data, you can omit this for improved performance.
+
+- `branchNames`: Optional[Recommended]. Use to ingest only specific branches by name. When set, the integration fetches those branches explicitly instead of listing all branches using pagination. This reduces API usage and helps avoid performance and memory issues when syncing branch protection rules across many branches.
 
 You can use the following Port blueprint definitions and `port-app-config.yml`:
 

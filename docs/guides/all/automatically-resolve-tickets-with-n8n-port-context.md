@@ -51,119 +51,75 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
 
     ```json showLineNumbers
     {
-      "name": "Automatically resolve tickets with coding agents",
+      "name": "Auto-resolve Jira tickets with GitHub Copilot using Port Context",
       "nodes": [
-        {
-          "parameters": {
-            "operation": "getInvocation",
-            "invocationId": "={{ $json.invocationIdentifier }}"
-          },
-          "type": "CUSTOM.portIo",
-          "typeVersion": 1,
-          "position": [
-            -720,
-            128
-          ],
-          "id": "b406b9a3-85af-4f5e-960a-8f105fba2406",
-          "name": "Parse Port AI response",
-          "credentials": {
-            "portIoApi": {
-              "id": "vphYNYaTZimXT7su",
-              "name": "Port.io account"
-            }
-          }
-        },
         {
           "parameters": {
             "conditions": {
               "options": {
-                "caseSensitive": true,
+                "version": 2,
                 "leftValue": "",
-                "typeValidation": "strict",
-                "version": 2
+                "caseSensitive": true,
+                "typeValidation": "strict"
               },
+              "combinator": "and",
               "conditions": [
                 {
                   "id": "ded3f45f-fd63-493a-a5fc-225004d5d292",
-                  "leftValue": "={{ $json.number }}",
-                  "rightValue": "",
                   "operator": {
                     "type": "number",
                     "operation": "notEmpty",
                     "singleValue": true
-                  }
+                  },
+                  "leftValue": "={{ $json.number }}",
+                  "rightValue": ""
                 }
-              ],
-              "combinator": "and"
+              ]
             },
             "options": {}
           },
+          "id": "dc5b0535-793f-4ba7-b748-2798a3c4e22e",
+          "name": "Is issue creation successful?",
           "type": "n8n-nodes-base.if",
-          "typeVersion": 2.2,
           "position": [
-            -304,
-            128
+            2080,
+            544
           ],
-          "id": "595d2b11-2e6b-4e50-b871-64a5d8dfffcc",
-          "name": "Is issue creation successful?"
-        },
-        {
-          "parameters": {
-            "operation": "generalInvoke",
-            "userPrompt": "=A Jira issue has moved to In Progress.\n\nIssue Details:\n- Key: {{ $json.issue.key }}\n- Title: {{ $json.issue.fields.summary }}\n- Type: {{ $json.issue.fields.issuetype.name }}\n- Description: {{ $json.issue.fields.description }}\n\nJira Project:\n- Key/Name: {{ $json.issue.fields.project.key }} / {{ $json.issue.fields.project.name }}\n\nYour task:\nQuery the Port catalog across services, repositories, teams, architecture, documentation, cloud resources, workloads, internal docs, READMEs, and dependencies.  \nExtract ONLY the contextual information that actually exists in the catalog and that is directly relevant to this Jira issue.\n\nThen create:\n1. A GitHub issue title that starts with the Jira key.\n2. A GitHub issue body that:\n   - Summarizes the Jira description in clear developer-friendly language.\n   - Incorporates any relevant Port context found.\n   - Is fully self-contained.\n   - Ends with the directive:\n\n     @github-copilot please begin working on this issue.\n\nOutput format:\nReturn ONLY the following JSON object:\n\n{\n  \"github_issue_title\": \"\",\n  \"github_issue_body\": \"\"\n}\n\nRules:\n- If no relevant context exists, leave the string empty (\"\").\n- Do NOT include explanations, reasoning, commentary, assumptions, or URLs.\n- Do NOT mention things you did not find.\n- Do NOT return any text outside the JSON object.\n",
-            "tools": "[\"^(list|get|search|track|describe)_.*\"]",
-            "generalProvider": "port",
-            "generalModel": "gpt-5",
-            "systemPrompt": "You are a helpful assistant"
-          },
-          "type": "CUSTOM.portIo",
-          "typeVersion": 1,
-          "position": [
-            -928,
-            128
-          ],
-          "id": "a905b89a-606e-487f-80e3-c3f825550184",
-          "name": "Extract context from Port",
-          "credentials": {
-            "portIoApi": {
-              "id": "vphYNYaTZimXT7su",
-              "name": "Port.io account"
-            }
-          }
+          "typeVersion": 2.2
         },
         {
           "parameters": {
             "conditions": {
               "options": {
-                "caseSensitive": true,
+                "version": 2,
                 "leftValue": "",
-                "typeValidation": "strict",
-                "version": 2
+                "caseSensitive": true,
+                "typeValidation": "strict"
               },
+              "combinator": "and",
               "conditions": [
                 {
                   "id": "8800068e-ddaa-4979-a589-6442f424bb09",
-                  "leftValue": "={{ $json.webhookEvent == \"jira:issue_updated\" && $json.issue.fields.status.name == \"In Progress\" && $json.issue.fields.labels.includes(\"product_approved\") && !$json.issue.fields.labels.includes(\"copilot_assigned\") }}",
-                  "rightValue": "",
                   "operator": {
                     "type": "boolean",
                     "operation": "true",
                     "singleValue": true
-                  }
+                  },
+                  "leftValue": "={{ $json.webhookEvent == \"jira:issue_updated\" && $json.issue.fields.status.name == \"In Progress\" && $json.issue.fields.labels.includes(\"product_approved\") && !$json.issue.fields.labels.includes(\"copilot_assigned\") }}",
+                  "rightValue": ""
                 }
-              ],
-              "combinator": "and"
+              ]
             },
             "options": {}
           },
+          "id": "222058f6-cc6c-450a-8fbb-be3ed01c1f4a",
+          "name": "Is ready for assignment?",
           "type": "n8n-nodes-base.if",
-          "typeVersion": 2.2,
           "position": [
-            -1200,
-            144
+            1184,
+            560
           ],
-          "id": "c3809188-d14d-4c33-89a3-086ca097f880",
-          "name": "Is ready for assignment?"
+          "typeVersion": 2.2
         },
         {
           "parameters": {
@@ -174,10 +130,8 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             },
             "repository": {
               "__rl": true,
-              "value": "REPO",
-              "mode": "list",
-              "cachedResultName": "REPO",
-              "cachedResultUrl": "https://github.com/ORG/REPO"
+              "value": "aws-codeploy-demo",
+              "mode": "list"
             },
             "title": "={{ $json.result.message.parseJson().github_issue_title }}",
             "body": "={{ $json.result.message.parseJson().github_issue_body }}",
@@ -191,18 +145,18 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             ],
             "assignees": []
           },
-          "type": "n8n-nodes-base.github",
-          "typeVersion": 1.1,
-          "position": [
-            -512,
-            128
-          ],
-          "id": "2cbdb130-79fa-4885-a106-53234c467681",
+          "id": "03c29fb9-c747-4602-941e-a8f279cda515",
           "name": "Create a GitHub issue",
-          "webhookId": "7115b4e9-ca3d-4dbc-8b1b-8e00931a26f8",
+          "type": "n8n-nodes-base.github",
+          "position": [
+            1872,
+            544
+          ],
+          "webhookId": "d7f1c627-82f6-4f61-a220-bbe24c943a51",
+          "typeVersion": 1.1,
           "credentials": {
             "githubApi": {
-              "id": "zs106oTl3aX0eWI1",
+              "id": "3LaRYp1opDmuB6HX",
               "name": "GitHub account"
             }
           }
@@ -217,26 +171,24 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             },
             "repository": {
               "__rl": true,
-              "value": "REPO",
-              "mode": "list",
-              "cachedResultName": "REPO",
-              "cachedResultUrl": "https://github.com/ORG/REPO"
+              "value": "aws-codeploy-demo",
+              "mode": "list"
             },
             "issueNumber": "={{ $('Create a GitHub issue').item.json.number }}",
             "body": "@copilot please take ownership of this issue and begin working on a solution.\n\nUse the information in the issue body and title to propose and implement the necessary code changes.\n"
           },
-          "type": "n8n-nodes-base.github",
-          "typeVersion": 1.1,
-          "position": [
-            -96,
-            128
-          ],
-          "id": "0f0de120-9f27-4d06-958e-8b87b91a0487",
+          "id": "bd136228-82c3-4342-9a39-1461bf59b170",
           "name": "Assign issue to Copilot",
-          "webhookId": "87254a3f-ea48-432e-9fd2-897cf9b58143",
+          "type": "n8n-nodes-base.github",
+          "position": [
+            2288,
+            544
+          ],
+          "webhookId": "e4ba9b66-a68a-40d4-9c69-2dabb05d337b",
+          "typeVersion": 1.1,
           "credentials": {
             "githubApi": {
-              "id": "zs106oTl3aX0eWI1",
+              "id": "3LaRYp1opDmuB6HX",
               "name": "GitHub account"
             }
           }
@@ -244,21 +196,21 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
         {
           "parameters": {
             "resource": "issueComment",
-            "issueKey": "={{ $('Webhook').item.json.issue.key }}",
-            "comment": "=We've created an issue at {{ $json.issue_url }} and assigned it to Copilot.",
+            "issueKey": "={{ $('On Jira ticket updated').item.json.issue.key }}",
+            "comment": "=We've created an issue at {{ $('Create a GitHub issue').item.json.html_url }} and assigned it to Copilot.",
             "options": {}
           },
-          "type": "n8n-nodes-base.jira",
-          "typeVersion": 1,
-          "position": [
-            208,
-            0
-          ],
-          "id": "128e81aa-0607-4204-8f7a-1999f7690eed",
+          "id": "ee576573-0a96-4713-b71e-cf6b48d1aabe",
           "name": "Add issue link to Jira ticket",
+          "type": "n8n-nodes-base.jira",
+          "position": [
+            2592,
+            416
+          ],
+          "typeVersion": 1,
           "credentials": {
             "jiraSoftwareCloudApi": {
-              "id": "FcPOq6LRxRxgY0PY",
+              "id": "kFxflLsLkRHNY8gr",
               "name": "Jira SW Cloud account"
             }
           }
@@ -266,22 +218,22 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
         {
           "parameters": {
             "operation": "update",
-            "issueKey": "={{ $('Webhook').item.json.issue.key }}",
+            "issueKey": "={{ $('On Jira ticket updated').item.json.issue.key }}",
             "updateFields": {
-              "labels": "={{ $('Webhook').item.json.issue.fields.labels.concat('copilot_assigned') }}"
+              "labels": "={{ $('On Jira ticket updated').item.json.issue.fields.labels.concat('copilot_assigned') }}"
             }
           },
-          "type": "n8n-nodes-base.jira",
-          "typeVersion": 1,
-          "position": [
-            208,
-            240
-          ],
-          "id": "f424eb13-155c-411e-80b6-5abdc04b60c9",
+          "id": "46c0c5c2-4670-4a68-8338-5ded401e7242",
           "name": "Mark ticket as assigned",
+          "type": "n8n-nodes-base.jira",
+          "position": [
+            2592,
+            656
+          ],
+          "typeVersion": 1,
           "credentials": {
             "jiraSoftwareCloudApi": {
-              "id": "FcPOq6LRxRxgY0PY",
+              "id": "kFxflLsLkRHNY8gr",
               "name": "Jira SW Cloud account"
             }
           }
@@ -293,18 +245,18 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             ],
             "additionalFields": {}
           },
-          "type": "n8n-nodes-base.jiraTrigger",
-          "typeVersion": 1.1,
-          "position": [
-            -1424,
-            144
-          ],
-          "id": "3e0414e9-faf5-45ba-bd1e-995d9506a39c",
+          "id": "155cb785-4a98-4d57-a8ed-fb45cd8a800e",
           "name": "On Jira ticket updated",
-          "webhookId": "9cdd8662-169f-4aae-b30f-d02d9666fce7",
+          "type": "n8n-nodes-base.jiraTrigger",
+          "position": [
+            960,
+            560
+          ],
+          "webhookId": "559a3f87-cf37-4a25-b04a-13fc2dd72cf5",
+          "typeVersion": 1.1,
           "credentials": {
             "jiraSoftwareCloudApi": {
-              "id": "FcPOq6LRxRxgY0PY",
+              "id": "kFxflLsLkRHNY8gr",
               "name": "Jira SW Cloud account"
             }
           }
@@ -315,14 +267,14 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             "height": 672,
             "width": 512
           },
+          "id": "4193fee9-a6b8-4fa3-a0cd-17397c54d64e",
+          "name": "Sticky Note",
           "type": "n8n-nodes-base.stickyNote",
-          "typeVersion": 1,
           "position": [
-            -2016,
-            -176
+            368,
+            240
           ],
-          "id": "5badbf3d-1732-480f-bb83-26ec01fbdb33",
-          "name": "Sticky Note"
+          "typeVersion": 1
         },
         {
           "parameters": {
@@ -331,14 +283,14 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             "width": 400,
             "color": 6
           },
+          "id": "ff5792b7-5bcf-4837-9cc8-232f7dc69f7b",
+          "name": "Sticky Note1",
           "type": "n8n-nodes-base.stickyNote",
-          "typeVersion": 1,
           "position": [
-            -976,
-            -160
+            1408,
+            256
           ],
-          "id": "840ffdbb-f4c2-4ed2-ab9e-f756efde12e9",
-          "name": "Sticky Note1"
+          "typeVersion": 1
         },
         {
           "parameters": {
@@ -347,14 +299,14 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             "width": 592,
             "color": 4
           },
+          "id": "c4d094bd-342f-4625-a881-484ea9b2ad45",
+          "name": "Sticky Note2",
           "type": "n8n-nodes-base.stickyNote",
-          "typeVersion": 1,
           "position": [
-            -544,
-            -160
+            1840,
+            256
           ],
-          "id": "4f389694-ed4b-448c-8a88-724c6cd66635",
-          "name": "Sticky Note2"
+          "typeVersion": 1
         },
         {
           "parameters": {
@@ -363,67 +315,78 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             "width": 464,
             "color": 5
           },
+          "id": "c0593d1b-48f9-4bfe-88db-6b2e2a0dbbf4",
+          "name": "Sticky Note3",
           "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            2464,
+            256
+          ],
+          "typeVersion": 1
+        },
+        {
+          "parameters": {
+            "operation": "getInvocation",
+            "invocation_identifier": "={{ $json.invocationIdentifier }}"
+          },
+          "type": "@port-labs/n8n-nodes-portio-experimental.portApiAi",
           "typeVersion": 1,
           "position": [
-            80,
-            -160
+            1664,
+            544
           ],
-          "id": "e71ebc42-20b1-4095-aed7-9e7fbe731d8f",
-          "name": "Sticky Note3"
+          "id": "da319617-4f73-4988-8558-370cea868d60",
+          "name": "Parse Port AI response",
+          "credentials": {
+            "portApi": {
+              "id": "tRAwIiwSncqQh00a",
+              "name": "Port account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "generalInvoke",
+            "userPrompt": "=A Jira issue has moved to In Progress.\n\nIssue Details:\n- Key: {{ $('On Jira ticket updated').item.json.issue.key }}\n- Title: {{ $('On Jira ticket updated').item.json.issue.fields.summary }}\n- Type: {{ $('On Jira ticket updated').item.json.issue.fields.issuetype.name }}\n- Description: {{ $('On Jira ticket updated').item.json.issue.fields.description }}\n\nRelated Jira Project:\n- Key: {{ $('On Jira ticket updated').item.json.issue.fields.project.key }}\n- Name: {{ $('On Jira ticket updated').item.json.issue.fields.project.name }}\n\nRelated Service or Github Repo entity ID:\n{{ $('On Jira ticket updated').item.json.issue.fields.customfield_10308.value }}\n\nYour task:\nUse the Related Service/Repo ID and Issue ID to query the Port catalog.\n\nWhen querying Port entities via MCP (e.g. list_entities):\n- Always fetch ALL available properties for each entity\n- Do not limit properties unless explicitly required\n\nExtract ONLY context that actually exists and is directly related via Port relationships.\n\n### Core service context (if available)\n- Service description and tier based on the README\n- Owning team(s)\n- Deployment environments (e.g. prod, staging, dev)\n- Key dependencies (upstream/downstream services)\n\n### Relationship-heavy context (AGGREGATE, DO NOT LIST)\nFor the related service/repository, summarize:\n- PagerDuty incidents:\n  - Total number of open incidents\n- Deployments:\n  - Total number of deployments\n  - Environments deployed to\n  - Most recent deployment timestamp (if available)\n- Security vulnerabilities:\n  - Total number of open vulnerabilities\n  - Breakdown by severity (e.g. critical / high / medium)\n\nDo NOT include:\n- Raw logs\n- “None found” bullet lists\n\nOnly mention a category if at least one related entity exists.\n\nThen prepare:\n1. A GitHub issue title that starts with the Jira key.\n2. A GitHub issue body that:\n- Clearly summarizes the Jira issue in developer-friendly language\n- Adds concise business-relevant Port context (ownership, risk, stability, deploy state)\n- Uses aggregated facts, not exhaustive lists\n- Avoids assumptions or inferred data\n- Is fully self-contained\n- Ends exactly with: @github-copilot please begin working on this issue.\n\nIMPORTANT OUTPUT CONSTRAINT (HIGHEST PRIORITY)\n- If no relevant Port context exists, use empty strings (\"\") for fields where applicable.\n- You must return ONLY a valid JSON object and nothing else.\n\nOutput format:\nThe response must be parseable by JSON.parse() with no cleanup.\nReturn EXACTLY:\n{\"github_issue_title\":\"\",\"github_issue_body\":\"\"}\n",
+            "generalProvider": "port",
+            "generalModel": "gpt-5",
+            "systemPrompt": "You are a helpful assistant that extracts contextual information from the Port catalogue. You must return ONLY a valid JSON object and nothing else. If you violate this output format, downstream systems will fail.",
+            "executionMode": "Automatic"
+          },
+          "type": "@port-labs/n8n-nodes-portio-experimental.portApiAi",
+          "typeVersion": 1,
+          "position": [
+            1472,
+            544
+          ],
+          "id": "9f3068e9-cbbe-47a6-a617-35914ba2c366",
+          "name": "Extract context from Port",
+          "credentials": {
+            "portApi": {
+              "id": "tRAwIiwSncqQh00a",
+              "name": "Port account"
+            }
+          }
         }
       ],
       "pinData": {},
       "connections": {
-        "Parse Port AI response": {
-          "main": [
-            [
-              {
-                "node": "Create a GitHub issue",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Is issue creation successful?": {
-          "main": [
-            [
-              {
-                "node": "Assign issue to Copilot",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Extract context from Port": {
-          "main": [
-            [
-              {
-                "node": "Parse Port AI response",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
-        "Is ready for assignment?": {
-          "main": [
-            [
-              {
-                "node": "Extract context from Port",
-                "type": "main",
-                "index": 0
-              }
-            ]
-          ]
-        },
         "Create a GitHub issue": {
           "main": [
             [
               {
                 "node": "Is issue creation successful?",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "On Jira ticket updated": {
+          "main": [
+            [
+              {
+                "node": "Is ready for assignment?",
                 "type": "main",
                 "index": 0
               }
@@ -446,11 +409,44 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
             ]
           ]
         },
-        "On Jira ticket updated": {
+        "Is ready for assignment?": {
           "main": [
             [
               {
-                "node": "Is ready for assignment?",
+                "node": "Extract context from Port",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Is issue creation successful?": {
+          "main": [
+            [
+              {
+                "node": "Assign issue to Copilot",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Parse Port AI response": {
+          "main": [
+            [
+              {
+                "node": "Create a GitHub issue",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Extract context from Port": {
+          "main": [
+            [
+              {
+                "node": "Parse Port AI response",
                 "type": "main",
                 "index": 0
               }
@@ -460,13 +456,16 @@ We will create an n8n workflow that uses Port as a context lake to enrich GitHub
       },
       "active": false,
       "settings": {
-        "executionOrder": "v1"
+        "executionOrder": "v1",
+        "availableInMCP": false
       },
-      "versionId": "7f20c404-39e1-42e4-a7dd-5b6e217d9f24",
+      "versionId": "de493068-851e-422d-96f5-9891b3e6868e",
       "meta": {
-        "instanceId": "be7665cef51b13547e586e0f385e42416ebee48719c71d7dc7c03dbdf41fc246"
+        "templateId": "11728",
+        "templateCredsSetupCompleted": true,
+        "instanceId": "ece285d5f6d021267c1bf415cc6f43f61f89e93c51704a3846513e293fe52759"
       },
-      "id": "ioofAvQkygfyHxOd",
+      "id": "DhwPhvyAJzzDoAiq",
       "tags": []
     }
     ```

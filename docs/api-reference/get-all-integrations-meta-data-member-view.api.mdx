@@ -1,0 +1,63 @@
+---
+id: get-all-integrations-meta-data-member-view
+title: "Get all integrations meta-data (member view)"
+description: "This route allows members to fetch meta-data on all integrations in their Port organization.<br></br>The response includes each integration's identifier, installation ID, integration type, and last update timestamp."
+sidebar_label: "Get all integrations meta-data (member view)"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVMFu2zAM/RVBl21AFjdAT8EwoECHotil2LpTkANjM7FW21Ip2llm+N9H2k7jpt0OOw27yJZIPpGPj2otwy7a5creVow7Ana+inY9sxnGlFzQvV3a+9xFQ75mNFAUfh9NieUGKRr2Zouc5nLA8D4DBuMrdTJugigbwzk6Mnee2HjaQeV+9rb5hw19/JDIcp+jIYxB/FEC0qKWJAyCgE+w3ghYhhW7rUOaiSWy3NabzO31bOpq+BBwZqDKTAGRTR0kPzTsSpSgMsztzEZMa3J8EA5au0EgJKWDELKle8ZJJ6wc0xPKWnt5sdDPc6aucQt1webL6ClXpF5wKlZfCKFwaY+YfI8a0NqY5liC/gXyAYndAO8fdJXgKKFbKCJ2M4tEnvRcS5PrIpOrdlYsUlOEHb5i6zTvx9oRZlqa4B5xpCLIMqfpQHE3uX24rtPQy4vLl1VeaaN8TSmaveNce2sk+0Y6k03aY/YQTeXZbH1dZf80FaeoP5NyPhl/x0Q3cCszk3vJxO6QJYMAnMsmaRbJRHqJTpYOVq9WamTqerHWVIhzzhziMkkguHmQ2Zo7LxS8Zq3jyWF9Ev5X5Xyg+Sj/J9ok7DMe5N4KSt1f1ZIvjYMrx04ZyGVUJErrcdXW9+GOC/Xvh/3q7lZcNe2BscX8QpsUfOQS+raP6DfILx+O07PydnhyTONw/86e9aE9Ses/fqzGtjD+4CQUIPQLkX2n21E8K9ss+sY84fbKHgUkbc+9ztDKtu0GIn6jouv0+LFG0jdQfhsgBxvt32ot8GN7VXEPogURQZpiULk2UNSDSs4mWeX1JO2bT/fiC7VmNxXWQy+s8UfRj6bqMME+V9yQgq4q8ldD2naQrRR29B9Mv40YSzx6K61rmc9fwtd+YQ==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all integrations meta-data (member view)"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/metadata"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows members to fetch meta-data on all integrations in their Port organization.<br></br>The response includes each integration's identifier, installation ID, integration type, and last update timestamp.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
