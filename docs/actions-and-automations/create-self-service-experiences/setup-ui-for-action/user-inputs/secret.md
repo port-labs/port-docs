@@ -70,7 +70,7 @@ Client-side encryption gives you full control over key management by allowing yo
 You can provide secret input values through the API, but Port includes guardrails to prevent doing so unintentionally in plaintext. If you need API execution for an action with a client-side encryption secret input, contact [Port support](https://www.getport.io/community).
 :::
 
-#### Example configuration
+<h4>Example configuration</h4>
 
 ```json showLineNumbers
 {
@@ -89,7 +89,7 @@ You can provide secret input values through the API, but Port includes guardrail
 }
 ```
 
-#### How it works
+<h4>How it works</h4>
 
 Client-side encryption uses a hybrid approach that combines RSA and AES encryption:
 
@@ -99,7 +99,7 @@ Client-side encryption uses a hybrid approach that combines RSA and AES encrypti
 
 This approach allows encrypting data of any size while leveraging the security benefits of asymmetric encryption.
 
-#### Payload format
+<h4>Payload format</h4>
 
 The encrypted payload is base64-encoded with the following structure:
 
@@ -109,7 +109,7 @@ The encrypted payload is base64-encoded with the following structure:
 | Wrapped key | 256 bytes | The AES key encrypted with your RSA public key |
 | Ciphertext | Variable | Your data encrypted with AES-256-GCM (includes 16-byte auth tag) |
 
-#### Key requirements
+<h4>Key requirements</h4>
 
 - **Algorithm**: RSA with OAEP padding and SHA-256 hash
 - **Key size**: 2048-bit RSA key (minimum recommended)
@@ -517,7 +517,7 @@ fastify.listen({ port: PORT, host: "0.0.0.0" }).catch((err) => {
 </TabItem>
 </Tabs>
 
-#### Generating an RSA key pair
+<h4>Generating an RSA key pair</h4>
 
 To use client-side encryption, you need to generate an RSA key pair. Here's how to generate one using OpenSSL:
 
