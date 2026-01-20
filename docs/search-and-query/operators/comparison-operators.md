@@ -205,15 +205,31 @@ The `between` operator checks datetime values and returns entities whose relevan
 
 **Available Presets:**
 
-- tomorrow
-- today
-- yesterday
-- lastWeek
-- last2Weeks
-- lastMonth
-- last3Months
-- last6Months
-- last12Months
+- `last3Years` - In the past 3 years
+- `last2Years` - In the past 2 years
+- `last12Months` - In the past 365 days
+- `last6Months` - In the past 180 days
+- `last3Months` - In the past 90 days
+- `lastMonth` - In the past 30 days
+- `last2Weeks` - In the past 2 weeks
+- `lastWeek` - In the past week
+- `lastDay` - In the past day
+- `today` - Today
+- `tomorrow` - Tomorrow
+- `yesterday` - Yesterday
+- `nextDay` - In the next day
+- `nextWeek` - In the next week
+- `next2Weeks` - In the next 2 weeks
+- `nextMonth` - In the next 30 days
+- `next3Months` - In the next 90 days
+- `next6Months` - In the next 180 days
+- `next12Months` - In the next 365 days
+
+When using the catalog page UI, these presets are available via the `is` operator when filtering datetime properties.
+
+:::info Future date presets availability
+The future date presets (`nextDay`, `nextWeek`, `next2Weeks`, `nextMonth`, `next3Months`, `next6Months`, `next12Months`) are only available in the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) filters and initial filters. They are not supported in table widgets or other locations.
+:::
 
 The `between` operator also supports standard date ranges:
 
