@@ -52,7 +52,7 @@ helm upgrade --install my-port-agent port-labs/port-agent \
     --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
 ```
 
-### POLLING streamer
+### Polling streamer
 
 An alternative streamer mechanism that polls the Port API via HTTP to retrieve pending action runs.
 
@@ -62,7 +62,7 @@ An alternative streamer mechanism that polls the Port API via HTTP to retrieve p
 - Where higher latency is acceptable
 
 **Considerations:**
-- **Polling-based:** Not suitable for time-sensitive operations requiring immediate execution
+- **Polling-based:** Can take a few seconds longer to pick up new action runs compared to Kafka
 
 **Configuration:**
 
@@ -74,14 +74,14 @@ For the Helm installation, set:
 
 Note: POLLING streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 
-## When to use POLLING vs Kafka
+## When to use polling vs Kafka
 
 ### Comparison
 
-| Aspect | POLLING | Kafka |
+| Aspect | Polling | Kafka |
 |--------|---------|-------|
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
-| Latency | Polling-based | Real-time |
+| Latency | Based on the polling intervals | Real-time |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
 
 ## Self-signed certificate configuration
