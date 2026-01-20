@@ -76,7 +76,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 4. Add this JSON schema:
 
     <details>
-    <summary><b>GitHub workflow blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub workflow blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -153,7 +153,7 @@ We will create blueprints to model your workflow data. The `githubPullRequest` a
 4. Add this JSON schema:
 
     <details>
-    <summary><b>GitHub workflow run blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub workflow run blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -679,7 +679,7 @@ For the workflow run to pull request relation to work correctly, ensure your `gi
 3. Add or update the following YAML block in the editor to ingest data from GitHub:
 
     <details>
-    <summary><b>GitHub integration configuration (Click to expand)</b></summary>
+    <summary><b>GitHub integration configuration (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:
@@ -816,7 +816,7 @@ Now we'll configure the Azure DevOps integration to ingest build and deployment 
 3. Add the following YAML blocks to your existing mapping configuration:
 
     <details>
-    <summary><b>Azure DevOps integration configuration additions (Click to expand)</b></summary>
+    <summary><b>Azure DevOps integration configuration additions (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:
@@ -1010,7 +1010,7 @@ To help Platform Engineering teams understand, assess, and improve the reliabili
 4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Reliability Agent configuration (Click to expand)</b></summary>
+    <summary><b>Reliability Agent configuration (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -1241,39 +1241,6 @@ In the new dashboard, create the following widgets:
 
 6. Select `custom` as the **Unit** and input `prs` as the **Custom unit**.
 7. Click `Save`.
-
-</details>
-
-<details>
-<summary><b>Workflow states (click to expand)</b></summary>
-
-1. Click **`+ Widget`** and select **Table**.
-2. Title the widget **Workflow States**.
-3. Choose the **Workflow State** blueprint.
-4. Add this JSON to the **Initial filters** editor:
-
-    ```json showLineNumbers
-    {
-      "combinator": "and",
-      "rules": [
-        {
-          "value": "Azure Devops",
-          "property": "scim",
-          "operator": "="
-        }
-      ]
-    }
-    ```
-
-5. Click **Save** to add the widget to the dashboard.
-6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
-7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
-    - **Title**: The workflow name.
-    - **Status**: The current status of the workflow.
-    - **Result**: The result of the last run.
-    - **Last Triggered At**: When the workflow was last triggered.
-    - **Link**: The URL to the workflow definition.
-8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
 
