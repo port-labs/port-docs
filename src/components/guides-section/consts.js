@@ -1619,7 +1619,7 @@ export const availableGuides = [
     {
         title: "Gain visibility into delivery performance",
         description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
-        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-and-track-delivery-performance",
     },
