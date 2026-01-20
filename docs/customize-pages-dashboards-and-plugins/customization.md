@@ -92,7 +92,7 @@ Your custom icon is now available throughout your Port organization. Custom icon
   - PNG and JPEG: 512x512 pixels.
   - SVG: 8192x8192 pixels.
 - **Icon name length:** 1-30 characters.
-- **Platform URL:** Custom icons are only supported when accessing Port via the `app.port.io` domain. They are not available on the `app.getport.io` domain.
+- **Platform URL:** Custom icons are only supported when accessing Port via the `port.io` domain. They are not available on the `getport.io` domain.
 
 ### Dark mode
 
