@@ -40,15 +40,13 @@ Admins configure which MCP connectors are available organization-wide and contro
 4. Choose from the available MCP servers (Notion, Linear, Slack, GitLab, Jira) or select **Custom Server** to add your own.
 5. Fill in the connector details:
    - **Name**: A display name for this connector.
-   - **Instructions**: Guidance for when the AI should use this connector.
+   - **Description**: The intention of this server in your organization and guidance for when the AI should use it (e.g., "Notion workspace containing customer playbooks and internal runbooks").
    - **URL**: The MCP server URL (for custom servers).
 6. Click **Connect** and complete the OAuth authentication flow.
 7. Under **Allowed Tools**, select which tools to expose to your organization using `+ Add Tool`. Only the tools you add will be visible to users.
 8. Test the connector using the AI agent playground on the right side of the modal.
 9. Click `Publish` to make the connector available to users.
 
-{/* TODO: Clarify what the "Instructions" field is used for - is this organization context for AI routing? */}
-{/* TODO: Clarify if admins can remove default tools or only add from available tools */}
 
 :::caution Destructive actions
 Consider carefully before enabling write or delete capabilities. Users and AI agents will be able to perform these actions based on their permissions in the external tool. All actions are logged in Port's audit trail.
@@ -57,8 +55,6 @@ Consider carefully before enabling write or delete capabilities. Users and AI ag
 ## Authenticate to connectors
 
 Once your admin has configured MCP connectors, you need to authenticate your personal account to use them.
-
-{/* TODO: Confirm if the MCP Servers menu under avatar is available to both admins and regular users */}
 
 ### From the MCP Servers menu
 
@@ -88,23 +84,6 @@ After authenticating, you can toggle which tools are active for your account:
 
 You can only toggle tools that your admin has enabled. Tools not added by the admin will not appear.
 
-### From your IDE
-
-{/* TODO: Talk with Stav about this flow */}
-
-When using MCP clients (Cursor, Claude Desktop, VS Code):
-
-1. Connect your IDE to Port's MCP server (see [Port MCP Server setup](/ai-interfaces/port-mcp-server/overview-and-installation)).
-2. When you invoke a tool you haven't authenticated to, Port returns the OAuth URL.
-3. Your IDE displays a prompt to authenticate.
-4. Complete the OAuth flow in your browser.
-5. Restart your MCP client.
-6. All authenticated tools now appear alongside Port's native tools.
-
-:::info One-time setup
-You typically authenticate once per MCP server. Port handles token refresh automatically where supported by the OAuth provider. If a token expires and can't be refreshed, you will be prompted to re-authenticate.
-:::
-
 ## Using MCP connectors
 
 After authenticating, you can use natural language to interact with external tools through any Port AI interface.
@@ -117,6 +96,10 @@ After authenticating, you can use natural language to interact with external too
 - "What alerts fired in the last hour?"
 
 MCP connector tools are also available to [AI Agents](/ai-interfaces/ai-agents/overview) for automated workflows.
+
+### IDE access
+
+If you've connected your IDE to [Port's MCP server](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp), your authenticated MCP connectors are automatically available alongside Port's native tools.
 
 ## Security and permissions
 
