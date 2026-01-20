@@ -13,14 +13,6 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 
-## Deploy the integration
-
-If you deploy the integration outside Port (`Kubernetes`, `Docker`, or `CI`), you need your Port `CLIENT_ID` and `CLIENT_SECRET`.
-
-<FindCredentials/>
-
-___
-
 Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
@@ -28,7 +20,12 @@ Choose the installation method that best suits your needs:
 {props.setupName !== "app" && (
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="GithubOcean" showSelfHostedTip={false} dataSourceName="Github" />
+<OceanSaasInstallation
+  integration="GithubOcean"
+  showSelfHostedTip={false}
+  dataSourceName="Github"
+  showUseCustomSettingsStep={props.showUseCustomSettingsStep}
+/>
 
 
 </TabItem>
@@ -37,6 +34,12 @@ Choose the installation method that best suits your needs:
 <TabItem value="real-time-self-hosted" label="Kubernetes" default={props.setupName === "app"}>
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+### Port credentials
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
 
 <h2>Prerequisites</h2>
 
@@ -272,10 +275,22 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="docker" label="Docker">
-    <DockerInstallMethod showingApp={props.setupName == "app"} />
+### Port credentials
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
+
+<DockerInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 
 <TabItem value="one-time-ci" label="CI">
+### Port credentials
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
+
 <CiInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 </Tabs>

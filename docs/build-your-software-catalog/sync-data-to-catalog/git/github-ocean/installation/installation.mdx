@@ -6,7 +6,8 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import InstallMethods from "./_install_methods.mdx";
 import GithubAppManualSetupContent from "./_custom_github_app_content.mdx";
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx";
+import OceanHostedByPortViaPortUi from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_hosted_by_port_via_port_ui.mdx";
+import GithubAppViaPortRedirectContent from "./_github_app_via_port_redirect_content.mdx";
 
 # Installation
 
@@ -23,17 +24,20 @@ This page helps you choose an authentication method and then deploy the integrat
 
 <Tabs groupId="github-ocean-auth" queryString="auth">
 
-<TabItem value="github-app-wizard" label="GitHub App (OAuth via Port)" default>
+<TabItem value="github-app-wizard" label="GitHub App (via Port)" default>
 
 You can create and install a GitHub App directly from Port’s UI using OAuth. This is the recommended approach as it streamlines the entire setup process.
 
-<h2>Hosted by Port</h2>
+:::info Hosted by Port only
+The **GitHub App (via Port)** setup is available **only** as a **Hosted by Port** installation.
 
-:::caution Single organization limitation
-GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
+**Hosted by Port** means Port runs and manages the integration for you (no Kubernetes/Docker/CI deployment on your side).
 :::
 
-<OceanSaasInstallation integration="GithubOcean" showSelfHostedTip={false} dataSourceName="Github" />
+<OceanHostedByPortViaPortUi
+  dataSourceName="Github"
+  redirectContent={<GithubAppViaPortRedirectContent />}
+/>
 
 </TabItem>
 
@@ -45,37 +49,71 @@ To create a PAT, see GitHub’s [managing your personal access tokens](https://d
 
 The token must belong to a user with access to the relevant GitHub resources (e.g., repositories, teams) across all organizations you want to sync.
 
-You will use this token as the `githubToken` parameter when [deploying the integration](#deploy-the-integration) below.
+You will use this token as the `githubToken` parameter when deploying the integration below.
 
 <details>
 <summary><b>Required permissions (click to expand)</b></summary>
   
-These are the necessary permissions if you are creating a fine-grained PAT.
-  
-**Repository permissions:**
-- **Content**: Read-only (for reading files).
-- **Metadata**: Read-only.
-- **Administration**: Read-only (for syncing repository teams and collaborators).
-- **Pull requests**: Read-only.
-- **Issues**: Read-only.
-- **Actions**: Read-only.
-- **Code scanning alerts**: Read-only.
-- **Dependabot alerts**: Read-only.
-- **Deployments**: Read-only.
-- **Environments**: Read-only.
-  
-**Organization permissions:**
-- **Members**: Read-only (for syncing users and teams).
-- **Administration**: Read-only (for syncing external identities).
-- **Webhooks**: Read and write (for managing webhooks).
+This section focuses on the permissions you need to grant (fine-grained PAT vs classic PAT).
+
+### Fine-grained PAT
+
+To configure permissions for a fine-grained PAT:
+
+- Choose the **resource owner** (organization/user).
+  ![Selecting a resource owner when creating a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedResourceOwnerSelection.png)
+
+- Under **Repository access**, choose **All repositories** or **Only select repositories** (and select the relevant repositories).
+- **Repositories permissions**:
+    - **Actions**: Read-only.
+    - **Administration**: Read-only (for syncing repository teams and collaborators).
+    - **Code scanning alerts**: Read-only.
+    - **Contents**: Read-only (for reading files).
+    - **Dependabot alerts**: Read-only.
+    - **Deployments**: Read-only.
+    - **Environments**: Read-only.
+    - **Issues**: Read-only.
+    - **Metadata**: Read-only.
+    - **Pull requests**: Read-only.
+    - **Secret scanning alerts**: Read-only.
+    - **Webhooks**: Read and write *(personal accounts only — required to create repository webhooks).*
+    ![Choosing organization repositories when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATOrganizationRepositories.png)
+    ![Choosing personal account repositories when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATPersonalAccountRepositories.png)
+
+- **Organization permissions** (when the resource owner is an organization):
+  - **Members**: Read-only (for syncing users and teams).
+  - **Administration**: Read-only (for syncing external identities).
+  - **Webhooks**: Read and write *(organizations only — required to create organization webhooks).*
+    ![Choosing organization permissions when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATOrganizationPermissions.png)
+
+- **Account permissions** (when the resource owner is a personal account):
+  to grant the permissions below.
+  - **Email addresses**: Read-only (only if you want to ingest user email addresses).
+    ![Choosing account permissions when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATPersonalAccount.png)
 
 :::note Default permissions
 GitHub will prompt you to confirm these permissions when creating the token.
 :::
 
+### Classic PAT
+
+Select the following scopes (classic PAT):
+   - `repo`
+   - `repo_deployment`
+   - `public_repo`
+   - `security_events`
+   - `workflow`
+   - `read:org`
+   - `admin:repo_hook` *(required if you intend syncing a personal account — used to create repository webhooks).*
+   - `admin:org_hook`
+   - `read:user`
+   - `user:email`
+  ![Classic PAT permission scopes for personal accounts](../../../../../../static/img/integrations/github-ocean/ClassicPATPermissionScopes.png)
+   
+
 </details>
 
-<InstallMethods setupName="classic" />
+<InstallMethods setupName="classic" showUseCustomSettingsStep />
 
 ## Multi GitHub organization support
 
