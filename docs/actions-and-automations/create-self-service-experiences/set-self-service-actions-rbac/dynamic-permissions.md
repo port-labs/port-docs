@@ -163,10 +163,11 @@ This condition returns an array of user emails who are on the same team as the e
 
 </Tabs>
 
-:::info Why the difference?
-- **Execute permissions** answer: "Can this specific user run the action?" → Yes/No (boolean).
-- **Approve permissions** answer: "Who is allowed to approve this action?" → A list of users (array of emails).
+:::info Execute vs. Approve
+- **Execute permissions** return a boolean indicating whether a specific user can execute the action.
+- **Approve permissions** return an array of user email addresses allowed to approve the action.
 :::
+
 
 ### Using a policy object
 
