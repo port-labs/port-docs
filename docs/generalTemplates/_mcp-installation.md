@@ -142,7 +142,7 @@ If you encounter errors:
 </TabItem>
 </Tabs>
 
-:::tip WSL Users
+<h4>WSL Users</h4>
 If you are running VS Code on Windows with WSL, you may need to explicitly specify `wsl` as the command and provide the full path to `npx` (run `which npx` in your WSL terminal to find the path). For example:
 
 ```json showLineNumbers
@@ -161,9 +161,6 @@ If you are running VS Code on Windows with WSL, you may need to explicitly speci
     }
   }
 }
-```
-Make sure to replace the URL with `https://mcp.us.port.io/v1` if you are in the US region.
-:::
 
    :::tip Read-only mode
    The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools. When set to `1`, write tools are completely hidden from the available tools list, ensuring you can only query data without making modifications.
