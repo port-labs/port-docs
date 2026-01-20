@@ -165,6 +165,13 @@ For example, if your actions include a `target_cluster` property:
 
 Each agent will ignore actions that don't match its filter, ensuring that only the appropriate agent processes each action.
 
+:::caution Polling streamer behavior
+With [polling streamer](/actions-and-automations/setup-backend/webhook/port-execution-agent/usage#polling-streamer), messages are acknowledged before processing and cannot be claimed by another agent once fetched.
+This allows multiple agents to run in parallel without conflicts, but requires using the same filtering logic across all agents to avoid unintended filtering.
+
+**You cannot control which agent processes which message.**
+:::
+
 #### Create a URL based on a property
 
 Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
