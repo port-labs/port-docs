@@ -1203,7 +1203,7 @@ To help Platform Engineering teams understand and improve software delivery flow
 4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Delivery Performance Agent configuration (Click to expand)</b></summary>
+    <summary><b>Delivery Performance Agent configuration (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
