@@ -137,7 +137,7 @@ Execute conditions must return a **boolean** value (`true` or `false`).
 ]
 ```
 
-This condition checks if a query returned zero entities. If true, the user can execute; if false, they cannot.
+This condition checks if the query returned zero entities. Execution is allowed only in that case.
 
 </TabItem>
 
