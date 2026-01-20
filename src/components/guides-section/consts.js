@@ -1626,7 +1626,7 @@ export const availableGuides = [
     {
         title: "Measure delivery reliability and stability",
         description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
-        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-reliability-and-stability",
     },
