@@ -22,7 +22,7 @@ The text input type can be used to store any text based data, for example:
 - Commit SHA
 - File names
 
-In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
+In the [live demo](https://demo.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
 
 ## API definition
 
