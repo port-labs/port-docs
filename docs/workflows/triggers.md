@@ -71,4 +71,10 @@ Event triggers can include a JQ condition. This is useful when you only want to 
   }
 }`}</CodeBlock>
 
+<h2>Using trigger outputs in later nodes</h2>
+
+Both trigger types store their output under `workflowRun.variables.outputs[<triggerNodeIdentifier>]`.
+
+This output can be referenced in later nodes on the same execution path using templates (for example `{{ .outputs.event_trigger.diff.after.properties.tier }}`), and is evaluated at runtime (see [data flow](/workflows/data-flow)).
+
 

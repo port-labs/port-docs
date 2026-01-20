@@ -82,4 +82,12 @@ The workflow below starts from a self-serve trigger, collects a `message`, sends
 Trigger nodes cannot have incoming connections. A trigger is always a start point.
 </Admonition>
 
+<h2>Related topics</h2>
+
+If you are building workflows beyond the minimal example, these pages help you model and debug real runs:
+
+- Learn about node types in [workflow nodes](/workflows/nodes).
+- Learn how outputs are stored and referenced in [data flow](/workflows/data-flow).
+- Learn how to run and debug workflows in [run and inspect workflows](/workflows/running-and-inspecting).
+
 

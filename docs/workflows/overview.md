@@ -79,4 +79,14 @@ During closed beta:
 - **Support is best-effort** and scoped to your beta agreement.
 </Admonition>
 
+<h2>Next steps</h2>
+
+If you want to go deeper, start here:
+
+- Read how to define a workflow in JSON in [define workflows](/workflows/define).
+- Learn about available node types in [workflow nodes](/workflows/nodes).
+- Understand how outputs flow between nodes in [data flow](/workflows/data-flow).
+- Configure who can execute and who can view runs in [permissions and access control](/workflows/permissions).
+- Learn how to debug and complete asynchronous nodes in [run and inspect workflows](/workflows/running-and-inspecting).
+- Explore patterns and examples in [use cases](/workflows/use-cases).
 
