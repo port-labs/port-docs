@@ -245,7 +245,7 @@ const config = {
               },
               {
                 label: "Demo",
-                href: "https://showcase.port.io",
+                href: "https://demo.port.io",
               },
               {
                 label: "GitHub",
@@ -427,6 +427,7 @@ const config = {
       "data-search-ask-ai-cta-hover-bg-color": "#FFFFFF",
       "data-search-ask-ai-cta-text-color": "#000000",
       "data-search-ask-ai-cta-bg-color": "#FFFFFF",
+      "data-search-source-ids-include": "fcdffc9e-3c68-461a-9121-2362878b542b",
       "data-modal-override-open-selector-search": ".kapa-search-trigger",
       async: true,
     },
