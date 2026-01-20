@@ -77,7 +77,7 @@ Organization admins can upload custom icons to use throughout Port. Once uploade
    - Select a file from your computer.
    - Copy and paste the file directly into the upload area (hover over the upload area first to enable paste).
    
-   Supported formats: PNG, SVG, or JPEG (maximum dimensions: 512x512 pixels). For SVG files, the dimension is enforced on the viewbox first, then on the width and height properties if there is no usable viewbox.
+   Supported formats: PNG, SVG, or JPEG. For PNG and JPEG files, maximum dimensions are 512x512 pixels. For SVG files, maximum dimensions are 8192x8192 pixels.
 
 4. Enter a name for your custom icon (between 1-30 characters).
 
@@ -88,9 +88,11 @@ Your custom icon is now available throughout your Port organization. Custom icon
 **Limitations**
 
 - **Maximum file size:** 10MB.
-- **Maximum icon dimensions:** 512x512 pixels.
+- **Maximum icon dimensions:**
+  - PNG and JPEG: 512x512 pixels.
+  - SVG: 8192x8192 pixels.
 - **Icon name length:** 1-30 characters.
-- **Platform URL:** Custom icons work reliably when accessing Port via `app.port.io`. While you can upload icons using `app.getport.io`, custom icons currently won't be visible when accessing the platform through that URL.
+- **Platform URL:** Custom icons are only supported when accessing Port via the `port.io` domain. They are not available on the `getport.io` domain.
 
 ### Dark mode
 

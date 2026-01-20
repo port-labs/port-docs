@@ -10,7 +10,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 The `Markdown` property is used to display [Markdown](https://en.wikipedia.org/wiki/Markdown) content within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
 Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the formatted content.
 
-An example can be seen in the [live demo](https://showcase.port.io/serviceEntity?identifier=payment&activeTab=5):  
+An example can be seen in the [live demo](https://demo.port.io/serviceEntity?identifier=payment&activeTab=5):  
 The `service` blueprint has a `README` property that displays the service's Readme file. As you can see in the example, the "Payment" service has a `README` tab that displays the value of the property in markdown format.
 
 ## Schema definition
