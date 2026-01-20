@@ -5,7 +5,7 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Hosted by Port installation
+# Hosted by Port
 
 
 AWS Hosted by Port is available through [Port's Ocean SaaS framework](https://ocean.getport.io/integrations-library/).  
@@ -25,7 +25,7 @@ AWS Hosted by Port runs on **Port's servers** and connects to your AWS accounts 
 :::tip Why Can't I Use an Existing Role?
 AWS Hosted by Port requires specific OIDC trust relationships and permissions that are automatically configured by the CloudFormation template. Using an existing role would require manual configuration of these complex trust relationships, which is why we provide the CloudFormation template to ensure proper setup.
 
-For detailed information about the IAM role architecture and permissions, see the [IAM Role Architecture](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/iam-role-architecture.md) documentation.
+For detailed information about the IAM role architecture and permissions, see the [IAM Role Architecture](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/hosted-by-port/iam-role-architecture.md) documentation.
 :::
 
 ## Installation methods

@@ -4,9 +4,6 @@ sidebar_position: 3
 
 # IAM role architecture
 
-:::info Applies to hosted by Port only
-This guide describes the IAM role architecture for the **[hosted by Port](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/hosted-by-port.md)** deployment method. For self-hosted deployments, see the [self-hosted installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/) for IAM setup instructions.
-:::
 
 AWS Hosted by Port uses a strategically designed IAM role that provides comprehensive read-only access to all AWS services. The role is created automatically by the CloudFormation template and uses the AWS managed `ReadOnlyAccess` policy for future-proofing and operational simplicity.
 
