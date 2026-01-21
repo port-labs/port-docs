@@ -179,7 +179,14 @@ export const liveEvents = {
     "**Code Events:** \
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
-    \n- git.push",
+    \n- git.push \
+    \n\n**Pipeline:** \
+    \n- build.completed \
+    \n\n**Work Items:** \
+    \n- workitem.created \
+    \n- workitem.updated \
+    \n- workitem.commented \
+    \n- workitem.deleted",
   BitbucketServer:
     "**Pull Request:** \
     \n- pr:modified \
