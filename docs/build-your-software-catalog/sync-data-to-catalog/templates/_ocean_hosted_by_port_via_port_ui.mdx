@@ -1,5 +1,3 @@
-import Admonition from "@theme/Admonition";
-
 This installation option means that the integration will be hosted and managed by Port.
 
 1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
@@ -8,16 +6,15 @@ This installation option means that the integration will be hosted and managed b
 4. Under `Select your installation method`, choose `Hosted by Port`.
 5. Click `Connect` to start the setup wizard.
 
-{(props.redirectContent) && (
-  <Admonition type="tip" title={props.redirectTitle || "Redirect step (important)"}>
+{props.redirectContent && (
+  <>
+    <h2>{props.redirectTitle || "Redirect step (important)"}</h2>
     <p>
-      During the wizard, you will be redirected to your provider to authorize
-      Port and approve the requested permissions.
+      During the wizard, you will be redirected to your provider to authorize Port
+      and approve the requested permissions.
     </p>
-
     {props.redirectContent}
-
-  </Admonition>
+  </>
 )}
 
 
