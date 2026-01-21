@@ -23,17 +23,20 @@ Examples of useful applications of dynamic permissions:
 - Ensure that only those who are on-call can perform rollbacks of a service with issues.
 - Allow service owners to modify their own infrastructure freely, but also enforce approval when they seek to make changes to infrastructure shared by multiple services.
 
-## Configuring permissions
+## Configuration
+
+This section covers how dynamic permissions are evaluated and how to configure them for your self-service actions.
 
 ### Guidelines
 
 - There is no limit to the number of queries you may define for execution and approve policies.
 - For `execution` policies, the condition **must** return a `boolean` value (determining whether or not the requester is allowed to execute the action).
-- For `approve` policies, the condition **must** return an array of strings, which **must** be the email addresses of users who can approve the execution of the action.
+- For `approve` policies, the condition **must** return an array of user **email addresses** who can approve the action execution.  
+  Note that fields like `createdBy` or `updatedBy` return **user IDs**, not email addresses. To avoid this issue, ensure your JQ condition outputs email addresses.
 
-:::info Email notifications
-When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
-:::
+  :::info Email notifications
+  When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
+  :::
 
 - In both the `rules` and `conditions` values, you can access the following metadata:
   - `blueprint` - the blueprint tied to the action (if any).
@@ -47,19 +50,27 @@ When approvers are defined dynamically using a `policy`, they will only be notif
 - Any query that fails to evaluate will be ignored.
 - Each query can return up to 1000 entities, so be sure to make them as precise as possible.
 
+### Evaluation order
+
+Dynamic permissions are evaluated **after** [blueprint permissions](/sso-rbac/rbac/). This means:
+
+1. Port first checks if the user has the required permissions on the underlying blueprint.
+2. Only if the blueprint permissions allow access, the dynamic permission policy is evaluated.
+
+If a user lacks the necessary blueprint permissions, dynamic permissions cannot grant them access. Dynamic permissions can only **further restrict** who can execute or approve an action, or **dynamically determine approvers** - they cannot bypass blueprint-level restrictions.
+
+:::tip Troubleshooting
+If your dynamic permissions aren't working as expected, first verify that the user has the necessary blueprint permissions (view/update/delete as required by the action).
+:::
+
 ### Instructions
 
 To define dynamic permissions for an action:
 
-- Go to the [`self-service`](https://app.getport.io/self-serve) page of your portal.
+1. Go to the [Self-service](https://app.getport.io/self-serve) page of your portal.
+2. Hover over the desired action, click on the `...` icon in its top-right corner, and choose `Edit`.
+3. Click on the `Edit JSON` button in the top-right corner of the configuration modal, then choose the `Permissions` tab.
 
-- Hover over the desired action, click on the `...` icon in its top-right corner, and choose `Edit`.
-
-  <img src='/img/self-service-actions/rbac/actionEditPermissions.png' width='50%' border='1px' />
-
-- Click on the `Edit JSON` button in the top-right corner of the configuration modal, then choose the `Permissions` tab.
-
-  <img src='/img/self-service-actions/rbac/actionEditJsonButton.png' width='100%' border='1px' />
 
 This is the action's permission configuration in JSON format. Every action in Port has the following two keys under it:
 
@@ -82,21 +93,21 @@ If the `policy` object **is** defined, then `roles`, `users`, and `teams` only c
 To remove an existing policy, set `"policy": null` in the JSON configuration. Simply deleting the policy content via backspace will not remove it.
 :::
 
-For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
+For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `admin` or a member of the `engineering` team:
 
-```json
+```json showLineNumbers
   "execute": {
-    "roles": ["Admin"],
+    "roles": ["admin"],
     "users": [],
     "teams": ["engineering"]
   }
   ```
 Using the same configuration, but this time with a `policy` object defined, these `roles` and `teams` only determine who can view the action, while the `policy` exclusively controls who can **execute** or **approve** it.
 
-In the following example, the action will be visible to `Admin` and `Engineering` team members, but its execution permissions depend only on whether the `policy` conditions evaluate to `true`:
+In the following example, the action will be visible to `admin` and `engineering` team members, but its execution permissions depend only on whether the `policy` conditions evaluate to `true`:
 ```json 
 "execute": {
-  "roles": ["Admin"],
+  "roles": ["admin"],
   "users": [],
   "teams": ["engineering"],
   "policy": {
