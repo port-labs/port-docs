@@ -56,7 +56,7 @@ You will use this token as the `githubToken` parameter when deploying the integr
   
 This section focuses on the permissions you need to grant (fine-grained PAT vs classic PAT).
 
-### Fine-grained PAT
+<h3>Fine-grained PAT</h3>
 
 To configure permissions for a fine-grained PAT:
 
@@ -91,13 +91,9 @@ To configure permissions for a fine-grained PAT:
   - **Email addresses**: Read-only (only if you want to ingest user email addresses).
     ![Choosing account permissions when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATPersonalAccount.png)
 
-:::note Default permissions
-GitHub will prompt you to confirm these permissions when creating the token.
-:::
+<h3>Classic PAT</h3>
 
-### Classic PAT
-
-Select the following scopes (classic PAT):
+Select the following scopes for classic PAT:
    - `repo`
    - `repo_deployment`
    - `public_repo`
@@ -115,7 +111,7 @@ Select the following scopes (classic PAT):
 
 <InstallMethods setupName="classic" showUseCustomSettingsStep />
 
-## Multi GitHub organization support
+<h2>Multi GitHub organization support</h2>
 
 Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations when you use a classic PAT.
 
