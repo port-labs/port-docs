@@ -5,7 +5,7 @@ sidebar_label: Self-hosted
 
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
-# Self-hosted AWS integration
+# Self-hosted installation
 
 <IntegrationVersion integration="aws-v3" />
 
@@ -29,7 +29,7 @@ Choose the installation path that matches your AWS setup:
 - **IRSA**: Uses IAM roles for Kubernetes service accounts (ideal for EKS).
 
 ### Single account
-For a [single account setup](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/single-account.md), deploy the integration directly to connect to your AWS environment. Choose between IAM User access keys, IAM Role authentication for AWS services, or IRSA for Kubernetes.
+For a [single account setup](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/single-account.md), deploy the integration directly to connect to your AWS environment.
 
 This approach works well when you need resources from just one account and want straightforward setup.
 

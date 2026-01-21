@@ -169,6 +169,8 @@ When creating your ECS task definition, use the following container configuratio
   "name": "port-ocean-aws",
   "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
   "essential": true,
+  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanCrossAccountRole",
+  "executionRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/ecsTaskExecutionRole",
   "environment": [
     {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
     {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
@@ -302,6 +304,8 @@ When creating your ECS task definition, use the following container configuratio
   "name": "port-ocean-aws",
   "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
   "essential": true,
+  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanCrossAccountRole",
+  "executionRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/ecsTaskExecutionRole",
   "environment": [
     {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
     {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
