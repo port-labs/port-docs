@@ -7,11 +7,15 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 Port's Azure DevOps integration allows you to model Azure DevOps resources in your software catalog and ingest data into them.
 
+:::info On-premises support
+This integration supports both **Azure DevOps Services (cloud)** and **Azure DevOps Server (on-premises)**.
+:::
+
 ## Overview
 
 This integration allows you to:
 
-- Map and orgaize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
+- Map and organize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
 - Watch for Azure DevOps object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 
@@ -21,6 +25,10 @@ This integration allows you to:
 The resources that can be ingested from Azure DevOps into Port are listed below.
 
   <AzureDevopsResources/>
+
+:::caution On-premises limitations
+When using Azure DevOps Server (on-premises), **releases** and **work items** are not currently supported due to API version differences. All other resources listed above work the same as the cloud version.
+:::
 
 
 ## Setup

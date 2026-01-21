@@ -21,7 +21,7 @@ The number input type can be used to store any numeric data, for example:
 - Replica counts
 - Number of days to retain data
 
-In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `K8s Replica Count` input is a number input. 🎬
+In the [live demo](https://demo.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `K8s Replica Count` input is a number input. 🎬
 
 ## API definition
 
