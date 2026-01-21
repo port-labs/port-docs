@@ -5,10 +5,6 @@ title: MCP connectors
 
 # MCP connectors
 
-import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
-
-<BetaFeatureNotice id="ai-form" />
-
 MCP Connectors turn Port into a unified MCP gateway, routing requests from developers and AI agents to external MCP servers while applying Port's governance, RBAC, and audit controls. Platform engineers configure which MCP servers are available and which tools are exposed. Developers and AI agents access everything through a single interface.
 
 ## Why MCP connectors?
@@ -21,7 +17,7 @@ MCP Connectors solve three critical challenges:
 
 - **Governance and control**: Platform engineers choose which MCPs are approved, which tools are exposed, and who can access them. Complete audit trails and RBAC enforcement apply to all tool invocations.
 
-- **Better AI accuracy**: Port AI uses the [Context Lake](/ai-interfaces/context-lake) for modeled organizational data and MCP Connectors for real-time external data you wouldn't model (technical docs, logs, tickets). Structured context combined with just-in-time data leads to better AI decisions.
+- **Holistic data access**: Port AI uses the [Context Lake](/ai-interfaces/context-lake) for structured organizational data and MCP Connectors for ephemeral or time-series data that doesn't belong in your data model. Refer to the following [article](https://www.port.io/blog/why-ai-agents-need-a-context-lake) to learn more about why agents need both types of data.
 
 ## Setting up MCP connectors
 
@@ -37,15 +33,14 @@ Admins configure which MCP connectors are available organization-wide and contro
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Click on the `+ Data source` in the top-right corner.
 3. Select the **MCP Servers** tab.
-4. Choose from the available MCP servers (Notion, Linear, Slack, GitLab, Jira) or select **Custom Server** to add your own.
+4. Choose from the available MCP servers (like Notion, Linear, Slack, GitLab, etc) or select **Custom Server** to add your own.
 5. Fill in the connector details:
-   - **Name**: A display name for this connector.
-   - **Description**: The intention of this server in your organization and guidance for when the AI should use it (e.g., "Notion workspace containing customer playbooks and internal runbooks").
-   - **URL**: The MCP server URL (for custom servers).
+   - **Name**: Choose a name that is recognizable for developers and AI agents.
+   - **Description**: Define when this MCP should be used and for which use cases (e.g., "Customer playbooks and internal runbooks").
+   - **Configuration**: Fill in the required fields according to the on-screen instructions.
 6. Click **Connect** and complete the OAuth authentication flow.
 7. Under **Allowed Tools**, select which tools to expose to your organization using `+ Add Tool`. Only the tools you add will be visible to users.
-8. Test the connector using the AI agent playground on the right side of the modal.
-9. Click `Publish` to make the connector available to users.
+8. Click `Publish` to make the connector available to users.
 
 
 :::caution Destructive actions
@@ -65,7 +60,7 @@ Once your admin has configured MCP connectors, you need to authenticate your per
 5. Click **Connect** on one and complete the OAuth authentication flow.
 6. The MCP server is now available in all Port AI interfaces.
 
-### From Port AI chat
+### From Port AI assistant
 
 1. Open the Port AI chat interface.
 2. Click the **+** button to see available MCP servers.

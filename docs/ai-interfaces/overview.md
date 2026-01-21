@@ -122,8 +122,6 @@ Use the **Slack App** to make AI insights available to your entire team in your 
 
 ## Feature Support Matrix
 
-{/* TODO: Verify with Stav that the "External MCP Tools" column is accurate for each interface */}
-
 The following table shows which capabilities are supported across Port's AI interfaces:
 
 <div style={{overflowX: 'auto'}}>
