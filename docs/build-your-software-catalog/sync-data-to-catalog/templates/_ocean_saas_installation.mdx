@@ -3,10 +3,13 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
+import LiveEventsNote from "./_live_events_note.mdx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
 <h3>Live event support</h3>
+
+{props.showLiveEventsGuide && <LiveEventsNote />}
 
 <OceanSaasLiveEventsDescription id={props.integration} />
 

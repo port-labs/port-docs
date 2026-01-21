@@ -2,7 +2,7 @@ const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
 
-    "Solutions": ["Security", "Autonomous Ticket Resolution", "Self Healing Incidents", "Engineering Intelligence", "Agentic Work Management"],
+    "Solutions": ["Security", "Engineering Intelligence", "Autonomous Ticket Resolution", "Self Healing Incidents", "Agentic Work Management"],
     "Use-cases": ["K8s for devs", "IaC for devs", "Cloud access management", "Feature flag management", /*"Cloud cost",*/ "Dev environments", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access controls"],
 
@@ -1619,21 +1619,21 @@ export const availableGuides = [
     {
         title: "Gain visibility into delivery performance",
         description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
-        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-and-track-delivery-performance",
     },
     {
         title: "Measure delivery reliability and stability",
         description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
-        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-reliability-and-stability",
     },
     {
         title: 'Track standards adherence',
         description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
-        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        tags: ["Engineering Intelligence", "GitHub", "Azure DevOps", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
     },
