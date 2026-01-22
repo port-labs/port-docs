@@ -165,13 +165,8 @@ The optimized query fetches only virtual machines and storage accounts that have
 
 The Azure Resource Graph API has undocumented behavior that can cause data inconsistencies when querying large datasets. We have identified two specific issues:
 
-#### Data inconsistency with multi-subscription queries
-
-When querying multiple Azure subscriptions simultaneously, subscriptions with a large number of resources may return inconsistent or incomplete data.
-
-#### Data drift during pagination
-
-If resources are created or deleted in Azure while the integration is paginating through results, the API may return newly created resources instead of existing ones on subsequent pages. This can cause entities to appear as "deleted" in Port when they still exist in Azure.
+1. **Data inconsistency with multi-subscription queries** - When querying multiple Azure subscriptions simultaneously, subscriptions with a large number of resources may return inconsistent or incomplete data.
+2. **Data drift during pagination** - If resources are created or deleted in Azure while the integration is paginating through results, the API may return newly created resources instead of existing ones on subsequent pages. This can cause entities to appear as "deleted" in Port when they still exist in Azure.
 
 #### Workaround
 
