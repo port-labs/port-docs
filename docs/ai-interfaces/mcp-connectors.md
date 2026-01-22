@@ -48,6 +48,16 @@ Admins configure which MCP connectors are available organization-wide and contro
 Consider carefully before enabling write or delete capabilities. Users and AI agents will be able to perform these actions based on their permissions in the external tool. All actions are logged in Port's audit trail.
 :::
 
+### Supported server types
+
+<!-- TODO: Elaborate on each server type with more details once the configuration section is ready -->
+
+Port supports the following types of remote MCP servers:
+
+- **Dynamic client registration**: Servers that support automatic OAuth registration (e.g., Notion).
+- **Manual client registration**: Servers that require you to create an OAuth app first (e.g., GitHub).
+- **API-based authentication**: Servers that authenticate via API keys or tokens instead of OAuth.
+
 ## Authenticate to connectors
 
 Once your admin has configured MCP connectors, you need to authenticate your personal account to use them.
@@ -91,8 +101,6 @@ After authenticating, you can use natural language to interact with external too
 - "Show me open Jira tickets for the payments service"
 - "What alerts fired in the last hour?"
 
-MCP connector tools are also available to [AI Agents](/ai-interfaces/ai-agents/overview) for automated workflows.
-
 ### IDE access
 
 If you've connected your IDE to [Port's MCP server](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp), your authenticated MCP connectors are automatically available alongside Port's native tools.
@@ -105,12 +113,17 @@ If you've connected your IDE to [Port's MCP server](/ai-interfaces/port-mcp-serv
 
 For more details, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
+## Limitations
+
+- **Self-hosted MCP servers**: Only remote MCP servers are supported. Self-hosted MCP servers cannot be connected as MCP connectors.
+- **AI Agents**: MCP connector tools are not available for [AI Agents](/ai-interfaces/ai-agents/overview) automated workflows.
+
 ## FAQs
 
 <details>
 <summary><b>Who can add MCP connectors?</b></summary>
 
-Only admins can add and configure MCP connectors. Regular users can only authenticate to the MCP servers that admins have made available.
+By default, only admins can add and configure MCP connectors. Organizations can change this by editing the MCP server blueprint permissions or by creating a [self-service action](/actions-and-automations/create-self-service-experiences/).
 
 </details>
 
