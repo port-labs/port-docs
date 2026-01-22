@@ -44,6 +44,7 @@ The resources that can be ingested from Terraform Cloud into Port are listed bel
 - [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
 - [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
 - [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
+- [`State File`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions#fetch-the-current-state-version-for-a-workspace)
 
 
 ## Setup
@@ -456,6 +457,24 @@ resources:
           source: .attributes.source
         relations:
           terraformCloudWorkspace: .relationships.workspace.data.id
+- kind: state-file
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .lineage + "-" + (.serial | tostring)
+        title: '"State v" + (.serial | tostring)'
+        blueprint: '"terraformCloudStateFile"'
+        properties:
+          version: .version
+          terraformVersion: .terraform_version
+          serial: .serial
+          lineage: .lineage
+          resourceCount: .resources | length
+          resourceTypes: .resources | map(.type) | unique | sort
+          providers: .resources | map(.provider) | unique | sort
+          outputKeys: .outputs | keys
 ```
 
 </details>
@@ -1341,6 +1360,56 @@ Here is an example of the payload structure from Terraform:
 
 </details>
 
+<details>
+<summary> State file response data</summary>
+
+```json showLineNumbers
+{
+  "version": 4,
+  "terraform_version": "1.5.7",
+  "serial": 1,
+  "lineage": "7e30e20a-09d2-6e05-300a-e1875120359f",
+  "outputs": {},
+  "resources": [
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "cidr_block": "10.0.0.0/16",
+            "enable_dns_hostnames": true,
+            "id": "vpc-0abc123def456789"
+          }
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "cidr_block": "10.0.1.0/24",
+            "id": "subnet-0abc123def456789"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1584,6 +1653,40 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
   "relations": {},
   "icon": "Terraform"
+}
+```
+
+</details>
+
+<details>
+<summary> State file entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "7e30e20a-09d2-6e05-300a-e1875120359f-1",
+  "title": "State v1",
+  "blueprint": "terraformCloudStateFile",
+  "properties": {
+    "version": 4,
+    "terraformVersion": "1.5.7",
+    "serial": 1,
+    "lineage": "7e30e20a-09d2-6e05-300a-e1875120359f",
+    "resourceCount": 10,
+    "resourceTypes": [
+      "google_cloud_asset_project_feed",
+      "google_iam_role",
+      "google_organization_iam_custom_role",
+      "google_project_iam_binding",
+      "google_projects",
+      "google_pubsub_topic",
+      "google_service_account"
+    ],
+    "providers": [
+      "provider[\"registry.terraform.io/hashicorp/google\"]"
+    ],
+    "outputKeys": []
+  },
+  "relations": {}
 }
 ```
 
