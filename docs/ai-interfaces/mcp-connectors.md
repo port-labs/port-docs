@@ -38,6 +38,7 @@ Admins configure which MCP connectors are available organization-wide and contro
    - **Name**: Choose a name that is recognizable for developers and AI agents.
    - **Description**: Define when this MCP should be used and for which use cases (e.g., "Customer playbooks and internal runbooks").
    - **Configuration**: Fill in the required fields according to the on-screen instructions.
+   <!-- TODO: See if there are specific configurations to mention here -->
 6. Click **Connect** and complete the OAuth authentication flow.
 7. Under **Allowed Tools**, select which tools to expose to your organization using `+ Add Tool`. Only the tools you add will be visible to users.
 8. Click `Publish` to make the connector available to users.
