@@ -644,8 +644,8 @@ In this case, we are parsing the `dependencies` object from the `package.json` f
 
 :::info File content structure
 When Port ingests JSON or YAML files, the content is available in two forms:
-- **`.file.content.raw`** - The original file content as a string
-- **`.file.content.parsed`** - The parsed JSON/YAML structure
+- `.file.content.raw` - The original file content as a string.
+- `.file.content.parsed` - The parsed JSON/YAML structure.
 
 Always use `.file.content.parsed` when accessing structured data from JSON or YAML files.
 :::
