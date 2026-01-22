@@ -5,18 +5,38 @@ description: Learn how to connect GitHub Codeowners with service teams in Port, 
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub CODEOWNERS with Service, Team & User
 
 This guide demostrates how to map CODEOWNERS file in GitHub repositories to their respective Service, Team and User blueprints in port.
 
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
+
 ## Prerequisites
 - A Port account.
+
+<Tabs groupId="github-codeowners" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 - Install [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organization or in repositories you are interested in.
+
 :::info Default Github Blueprints
 Once you install Port's GitHub app, the following blueprints will be automatically created in your data model: `Repository`, `Pull Request`, `Github User`, `Github Team`.
 :::
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+- Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+
+:::info Default Github Blueprints
+Once you install GitHub ocean, the following blueprints will be automatically created in your data model: `Repository`, `Pull Request`, `Github User`, `Github Team`.
+:::
+
+</TabItem>
+</Tabs>
 
 ## Set up data model
 
@@ -91,6 +111,9 @@ To add the CODEOWNERS blueprint:
 
 ### Set up mapping configuration
 
+<Tabs groupId="github-codeowners" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 2. Under `Exporters`, click on your desired GitHub organization.
@@ -159,6 +182,81 @@ To add the CODEOWNERS blueprint:
     ```
 
     </details>
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Under `Exporters`, click on your installed GitHub ocean integration.
+
+3. A window will open containing the default YAML configuration of your GitHub ocean integration.
+
+4. In the bottom-left corner you can modify the configuration to suit your needs, by adding/removing entries.
+
+5. Copy the following configuration and paste it in the editor, then click `Save & Resync`:
+
+    <details>
+    <summary><b>CODEOWNERS mapping configuration (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: file
+        selector:
+          query: .repository.archived == false
+          files:
+            - path: '**/.github/CODEOWNERS'
+        port:
+          itemsToParse: >-
+            (. as $root | .content | split("\n") | map(trim) |
+            map(select((test("^[[:space:]]*#") | not) and (length > 0))) | map(
+                (split(" ") | map(select(length > 0))) as $tokens
+                | {
+                    scope: ($tokens[0]), 
+                    # Replacing ** and * characters since the identifier can't contain special characters
+                    identifier: ($tokens[0] 
+                              | gsub("\\*\\*"; "doublestar")
+                              | gsub("\\*"; "star")),
+                    # Extracting users and teams to their respective arrays
+                    users: (
+                        $tokens[1:]
+                        | map(select(contains("/") | not)
+                                | gsub("@" ; "")
+                              )
+                      ),
+                    teams: (
+                        $tokens[1:]
+                        | map(select(test("^@[^ ]+/[^ ]+$"))
+                              | split("/")
+                              | .[-1]
+                  ))
+                }
+                )
+              )
+          entity:
+            mappings:
+              identifier: .repository.full_name + "_" +.item.identifier + "_codeowners"
+              title: .item.scope + " codeowners"
+              blueprint: '"githubCodeowners"'
+              properties:
+                scope: .item.scope
+                location: .path
+              relations:
+                repository: .repository.name
+                teams: 
+                  combinator: '''and'''
+                  rules:
+                    - property: '"$title"'
+                      value: .item.teams
+                      operator: '"in"'
+                users: .item.users
+
+    ```
+
+    </details>
+
+</TabItem>
+</Tabs>
   
 ## Example
 
