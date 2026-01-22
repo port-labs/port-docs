@@ -37,7 +37,7 @@
     "docusaurus-plugin-openapi-docs": "^4.6.0",
     "docusaurus-theme-openapi-docs": "^4.6.0",
     "pluralize": "^8.0.0",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
