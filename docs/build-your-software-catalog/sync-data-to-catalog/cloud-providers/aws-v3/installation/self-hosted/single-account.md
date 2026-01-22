@@ -26,23 +26,26 @@ Before installing the integration, ensure you have:
 <TabItem value="iam-role" label="IAM Role">
 
 **Prerequisites:**
-- AWS ECS service with an attached IAM role.
+- AWS compute service with an attached IAM role.
 - Permissions to create IAM roles.
+
+**Trusted entity:**
+
+The trusted entity for IAM Role authentication is the AWS service principal (e.g., `ecs-tasks.amazonaws.com` for ECS or `ec2.amazonaws.com` for EC2). This allows your compute service to assume the IAM role automatically.
 
 **Set up IAM role:**
 
-Create an IAM role for your ECS service:
+Create an IAM role for your compute service:
 
 1. **Create an IAM role** with the following configuration:
    - Go to **AWS Console → IAM → Roles → Create role**.
    - Select **AWS service** as the trusted entity.
-   - Choose **Elastic Container Service** as the service.
-   - Select **Elastic Container Service Task** as the use case.
+   - Choose the appropriate AWS service.
 
 2. **Attach permissions**:
    - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
 
-3. **Note the role ARN** - you'll need it when creating your ECS service.
+3. **Note the role ARN** - you'll need it when deploying your compute service.
 
 **Deploy the integration:**
 
@@ -82,6 +85,31 @@ Deploy the integration as an ECS service with the IAM role attached.
     }
   ]
 }
+```
+
+</TabItem>
+
+<TabItem value="ec2" label="EC2 (Docker)">
+
+Deploy the AWS integration on an EC2 instance. The integration runs as a Docker container with the IAM role attached via instance profile.
+
+**Prerequisites:**
+- EC2 instance with Docker installed.
+- IAM instance profile created and attached to the EC2 instance.
+- The IAM role created above attached to the instance profile.
+
+```bash showLineNumbers
+docker run -d --restart unless-stopped --platform=linux/amd64 \
+  -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
+  -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
+  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
+  -e OCEAN__INITIALIZE_PORT_RESOURCES="true" \
+  -e OCEAN__SEND_RAW_DATA_EXAMPLES="true" \
+  -e OCEAN__EVENT_LISTENER='{"type": "POLLING", "resyncInterval": 1440}' \
+  -e OCEAN__INTEGRATION__IDENTIFIER="my-aws-v3" \
+  -e OCEAN__INTEGRATION__TYPE="aws-v3" \
+  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS='["arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole"]' \
+  ghcr.io/port-labs/port-ocean-aws-v3:latest
 ```
 
 </TabItem>
