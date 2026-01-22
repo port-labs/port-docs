@@ -57,11 +57,9 @@ Dynamic permissions are evaluated **after** [blueprint permissions](/sso-rbac/rb
 1. Port first checks if the user has the required permissions on the underlying blueprint.
 2. Only if the blueprint permissions allow access, the dynamic permission policy is evaluated.
 
-If a user lacks the necessary blueprint permissions, dynamic permissions cannot grant them access. Dynamic permissions can only **further restrict** who can execute or approve an action, or **dynamically determine approvers** - they cannot bypass blueprint-level restrictions.
+If a user lacks the necessary blueprint permissions, dynamic permissions cannot grant them access. Dynamic permissions can only **further restrict** who can execute or approve an action, or **dynamically determine approvers**. They cannot bypass blueprint-level restrictions. 
 
-:::tip Troubleshooting
-If your dynamic permissions aren't working as expected, first verify that the user has the necessary blueprint permissions (view/update/delete as required by the action).
-:::
+If your dynamic permissions aren't working as expected, first verify that the user has the necessary blueprint permissions.
 
 ### Instructions
 
@@ -291,7 +289,7 @@ Here is an example of a permissions JSON that achieves this:
 
 </details>
 
-#### Explanation
+**Explanation**
 
 The two rules that we defined fetch all `service` entities whose name is the same as the one provided to the action during execution. These rules will return an array of entities that comply with them. If no entities comply with the rules, the array will be empty.  
 The `conditions` query checks if the resulting array is empty or not, and returns `true` or `false`, respectively. If the array is empty, that means that an entity with the provided name does not exist in our software catalog, so we can return `true` and allow the action execution.
@@ -378,7 +376,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
 
 </details>
 
-#### Explanation
+**Explanation**
 
 The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. 
 
@@ -397,7 +395,10 @@ The next query (`.results.approvingUsers.entities[]`) takes the *entire* array f
 In this example, we will implement a security best practice known as "segregation of duties" by ensuring that the user who executes an action cannot also approve it.  
 This is particularly important for sensitive operations like production deployments, infrastructure changes, or permission modifications.
 
-```json
+<details>
+<summary><b>Full permissions JSON (click to expand)</b></summary>
+
+```json showLineNumbers
 {
   "execute": {
     "roles": ["Member", "Admin"],
@@ -435,7 +436,9 @@ This is particularly important for sensitive operations like production deployme
 }
 ```
 
-#### Explanation
+</details>
+
+**Explanation**
 
 This configuration implements a "four-eyes principle", which requires that sensitive actions be verified by a second person before being executed.
 
