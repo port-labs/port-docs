@@ -111,6 +111,42 @@ resources:
 
 </details>
 
+## Configure parallel processing
+
+Configure multiple workers to handle GitHub webhook events in parallel groups, preventing race conditions while maintaining event ordering for related resources.
+
+Starting with Ocean 0.27, a new parameter was added to the configuration, which adjusts the number of async workers spawned for webhook events.
+
+Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
+
+When `event_workers_count > 1`, related GitHub events get grouped together:
+
+- All PR events (opened, review, status) for PR #123 → same processing group.
+- All issue events for issue #456 → same processing group.
+- Push events grouped by commit SHA.
+
+<details>
+<summary><b>Event grouping behavior (click to expand)</b></summary>
+  
+**Supported event types:**
+- **Pull requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`).
+- **Issues**: Grouped by issue number (`issues`, `issue_comment`).
+- **Pushes**: Grouped by commit SHA (`push`).
+- **Releases**: Grouped by release ID (`release`).
+- **Workflow runs**: Grouped by run ID (`workflow_run`).
+- **Status checks**: Grouped by commit SHA (`status`).
+  
+**Fallback**: If the event type is not recognized, the payload will be scanned for the first `number`, `id`, or `sha` field.
+
+:::note Processing guarantees
+Events within the same group are processed sequentially to maintain order and prevent conflicts.
+Different groups can be processed in parallel across workers.
+With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
+:::
+
+</details>
+
+
 ## Ingest Git objects
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.

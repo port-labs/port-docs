@@ -45,6 +45,11 @@ The **GitHub App (via Port)** setup is available **only** as a **Hosted by Port*
 
 A Personal Access Token (PAT) is suitable if you are the only one managing the integration and you do not need frequent credential rotation.
 
+::::info PAT authentication support
+The GitHub integration supports authenticating with both **fine-grained** and **classic** PATs.
+If you need **multi-organization** support (v3.0.0-beta+), use a **classic PAT** (fine-grained PATs do not support multi-org).
+::::
+
 To create a PAT, see GitHub’s [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
 The token must belong to a user with access to the relevant GitHub resources (e.g., repositories, teams) across all organizations you want to sync.
@@ -61,7 +66,7 @@ This section focuses on the permissions you need to grant (fine-grained PAT vs c
 To configure permissions for a fine-grained PAT:
 
 - Choose the **resource owner** (organization/user).
-  ![Selecting a resource owner when creating a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedResourceOwnerSelection.png)
+  <img src="/img/integrations/github-ocean/FineGrainedResourceOwnerSelection.png" alt="Selecting a resource owner when creating a fine-grained PAT" width="100%" border="1px" />
 
 - Under **Repository access**, choose **All repositories** or **Only select repositories** (and select the relevant repositories).
 - **Repositories permissions**:
@@ -77,19 +82,19 @@ To configure permissions for a fine-grained PAT:
     - **Pull requests**: Read-only.
     - **Secret scanning alerts**: Read-only.
     - **Webhooks**: Read and write *(personal accounts only — required to create repository webhooks).*
-    ![Choosing organization repositories when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATOrganizationRepositories.png)
-    ![Choosing personal account repositories when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATPersonalAccountRepositories.png)
+    <img src="/img/integrations/github-ocean/FineGrainedPATOrganizationRepositories.png" alt="Choosing organization repositories when configuring a fine-grained PAT" width="100%" border="1px" />
+    <img src="/img/integrations/github-ocean/FineGrainedPATPersonalAccountRepositories.png" alt="Choosing personal account repositories when configuring a fine-grained PAT" width="100%" border="1px" />
 
 - **Organization permissions** (when the resource owner is an organization):
   - **Members**: Read-only (for syncing users and teams).
   - **Administration**: Read-only (for syncing external identities).
   - **Webhooks**: Read and write *(organizations only — required to create organization webhooks).*
-    ![Choosing organization permissions when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATOrganizationPermissions.png)
+    <img src="/img/integrations/github-ocean/FineGrainedPATOrganizationPermissions.png" alt="Choosing organization permissions when configuring a fine-grained PAT" width="100%" border="1px" />
 
 - **Account permissions** (when the resource owner is a personal account):
   to grant the permissions below.
   - **Email addresses**: Read-only (only if you want to ingest user email addresses).
-    ![Choosing account permissions when configuring a fine-grained PAT](../../../../../../static/img/integrations/github-ocean/FineGrainedPATPersonalAccount.png)
+    <img src="/img/integrations/github-ocean/FineGrainedPATPersonalAccount.png" alt="Choosing account permissions when configuring a fine-grained PAT" width="100%" border="1px" />
 
 <h3>Classic PAT</h3>
 
@@ -104,7 +109,7 @@ Select the following scopes for classic PAT:
    - `admin:org_hook`
    - `read:user`
    - `user:email`
-  ![Classic PAT permission scopes for personal accounts](../../../../../../static/img/integrations/github-ocean/ClassicPATPermissionScopes.png)
+  <img src="/img/integrations/github-ocean/ClassicPATPermissionScopes.png" alt="Classic PAT permission scopes for personal accounts" width="100%" border="1px" />
    
 
 </details>
@@ -115,7 +120,8 @@ Select the following scopes for classic PAT:
 
 Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations when you use a classic PAT.
 
-- **Supported credentials**: Multi-organization support is available only when you authenticate using a classic PAT.
+
+- **Supported authentication method**: Multi-organization support is available only when you authenticate using a **classic PAT**. Syncing multi organizations is **not supported** when authenticating via **GitHub App** (including **GitHub app (via Port)** / self hosted setups)
 - **Multi-organization setup**: Set `organizations: ["org1", "org2", "org3"]` in your mapping.
 - **All organizations setup**: If `organizations` is not specified, the integration syncs all organizations the classic PAT has access to.
 
@@ -155,39 +161,3 @@ Use this option if you want GitHub App authentication but you prefer to create a
 </TabItem>
 
 </Tabs>
-
-## Configure parallel processing
-
-Configure multiple workers to handle GitHub webhook events in parallel groups, preventing race conditions while maintaining event ordering for related resources.
-
-Starting with Ocean 0.27, a new parameter was added to the configuration, which adjusts the number of async workers spawned for webhook events.
-
-Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
-
-When `event_workers_count > 1`, related GitHub events get grouped together:
-
-- All PR events (opened, review, status) for PR #123 → same processing group.
-- All issue events for issue #456 → same processing group.
-- Push events grouped by commit SHA.
-
-<details>
-<summary><b>Event grouping behavior (click to expand)</b></summary>
-  
-**Supported event types:**
-- **Pull requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`).
-- **Issues**: Grouped by issue number (`issues`, `issue_comment`).
-- **Pushes**: Grouped by commit SHA (`push`).
-- **Releases**: Grouped by release ID (`release`).
-- **Workflow runs**: Grouped by run ID (`workflow_run`).
-- **Status checks**: Grouped by commit SHA (`status`).
-  
-**Fallback**: If the event type is not recognized, the payload will be scanned for the first `number`, `id`, or `sha` field.
-
-:::note Processing guarantees
-Events within the same group are processed sequentially to maintain order and prevent conflicts.
-Different groups can be processed in parallel across workers.
-With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
-:::
-
-</details>
-
