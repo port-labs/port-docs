@@ -24,13 +24,65 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 
 Once configured, the Port Agent will run in your environment and trigger webhooks for self-service actions or software catalog changes.
 
-When a new invocation is detected, the agent pulls it from your Kafka topic and forwards it to the internal API in your private network.
-
 ![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
 :::info Advanced configuration
 For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
 :::
+
+## Streamer types
+
+The Port Agent supports two streamer mechanisms for receiving and processing action runs:
+
+### Kafka streamer (default)
+
+The default and recommended streamer mechanism that uses Kafka for real-time event streaming.
+
+**When to use:**
+- Where higher latency is acceptable
+
+Install the agent with Kafka streamer:
+```bash showLineNumbers
+helm upgrade --install my-port-agent port-labs/port-agent \
+    --create-namespace --namespace port-agent \
+    --set env.normal.PORT_ORG_ID="YOUR_ORG_ID" \
+    --set env.normal.STREAMER_NAME=KAFKA \
+    --set env.normal.KAFKA_CONSUMER_GROUP_ID="YOUR_CONSUMER_GROUP_ID" \
+    --set env.secret.PORT_CLIENT_ID="YOUR_CLIENT_ID" \
+    --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+```
+
+### Polling streamer
+
+An alternative streamer mechanism that polls the Port API via HTTP to retrieve pending action runs.
+
+**When to use:**
+- When Kafka connectivity is restricted or unavailable in your environment
+- For simpler network configurations requiring only HTTP access
+- Where higher latency is acceptable
+
+**Considerations:**
+- **Polling-based:** Can take a few seconds longer to pick up new action runs compared to Kafka
+
+**Configuration:**
+
+For the Helm installation, set:
+
+```bash showLineNumbers
+--set env.normal.STREAMER_NAME=POLLING
+```
+
+Note: POLLING streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
+
+## When to use polling vs Kafka
+
+### Comparison
+
+| Aspect | Polling | Kafka |
+|--------|---------|-------|
+| Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
+| Latency | Based on the polling intervals | Real-time |
+| Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
 
 ## Self-signed certificate configuration
 
@@ -149,9 +201,7 @@ extraVolumeMounts:
 
 ## Overriding configurations
 
-When installing the Port Agent, you can override default values in the `helm upgrade` command:
-
-By using the `--set` flag, you can override specific agent configuration parameters during agent installation/upgrade:
+You can override default values using the `--set` flag during agent installation/upgrade:
 
 ```bash showLineNumbers
 helm upgrade --install my-port-agent port-labs/port-agent \
