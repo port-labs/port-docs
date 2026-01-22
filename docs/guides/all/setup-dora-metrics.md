@@ -1282,7 +1282,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
 :::tip Metric widget groupings
 It would be visually cleaner and more informative to group related widgets, such as the **Line Chart** and **Number Chart** widgets, side by side for easier comparison.
-You can replicate more examples by checking our dora metrics dashboard on the [demo environment](https://showcase.port.io/dora_metrics).
+You can replicate more examples by checking our dora metrics dashboard on the [demo environment](https://demo.port.io/dora_metrics).
 :::
 
 <img src="/img/guides/doraMetricsDBVisualization.png"/>

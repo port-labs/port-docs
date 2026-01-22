@@ -1,4 +1,4 @@
-import GitHubWorkflowLimitations from '/docs/actions-and-automations/templates/_github-workflow-limitations.md'
+import GitHubWorkflowLimitations from '/docs/actions-and-automations/templates/\_github-workflow-limitations.md'
 
 # GitHub workflow via Ocean
 
@@ -33,7 +33,7 @@ Important notes:
 
 ### Automatic workflow status update
 
-Additionally, you can define whether or not Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.  
+Additionally, you can define whether or not Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.
 
 By default, this is set to `true`. To disable this option, set the `reportWorkflowStatus` field to `false` in the `invocationMethod` object, or turn the `Report workflow status` toggle off if using the UI.
 
@@ -48,5 +48,23 @@ The `org` field behavior depends on the installation type:
 - If the integration is **hosted by Port**, the `org` input field will be hidden and prefilled in the UI. Port automatically knows which organization you selected during installation.
 - If the integration is **self-hosted**, you must always fill in the organization input, even if it is configured for a specific organization.
 - When creating an action **through the API**, you must specify the organization even if the integration is hosted by Port.
+
+### Specify a branch
+
+By default, the integration will look for the workflow in the repository's default branch (usually `main`/`master`).
+
+To use a different branch, simply pass the `ref` key in the `Configure the invocation payload` section (or `invocationMethod.workflowInputs` in the JSON object) with the desired branch name as the value:
+
+```json showLineNumbers
+{
+  "ref": "my-branch-name"
+}
+```
+
+:::info Workflow file must exist in the default branch
+Due to [GitHub's behavior](https://github.com/github/docs/issues/31007), to trigger a workflow that uses the `workflow_dispatch` event from a non-default branch using the `ref` key, the same workflow file must exist in the **default branch**.
+
+TIP: If you prefer not to include the full workflow file in the **default branch**, placing a workflow file with the **same name** is enough for the correct workflow in the non-branch to run successfully.
+:::
 
 <GitHubWorkflowLimitations />

@@ -22,6 +22,18 @@ export const liveEvents = {
     \n- user_created \
     \n- user_updated \
     \n- user_deleted",
+  JiraServer: "**Issue:** \
+    \n- jira:issue_created \
+    \n- jira:issue_updated \
+    \n- jira:issue_deleted \
+    \n\n**Project:** \
+    \n- project_created \
+    \n- project_updated \
+    \n- project_deleted \
+    \n\n**User:** \
+    \n- user_created \
+    \n- user_updated \
+    \n- user_deleted",
   Jira_OAuth:
     "**Issue:** \
     \n- jira:issue_created \
@@ -301,6 +313,13 @@ export const liveEvents = {
     \n\n**Group Membership:** \
     \n- group.user_membership.add \
     \n- group.user_membership.remove",
+  Sentry:
+    "**Issue & Issue Tag:** \
+    \n- created \
+    \n- resolved \
+    \n- ignored \
+    \n- unresolved \
+    \n- assigned"
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

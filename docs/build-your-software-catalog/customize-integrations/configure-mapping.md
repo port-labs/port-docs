@@ -134,6 +134,17 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: ...
   ```
 
+:::tip JQ syntax for identifiers with hyphens
+When using JQ to reference identifiers or property names that contain hyphens, you must wrap them in double quotes and use bracket notation.
+
+For example, use `.["my-property"]` instead of `.my-property`, which JQ would interpret as subtraction.
+
+This applies to secrets, properties, and any other identifiers containing hyphens:
+- Secrets: `.secrets["zendesk-api-token"]`
+- Properties: `.properties["my-custom-field"]`
+- Relations: `.relations["parent-service"]`
+:::
+
 ### Additional options
 
 Several more advanced options are available in the mapping configuration:
