@@ -23,6 +23,32 @@ Each skill contains:
 
 Skills follow the open [Agent Skills specification](https://agentskills.io/specification).
 
+## Example skills you can create
+
+<Tabs groupId="skill-examples" queryString>
+<TabItem value="deployment" label="Deployment guidelines">
+
+<h2>Deployment guidelines</h2>
+
+A skill that helps decide on a deployment strategy, which workflows to run, how to check deployment status, and get approval. This skill can guide developers through your organization's deployment process by providing step-by-step instructions on choosing the right deployment strategy for different environments, running the appropriate CI/CD workflows, monitoring deployment progress, and obtaining necessary approvals from stakeholders before deploying to production.
+
+</TabItem>
+<TabItem value="metrics" label="Engineering metrics">
+
+<h2>Engineering metrics</h2>
+
+A skill that structures how you want to get engineering metrics and what to look for. This skill helps analyze key performance indicators like lead time for changes, deployment frequency, change failure rate, and AI usage and cost metrics. It can provide guidance on how to collect, aggregate, and interpret these metrics to gain insights into your team's performance and identify areas for improvement.
+
+</TabItem>
+<TabItem value="incident" label="Analyze incident root cause">
+
+<h2>Analyze incident root cause</h2>
+
+A skill that provides a walkthrough on steps to run when analyzing an incident root cause. This skill guides you through a systematic process for investigating incidents, including gathering relevant logs and metrics, identifying the timeline of events, examining related services and dependencies, analyzing error patterns, and documenting findings to prevent similar incidents in the future.
+
+</TabItem>
+</Tabs>
+
 ## How skills work
 
 Skills are loaded via the `load_skill` tool available in the [Port MCP Server](/ai-interfaces/port-mcp-server/overview-and-installation). When Port AI detects a task that matches a skill's description, it automatically loads the relevant skill before proceeding.
@@ -43,7 +69,8 @@ load_skill({ name: "troubleshoot-integration", resource: "references/common-erro
 
 Port includes built-in skills for common workflows. These skills are available to all users without any configuration.
 
-### troubleshoot-integration
+<details>
+<summary><b>troubleshoot-integration (click to expand)</b></summary>
 
 Diagnose and resolve integration sync issues, mapping errors, and data problems. Use this skill when users report:
 - Data not syncing or appearing in Port.
@@ -62,22 +89,7 @@ Diagnose and resolve integration sync issues, mapping errors, and data problems.
 7. Tests proposed fixes before recommending them.
 8. Provides solutions in the correct format (YAML for Port UI).
 
-**Example:**
-
-When you ask to troubleshoot an integration, the AI automatically loads the skill and follows the diagnostic workflow:
-
-<Tabs groupId="skill-example" queryString>
-<TabItem value="port-ui" label="Port AI">
-
-<img src="/img/ai-agents/SkillsExample1.png" style={{border: '1px solid black'}} />
-
-</TabItem>
-<TabItem value="cursor" label="Cursor">
-
-<img src="/img/ai-agents/SkillsExample2.png" style={{border: '1px solid black'}} />
-
-</TabItem>
-</Tabs>
+</details>
 
 ## Creating custom skills
 
