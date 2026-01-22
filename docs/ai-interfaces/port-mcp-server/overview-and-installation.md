@@ -133,6 +133,10 @@ Port uses your browser's OAuth session to approve MCP connections. When your MCP
 
 To connect another organization from the same MCP client, add a second configuration and repeat the flow while logged in to the other organization. Each configuration keeps its own OAuth approval, so you can work with multiple organizations in parallel.
 
+:::tip External tools via MCP connectors
+In addition to Port's native tools, you can also access external MCP servers (like Notion, Slack, Jira, and more) through the same interface. If you have configured [MCP connectors](/ai-interfaces/mcp-connectors), authenticate to them in Port and they will automatically be available in your IDE alongside Port's native capabilities.
+:::
+
 ## Connecting the server when SSO is enabled
 
 If your organization uses SSO (Single Sign-On) and you see an error like the one below when trying to connect to the MCP Server:

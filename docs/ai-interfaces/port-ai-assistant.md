@@ -141,6 +141,18 @@ The Port AI Assistant can help with a wide variety of questions out of the box:
 
 </details>
 
+<details>
+<summary><b>External Tools (via MCP Connectors)</b></summary>
+
+If your admin has configured [MCP Connectors](/ai-interfaces/mcp-connectors), you can also query external tools:
+
+- "Search Notion for our API authentication documentation"
+- "Find the deployment runbook in Confluence"
+- "Show me open Jira tickets for the payments service"
+- "What's in the architecture decisions page?"
+
+</details>
+
 
 ## Security & Permissions
 
