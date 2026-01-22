@@ -7,11 +7,15 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 Port's Azure DevOps integration allows you to model Azure DevOps resources in your software catalog and ingest data into them.
 
+:::info On-premises support
+This integration supports both **Azure DevOps Services (cloud)** and **Azure DevOps Server (on-premises)**.
+:::
+
 ## Overview
 
 This integration allows you to:
 
-- Map and orgaize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
+- Map and organize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
 - Watch for Azure DevOps object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 
@@ -21,6 +25,10 @@ This integration allows you to:
 The resources that can be ingested from Azure DevOps into Port are listed below.
 
   <AzureDevopsResources/>
+
+:::caution On-premises limitations
+When using Azure DevOps Server (on-premises), **releases** and **work items** are not currently supported due to API version differences. All other resources listed above work the same as the cloud version.
+:::
 
 
 ## Setup
@@ -647,6 +655,12 @@ You can use one of these methods to ingest multi-document YAML files:
 
 1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
 2. Map the result to an `array` property.
+
+**Limitation:**
+
+Port does not support nested `itemsToParse` operations. When you have a multi-document YAML file (documents separated by `---`), the parsing engine automatically treats each document as a separate item in an array. This automatic splitting acts as an implicit `itemsToParse`, which means you cannot add an explicit `itemsToParse` to iterate over the documents.
+
+As a result, you cannot iterate over each YAML document in the multi-document file to create separate entities. Your only option is to ingest the entire multi-document file's content as a whole into a `string`, `markdown`, `json`, or `array` property.
 
 :::tip Mixed YAML types
 If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:

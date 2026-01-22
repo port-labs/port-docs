@@ -164,6 +164,134 @@ If you are still facing issues, reach out to us using chat/Slack/mail to [suppor
 
 ---
 
+#### Does my Ocean integration mapping change when I upgrade to a newer version?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+No, when you upgrade an Ocean integration to a newer version, your existing mapping configuration is preserved and not automatically changed.
+
+The integration will continue using your custom mapping configuration after the upgrade. If you want to adopt new default mappings from the upgraded version, you need to manually update the mapping configuration.
+
+</details>
+
+---
+
+#### Why am I getting validation errors when starting my Ocean integration?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Validation errors occur when required configuration parameters are missing or incorrectly formatted. You will typically see errors like this in your logs:
+
+```
+pydantic.error_wrappers.ValidationError: 3 validation errors for Config
+jira_host
+  field required (type=value_error.missing)
+atlassian_user_email
+  field required (type=value_error.missing)
+```
+
+To resolve this:
+
+1. Check the integration's documentation for all required parameters.
+2. Verify that all required environment variables or configuration values are provided.
+3. Ensure credentials like `PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`, and integration-specific API tokens are correct.
+4. For complex parameters (like GitLab's `tokenMapping`), ensure the value is properly formatted as valid JSON or follows the expected structure.
+
+**Example of a common formatting error:**
+
+```
+pydantic.error_wrappers.ValidationError: 1 validation error for Config
+token_mapping
+  value is not a valid dict (type=type_error.dict)
+```
+
+This indicates the `tokenMapping` parameter is not properly formatted. Refer to the [GitLab token mapping docs](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation#tokenmapping) for the correct format.
+
+</details>
+
+---
+
+#### Why is my CI/CD-based Ocean integration failing?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+When running Ocean integrations via CI/CD pipelines (GitHub Actions, GitLab CI, etc.), common issues include:
+
+1. **Secrets not configured**: Ensure all required secrets (`PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`, integration tokens) are properly configured in your CI/CD platform and passed to the workflow step.
+
+2. **Workflow syntax errors**: Verify your workflow file syntax is correct and the integration step is properly configured.
+
+3. **Parameter escaping issues**: Some parameters require specific formatting. For example, JSON objects may need to be escaped differently depending on your CI/CD platform.
+
+4. **Network restrictions**: Some CI/CD runners have restricted network access. Ensure outbound connections to Port's API (`api.getport.io`) are allowed.
+
+To debug, check the workflow logs for specific error messages and refer to the integration's installation documentation for CI/CD-specific examples.
+
+</details>
+
+---
+
+#### Why are my entities not being created or mapped correctly?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+If your integration is running but entities are not appearing in your catalog as expected, the issue is likely in your mapping configuration.
+
+**Common causes:**
+
+1. **JQ syntax errors**: The mapping uses JQ expressions to extract data. Verify your JQ syntax is correct using a [JQ playground](https://jqplay.org/).
+
+2. **Missing or null identifiers**: Each entity requires a unique identifier. If the identifier mapping returns null or empty, the entity will not be created. Check your logs for messages like:
+   ```
+   X transformations of batch failed due to empty, null or missing values
+   ```
+
+3. **Incorrect property paths**: Ensure the JQ paths in your mapping match the actual structure of the source data. If a path doesn't exist, you will see:
+   ```
+   Unable to find valid data for: {foo:.bar} (null, missing, or misconfigured)
+   ```
+
+4. **Unknown `kind`**: Make sure you're using a valid `kind` that the integration supports. Check the integration's documentation for available kinds.
+
+**How to debug:**
+
+- Go to your [Data sources](https://app.getport.io/settings/data-sources) page in Port.
+- Select the relevant integration.
+- Click on the **Event log** tab to view detailed logs from the integration, including any mapping errors or warnings.
+
+For help with mapping syntax, see the [mapping configuration guide](/build-your-software-catalog/customize-integrations/configure-mapping).
+
+</details>
+
+---
+
+#### Why can't my Ocean integration connect to Port?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+If your integration starts but cannot communicate with Port, it's typically a network configuration issue in your environment.
+
+**Common causes:**
+
+1. **Firewall restrictions**: Ensure your network allows outbound HTTPS connections to `api.getport.io` (Port US) or `api.eu.getport.io` (Port EU).
+
+2. **Proxy configuration**: If your environment uses a proxy, configure the integration to use it via the appropriate environment variables (`HTTP_PROXY`, `HTTPS_PROXY`).
+
+3. **DNS resolution**: Verify that your environment can resolve Port's API hostname.
+
+4. **TLS/SSL issues**: If you're using a corporate proxy or custom certificates, ensure the integration trusts the certificate chain. See the TLS troubleshooting tip above for creating a proper PEM bundle.
+
+These are internal network issues that need to be resolved in your environment. Port's support team cannot directly troubleshoot internal network configurations, but can help verify there are no issues on Port's side.
+
+</details>
+
+---
+
 ## Actions
 
 #### After triggering an Action in Port, why is it stuck "in progress" and nothing happens in the Git provider?

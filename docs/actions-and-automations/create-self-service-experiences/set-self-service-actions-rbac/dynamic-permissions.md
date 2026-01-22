@@ -116,6 +116,59 @@ In the following example, the action will be visible to `Admin` and `Engineering
 ```
 
 
+### Condition return types
+
+The `conditions` array in a policy behaves differently depending on whether it's used for **execute** or **approve** permissions:
+
+<Tabs groupId="condition-types" queryString="condition-type">
+
+<TabItem value="execute" label="Execute conditions" default>
+
+Execute conditions must return a **boolean** value (`true` or `false`).
+
+- `true` → the user **can** execute the action.
+- `false` → the user **cannot** execute the action.
+
+**Example condition:**
+
+```json
+"conditions": [
+  ".results.search_entity.entities | length == 0"
+]
+```
+
+This condition checks if the query returned zero entities. Execution is allowed only in that case.
+
+</TabItem>
+
+<TabItem value="approve" label="Approve conditions">
+
+Approve conditions must return an **array of strings** containing the **email addresses** of users who can approve the action.
+
+- The array should contain user identifiers (email addresses).
+- An empty array means no one can approve.
+- Any user whose email is in the returned array can approve the action.
+
+**Example condition:**
+
+```json
+"conditions": [
+  "[.results.approvingUsers.entities[] | select(.relations.team == $executerTeam) | .identifier]"
+]
+```
+
+This condition returns an array of user emails who are on the same team as the executor.
+
+</TabItem>
+
+</Tabs>
+
+:::info Execute vs. Approve
+- **Execute permissions** return a boolean indicating whether a specific user can execute the action.
+- **Approve permissions** return an array of user email addresses allowed to approve the action.
+:::
+
+
 ### Using a policy object
 
 Here is an example of using the policy key in a permissions JSON:
