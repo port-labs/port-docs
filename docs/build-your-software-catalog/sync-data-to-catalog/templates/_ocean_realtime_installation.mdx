@@ -26,7 +26,7 @@ The `liveEvents.baseUrl` needs to be reachable by the {props.integration} instan
   - **If {props.integration} and the integration are in the same cluster/network**: Use an internal URL (e.g., a Kubernetes service DNS name).
   - **If {props.integration} is external to the integration's network**: The integration must be exposed via an ingress, load balancer, or public URL that {props.integration} can reach.
 
-For Kubernetes deployments, create a Service to expose the integration pod and use the service URL as `liveEvents.baseUrl`. If both the source system and integration are in the same cluster, an internal ClusterIP service is sufficient.
+For Kubernetes deployments, create a service to expose the integration pod and use the service URL as `liveEvents.baseUrl`. If both the source system and integration are in the same cluster, an internal ClusterIP service is sufficient.
 
 
 :::tip Debugging local integrations
