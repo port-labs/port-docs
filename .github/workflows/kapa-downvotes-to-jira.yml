@@ -394,11 +394,14 @@ jobs:
                 '. += [{"type": "bulletList", "content": $items}]')
             fi
             
-            # Add metadata section
+            # Add metadata section at the top with link to Kapa dashboard
+            kapa_conversation_url="https://app.kapa.ai/e64464bc-19b5-4cd2-9779-2930e2ca0b81/conversations/${thread_id}"
+            
             adf_content=$(echo "$base_content" | jq \
               --arg thread_id "$thread_id" \
               --arg qa_id "$question_answer_id" \
-              '. += [
+              --arg kapa_url "$kapa_conversation_url" \
+              '[
                 {
                   "type": "paragraph",
                   "content": [{"type": "text", "text": "Metadata:", "marks": [{"type": "strong"}]}]
@@ -413,10 +416,17 @@ jobs:
                     {
                       "type": "listItem",
                       "content": [{"type": "paragraph", "content": [{"type": "text", "text": ("Question Answer ID: " + $qa_id)}]}]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [{"type": "paragraph", "content": [
+                        {"type": "text", "text": "Kapa Conversation: "},
+                        {"type": "text", "text": "View in Dashboard", "marks": [{"type": "link", "attrs": {"href": $kapa_url}}]}
+                      ]}]
                     }
                   ]
                 }
-              ]')
+              ] + .')
             
             # Create issue JSON payload with proper ADF and components field
             issue_json=$(jq -n \
@@ -434,6 +444,7 @@ jobs:
                     content: $adf_content
                   },
                   issuetype: { name: $issue_type },
+                  priority: { name: "High" },
                   components: [{ name: "port-docs" }]
                 }
               }')
