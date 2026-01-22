@@ -67,7 +67,7 @@ The legacy method involved:
 2. Including the following query parameters:
    - `isSelfHostedEnterprise=false` (set to `true` for GitHub Enterprise).
    - `githubOrgName=YOUR_ORG_NAME` (replace with your GitHub organization name).
-   - `selfHostedEnterpriseUrl=YOUR_GH_ENTERPRISE_URL` (replace with your self hosted github enterprise url).
+   - `selfHostedEnterpriseUrl=YOUR_GH_ENTERPRISE_URL` (replace with your self-hosted GitHub Enterprise URL).
 3. Adding your Port authentication token in the Authorization header:
 
    ```
@@ -78,7 +78,7 @@ The legacy method involved:
 5. Creating an HTML form with a button that triggers a POST request to the `url` provided by Port's API. The request should include the GitHub App `manifest` as the payload.
 
 :::tip
-You'll need your Port API credentials for this process:
+You will need your Port API credentials for this process:
 
 <FindCredentials/>
 :::
@@ -130,7 +130,7 @@ Custom GitHub Apps must be configured with the following minimum permissions:
 After creating a GitHub App, Port securely stores:
 
 - App ID.
-- Github org name.
+- GitHub org name.
 - Private key.
 - Webhook secret.
 
@@ -162,7 +162,7 @@ The legacy method required:
 
 1. Selecting the "Enterprise" option in the deprecated form.
 2. Providing your GitHub Enterprise host URL (e.g., `github.company.com`).
-3. Ensuring your GitHub Enterprise instance could reach Port's self hosted github app webhook endpoints.
+3. Ensuring your GitHub Enterprise instance could reach Port's self-hosted GitHub App webhook endpoints.
 
 :::warning Configuration limitation
 When using a custom GitHub App with self-hosted GitHub Enterprise, the mapping configuration must be included as part of the repository using the `port-app-config.yml` file, and cannot be configured via Port's UI/API.
@@ -175,8 +175,8 @@ For more details on configuration options, refer to the [GitHub Ocean documentat
 - Custom GitHub Apps must have all the required permissions to function properly.
 - You cannot modify the permissions after creation (you would need to create a new app).
 - For secure credential management, Port does not expose the raw credential values after initial creation.
-- You can't identify the Github app is custom from the UI
-- You can't delete the Github app from the UI, you need to delete it directly from your Github organization (https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations)
+- You can't identify that the GitHub App is custom from the UI.
+- You can't delete the GitHub App from the UI. Delete it directly from your GitHub organization (`https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations`).
 
 ## Frequently Asked Questions
 
@@ -197,15 +197,15 @@ Use cases include:
 
 ### Why do I need multiple custom apps for the same GitHub organization?
 
-GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, after installing the Port Github App in the first Port organization, each additional Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently, this is ideal for multi-environment rollouts or segmented pipelines.
+GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, after installing the Port GitHub App in the first Port organization, each additional Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently. This is ideal for multi-environment rollouts or segmented pipelines.
 
 **GitHub Ocean supports this use case with its OAuth-based custom GitHub App creation.**
 
-### How can I connect the same Github organization to my Production and Staging instance?
+### How can I connect the same GitHub organization to my Production and Staging instance?
 
-- In your Production instance install the [Port Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) or [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+- In your Production instance, install the [Port GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) or [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 - In your other (Staging or Dev) instance install [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) with a custom GitHub App.
-- Once completed you should see the same Github organization listed in the GitHub integration for each Port organization.
+- Once completed, you should see the same GitHub organization listed in the GitHub integration for each Port organization.
 
 ## Troubleshooting
 
