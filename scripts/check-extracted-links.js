@@ -7,13 +7,23 @@ const linksFile = path.join(__dirname, '../external-links.txt');
 const mapFile = path.join(__dirname, '../external-links-map.json');
 const outputFile = path.join(__dirname, '../link-check-results.json');
 
+// Links to exclude from checking (example/placeholder URLs in documentation)
+const excludedLinks = [
+  'https://github.com/your-org/your-repo/blob/main/docs/guide.md',
+  'https://wiki.company.com',
+  'https://ingest.us.port.io',
+  'https://ingest.port.io',
+];
+
 if (!fs.existsSync(linksFile)) {
   console.error('❌ external-links.txt not found. Run extract-links-from-markdown.js first.');
   process.exit(1);
 }
 
-const links = fs.readFileSync(linksFile, 'utf-8').trim().split('\n').filter(l => l);
+const allLinks = fs.readFileSync(linksFile, 'utf-8').trim().split('\n').filter(l => l);
 const linkMap = JSON.parse(fs.readFileSync(mapFile, 'utf-8')).links;
+
+const links = allLinks.filter(link => !excludedLinks.includes(link));
 
 console.log(`🔗 Checking ${links.length} external URLs...\n`);
 
@@ -25,7 +35,6 @@ const results = {
 let checked = 0;
 let working = 0;
 let broken = 0;
-let authRequired = 0;
 
 async function checkUrl(url, timeout = 10000) {
   return new Promise((resolve) => {
@@ -81,19 +90,17 @@ async function checkAllLinks() {
     batchResults.forEach(result => {
       results.links.push(result);
       checked++;
-      
-      if (result.status === 403) {
-        authRequired++;
-      } else if (result.state === 'OK') {
+
+      if (result.state === 'OK' || result.status === 403) {
         working++;
       } else {
         broken++;
         results.passed = false;
       }
-      
+
       // Progress indicator
       const percent = Math.floor((checked / links.length) * 100);
-      process.stdout.write(`\r   Progress: ${checked}/${links.length} (${percent}%) - ✅ ${working} | ❌ ${broken} | 🔒 ${authRequired}`);
+      process.stdout.write(`\r   Progress: ${checked}/${links.length} (${percent}%) - ✅ ${working} | ❌ ${broken}`);
     });
   }
   
@@ -108,7 +115,6 @@ checkAllLinks().then(() => {
   console.log(`\n✅ Link check completed in ${duration}s`);
   console.log(`   ✅ Working: ${working}`);
   console.log(`   ❌ Broken: ${broken}`);
-  console.log(`   🔒 Auth required (403): ${authRequired}`);
   console.log(`   📝 Total checked: ${checked}\n`);
   
   fs.writeFileSync(outputFile, JSON.stringify(results, null, 2));
