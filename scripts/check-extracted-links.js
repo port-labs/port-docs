@@ -11,6 +11,8 @@ const outputFile = path.join(__dirname, '../link-check-results.json');
 const excludedLinks = [
   'https://github.com/your-org/your-repo/blob/main/docs/guide.md',
   'https://wiki.company.com',
+  'https://ingest.us.port.io',
+  'https://ingest.port.io',
 ];
 
 if (!fs.existsSync(linksFile)) {
