@@ -7,11 +7,10 @@ sidebar_label: IAM role architecture
 
 This guide describes the IAM setup for **self-hosted AWS integration** deployments. Unlike the hosted version, self-hosted deployments require you to manage IAM resources directly.
 
-Self-hosted integrations support three authentication methods that allow your infrastructure to securely access AWS resources:
+Self-hosted integrations support two authentication methods that allow your infrastructure to securely access AWS resources:
 
-- **IAM Role authentication** (Recommended): Uses role-based access for AWS services (ECS) with automatic credential management.
+- **IAM Role authentication** (Recommended): Uses role-based access for AWS services with automatic credential management.
 - **IRSA (IAM Roles for Service Accounts)**: Uses OIDC federation where Kubernetes service accounts assume AWS IAM roles.
-- **IAM User authentication**: Uses access keys for direct AWS API authentication.
 
 All methods create IAM roles with the AWS managed `ReadOnlyAccess` policy, ensuring comprehensive read-only access to all AWS services.
 
@@ -73,33 +72,6 @@ For IRSA authentication, roles trust your EKS cluster's OIDC identity provider:
 - **OIDC federation**: Secure identity federation without shared secrets.
 - **Service account binding**: Roles tied to specific Kubernetes service accounts.
 - **Temporary credentials**: Short-lived tokens for enhanced security.
-
-### IAM User authentication (Cross-account trust)
-
-For IAM User authentication, roles are created with cross-account trust relationships that allow your management account's IAM user to assume roles in target accounts:
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Allow",
-    "Principal": {
-      "AWS": "arn:aws:iam::MANAGEMENT_ACCOUNT_ID:user/YOUR_IAM_USER"
-    },
-    "Action": "sts:AssumeRole",
-    "Condition": {
-      "StringEquals": {
-        "sts:ExternalId": "YOUR_EXTERNAL_ID"
-      }
-    }
-  }]
-}
-```
-
-**Key security features**:
-- **Cross-account trust**: Allows the IAM user from management account to assume roles.
-- **External ID**: Additional security layer to prevent confused deputy attacks.
-- **Temporary credentials**: All access uses short-lived tokens.
 
 ## Permissions setup
 
