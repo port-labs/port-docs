@@ -3,6 +3,9 @@ sidebar_position: 5
 title: Skills
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Skills
 
 Skills are domain-specific guidance packages that help Port AI handle specialized tasks more effectively. When the AI encounters a task that matches a skill's description, it loads the skill's step-by-step instructions to ensure consistent, thorough handling.
@@ -19,6 +22,32 @@ Each skill contains:
 - **Assets** (optional): Templates, configuration files, or other resources.
 
 Skills follow the open [Agent Skills specification](https://agentskills.io/specification).
+
+## Example skills you can create
+
+<Tabs groupId="skill-examples" queryString>
+<TabItem value="deployment" label="Deployment guidelines">
+
+<h2>Deployment guidelines</h2>
+
+A skill that helps decide on a deployment strategy, which workflows to run, how to check deployment status, and get approval. This skill can guide developers through your organization's deployment process by providing step-by-step instructions on choosing the right deployment strategy for different environments, running the appropriate CI/CD workflows, monitoring deployment progress, and obtaining necessary approvals from stakeholders before deploying to production.
+
+</TabItem>
+<TabItem value="metrics" label="Engineering metrics">
+
+<h2>Engineering metrics</h2>
+
+A skill that structures how you want to get engineering metrics and what to look for. This skill helps analyze key performance indicators like lead time for changes, deployment frequency, change failure rate, and AI usage and cost metrics. It can provide guidance on how to collect, aggregate, and interpret these metrics to gain insights into your team's performance and identify areas for improvement.
+
+</TabItem>
+<TabItem value="incident" label="Analyze incident root cause">
+
+<h2>Analyze incident root cause</h2>
+
+A skill that provides a walkthrough on steps to run when analyzing an incident root cause. This skill guides you through a systematic process for investigating incidents, including gathering relevant logs and metrics, identifying the timeline of events, examining related services and dependencies, analyzing error patterns, and documenting findings to prevent similar incidents in the future.
+
+</TabItem>
+</Tabs>
 
 ## How skills work
 
@@ -40,7 +69,8 @@ load_skill({ name: "troubleshoot-integration", resource: "references/common-erro
 
 Port includes built-in skills for common workflows. These skills are available to all users without any configuration.
 
-### troubleshoot-integration
+<details>
+<summary><b>troubleshoot-integration (click to expand)</b></summary>
 
 Diagnose and resolve integration sync issues, mapping errors, and data problems. Use this skill when users report:
 - Data not syncing or appearing in Port.
@@ -58,6 +88,8 @@ Diagnose and resolve integration sync issues, mapping errors, and data problems.
 6. Diagnoses the root cause.
 7. Tests proposed fixes before recommending them.
 8. Provides solutions in the correct format (YAML for Port UI).
+
+</details>
 
 ## Creating custom skills
 
