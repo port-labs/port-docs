@@ -25,27 +25,30 @@ Before installing the integration, ensure you have:
 
 Select the authentication method that best fits your infrastructure and security requirements:
 
-- **IAM Role** (Recommended): Use when deploying on AWS ECS services. Provides automatic credential management through IAM roles attached to your AWS resources.
+- **IAM Role** : Use when deploying on AWS ECS services. Provides automatic credential management through IAM roles attached to your AWS resources.
 
-- **IAM User**: Use when you need programmatic access with static credentials or when deploying outside AWS infrastructure.
-
-- **IRSA**: Use when deploying on Amazon EKS with IRSA. Provides secure authentication through IAM Roles for Service Accounts.
+- **IAM Role for service accounts(IRSA)**: Use when deploying on Amazon EKS with IRSA. Provides secure authentication through IAM Roles for Service Accounts.
 
 <Tabs groupId="multiple-account-auth" queryString="multiple-account-auth" defaultValue="iam-role">
 
 <TabItem value="iam-role" label="IAM Role">
 
 **Prerequisites:**
-- AWS ECS service with an attached IAM role that has permissions to assume roles in target accounts.
-- Permissions to create IAM roles in member accounts.
+- AWS compute service (ECS or EC2) with an attached IAM role that has permissions to assume roles in target accounts.
+- Permissions to create IAM roles in target accounts.
+
+**Trusted entity:**
+
+The trusted entity for IAM Role authentication is the AWS service principal:
+- For ECS: `ecs-tasks.amazonaws.com`
+- For EC2: `ec2.amazonaws.com`
+
+This allows your compute service to assume the IAM role automatically.
 
 **Account terminology:**
 
-- **Base account**: The AWS account where your ECS service runs. This is where the integration gets its initial credentials from the attached IAM role.
-- **Management account**: Your AWS Organizations management account. This is where you deploy CloudFormation StackSets and where the Organizations API is accessible. For automatic account discovery, you need a role ARN from this account.
-- **Member accounts**: All other accounts in your organization that you want to sync resources from.
-
-The base account and management account can be the same account, or they can be different. For automatic account discovery, the role ARN must come from the management account (the account with Organizations API access).
+- **Target accounts**: The AWS accounts that you want to sync resources from. These accounts contain IAM roles with trust policies that allow your compute service's IAM role to assume them. In AWS Organizations setups, target accounts are also referred to as member accounts.
+- **Management account** (Organizations only): Your AWS Organizations management account. This is where you deploy CloudFormation StackSets and where the Organizations API is accessible. For automatic account discovery, you need a role ARN from this account.
 
 **Choose account discovery method:**
 
@@ -67,18 +70,18 @@ To manually specify which accounts to sync, see the [Non organizations tab](/bui
 
 **How it works:**
 
-1. The ECS service gets credentials from its **attached IAM role** in the base account
+1. Your compute service (ECS or EC2) gets credentials from its **attached IAM role** authenticated via the trusted entity.
 2. The integration assumes the **configured organization role** (specified in `account_role_arn`) to access AWS Organizations API and discover all member accounts
 3. It uses AWS Organizations `list_accounts` API to discover all active accounts in the organization
 4. For each discovered account, it assumes a role in that account to get temporary credentials and sync resources to Port
 
 **Configure IAM role for cross-account access:**
 
-Your ECS service needs an IAM role with permissions to assume roles in target accounts. Create or update the service's IAM role with the following permissions:
+Your compute service needs an IAM role with permissions to assume roles in target accounts. Create the IAM role (for ECS, this will be used as `taskRoleArn` in your task definition; for EC2, this will be attached via instance profile) with the following permissions:
 
-1. **Create or update the ECS task execution role**
+1. **Create the IAM role**: Create the role and select the appropriate service as the trusted entity.
 
-2. **Add the following inline policy** to allow role assumption:
+2. **Add the following inline policy** to the role to allow role assumption:
 
 ```json showLineNumbers
 {
@@ -114,7 +117,7 @@ Run the StackSet deployment from your AWS Organizations **management account**, 
   - You can also target specific account IDs if needed.
 
 - **Identify your base account**:
-  - The base account is where your ECS service runs with the attached IAM role.
+  - The base account is where your compute service (ECS or EC2) runs with the attached IAM role.
   - Note the account ID where your service is deployed.
 
 - **Generate an external ID**:
@@ -131,7 +134,7 @@ Run the StackSet deployment from your AWS Organizations **management account**, 
   - Choose **Template is ready** and provide the S3 URL for the IAM role template.
   - Configure stack parameters:
     - **RoleName**: Enter a consistent role name (e.g., `PortOceanReadRole`).
-    - **TrustedPrincipalARN**: Enter your ECS task execution role ARN.
+    - **TrustedPrincipalARN**: Enter your IAM role ARN from the base account (for ECS, this is the role specified in `taskRoleArn`; for EC2, this is the role attached via instance profile).
     - **ExternalId**: Enter the external ID you generated.
   - Specify deployment targets (organization, OU, or specific accounts).
   - Review and create the StackSet.
@@ -162,27 +165,58 @@ Deploy the AWS integration as an ECS service. Follow the [AWS ECS documentation]
 
 <h4>Integration Configuration</h4>
 
-When creating your ECS task definition, use the following container configuration:
+When creating your ECS task definition, use the following task definition:
 
 ```json showLineNumbers
 {
-  "name": "port-ocean-aws",
-  "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
-  "essential": true,
-  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanCrossAccountRole",
+  "family": "port-ocean-aws-v3",
+  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanTaskRole",
   "executionRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/ecsTaskExecutionRole",
-  "environment": [
-    {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
-    {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
-    {"name": "OCEAN__PORT__BASE_URL", "value": "https://api.getport.io"},
-    {"name": "OCEAN__INTEGRATION__IDENTIFIER", "value": "my-aws-v3-org"},
-    {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"},
-    {"name": "OCEAN__EVENT_LISTENER", "value": "{\"type\":\"POLLING\"}"},
-    {"name": "OCEAN__SCHEDULED_RESYNC_INTERVAL", "value": "1440"},
-    {"name": "OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN", "value": "arn:aws:iam::ORG_ACCOUNT_ID:role/PortOceanReadRole"},
-    {"name": "OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID", "value": "YOUR_EXTERNAL_ID"}
+  "containerDefinitions": [
+    {
+      "name": "port-ocean-aws",
+      "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
+      "essential": true,
+      "environment": [
+        {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
+        {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
+        {"name": "OCEAN__PORT__BASE_URL", "value": "https://api.getport.io"},
+        {"name": "OCEAN__INTEGRATION__IDENTIFIER", "value": "my-aws-v3-org"},
+        {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"},
+        {"name": "OCEAN__EVENT_LISTENER", "value": "{\"type\":\"POLLING\"}"},
+        {"name": "OCEAN__SCHEDULED_RESYNC_INTERVAL", "value": "1440"},
+        {"name": "OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN", "value": "arn:aws:iam::ORG_ACCOUNT_ID:role/PortOceanReadRole"},
+        {"name": "OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID", "value": "YOUR_EXTERNAL_ID"}
+      ]
+    }
   ]
 }
+```
+
+</TabItem>
+
+<TabItem value="ec2" label="EC2 (Docker)">
+
+Deploy the AWS integration on an EC2 instance. The integration runs as a Docker container with the IAM role attached via instance profile.
+
+**Prerequisites:**
+- EC2 instance with Docker installed.
+- IAM instance profile created and attached to the EC2 instance.
+- The IAM role created above attached to the instance profile.
+
+```bash showLineNumbers
+docker run -d --restart unless-stopped --platform=linux/amd64 \
+  -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
+  -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
+  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
+  -e OCEAN__INITIALIZE_PORT_RESOURCES="true" \
+  -e OCEAN__SEND_RAW_DATA_EXAMPLES="true" \
+  -e OCEAN__EVENT_LISTENER='{"type": "POLLING", "resyncInterval": 1440}' \
+  -e OCEAN__INTEGRATION__IDENTIFIER="my-aws-v3-org" \
+  -e OCEAN__INTEGRATION__TYPE="aws-v3" \
+  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN="arn:aws:iam::ORG_ACCOUNT_ID:role/PortOceanReadRole" \
+  -e OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID="YOUR_EXTERNAL_ID" \
+  ghcr.io/port-labs/port-ocean-aws-v3:latest
 ```
 
 </TabItem>
@@ -194,9 +228,9 @@ When creating your ECS task definition, use the following container configuratio
 
 <TabItem value="specify" label="Non Organization">
 
-**Understanding specify accounts mode:**
+**Explicit account configuration:**
 
-Specify accounts lets you choose which AWS accounts to sync by providing a list of role ARNs. You control exactly which accounts are synced by listing their role ARNs in the integration configuration.
+Choose which AWS accounts to sync by providing a list of role ARNs. You control exactly which accounts are synced by listing their role ARNs in the integration configuration.
 
 :::info Alternative option
 To use automatic account discovery with AWS Organizations, see the [Automatic account discovery tab](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/multiple-accounts.md?multiple-account-auth=iam-role&iam-role-discovery=automatic).
@@ -204,18 +238,18 @@ To use automatic account discovery with AWS Organizations, see the [Automatic ac
 
 **How it works:**
 
-1. The ECS service gets credentials from its **attached IAM role** in the base account
+1. Your compute service (ECS or EC2) gets credentials from its **attached IAM role** (authenticated via the trusted entity - `ecs-tasks.amazonaws.com` for ECS or `ec2.amazonaws.com` for EC2)
 2. You manually provide a **list of account role ARNs** (specified in `account_role_arns`) for the accounts you want to sync
 3. For each account in the list, it assumes the **specified role** in that account to get temporary credentials
 4. With those credentials, it reads resources from each specified account and syncs them to Port
 
 **Configure IAM role for cross-account access:**
 
-Your ECS service needs an IAM role with permissions to assume roles in target accounts. Create or update the service's IAM role with the following permissions:
+Your compute service needs an IAM role with permissions to assume roles in target accounts. Create the IAM role (for ECS, this will be used as `taskRoleArn` in your task definition; for EC2, this will be attached via instance profile) with the following permissions:
 
-1. **Create or update the ECS task execution role**
+1. **Create the IAM role**: Create the role and select the appropriate service as the trusted entity.
 
-2. **Add the following inline policy** to allow role assumption:
+2. **Add the following inline policy** to the role to allow role assumption:
 
 ```json showLineNumbers
 {
@@ -251,7 +285,7 @@ Run the StackSet deployment from your AWS Organizations **management account**, 
   - You can also target specific account IDs if needed.
 
 - **Identify your base account**:
-  - The base account is where your ECS service runs with the attached IAM role.
+  - The base account is where your compute service (ECS or EC2) runs with the attached IAM role.
   - Note the account ID where your service is deployed.
 
 - **Generate an external ID**:
@@ -268,7 +302,7 @@ Run the StackSet deployment from your AWS Organizations **management account**, 
   - Choose **Template is ready** and provide the S3 URL for the IAM role template.
   - Configure stack parameters:
     - **RoleName**: Enter a consistent role name (e.g., `PortOceanReadRole`).
-    - **TrustedPrincipalARN**: Enter your ECS task execution role ARN.
+    - **TrustedPrincipalARN**: Enter your IAM role ARN from the base account (for ECS, this is the role specified in `taskRoleArn`; for EC2, this is the role attached via instance profile).
     - **ExternalId**: Enter the external ID you generated.
   - Specify deployment targets (organization, OU, or specific accounts).
   - Review and create the StackSet.
@@ -297,32 +331,63 @@ Deploy the AWS integration as an ECS service. Follow the [AWS ECS documentation]
 
 <h4>Integration Configuration</h4>
 
-When creating your ECS task definition, use the following container configuration with your specified account role ARNs:
+When creating your ECS task definition, use the following task definition with your specified account role ARNs:
 
 ```json showLineNumbers
 {
-  "name": "port-ocean-aws",
-  "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
-  "essential": true,
-  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanCrossAccountRole",
+  "family": "port-ocean-aws-v3",
+  "taskRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/PortOceanTaskRole",
   "executionRoleArn": "arn:aws:iam::BASE_ACCOUNT_ID:role/ecsTaskExecutionRole",
-  "environment": [
-    {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
-    {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
-    {"name": "OCEAN__PORT__BASE_URL", "value": "https://api.getport.io"},
-    {"name": "OCEAN__INTEGRATION__IDENTIFIER", "value": "my-aws-v3-multi"},
-    {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"},
-    {"name": "OCEAN__EVENT_LISTENER", "value": "{\"type\":\"POLLING\"}"},
-    {"name": "OCEAN__SCHEDULED_RESYNC_INTERVAL", "value": "1440"},
-    {"name": "OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS", "value": "[\"arn:aws:iam::111111111111:role/PortOceanReadRole\",\"arn:aws:iam::222222222222:role/PortOceanReadRole\",\"arn:aws:iam::333333333333:role/PortOceanReadRole\"]"},
-    {"name": "OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID", "value": "YOUR_EXTERNAL_ID"}
+  "containerDefinitions": [
+    {
+      "name": "port-ocean-aws",
+      "image": "ghcr.io/port-labs/port-ocean-aws-v3:latest",
+      "essential": true,
+      "environment": [
+        {"name": "OCEAN__PORT__CLIENT_ID", "value": "YOUR_PORT_CLIENT_ID"},
+        {"name": "OCEAN__PORT__CLIENT_SECRET", "value": "YOUR_PORT_CLIENT_SECRET"},
+        {"name": "OCEAN__PORT__BASE_URL", "value": "https://api.getport.io"},
+        {"name": "OCEAN__INTEGRATION__IDENTIFIER", "value": "my-aws-v3-multi"},
+        {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"},
+        {"name": "OCEAN__EVENT_LISTENER", "value": "{\"type\":\"POLLING\"}"},
+        {"name": "OCEAN__SCHEDULED_RESYNC_INTERVAL", "value": "1440"},
+        {"name": "OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS", "value": "[\"arn:aws:iam::111111111111:role/PortOceanReadRole\",\"arn:aws:iam::222222222222:role/PortOceanReadRole\",\"arn:aws:iam::333333333333:role/PortOceanReadRole\"]"},
+        {"name": "OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID", "value": "YOUR_EXTERNAL_ID"}
+      ]
+    }
   ]
 }
 ```
 
 :::info IAM Role Authentication
-The `ACCOUNT_ROLE_ARNS` parameter must be a valid JSON array string containing your specified account role ARNs. No AWS access keys are needed - the integration automatically uses credentials from the ECS task's attached IAM role.
+The `ACCOUNT_ROLE_ARNS` parameter must be a valid JSON array string containing your specified account role ARNs. No AWS access keys are needed - the integration automatically uses credentials from the attached IAM role (ECS task role or EC2 instance profile).
 :::
+
+</TabItem>
+
+<TabItem value="ec2" label="EC2 (Docker)">
+
+Deploy the AWS integration on an EC2 instance. The integration runs as a Docker container with the IAM role attached via instance profile.
+
+**Prerequisites:**
+- EC2 instance with Docker installed.
+- IAM instance profile created and attached to the EC2 instance.
+- The IAM role created above attached to the instance profile.
+
+```bash showLineNumbers
+docker run -d --restart unless-stopped --platform=linux/amd64 \
+  -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
+  -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
+  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
+  -e OCEAN__INITIALIZE_PORT_RESOURCES="true" \
+  -e OCEAN__SEND_RAW_DATA_EXAMPLES="true" \
+  -e OCEAN__EVENT_LISTENER='{"type": "POLLING", "resyncInterval": 1440}' \
+  -e OCEAN__INTEGRATION__IDENTIFIER="my-aws-v3-multi" \
+  -e OCEAN__INTEGRATION__TYPE="aws-v3" \
+  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS='["arn:aws:iam::111111111111:role/PortOceanReadRole","arn:aws:iam::222222222222:role/PortOceanReadRole","arn:aws:iam::333333333333:role/PortOceanReadRole"]' \
+  -e OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID="YOUR_EXTERNAL_ID" \
+  ghcr.io/port-labs/port-ocean-aws-v3:latest
+```
 
 </TabItem>
 
@@ -343,13 +408,14 @@ The `ACCOUNT_ROLE_ARNS` parameter must be a valid JSON array string containing y
 
 **Choose your deployment method:**
 
+**Trusted entity:**
+
+The trusted entity for IRSA is your EKS cluster's OIDC identity provider. This allows Kubernetes service accounts in your cluster to assume the IAM role via `sts:AssumeRoleWithWebIdentity`.
+
 **Account terminology:**
 
-- **Base account**: The AWS account where your EKS cluster is located. This is where the integration authenticates from using IRSA.
-- **Management account**: Your AWS Organizations management account. This is where you deploy CloudFormation StackSets and where the Organizations API is accessible. For automatic account discovery, you need a role ARN from this account.
-- **Member accounts**: The AWS accounts that you want to sync resources from.
-
-The base account and management account can be the same account, or they can be different. For automatic account discovery, the role ARN must come from the management account (the account with Organizations API access).
+- **Target accounts**: The AWS accounts that you want to sync resources from. These accounts contain IAM roles with trust policies that allow your EKS cluster's IAM role to assume them. In AWS Organizations setups, target accounts are also referred to as member accounts.
+- **Management account** (Organizations only): Your AWS Organizations management account. This is where you deploy CloudFormation StackSets and where the Organizations API is accessible. For automatic account discovery, you need a role ARN from this account.
 
 **Choose account discovery method:**
 
@@ -371,7 +437,7 @@ To manually specify which accounts to sync, see the [Specify accounts tab](/buil
 
 **How it works:**
 
-1. The integration authenticates to your **base account** using **IRSA** (IAM Roles for Service Accounts) via web identity
+1. The integration authenticates to your **trusted entity** (EKS cluster's OIDC provider) using **IRSA** (IAM Roles for Service Accounts) via web identity
 2. The integration assumes the **configured organization role** (specified in `account_role_arn`) to access AWS Organizations API and discover all member accounts
 3. It uses AWS Organizations `list_accounts` API to discover all active accounts in the organization
 4. For each discovered account, it assumes a role in that account to get temporary credentials using `AssumeRoleWithWebIdentity`
@@ -407,7 +473,7 @@ To manually specify which accounts to sync, see the [Specify accounts tab](/buil
 
 3. **Note the role ARN** - you'll need it later: `arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole`
 
-4. **Create a Kubernetes service account** and link it to the IAM role. Refer to the [AWS guide for associating an IAM role to a service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html).
+4. **Create a Kubernetes service account** and assign it to the IAM role. Refer to the [AWS guide for associating an IAM role to a service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html).
 
 **Deploy read-only IAM roles to target accounts:**
 
@@ -567,7 +633,7 @@ kubectl apply -f my-ocean-aws-integration.yaml
 
 <TabItem value="specify" label="Non Organization">
 
-**Understanding specify accounts mode:**
+**Explicit account configuration:**
 
 Specify accounts lets you choose which AWS accounts to sync by providing a list of role ARNs. You control exactly which accounts are synced by listing their role ARNs in the integration configuration.
 
@@ -577,7 +643,7 @@ To use automatic account discovery with AWS Organizations, see the [Automatic ac
 
 **How it works:**
 
-1. The integration authenticates to your **base account** using **IRSA** (IAM Roles for Service Accounts) via web identity
+1. The integration authenticates to your **trusted entity** (EKS cluster's OIDC provider) using **IRSA** (IAM Roles for Service Accounts) via web identity
 2. You manually provide a **list of account role ARNs** (specified in `account_role_arns`) for the accounts you want to sync
 3. For each account in the list, it assumes the **specified role** in that account to get temporary credentials using `AssumeRoleWithWebIdentity`
 4. With those credentials, it reads resources from each specified account and syncs them to Port
@@ -787,315 +853,7 @@ kubectl apply -f my-ocean-aws-integration.yaml
 
 </TabItem>
 
-<TabItem value="iam-user" label="IAM User">
-
-**Prerequisites:**
-- Permissions to create IAM users and IAM roles in member accounts.
-- For Helm: [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0 and a Kubernetes cluster.
-- For Docker: [Docker](https://www.docker.com/get-started) installed.
-
-**Account terminology:**
-
-- **Base account**: The AWS account where your IAM user is created. This is where the integration authenticates from.
-- **Management account**: Your AWS Organizations management account. This is where you deploy CloudFormation StackSets and where the Organizations API is accessible. For automatic account discovery, you need a role ARN from this account.
-- **Member accounts**: All other accounts in your organization that you want to sync resources from.
-
-The base account and management account can be the same account, or they can be different. For automatic account discovery, the role ARN must come from the management account (the account with Organizations API access).
-
-**Choose account discovery method:**
-
-<Tabs groupId="iam-user-discovery" queryString="iam-user-discovery" defaultValue="automatic">
-
-<TabItem value="automatic" label="Organizations">
-
-**Understanding automatic account discovery:**
-
-Automatic account discovery uses the Organizations API to discover all member accounts in your organization. The integration automatically finds and syncs all accounts without requiring you to list them manually.
-
-:::info Alternative option
-To manually specify which accounts to sync, see the [Specify accounts tab](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/multiple-accounts.md?multiple-account-auth=iam-user&iam-user-discovery=specify).
-:::
-
-**Prerequisites:**
-- AWS Organizations enabled.
-- Access to your AWS Organizations management account.
-
-**How it works:**
-
-1. The integration authenticates to your **base account** using **IAM access keys**
-2. The integration assumes the **configured organization role** (specified in `account_role_arn`) to access AWS Organizations API and discover all member accounts
-3. It uses AWS Organizations `list_accounts` API to discover all active accounts in the organization
-4. For each discovered account, it assumes a role in that account to get temporary credentials and sync resources to Port
-
-:::tip External ID
-External ID is a security feature required for cross-account access when using IAM user authentication. It's a secret value that both parties must know when assuming roles, preventing the [confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html).
-:::
-
-**Set up IAM user:**
-
-1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following permissions:
-   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
-   - Create and attach an inline policy with `sts:AssumeRole` permission:
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "sts:AssumeRole"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user:
-   - Go to **IAM → Users → Security credentials → Create access key**.
-   - Save the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-   - Never commit access keys to version control. Use environment variables or secret management tools to store them securely.
-
-**Deploy read-only IAM roles to target accounts:**
-
-Use CloudFormation StackSets to deploy IAM roles across your AWS Organization member accounts automatically. You can target specific accounts, organizational units, or all accounts.
-
-:::caution Management account required
-Run the StackSet deployment from your AWS Organizations **management account**, as only the management account can deploy StackSets across member accounts.
-:::
-
-<h4>Step 1: Prepare Your Organization</h4>
-
-- **Find your OU ID** (if deploying to an organizational unit):
-  - Log into your AWS Organizations management account.
-  - Navigate to [AWS Organizations](https://us-east-1.console.aws.amazon.com/organizations/v2/home/accounts) service.
-  - Under **Organizational structure**, copy the OU ID from the details page (format `ou-xxxx-xxxxxxxx` or `r-xxxx`).
-  - You can also target specific account IDs if needed.
-
-- **Get your base account IAM user ARN**:
-  - Go to **IAM** → **Users** in your base account (where the IAM user is created).
-  - Find the IAM user we created for authentication.
-  - Copy the user ARN (format: `arn:aws:iam::BASE_ACCOUNT_ID:user/USER_NAME`).
-
-- **Generate an external ID**:
-  - Generate a secure external ID using: `openssl rand -hex 16`
-  - Save this value - use the same external ID across all member accounts.
-
-<h4>Step 2: Deploy CloudFormation StackSet</h4>
-
-- **Configure StackSet**:
-  - Choose **Template is ready** and provide the S3 URL for the IAM user template.
-  - Configure stack parameters:
-    - **RoleName**: Enter a consistent role name (e.g., `PortOceanReadRole`).
-    - **TrustedPrincipalARN**: Enter your IAM user ARN.
-    - **ExternalId**: Enter the external ID you generated.
-  - Specify deployment targets (organization, OU, or specific accounts).
-  - Review and create the StackSet.
-
-<h4>Step 3: Monitor Deployment</h4>
-
-- **Check StackSet status**:
-  - Check StackSet status in your management account.
-  - Verify IAM roles exist in target accounts with correct permissions.
-
-<h4>Step 4: Collect Role ARNs</h4>
-
-- **Get role ARNs from each account**:
-  - Format: `arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME`
-  - Example: `arn:aws:iam::234567890123:role/PortOceanReadRole`
-
-**Deploy the integration:**
-
-Choose your deployment method:
-
-<Tabs groupId="deployment-method-iam-auto" queryString="deployment-method-iam-auto" defaultValue="helm">
-
-<TabItem value="helm" label="Helm">
-
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install aws-v3 port-labs/port-ocean \
-  --create-namespace --namespace port-ocean \
-  --set port.clientId="$PORT_CLIENT_ID" \
-  --set port.clientSecret="$PORT_CLIENT_SECRET" \
-  --set port.baseUrl="https://api.getport.io" \
-  --set initializePortResources=true \
-  --set scheduledResyncInterval=1440 \
-  --set integration.identifier="my-aws-v3-org" \
-  --set integration.type="aws-v3" \
-  --set integration.eventListener.type="POLLING" \
-  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
-  --set integration.config.accountRoleArn="arn:aws:iam::ORG_ACCOUNT_ID:role/PortOceanReadRole" \
-  --set integration.config.externalId="YOUR_EXTERNAL_ID"
-```
-
-</TabItem>
-
-<TabItem value="docker" label="Docker">
-
-```bash showLineNumbers
-docker run -i --rm --platform=linux/amd64 \
-  -e OCEAN__PORT__CLIENT_ID="$PORT_CLIENT_ID" \
-  -e OCEAN__PORT__CLIENT_SECRET="$PORT_CLIENT_SECRET" \
-  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
-  -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-  -e OCEAN__INTEGRATION__IDENTIFIER="my-aws-v3-org" \
-  -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-  -e OCEAN__INTEGRATION__SECRETS__AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-  -e OCEAN__INTEGRATION__SECRETS__AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
-  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN="arn:aws:iam::ORG_ACCOUNT_ID:role/PortOceanReadRole" \
-  -e OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID="YOUR_EXTERNAL_ID" \
-  ghcr.io/port-labs/port-ocean-aws-v3:latest
-```
-
-</TabItem>
-
 </Tabs>
-
-
-</TabItem>
-
-<TabItem value="specify" label="Non Organization">
-
-**Understanding specify accounts mode:**
-
-Specify accounts lets you choose which AWS accounts to sync by providing a list of role ARNs. You control exactly which accounts are synced by listing their role ARNs in the integration configuration.
-
-:::info Alternative option
-To use automatic account discovery with AWS Organizations, see the [Automatic account discovery tab](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/multiple-accounts.md?multiple-account-auth=iam-user&iam-user-discovery=automatic).
-:::
-
-**How it works:**
-
-1. The integration authenticates to your **base account** using **IAM access keys**
-2. You manually provide a **list of account role ARNs** (specified in `account_role_arns`) for the accounts you want to sync
-3. For each account in the list, it assumes the **specified role** in that account to get temporary credentials
-4. With those credentials, it reads resources from each specified account and syncs them to Port
-
-
-**Set up IAM user:**
-
-1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following permissions:
-   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
-   - Create and attach an inline policy with `sts:AssumeRole` permission:
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "sts:AssumeRole"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user:
-   - Go to **IAM → Users → Security credentials → Create access key**.
-   - Save the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-   - Never commit access keys to version control. Use environment variables or secret management tools to store them securely.
-
-**Deploy read-only IAM roles to target accounts:**
-
-Use CloudFormation to create IAM roles in each target account. You'll need to deploy this in each account you want to access.
-
-<h4>Step 1: Prepare Your Accounts</h4>
-
-- **Generate an external ID**:
-  - Generate a secure external ID using: `openssl rand -hex 16`
-  - Use the same external ID for all accounts.
-
-- **Get your base account IAM user ARN**:
-  - Go to **IAM** → **Users** in your base account.
-  - Find the IAM user we created for authentication.
-  - Copy the user ARN (format: `arn:aws:iam::BASE_ACCOUNT_ID:user/USER_NAME`).
-
-<h4>Step 2: Deploy CloudFormation in Each Target Account</h4>
-
-For each AWS account you want to sync resources from:
-
-- **Deploy the CloudFormation stack**:
-  - Choose **Template is ready** and provide the S3 URL for the IAM user template.
-  - Configure stack parameters:
-    - **RoleName**: Enter a consistent role name (e.g., `PortOceanReadRole`).
-    - **TrustedPrincipalARN**: Enter your IAM user ARN.
-    - **ExternalId**: Enter the external ID you generated.
-  - Deploy the stack in each target account.
-
-<h4>Step 3: Collect Role ARNs</h4>
-
-- **Get role ARNs from each account**:
-  - Format: `arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME`
-  - Example: `arn:aws:iam::234567890123:role/PortOceanReadRole`
-
-**Deploy the integration:**
-
-Choose your deployment method:
-
-<Tabs groupId="deployment-method-iam-specify" queryString="deployment-method-iam-specify" defaultValue="helm">
-
-<TabItem value="helm" label="Helm">
-
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install aws-v3 port-labs/port-ocean \
-  --create-namespace --namespace port-ocean \
-  --set port.clientId="$PORT_CLIENT_ID" \
-  --set port.clientSecret="$PORT_CLIENT_SECRET" \
-  --set port.baseUrl="https://api.getport.io" \
-  --set initializePortResources=true \
-  --set scheduledResyncInterval=1440 \
-  --set integration.identifier="my-aws-v3-multi" \
-  --set integration.type="aws-v3" \
-  --set integration.eventListener.type="POLLING" \
-  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
-  --set integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/PortOceanReadRole","arn:aws:iam::222222222222:role/PortOceanReadRole","arn:aws:iam::333333333333:role/PortOceanReadRole"]' \
-  --set integration.config.externalId="YOUR_EXTERNAL_ID"
-```
-
-</TabItem>
-
-<TabItem value="docker" label="Docker">
-
-:::caution JSON encoding required
-The `ACCOUNT_ROLE_ARNS` parameter must be a valid JSON array string.
-:::
-
-```bash showLineNumbers
-docker run -i --rm --platform=linux/amd64 \
-  -e OCEAN__PORT__CLIENT_ID="$PORT_CLIENT_ID" \
-  -e OCEAN__PORT__CLIENT_SECRET="$PORT_CLIENT_SECRET" \
-  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
-  -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-  -e OCEAN__INTEGRATION__IDENTIFIER="my-aws-v3-multi" \
-  -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-  -e OCEAN__INTEGRATION__SECRETS__AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-  -e OCEAN__INTEGRATION__SECRETS__AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
-  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS='["arn:aws:iam::111111111111:role/PortOceanReadRole","arn:aws:iam::222222222222:role/PortOceanReadRole","arn:aws:iam::333333333333:role/PortOceanReadRole"]' \
-  -e OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID="YOUR_EXTERNAL_ID" \
-  ghcr.io/port-labs/port-ocean-aws-v3:latest
-```
-
-</TabItem>
-
-</Tabs>
-
-
-</TabItem>
-
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
 
 <PortApiRegionTip/>
 

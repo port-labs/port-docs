@@ -76,7 +76,8 @@ Deploy the integration as an ECS service with the IAM role attached.
         {"name": "OCEAN__SEND_RAW_DATA_EXAMPLES", "value": "true"},
         {"name": "OCEAN__EVENT_LISTENER", "value": "{\"type\": \"POLLING\", \"resyncInterval\": 1440}"},
         {"name": "OCEAN__INTEGRATION__IDENTIFIER", "value": "my-aws-v3"},
-        {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"}
+        {"name": "OCEAN__INTEGRATION__TYPE", "value": "aws-v3"},
+        {"name": "OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARNS", "value": "[\"arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole\"]"}
       ]
     }
   ]
