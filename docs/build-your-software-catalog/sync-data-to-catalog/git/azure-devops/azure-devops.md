@@ -659,12 +659,11 @@ This allows us to create an entity for each dependency dynamically.
 If your file contains a JSON array (rather than an object), you can iterate over it directly.
 
 For example, if you have a `services.json` file:
-```json
+```json showLineNumbers
 [
   { "name": "api-gateway", "port": 8080, "team": "platform" },
   { "name": "auth-service", "port": 3000, "team": "security" }
 ]
-```
 
 You can create an entity for each service using:
 
