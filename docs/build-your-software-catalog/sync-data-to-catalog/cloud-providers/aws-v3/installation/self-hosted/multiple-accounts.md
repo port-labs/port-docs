@@ -25,7 +25,7 @@ Before installing the integration, ensure you have:
 
 Select the authentication method that best fits your infrastructure and security requirements:
 
-- **IAM Role** : Use when deploying on AWS ECS services. Provides automatic credential management through IAM roles attached to your AWS resources.
+- **IAM Role**: Use when deploying on AWS services. Provides automatic credential management through IAM roles attached to your AWS resources.
 
 - **IAM Role for service accounts(IRSA)**: Use when deploying on Amazon EKS with IRSA. Provides secure authentication through IAM Roles for Service Accounts.
 
@@ -34,16 +34,12 @@ Select the authentication method that best fits your infrastructure and security
 <TabItem value="iam-role" label="IAM Role">
 
 **Prerequisites:**
-- AWS compute service (ECS or EC2) with an attached IAM role that has permissions to assume roles in target accounts.
+- AWS compute service with an attached IAM role that has permissions to assume roles in target accounts.
 - Permissions to create IAM roles in target accounts.
 
 **Trusted entity:**
 
-The trusted entity for IAM Role authentication is the AWS service principal:
-- For ECS: `ecs-tasks.amazonaws.com`
-- For EC2: `ec2.amazonaws.com`
-
-This allows your compute service to assume the IAM role automatically.
+The trusted entity for IAM Role authentication is the AWS service principal (e.g., `ecs-tasks.amazonaws.com` for ECS or `ec2.amazonaws.com` for EC2). This allows your compute service to assume the IAM role automatically.
 
 **Account terminology:**
 
