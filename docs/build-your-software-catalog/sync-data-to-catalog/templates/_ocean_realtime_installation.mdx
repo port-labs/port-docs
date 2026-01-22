@@ -20,7 +20,7 @@ Copy the command, replace the placeholders with your values, then run it in your
 :::
 
 In order for the {props.integration} integration to update the data in Port on real-time changes in {props.integration}, you need to specify the `liveEvents.baseUrl` parameter.
-The `liveEvents.baseUrl` parameter should be set to the `url` of your {props.integration} integration instance. Your integration instance needs to have the option to setup webhooks via http requests/receive http requests, so please configure your network accordingly.
+The `liveEvents.baseUrl` parameter should be set to the `url` of your {props.integration} integration instance. Your integration instance needs to have the option to setup webhooks via http requests/receive http requests, so ensure the network is configured accordingly.
 
 The `liveEvents.baseUrl` needs to be reachable by the {props.integration} instance that will send webhook events to the integration.
   - **If {props.integration} and the integration are in the same cluster/network**: Use an internal URL (e.g., a Kubernetes service DNS name).
