@@ -90,7 +90,7 @@ In any case, after 7 days you will need to login again.
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider [here](https://docs.port.io/sso-rbac/sso-providers/).
+1. Set up the application in your SSO dashboard by following the [manage your SSO connection](/sso-rbac/sso-and-scim/self-serve-sso) documentation.
 2. Reach out to us with the required credentials in order to complete the set up.
 3. After completing the set up, Port will provide you with the `CONNECTION_NAME`. Head back to the documentation and replace it where needed.
 
