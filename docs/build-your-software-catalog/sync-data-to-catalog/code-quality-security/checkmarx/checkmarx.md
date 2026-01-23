@@ -99,7 +99,7 @@ You can configure webhooks at two levels: **tenant-level** for organization-wide
 
 <TabItem value="tenant" label="Tenant-level (recommended)" default>
 
-Tenant-level webhooks receive events from all projects and support project creation events.
+Tenant-level webhooks receive events from all projects and support project creation events. For more details, see the [Checkmarx tenant-level webhooks documentation](https://docs.checkmarx.com/en/34965-378162-tenant-level-webhooks.html).
 
 1. Log in to your Checkmarx One account with admin permissions.
 2. Click the **gear icon** and select **Global Settings**.
@@ -115,7 +115,7 @@ Tenant-level webhooks receive events from all projects and support project creat
 
 <TabItem value="project" label="Project-level">
 
-Project-level webhooks receive events only from a specific project. Use this for targeted monitoring of critical applications.
+Project-level webhooks receive events only from a specific project. Use this for targeted monitoring of critical applications. For more details, see the [Checkmarx project webhooks documentation](https://docs.checkmarx.com/en/34965-68538-configuring-projects.html#UUID-1a1413d4-5d19-ddc0-aa35-51ff05ef0ade_UUID-a11c3b46-abfa-c26f-026b-0a9c04a79a46).
 
 1. Navigate to the project you want to monitor.
 2. Click the **three dots** menu on the project and select **Project Settings**.
