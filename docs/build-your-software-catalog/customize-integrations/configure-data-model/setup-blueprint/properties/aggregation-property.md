@@ -13,7 +13,11 @@ Aggregation properties allow you to calculate metrics based on the [relations](/
 
 Using the aggregation property enables you to see relevant metrics on related entities, without having to manually calculate them.
 
-Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
+Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream). 
+
+:::tip Relation traversal
+By default, aggregations consider all possible paths between the source and target entities. To control which path is used, see [Path Filter](#path-filter).
+:::
 
 ## Common aggregation usage
 
@@ -26,7 +30,7 @@ For example, if you have a microservice blueprint, you can define aggregation pr
 
 The aggregation property enables you to specify scorecards and initiative rules based on metrics of related entities.
 
-:::tip
+:::tip Example
 For example - If you have a microservice blueprint, with related Alert blueprint, you can define a rule that will check if the number of open CRITICAL and HIGH alerts that are related to each microservice is greater than 0.
 :::
 
@@ -1818,6 +1822,6 @@ Count cloud resources associated with a service or environment.
 ## Limitations
 
 - The aggregation property value for all entities of a blueprint will be recalculated **every 15 minutes**.
-
 - The maximum number of entities based on the blueprint where the aggregation property is defined is **20,000**.
+- When calculating by property (`sum`, `average`, `min`, `max`, `median`), only **number** type properties are supported.
 
