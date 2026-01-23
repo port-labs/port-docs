@@ -106,7 +106,7 @@ Tenant-level webhooks receive events from all projects and support project creat
 3. Select **Webhooks** from the menu, then click **Add Webhook**.
 4. Fill in the webhook details:
    - **Name**: Enter a descriptive name (e.g., `Port Integration Webhook`).
-   - **Payload URL**: For hosted integrations, use the webhook URL from your Port integration settings. For self-hosted integrations, use `https://<YOUR_INTEGRATION_HOST>/integration/webhook`.
+   - **Payload URL**: Enter the URL where your integration is accessible, following the pattern `https://<YOUR_INTEGRATION_HOST>/integration/webhook` (replace `<YOUR_INTEGRATION_HOST>` with your integration's host address).
    - **Secret** (optional): Enter a secret to secure webhook deliveries. If configured, set the same value in the `webhookSecret` parameter of your integration.
    - **Events**: Select `Project Created`, `Completed Scan`, `Failed Scan`, and `Partial Scan`.
 5. Click **Add Webhook** to save.
@@ -122,7 +122,7 @@ Project-level webhooks receive events only from a specific project. Use this for
 3. Select **Webhooks** from the menu, then click **Add Webhook**.
 4. Fill in the webhook details:
    - **Name**: Enter a descriptive name (e.g., `Port Integration Webhook`).
-   - **Payload URL**: For hosted integrations, use the webhook URL from your Port integration settings. For self-hosted integrations, use `https://<YOUR_INTEGRATION_HOST>/integration/webhook`.
+   - **Payload URL**: Enter the URL where your integration is accessible, following the pattern `https://<YOUR_INTEGRATION_HOST>/integration/webhook` (replace `<YOUR_INTEGRATION_HOST>` with your integration's host address).
    - **Secret** (optional): Enter a secret to secure webhook deliveries. If configured, set the same value in the `webhookSecret` parameter of your integration.
    - **Events**: Select `Completed Scan`, `Failed Scan`, and `Partial Scan`.
 5. Click **Add Webhook** to save.
