@@ -975,7 +975,7 @@ If you want to track these metrics at higher levels, such as **team** or **domai
 :::
 
 ###  Aggregation
-The metrics in this guide are aggregated monthly. However, you can easily switch the timeframes to weekly, hourly, etc., based on your requirements.
+The metrics in this guide use different aggregation timeframes depending on the metric (e.g., weekly for deployment frequency). You can adjust the timeframes to hourly, daily, weekly, or monthly based on your requirements.
 
 :::tip Adding Aggregation to Blueprints
 
@@ -1004,7 +1004,7 @@ Add this aggregation property to calculate deployment frequency:
 ```json showLineNumbers
 
 "deployment_frequency": {
-   "title": "Monthly Deployment Frequency",
+   "title": "Weekly Deployment Frequency",
    "icon": "DeploymentIcon",
    "type": "number",
    "target": "deployment",
@@ -1015,12 +1015,17 @@ Add this aggregation property to calculate deployment frequency:
             "property": "deploymentStatus",
             "operator": "=",
             "value": "Success"
+         },
+         {
+            "property": "environment",
+            "operator": "=",
+            "value": "Production"
          }
       ]
    },
    "calculationSpec": {
       "func": "average",
-      "averageOf": "month",
+      "averageOf": "week",
       "measureTimeBy": "$createdAt",
       "calculationBy": "entities"
    }
@@ -1101,7 +1106,7 @@ Add the following to the aggregated property in service:
       }
   }, 
    "total_deployments": {
-      "title": "Total Monthly Deployment Frequency",
+      "title": "Total Deployments",
       "type": "number",
       "target": "deployment",
       "query": {
@@ -1115,9 +1120,7 @@ Add the following to the aggregated property in service:
          ]
       },
       "calculationSpec": {
-         "func": "average",
-         "averageOf": "month",
-         "measureTimeBy": "$createdAt",
+         "func": "count",
          "calculationBy": "entities"
       }
    }
@@ -1132,7 +1135,7 @@ Add this calculation property to calculate the cfr from the aggregated propertie
 ```json showLineNumbers
       "changeFailureRate": {
         "title": "Change Failure Rate",
-        "calculation": "(.properties.total_incidents / .properties.total_deployments) * 100",
+        "calculation": ".properties.total_incidents as $incidents | .properties.total_deployments as $deployments | if $deployments == 0 or $incidents == null then 0 else (if $deployments < $incidents then 100 else $incidents / ($deployments + $incidents) * 100 end) end | floor",
         "type": "number"
       }
      
