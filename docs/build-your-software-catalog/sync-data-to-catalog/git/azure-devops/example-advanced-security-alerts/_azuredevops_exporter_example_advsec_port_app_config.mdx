@@ -1,0 +1,29 @@
+<details>
+
+<summary><b>Integration mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: advanced-security-alert
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .__repository.id + "/" + (.alertId | tostring)
+          title: .title
+          blueprint: '"azureDevopsAdvancedSecurity"'
+          properties:
+            severity: .severity
+            state: .state
+            alertType: .alertType
+            introducedDate: .introducedDate
+            confidence: .confidence
+            link: .physicalLocations[0].versionControl.itemUrl
+          relations:
+            repository: .__repository.id
+            project: .__project.id
+
+```
+
+</details>

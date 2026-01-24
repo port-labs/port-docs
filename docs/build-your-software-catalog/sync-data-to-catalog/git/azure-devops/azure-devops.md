@@ -46,7 +46,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration for this integration:
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 deleteDependentEntities: true
@@ -765,7 +765,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary><b>Project response data (Click to expand)</b></summary>
+<summary><b>Project response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -800,7 +800,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Repository response data (Click to expand)</b></summary>
+<summary><b>Repository response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -829,7 +829,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Work-item response data (Click to expand)</b></summary>
+<summary><b>Work-item response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -909,7 +909,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Pipeline response data (Click to expand)</b></summary>
+<summary><b>Pipeline response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -932,7 +932,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Pull request response data (Click to expand)</b></summary>
+<summary><b>Pull request response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1021,7 +1021,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary><b>Build response data (Click to expand)</b></summary>
+<summary><b>Build response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1060,7 +1060,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
+<summary><b>Pipeline-stage response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1082,7 +1082,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary><b>Pipeline-run response data (Click to expand)</b></summary>
+<summary><b>Pipeline-run response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1173,12 +1173,101 @@ Here is an example of the payload structure from Azure DevOps:
 
 </details>
 
+<details>
+<summary><b>Advanced-security-alert response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "alertId": 2,
+  "severity": "critical",
+  "title": "Google API key",
+  "tools": [
+    {
+      "name": "Advanced Security Secrets Scanning",
+      "rules": [
+        {
+          "opaqueId": "SEC101/003",
+          "friendlyName": "GoogleApiKey",
+          "description": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content.",
+          "resources": "",
+          "helpMessage": "## Remediation steps\n\nFollow the steps below before you close this alert:\n\n1. Rotate the secret and store securely if it's in use to prevent breaking workflows.\n2. Revoke this Google API key to prevent unauthorized access.&nbsp;\n3. Check security logs for potential breaches.\n4. Close the alert as revoked.",
+          "tags": null,
+          "additionalProperties": {}
+        }
+      ]
+    }
+  ],
+  "dismissal": null,
+  "repositoryId": null,
+  "projectId": "00000000-0000-0000-0000-000000000000",
+  "repositoryUrl": "[REDACTED]/ac5aaba6-a66a-4e1d-b508-b060ec624fa9/_git/864e1b4d-d163-47f5-87fb-22f2d4046fa6",
+  "gitRef": null,
+  "alertType": "secret",
+  "firstSeenDate": "2026-01-23T01:35:26.9669502Z",
+  "lastSeenDate": "2026-01-23T01:36:28.0573831Z",
+  "fixedDate": null,
+  "introducedDate": "2023-06-08T23:25:14Z",
+  "state": "active",
+  "physicalLocations": [
+    {
+      "versionControl": {
+        "commitHash": "b78974cefc96712e72081e66c18a1d71f1948ccd",
+        "itemUrl": "https://dev.azure.com:443/fabrikam/ac5aaba6-a66a-4e1d-b508-b060ec624fa9/_git/864e1b4d-d163-47f5-87fb-22f2d4046fa6?path=%2Fios%2FRunner%2FGoogleService-Info.plist&version=GCb78974cefc96712e72081e66c18a1d71f1948ccd&line=10&lineEnd=10&lineStartColumn=10&lineEndColumn=49&lineStyle=plain"
+      },
+      "filePath": "ios/Runner/GoogleService-Info.plist",
+      "region": {
+        "lineStart": 10,
+        "lineEnd": 10,
+        "columnStart": 10,
+        "columnEnd": 49
+      }
+    }
+  ],
+  "logicalLocations": [],
+  "truncatedSecret": "…iMF-XM",
+  "confidence": "high",
+  "hasTrustedSourceOrigin": true,
+  "__repository": {
+    "id": "864e1b4d-d163-47f5-87fb-22f2d4046fa6",
+    "name": "fabrikam",
+    "url": "[REDACTED]/ac5aaba6-a66a-4e1d-b508-b060ec624fa9/_apis/git/repositories/864e1b4d-d163-47f5-87fb-22f2d4046fa6",
+    "project": {
+      "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+      "name": "fabrikam",
+      "url": "[REDACTED]/_apis/projects/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+      "state": "wellFormed",
+      "revision": 11,
+      "visibility": "private",
+      "lastUpdateTime": "2025-08-27T22:17:21.613Z"
+    },
+    "defaultBranch": "refs/heads/main",
+    "size": 14885587,
+    "remoteUrl": "https://fabrikam@dev.azure.com/fabrikam/fabrikam/_git/fabrikam",
+    "sshUrl": "git@ssh.dev.azure.com:v3/fabrikam/fabrikam/fabrikam",
+    "webUrl": "[REDACTED]/fabrikam/_git/fabrikam",
+    "isDisabled": false,
+    "isInMaintenance": false
+  },
+  "__project": {
+    "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "name": "fabrikam",
+    "url": "[REDACTED]/_apis/projects/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "state": "wellFormed",
+    "revision": 11,
+    "visibility": "private",
+    "lastUpdateTime": "2025-08-27T22:17:21.613Z"
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary><b>Project entity in Port (Click to expand)</b></summary>
+<summary><b>Project entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1198,7 +1287,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Repository entity in Port (Click to expand)</b></summary>
+<summary><b>Repository entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1219,7 +1308,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Work-item entity in Port (Click to expand)</b></summary>
+<summary><b>Work-item entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1247,7 +1336,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
+<summary><b>Pipeline entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1268,7 +1357,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Pull request entity in Port (Click to expand)</b></summary>
+<summary><b>Pull request entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1294,7 +1383,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary><b>Build entity in Port (Click to expand)</b></summary>
+<summary><b>Build entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1320,7 +1409,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
+<summary><b>Pipeline-stage entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1344,7 +1433,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
+<summary><b>Pipeline-run entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1369,7 +1458,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary><b> Iteration entity in Port (Click to expand)</b></summary>
+<summary><b> Iteration entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1390,7 +1479,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Branch entity in Port (Click to expand)</b></summary>
+<summary><b>Branch entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1404,6 +1493,31 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
   "relations": {
     "repository": "myproject/my-repository"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Advanced-security-alert entity in Port (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "blueprint": "azureDevopsAdvancedSecurity",
+  "identifier": "864e1b4d-d163-47f5-87fb-22f2d4046fa6/1",
+  "title": "Alert 1",
+  "relations": {
+    "project": "4a2c1f34-76ba-4565-adf7-839987fba56f",
+    "repository": "864e1b4d-d163-47f5-87fb-22f2d4046fa6"
+  },
+  "properties": {
+    "severity": "critical",
+    "alertType": "secret",
+    "link": null,
+    "introducedDate": "2023-06-08T23:25:14Z",
+    "state": "active",
+    "title": null
   }
 }
 ```
