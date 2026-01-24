@@ -502,7 +502,7 @@ The following example demonstrates how to ingest Azure DevOps pipeline deploymen
 
 <PortPipelineDeploymentAppConfig/>
 
-## Mapping Advanced Security Alerts
+## Mapping advanced security alerts
 
 The following example demonstrates how to ingest your Azure Devops advanced security alerts to Port.  
 You can use the following Port blueprint definitions and integration configuration:
