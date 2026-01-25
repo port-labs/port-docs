@@ -3,52 +3,33 @@ import TabItem from "@theme/TabItem"
 
 # Dynamic permissions
 
-Port allows users to set dynamic permissions for both executing and approving execution of self-service actions.   
-To support dynamic permissions, the following items are available to you via the JSON configuration of any given self-service action:
-- The organization's full software catalog as defined in Port (to provide necessary context to the self-service action).
-- The ability to query the software catalog.
-- The ability to set conditions based on queries of the software catalog.
+Dynamic permissions allow you to control who can execute or approve self-service actions based on data in your software catalog. Unlike static permissions, where you explicitly list roles, users, or teams, dynamic permissions let you define logic that evaluates at runtime.
 
-This is a powerful feature that allows you to define your own logic based on any piece of data in your software catalog. Prior to defining dynamic permissions for a self-service action, we recommend:
-- Clearly defining which users should be allowed to perform this action.
-- Clearly defining which users should be allowed to approve this action.
-- Ensuring that your software catalog contains the necessary blueprints and properties to support the dynamic permissions.
+This enables access control patterns such as requiring manager approval, restricting actions based on entity ownership, or enforcing separation of duties.
 
-## Potential use-cases
-
-Examples of useful applications of dynamic permissions:
+## Common use cases
 
 - Ensure that action executions requested by a team member can only be approved by his/her direct manager.
 - Perform validations/manipulations on inputs that depend on data from related entities.
 - Ensure that only those who are on-call can perform rollbacks of a service with issues.
 - Allow service owners to modify their own infrastructure freely, but also enforce approval when they seek to make changes to infrastructure shared by multiple services.
 
-## Configuration
+## How it works
 
-This section covers how dynamic permissions are evaluated and how to configure them for your self-service actions.
+Dynamic permissions are configured using a `policy` object in the action's permissions JSON.  
+The policy requires two keys:
 
-### Guidelines
+- `queries` - Fetch entities from your software catalog based on rules you define.
+- `conditions` - JQ expressions that evaluate the query results.
 
-- There is no limit to the number of queries you may define for execution and approve policies.
-- For `execution` policies, the condition **must** return a `boolean` value (determining whether or not the requester is allowed to execute the action).
-- For `approve` policies, the condition **must** return an array of user **email addresses** who can approve the action execution.  
-  Note that fields like `createdBy` or `updatedBy` return **user IDs**, not email addresses. To avoid this issue, ensure your JQ condition outputs email addresses.
+Both keys must be present in the policy object.
 
-  :::info Email notifications
-  When approvers are defined dynamically using a `policy`, they will only be notified via the Port UI. Email notifications are **not** sent to dynamically resolved approvers. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
-  :::
+**When a `policy` is defined:**
+- The `roles`, `users`, and `teams` keys control who can **see** the action.
+- The `policy` exclusively controls who can **execute** or **approve** the action.
 
-- In both the `rules` and `conditions` values, you can access the following metadata:
-  - `blueprint` - the blueprint tied to the action (if any).
-  - `action` - the action object.
-  - `inputs` - the values provided to the action inputs by the user who executed the action.
-  - `user` - the user who executed/wants to approve the action.
-  - `entity` - for day-2 actions, this will hold the entity the action was executed on.
-  - `trigger` - information about the triggered action:
-    - `at` - the date of the action execution.
-    - `user` - the user who executed the action.
-- Any query that fails to evaluate will be ignored.
-- Each query can return up to 1000 entities, so be sure to make them as precise as possible.
+**When no `policy` is defined:**
+- The `roles`, `users`, and `teams` keys control both visibility and execution/approval.
 
 ### Evaluation order
 
@@ -57,11 +38,13 @@ Dynamic permissions are evaluated **after** [blueprint permissions](/sso-rbac/rb
 1. Port first checks if the user has the required permissions on the underlying blueprint.
 2. Only if the blueprint permissions allow access, the dynamic permission policy is evaluated.
 
-If a user lacks the necessary blueprint permissions, dynamic permissions cannot grant them access. Dynamic permissions can only **further restrict** who can execute or approve an action, or **dynamically determine approvers**. They cannot bypass blueprint-level restrictions. 
+Dynamic permissions can only **further restrict** who can execute or approve an action, or **dynamically determine approvers**. They cannot bypass blueprint-level restrictions.
 
-If your dynamic permissions aren't working as expected, first verify that the user has the necessary blueprint permissions.
+## Configuration
 
-### Instructions
+Dynamic permissions are defined in the action's permissions JSON. This section covers how to access and structure the configuration.
+
+### Accessing the permissions JSON
 
 To define dynamic permissions for an action:
 
@@ -70,36 +53,90 @@ To define dynamic permissions for an action:
 3. Click on the `Edit JSON` button in the top-right corner of the configuration modal, then choose the `Permissions` tab.
 
 
-This is the action's permission configuration in JSON format. Every action in Port has the following two keys under it:
+### The policy object structure
 
-- `"execute"` - any logic defined here pertains to the execution of the action. Here you can define who can **run** the action.
-- `"approve"` - any logic defined here pertains to the approval of the action's execution. If [manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions) is not enabled for this action, this key is irrelevant since no approval is needed to execute the action.
+The permissions JSON contains two top-level keys:
 
-Under each of these two keys, you can add one or more of the following keys:
+- `"execute"` - defines who can **run** the action.
+- `"approve"` - defines who can **approve** the action (only relevant if [manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions) is enabled).
 
-- A `roles` key, which allows you to specify which **roles** can execute/approve the action.
-- A `users` key, which allows you to specify which **users** can execute/approve the action.
-- A `teams` key, which allows you to specify which **teams** can execute/approve the action.
-- A `policy` key, which allows you to use more complex logic using two keys:
-  - [`"queries"`](/search-and-query/structure-and-syntax) - a collection of [rules](/search-and-query/structure-and-syntax#rules) you can use to fetch and filter the data you need from your software catalog.
-  - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
+Under each of these keys, you can define:
 
-If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
-If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.
+- `roles` - which roles can execute/approve the action.
+- `users` - which specific users can execute/approve the action.
+- `teams` - which teams can execute/approve the action.
+- `policy` - dynamic logic containing:
+  - [`queries`](/search-and-query/structure-and-syntax) - [rules](/search-and-query/structure-and-syntax#rules) to fetch entities from your catalog.
+  - `conditions` - JQ expressions that determine access. Multiple conditions are evaluated with an implicit "OR".
 
-:::tip Removing a policy
-To remove an existing policy, set `"policy": null` in the JSON configuration. Simply deleting the policy content via backspace will not remove it.
-:::
+**Note** that to remove an existing policy, set `"policy": null` in the JSON configuration. Simply deleting the policy content will not remove it.
 
-For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `admin` or a member of the `engineering` team:
+The following example shows the complete structure of a policy object:
+
+<details>
+<summary><b>Complete policy structure example (click to expand)</b></summary>
 
 ```json showLineNumbers
+{
   "execute": {
-    "roles": ["admin"],
+    "policy": {
+      "queries": {
+        "query_name": {
+          "rules": [
+              // Your rule/s logic here
+            ],
+            "combinator": "and"
+        }
+      },
+      "conditions": [
+        // A jq query resulting in a boolean value (allowed/not-allowed to execute)
+      ]
+    }
+  },
+  "approve": {
+    "roles": [
+      "Admin"
+    ],
     "users": [],
-    "teams": ["engineering"]
+    "teams": [],
+    "policy": {
+      "queries": {
+        "query_name": {
+          "rules": [
+              // Your rule/s logic here
+            ],
+            "combinator": "and"
+        }
+      },
+      "conditions": [
+        // A jq query resulting in an array of strings (a list of users who can approve the action)
+      ]
+    }
   }
-  ```
+}
+```
+
+</details>
+
+### How policy affects visibility vs execution
+
+When no `policy` is defined, `roles`, `users`, and `teams` control both visibility **and** execution/approval permissions.
+When a `policy` is defined, `roles`, `users`, and `teams` control only **visibility**, while the `policy` exclusively controls **execution** or **approval**.
+
+**Example without policy:**
+
+The action is visible and executable by users with the `admin` role or members of the `engineering` team:
+
+```json showLineNumbers
+"execute": {
+  "roles": ["admin"],
+  "users": [],
+  "teams": ["engineering"]
+}
+```
+
+**Example with policy:**
+
 Using the same configuration, but this time with a `policy` object defined, these `roles` and `teams` only determine who can view the action, while the `policy` exclusively controls who can **execute** or **approve** it.
 
 In the following example, the action will be visible to `admin` and `engineering` team members, but its execution permissions depend only on whether the `policy` conditions evaluate to `true`:
@@ -127,7 +164,7 @@ In the following example, the action will be visible to `admin` and `engineering
 
 ### Condition return types
 
-The `conditions` array in a policy behaves differently depending on whether it's used for **execute** or **approve** permissions:
+The `conditions` array in a policy behaves differently depending on whether it's used for **execute** or **approve** permissions: execute conditions return a **boolean**, while approve conditions return an **array of email addresses**.
 
 <Tabs groupId="condition-types" queryString="condition-type">
 
@@ -140,7 +177,7 @@ Execute conditions must return a **boolean** value (`true` or `false`).
 
 **Example condition:**
 
-```json
+```json showLineNumbers
 "conditions": [
   ".results.search_entity.entities | length == 0"
 ]
@@ -154,13 +191,12 @@ This condition checks if the query returned zero entities. Execution is allowed 
 
 Approve conditions must return an **array of strings** containing the **email addresses** of users who can approve the action.
 
-- The array should contain user identifiers (email addresses).
+- The array must contain **email addresses**, not user IDs. Fields like `createdBy` or `updatedBy` return user IDs, which will silently fail to match any approvers.
 - An empty array means no one can approve.
-- Any user whose email is in the returned array can approve the action.
 
 **Example condition:**
 
-```json
+```json showLineNumbers
 "conditions": [
   "[.results.approvingUsers.entities[] | select(.relations.team == $executerTeam) | .identifier]"
 ]
@@ -172,65 +208,16 @@ This condition returns an array of user emails who are on the same team as the e
 
 </Tabs>
 
-:::info Execute vs. Approve
-- **Execute permissions** return a boolean indicating whether a specific user can execute the action.
-- **Approve permissions** return an array of user email addresses allowed to approve the action.
-:::
+## Limitations
 
-
-### Using a policy object
-
-Here is an example of using the policy key in a permissions JSON:
-<details>
-<summary><b>Example snippet (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "execute": {
-    #highlight-start
-    "policy": {
-      "queries": {
-        "query_name": {
-          "rules": [
-              // Your rule/s logic here
-            ],
-            "combinator": "and"
-        }
-      },
-      "conditions": [
-        // A jq query resulting in a boolean value (allowed/not-allowed to execute)
-      ]
-    }
-    #highlight-end
-  },
-  "approve": {
-    "roles": [
-      "Admin"
-    ],
-    "users": [],
-    "teams": [],
-    #highlight-start
-    "policy": {
-      "queries": {
-        "query_name": {
-          "rules": [
-              // Your rule/s logic here
-            ],
-            "combinator": "and"
-        }
-      },
-      "conditions": [
-        // A jq query resulting in an array of strings (a list of users who can approve the action)
-      ]
-    }
-    #highlight-end
-  }
-}
-```
-
-</details>
+- Each query can return up to **1000 entities**. Make your queries as precise as possible to stay within this limit.
+- Any query that fails to evaluate will be **silently ignored**.
+- Dynamically resolved approvers are only notified via the Port UI. Email notifications are **not** sent to them. To send email notifications, define approvers statically using the `users`, `roles`, or `teams` keys.
+- There is no limit to the number of queries you can define per policy.
 
 ## Examples
+
+The following examples demonstrate common patterns for dynamic permissions.
 
 ### Forbid execution if entity exists
 
