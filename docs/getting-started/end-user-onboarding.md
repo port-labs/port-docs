@@ -119,5 +119,5 @@ Using a scorecard in one of your dashboards, you can:
 ## Ready to go?
 
 - Start by exploring your dashboard, click into a few services and observe the different properties they have.  
-- Check out the [demo site](https://showcase.port.io/) to get inspired and see other use cases that may be relevant to your organization.  
+- Check out the [demo site](https://demo.port.io/) to get inspired and see other use cases that may be relevant to your organization.  
 - Pass feedback to your Port champion to help us improve the product and see how else Port can help you.

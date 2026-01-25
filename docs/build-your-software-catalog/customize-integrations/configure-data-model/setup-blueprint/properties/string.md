@@ -22,7 +22,7 @@ The string property type can be used to store any text based data, for example:
 - Commit SHA
 - File names
 
-In this [live demo](https://showcase.port.io/service_catalog) example, we can see the `Language` string property. 🎬
+In this [live demo](https://demo.port.io/service_catalog) example, we can see the `Language` string property. 🎬
 
 ## API definition
 

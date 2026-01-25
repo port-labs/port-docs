@@ -242,6 +242,89 @@ steps:
 ```
 
 </TabItem>
+
+<TabItem value="gitlab" label="GitLab">
+
+
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters />
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: okta
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+        -e OCEAN__INTEGRATION__CONFIG__OKTA_DOMAIN=$OCEAN__INTEGRATION__CONFIG__OKTA_DOMAIN \
+        -e OCEAN__INTEGRATION__SECRETS__OKTA_API_TOKEN=$OCEAN__INTEGRATION__SECRETS__OKTA_API_TOKEN \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - when: manual
+```
+
+</TabItem>
+
+<TabItem value="docker" label="Docker">
+
+To run the integration using Docker for a one-time sync:
+
+:::info Replace placeholders
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, `YOUR_OKTA_DOMAIN`, and `YOUR_OKTA_API_TOKEN`.
+:::
+
+<DockerParameters />
+
+<br/>
+
+```bash showLineNumbers
+docker run -i --rm --platform=linux/amd64 \
+  -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+  -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+  -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+  -e OCEAN__INTEGRATION__CONFIG__OKTA_DOMAIN="YOUR_OKTA_DOMAIN" \
+  -e OCEAN__INTEGRATION__SECRETS__OKTA_API_TOKEN="YOUR_OKTA_API_TOKEN" \
+  -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
+  -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
+  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
+  ghcr.io/port-labs/port-ocean-okta:latest
+```
+
+<PortApiRegionTip/>
+
+<AdvancedConfig/>
+
+</TabItem>
 </Tabs>
 
 </TabItem>

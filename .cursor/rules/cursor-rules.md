@@ -43,5 +43,5 @@ To suggest improvements to our Cursor rules:
 
 ## Reference
 
-- [CONTRIBUTING.md](../CONTRIBUTING.md) - Our detailed contribution guidelines
+- [best_practices.md](../best_practices.md) - Our detailed contribution guidelines
 - [Cursor Documentation](https://docs.cursor.sh/) - Learn more about Cursor features 

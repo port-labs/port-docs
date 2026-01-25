@@ -4,6 +4,7 @@ import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalo
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 # Jira Server (self-hosted)
 
@@ -41,6 +42,17 @@ Not sure which method is right for your use case? Check the available [installat
 <TabItem value="real-time-self-hosted" label="Self-hosted (Recommended)" default>
 
 This workflow will run the Jira Server integration and update Port in real time using scheduled polling.
+
+<h2>Live event support</h2>
+
+<OceanSaasLiveEventsDescription id="JiraServer" />
+
+<details>
+  <summary><b>Supported live event triggers (click to expand)</b></summary>
+  {liveEvents["JiraServer"] && 
+    <OceanSaasLiveEventsTriggersManual id="JiraServer" isOAuth={false} />
+  }
+</details>
 
 <h2> Prerequisites </h2>
 
