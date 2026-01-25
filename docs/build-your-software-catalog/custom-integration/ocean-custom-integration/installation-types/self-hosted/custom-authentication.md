@@ -6,7 +6,7 @@ description: Configure OAuth2, JWT, and other dynamic token-based authentication
 
 # Custom authentication
 
-:::warning Self-hosted only
+:::info Self-hosted only
 Custom authentication is only available for self-hosted installations. It is not supported for integrations hosted by Port.
 :::
 
@@ -16,8 +16,8 @@ The custom authentication feature enables you to configure OAuth2, JWT, and othe
 
 When `authType` is set to `"custom"`, you configure two parts:
 
-1. **How to authenticate** (`customAuthRequest`) - defines the authentication endpoint, HTTP method, headers, and body
-2. **How to use the token** (`customAuthResponse`) - defines where to inject authentication values in subsequent requests using template syntax
+1. **How to authenticate** (`customAuthRequest`) - defines the authentication endpoint, HTTP method, headers, and body.
+2. **How to use the token** (`customAuthResponse`) - defines where to inject authentication values in subsequent requests using template syntax.
 
 The integration automatically:
 - Authenticates on startup
