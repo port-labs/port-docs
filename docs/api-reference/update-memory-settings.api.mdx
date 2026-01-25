@@ -1,0 +1,72 @@
+---
+id: update-memory-settings
+title: "Update memory settings"
+description: "This route allows organization administrators to update memory settings for their organization. When memory is disabled, the AI stops learning new preferences but existing memories are retained."
+sidebar_label: "Update memory settings"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVU2P3DYM/SsCz8rMbtuTb5MgAYKiwKLZRQ6DOcgWZ6ysLSmkvLsTw/+9oOTZ+cgkQNFe2ov8QUrke3ykRkhmx1Ct4Q/sA+1ho8EiN+RicsFDBfetY0VhSKhM14VnVoF2xrtvRhyUsb3zjhOZFIhVCmqI1iRUfT5PMabk/I7VNpBKLTo6279Qn1v0B2fHyjo2dYdWi7NafVScQmTVoSHv/E55fFaRcIuEvkFW9ZAUvjiWIOUYh6wMoSJMxnm0C9DA2Azk0h6q9Qg1GkKCar2ZNhoIvw7I6W2we6jG/OkILVSJBtTQBJ/QJzGZGDvX5LSXX1jIGYGbFnsjb2kfESoI9RdsEmiIFCJScshiLQDf+4ztxL0OoUPj4ZL1zy2mFumVxTYMnVU1KixHHOg8IxOmSZ8AWF9E3UxTceAYPJe8frm5kcd58E9D0yDzdui6/VxOe1lP+NeoCY+yNsFzKqRPUq85yj8m9oD5SEp4hJMAMym/3dx+z8ODN0NqA7lvaP8O3p/g25qOBSASBTpJlxM5v4NJQ4/MZodXbNdwlHM2Goy1TtIx3d1J9BJuRvjr9wg/BKqdtejVG7WSTlYRqXfMLnhWr9H+29jzwakNFiqIQ5aQSS1UsHy6XRq3LBJaniibkZ6QOE+LgTqooE0pcrVcmugWMVBauACTvmYd+OiwOU6eT8JQIeUwf15Bmuh+xz1o8KaX79WsutLUGpyUqkVjkTITwvqfx7H1/sX0scMr3TB3k/PbkMO5JG5wFyip1d1H0CAwixRuFzdSghg49SYXdc7m4eo8v5xY41Ei/48rY65Nwpe0jJ1xXtjJ5R5n/azh6RY0GAd6Jv5ssGhog8h+DeNYG8YH6qZJfn8dkOQm2mh4MuQk93wZ6UONRXaPuIcK3hVO39xLMuLeDUUwFy0oUiw7Vk2DMf3Ud3PSD3cP96Chni+/PljZQuYZdF4rAA0hlzhLN/8boTN+N+RGhXKkqFJm5bmoH7Oo5xcBdTD5/UmCl2ovOGQVVFe3jGNpmWl69S+mH+6YmT14SzVl8v8Fsbcqyw==
+sidebar_class_name: "put api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update memory settings"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/ai/memory/settings"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows organization administrators to update memory settings for their organization. When memory is disabled, the AI stops learning new preferences but existing memories are retained.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"required":true,"content":{"application/json":{"schema":{"type":"object","properties":{"memoryEnabled":{"type":"boolean","description":"Whether memory should be enabled for the organization"}},"required":["memoryEnabled"]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Successfully updated memory settings","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"const":true},"settings":{"type":"object","properties":{"memoryEnabled":{"type":"boolean"}}}},"required":["ok","settings"]}}}},"401":{"description":"Unauthorized","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"403":{"description":"Forbidden - Admin permissions required","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

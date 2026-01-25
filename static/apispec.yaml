@@ -29178,6 +29178,325 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
+  /v1/ai/memory:
+    get:
+      summary: List user memory records
+      tags:
+        - Memory
+      description: This route allows you to fetch all memory records associated with your user account. Memory records contain learned preferences that Port AI uses to personalize responses.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Successfully retrieved memory records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    const: true
+                  memories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the memory record
+                        content:
+                          type: string
+                          description: The content of the memory
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: When the memory was created
+                required:
+                  - ok
+                  - memories
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    delete:
+      summary: Delete user memory records
+      tags:
+        - Memory
+      description: "This route allows you to delete your own memory records. You can either delete all memories at once or specify individual record IDs to delete.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. Deleted records might still appear in list requests briefly. If deletion fails for some records, the response will indicate which deletions failed."
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - properties:
+                    deleteAll:
+                      type: boolean
+                      const: true
+                      description: Set to true to delete all memory records
+                  required:
+                    - deleteAll
+                - properties:
+                    recordIds:
+                      type: array
+                      items:
+                        type: string
+                      description: Array of memory record IDs to delete
+                  required:
+                    - recordIds
+      responses:
+        "200":
+          description: Successfully initiated deletion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    const: true
+                required:
+                  - ok
+        "400":
+          description: Invalid request - must provide either deleteAll or recordIds
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/memory/users:
+    delete:
+      summary: Delete users memory records
+      tags:
+        - Memory
+      description: "This route allows organization administrators to delete memory records for specific users.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. If deletion fails for some users, the response will indicate which deletions failed."
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of user IDs whose memories should be deleted
+              required:
+                - userIds
+      responses:
+        "200":
+          description: Successfully initiated deletion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    const: true
+                required:
+                  - ok
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "403":
+          description: Forbidden - Admin permissions required
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/memory/settings:
+    get:
+      summary: Get memory settings
+      tags:
+        - Memory
+      description: This route allows organization administrators to retrieve the current memory settings for their organization.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Successfully retrieved memory settings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    const: true
+                  settings:
+                    type: object
+                    properties:
+                      memoryEnabled:
+                        type: boolean
+                        description: Whether memory is enabled for the organization
+                required:
+                  - ok
+                  - settings
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "403":
+          description: Forbidden - Admin permissions required
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    put:
+      summary: Update memory settings
+      tags:
+        - Memory
+      description: This route allows organization administrators to update memory settings for their organization. When memory is disabled, the AI stops learning new preferences but existing memories are retained.
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                memoryEnabled:
+                  type: boolean
+                  description: Whether memory should be enabled for the organization
+              required:
+                - memoryEnabled
+      responses:
+        "200":
+          description: Successfully updated memory settings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    const: true
+                  settings:
+                    type: object
+                    properties:
+                      memoryEnabled:
+                        type: boolean
+                required:
+                  - ok
+                  - settings
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "403":
+          description: Forbidden - Admin permissions required
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
   /v1/audit-log:
     get:
       summary: Get audit logs

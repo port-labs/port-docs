@@ -90,6 +90,16 @@ This provides fine-grained control over what actions Port AI can perform - for e
 
 For detailed information about tool selection patterns, API usage examples, and best practices, see [Tool Selection in API Interaction](/ai-interfaces/port-ai/api-interaction#tool-selection).
 
+## Memory
+
+Memory allows Port AI to learn and remember your preferences across conversations. Over time, the AI adapts to your working style - remembering things like your preferred output formats, coding styles, and common workflows.
+
+In each conversation, Port AI selects the most relevant preferences based on your current input, providing more personalized responses without requiring you to repeat yourself.
+
+Memory is enabled by default and can be managed via API. Organization administrators can disable memory for their entire organization if needed.
+
+**[Learn more about Memory →](/ai-interfaces/port-ai/memory)**
+
 ## Available Interfaces
 
 Port AI can be accessed through several interfaces, each designed for different use cases:

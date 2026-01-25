@@ -1,0 +1,64 @@
+---
+id: get-memory-settings
+title: "Get memory settings"
+description: "This route allows organization administrators to retrieve the current memory settings for their organization."
+sidebar_label: "Get memory settings"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVLFu20AM/ZUD56tlt520ZUiDoigQIAk6GB7OEm1dIt0pJOVWEfTvBSXZsR23RZcCXWTJxyMf33tkB+K2DOkSvmIVqYWVhRw5I1+LjwFSuC88G4qNoHFlGb+zibR1wb84DTAur3zwLOQkEhuJhlDI4w6NFGiyhgiDmGrIbhhFfNiy2UTSc08n2WZggTFryEsL6bKDNTpCgnS56lcWCLmOgZEh7eD9fK4/p2DvmixD5k1Tlu0BSH5eHSxkMQgG0QyurkufDfWTR9Y0HXBWYOX0TdoaIYW4fsRMwEJNsUYSP4KIT/rMYmCBVKjBXhuYqvzx9gjrOrh1iflR+DrGEl2Acym+FSgF0r4dzwbHu3s6T8iEvu97Je258aT5lwr3CN9qDPg4X7wl8iG4RopI/gXzv6HrN/RsXMnKDxJFOuqWhXzYQm+hQma3xQtnl/oY86wsuDz3CseVt0fVx3JThx/edvgp0trnOQbzzlypiU2NVHlmHwObQ7X/u/chsRQxhxS2ODjQSQEpJLtF4nwyOik5GgxG2iHxMH0NlZBCIVJzmiSu9rM6ksx8hN5eOm34NWD1Osl3ytBIyn6eD0262n/BFiwEV+n31eS60cEWvEpVoMuRBiZ82MThupdS428jibm6/QwWFPYo7WI2V0rryFK5QaQp+w2+2UTnQ9a96v3PV9/EieAPSerS+aBdDDR3k25L2C3AgvNgp+1xMtAWiqh2W0LXrR3jA5V9r38/N0i6UVcWdo68Lo1hqdo9tyr3E7aqQJZhrU7ZubIZJTozvWp7cNXN9b0CahTdsapPg6rTi2bfH4X2KPe53CMEfarDLl7putEzfX+IH49+eWNqcR+ttOrq+wnjCnJL
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get memory settings"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/ai/memory/settings"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows organization administrators to retrieve the current memory settings for their organization.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Successfully retrieved memory settings","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"const":true},"settings":{"type":"object","properties":{"memoryEnabled":{"type":"boolean","description":"Whether memory is enabled for the organization"}}}},"required":["ok","settings"]}}}},"401":{"description":"Unauthorized","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"403":{"description":"Forbidden - Admin permissions required","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
