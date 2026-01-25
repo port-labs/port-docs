@@ -831,11 +831,11 @@ This allows you to:
 
 When creating custom skills, follow these guidelines for best results:
 
-### Keep instructions concise
+<h3>Keep instructions concise</h3>
 
 Skills are loaded into the AI's context, so keep instructions under 5000 tokens (approximately 500 lines). Move detailed reference content to the `references` array instead of putting everything in the main instructions.
 
-### Write clear trigger descriptions
+<h3>Write clear trigger descriptions</h3>
 
 The `description` field determines when Port AI loads the skill. Write descriptions that clearly indicate:
 - What task the skill handles.
@@ -848,13 +848,13 @@ The `description` field determines when Port AI loads the skill. Write descripti
 **Poor example:**
 > "Helps with integrations."
 
-### Structure instructions effectively
+<h3>Structure instructions effectively</h3>
 
 Organize instructions with clear structure. Include:
 - Step-by-step instructions for completing the task.
 - Examples of inputs and outputs.
 - Common edge cases and how to handle them.
 
-### Use resources for detailed content
+<h3>Use resources for detailed content</h3>
 
 Put detailed documentation, error catalogs, or templates in the `references` and `assets` arrays. The AI can load these on demand when needed, keeping the main instructions focused.
