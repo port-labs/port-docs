@@ -132,7 +132,7 @@ The integration supports several authentication types:
 - **Bearer token**: Use `authType: "bearer_token"` with an API token
 - **API key**: Use `authType: "api_key"` with an API key and optional custom header name
 - **Basic auth**: Use `authType: "basic_auth"` with username and password
-- **Custom authentication**: Use `authType: "custom"` for OAuth2, JWT, and other dynamic token-based flows. See [custom authentication](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/custom-authentication) for details.
+<!-- - **Custom authentication**: Use `authType: "custom"` for OAuth2, JWT, and other dynamic token-based flows. See [custom authentication](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/custom-authentication) for details. -->
 - **None**: Use `authType: "none"` for public APIs without authentication
 
 ## Ready to build?
