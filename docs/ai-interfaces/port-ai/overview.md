@@ -90,6 +90,14 @@ This provides fine-grained control over what actions Port AI can perform - for e
 
 For detailed information about tool selection patterns, API usage examples, and best practices, see [Tool Selection in API Interaction](/ai-interfaces/port-ai/api-interaction#tool-selection).
 
+## Skills
+
+Skills are domain-specific guidance packages that help Port AI handle specialized tasks more effectively. When Port AI encounters a task that matches a skill's description, it loads the skill's step-by-step instructions to ensure consistent, thorough handling.
+
+Port includes built-in skills for common workflows (such as troubleshooting integrations), and you can create custom skills tailored to your organization's specific processes.
+
+**[Learn more about Skills →](/ai-interfaces/port-mcp-server/skills)**
+
 ## Memory
 
 Memory allows Port AI to learn and remember your preferences across conversations. Over time, the AI adapts to your working style - remembering things like your preferred output formats, coding styles, and common workflows.
