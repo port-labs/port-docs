@@ -208,6 +208,126 @@ This condition returns an array of user emails who are on the same team as the e
 
 </Tabs>
 
+### Available context variables
+
+When writing JQ conditions, you have access to the action's [trigger data](/actions-and-automations/create-self-service-experiences/setup-the-backend/#trigger-data) - the same context available when defining backend payloads.
+
+**Commonly used in conditions:**
+
+| Variable | Description |
+|----------|-------------|
+| `.trigger.user.email` | Email of the user who triggered the action |
+| `.inputs.<field_name>` | Values provided by the user for action inputs |
+| `.entity` | The entity being acted on (DAY-2/DELETE operations) |
+| `.results.<query_name>.entities` | Array of entities returned by your queries |
+
+:::info Query results
+Access query results using `.results.<query_name>.entities`. Each entity contains `.identifier`, `.title`, `.properties.*`, and `.relations.*`.
+:::
+
+## Troubleshooting
+
+Dynamic permissions can be challenging to debug because there's limited visibility into what's happening at runtime. Here are strategies to diagnose common issues.
+
+### Common issues
+
+<details>
+<summary><b>Policy not working at all (click to expand)</b></summary>
+
+**Check blueprint permissions first.** Dynamic permissions are evaluated *after* blueprint permissions. If the user doesn't have the required blueprint permissions, the policy won't even be evaluated.
+
+To verify:
+1. Temporarily remove the `policy` object from the permissions JSON.
+2. Test if the user can execute the action with just `roles`/`users`/`teams`.
+3. If they still can't, the issue is with blueprint permissions, not your policy.
+
+</details>
+
+<details>
+<summary><b>No approvers appear for approval policy (click to expand)</b></summary>
+
+This usually means your condition is returning user **IDs** instead of **email addresses**. Approve conditions must return an array of email addresses.
+
+Common culprits:
+- Using `.createdBy` or `.updatedBy` (these return user IDs, not emails)
+- Using `.identifier` on a user entity when the identifier is an ID rather than an email
+
+**Fix:** If your user entities use email as the identifier, use `.identifier`. If not, you need to access the email from a property, e.g., `.properties.email`.
+
+</details>
+
+<details>
+<summary><b>Query returning no results (click to expand)</b></summary>
+
+Your query rules might be too restrictive or referencing non-existent data.
+
+**Test your query using the Search API:**
+
+```bash
+curl -X POST "https://api.getport.io/v1/entities/search" \
+  -H "Authorization: Bearer <YOUR_ACCESS_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "combinator": "and",
+    "rules": [
+      {
+        "property": "$blueprint",
+        "operator": "=",
+        "value": "your_blueprint"
+      }
+    ]
+  }'
+```
+
+This lets you verify what entities your query returns before using it in a policy.
+
+</details>
+
+<details>
+<summary><b>JQ condition syntax errors (click to expand)</b></summary>
+
+JQ syntax errors cause conditions to fail silently. Test your JQ expressions locally before adding them to Port.
+
+**Test JQ locally:**
+
+1. Create a file with sample context data (e.g., `test-data.json`)
+2. Run your expression: `jq '<your_expression>' test-data.json`
+
+**Common JQ mistakes:**
+- Missing quotes around strings
+- Using `=` instead of `==` for comparison
+- Forgetting to handle empty arrays (use `// []` for defaults)
+
+</details>
+
+### Testing queries with the Search API
+
+You can test your query rules using Port's [search API](/api-reference/search-entities) before adding them to a policy. This helps verify that your rules return the expected entities.
+
+The query structure in dynamic permissions is identical to the search API request body:
+
+```json showLineNumebrs
+// In your policy:
+"queries": {
+  "my_query": {
+    "rules": [...],
+    "combinator": "and"
+  }
+}
+
+// Equivalent Search API request body:
+{
+  "rules": [...],
+  "combinator": "and"
+}
+```
+
+:::tip Template variables
+When testing, remember that template variables like `{{ .inputs.name }}` won't work in the API - you will need to replace them with actual values.
+:::
+
+<!-- TODO: ask Amichai if this is accurate and is it a good approach -->
+
 ## Limitations
 
 - Each query can return up to **1000 entities**. Make your queries as precise as possible to stay within this limit.
