@@ -4,9 +4,6 @@ title: Triggers
 sidebar_label: "Triggers"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Triggers
 
 <h2>Triggering a workflow</h2>

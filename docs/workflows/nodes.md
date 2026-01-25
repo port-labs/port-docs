@@ -4,9 +4,6 @@ title: Workflow nodes
 sidebar_label: "Nodes"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Workflow nodes
 
 In Port workflows, a **node** is a single step in your workflow’s execution path.

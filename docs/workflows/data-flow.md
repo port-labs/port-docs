@@ -4,9 +4,6 @@ title: Data flow
 sidebar_label: "Data flow"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Data flow
 
 Workflows are **data-driven**: each node can produce an output, and later nodes can reference that output at runtime.
@@ -79,9 +76,5 @@ Port secrets are referenced using the same template syntax used elsewhere in Por
     "Authorization": "Bearer {{ .secrets.MY_SECRET_NAME }}"
   }
 }`}</CodeBlock>
-
-<Admonition type="info" title="Port secrets reference">
-For background and secret creation steps, see [port secrets](/sso-rbac/port-secrets/port-secrets).
-</Admonition>
 
 

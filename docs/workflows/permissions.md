@@ -4,9 +4,6 @@ title: Permissions and access control
 sidebar_label: "Permissions"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Permissions and access control
 
 Workflows support access control in two main areas:

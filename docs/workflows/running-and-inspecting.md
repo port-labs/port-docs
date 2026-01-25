@@ -4,9 +4,6 @@ title: Run and inspect workflows
 sidebar_label: "Run and inspect"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Run and inspect workflows
 
 Every execution of a workflow creates a **workflow run**. A run contains node runs (one per executed node), their outputs, and logs.

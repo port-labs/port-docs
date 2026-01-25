@@ -4,9 +4,6 @@ title: Define workflows
 sidebar_label: "Define"
 ---
 
-import Admonition from "@theme/Admonition"
-import CodeBlock from "@theme/CodeBlock"
-
 # Define workflows
 
 <h2>Defining a workflow (JSON-first)</h2>
