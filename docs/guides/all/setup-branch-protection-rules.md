@@ -3,11 +3,17 @@ displayed_sidebar: null
 description: Learn how to drive DevOps and DevSecOps governance in your organization by enforcing branch protection rules using scorecards 
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
+
 # Enforce branch protection rules with scorecards
 
 Branch protection rules are powerful ways to ensure critical branches in your repositories like `main` or `release` follow security and governance best practices. By tracking these rules with Port's scorecards, platform and security teams can monitor organizational compliance, enforce DevSecOps policies, and ensure consistent engineering standards across all teams.
 
 This guide demonstrates how to track GitHub branch protection settings using Port's scorecards, providing visibility and automation around repository health and security posture.
+
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
 ## Common use cases
 
@@ -16,7 +22,18 @@ This guide demonstrates how to track GitHub branch protection settings using Por
 
 ## Prerequisites
 
+<Tabs groupId="github-branch-protection" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+- Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+
+</TabItem>
+</Tabs>
 
 
 ## Set up data model
@@ -142,6 +159,9 @@ Follow the steps below to create the branch blueprint:
 
 <h3> Update GitHub integration configuration </h3>
 
+<Tabs groupId="github-branch-protection" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 1. Go to your [Data Source](https://app.getport.io/settings/data-sources) page.
 2. Select the GitHub integration.
 3. Add the following YAML block into the `Mapping` editor to ingest the branch protection rules data:
@@ -186,6 +206,60 @@ Follow the steps below to create the branch blueprint:
     </details>
 
 4. Click `Save & Resync` to apply the mapping.
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+1. Go to your [Data Source](https://app.getport.io/settings/data-sources) page.
+2. Select the GitHub integration.
+3. Add the following YAML block into the `Mapping` editor to ingest the branch protection rules data:
+
+    <details>
+    <summary><b>GitHub Branch Protection Rules Configuration (Click to expand)</b></summary>
+
+    :::note supported branch protection rules
+    Currently only default branch protection rules are supported
+    :::
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: branch
+        selector:
+          query: "true"
+          defaultBranchOnly: true
+          protectionRules: true
+        port:
+          entity:
+            mappings:
+              identifier: .__repository + "_" + .name
+              title: .__repository + " " + .name
+              blueprint: '"branch_protection"'
+              properties:
+                is_protected: .protected
+                url: ._links.html
+                require_approval_count: >-
+                  .__protection_rules.required_pull_request_reviews.required_approving_review_count
+                require_code_owner_review: >-
+                  .__protection_rules.required_pull_request_reviews.require_code_owner_reviews
+                allow_force_pushes: .__protection_rules.allow_force_pushes.enabled
+                allow_deletions: .__protection_rules.allow_deletions.enabled
+                require_signed_commits: .__protection_rules.required_signatures.enabled
+                require_linear_history: .__protection_rules.required_linear_history.enabled
+                restrict_creations: .__protection_rules.block_creations.enabled
+                restrict_updates: .__protection_rules.restrict_updates.enabled
+                require_conversation_resolution: >-
+                  .__protection_rules.required_conversation_resolution.enabled
+                lock_branch: .__protection_rules.lock_branch.enabled
+                block_force_pushes: .__protection_rules.allow_force_pushes.enabled == false
+              relations:
+                repository: .__repository
+    ```
+    </details>
+
+4. Click `Save & Resync` to apply the mapping.
+
+</TabItem>
+</Tabs>
 
 ## Set up scorecard
 
