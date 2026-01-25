@@ -52,7 +52,7 @@ When a node is about to run, its config is evaluated using the current `workflow
 Workflows evaluate data in two phases:
 
 - **Node config evaluation (before execution)**: templates inside `node.config` are evaluated against the current `workflowRun.variables`.
-- **Node variables evaluation (after execution)**: templates inside `node.variables` are evaluated against the node’s raw execution output, then stored into `workflowRun.variables.outputs[<nodeIdentifier>]`.
+- **Node variables evaluation (after execution)**: templates inside `node.variables` are evaluated against the node's raw execution output, then stored into `workflowRun.variables.outputs[<nodeIdentifier>]`.
 
 This means values are always computed **at runtime**, using the data available in the run at that moment.
 

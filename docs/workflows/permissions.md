@@ -8,7 +8,7 @@ sidebar_label: "Permissions"
 
 Workflows support access control in two main areas:
 
-- **Who can execute a workflow’s self-serve trigger**.
+- **Who can execute a workflow's self-serve trigger**.
 - **Who can view workflow runs**.
 
 <h2>Execution permissions for self-serve triggers</h2>
@@ -71,7 +71,7 @@ If you already use policy-based permissions for actions, you can reuse the same 
 
 <h2>Run visibility</h2>
 
-Run visibility is controlled by the workflow’s `allowAnyoneToViewRuns` field and the run creator.
+Run visibility is controlled by the workflow's `allowAnyoneToViewRuns` field and the run creator.
 
 In the workflow-service, a user is allowed to view a workflow run if at least one of the following is true:
 

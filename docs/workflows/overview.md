@@ -9,17 +9,17 @@ sidebar_label: "Overview"
 Workflows let you define and run multi-step processes in Port using a JSON definition. A workflow is built from **nodes** connected by **connections**, and every execution creates a **workflow run** you can inspect in Port.
 
 :::warning Closed beta notice
-Workflows are in **closed beta**, which means behavior, limits, and APIs can change without notice.
+Workflows are in **closed beta**, which means behavior, limits, and APIs can change without notice. We might also perform maintenance operations without notice.
 :::
 
-<h2>What this is (and what it isn’t)</h2>
+<h2>What this is (and what it isn't)</h2>
 
 Workflows are best when you want a **single run** to represent a multi-step process with an explicit execution path. Instead of managing several independent runs across systems, you get one timeline of what happened: which node ran, what it produced, what failed, and why the workflow took a certain branch.
 
 Workflows are a good fit for:
 - **Multi-step orchestration** where each step depends on previous outputs.
 - **Branching** (for example, tier 1 services take a stricter path than tier 3 services).
-- **Runnable operational processes** where you want a stable “start point” and a run history your teams can debug.
+- **Operational processes** you want users to run from a consistent start point, with each run fully recorded (nodes, outputs, logs) for debugging.
 
 Workflows are not a replacement for:
 - **Self-service actions**: Use actions when you want a single “unit of work” with a mature execution and audit model (including approvals). See [create actions](https://docs.port.io/actions-and-automations/create-self-service-experiences/).
@@ -29,7 +29,7 @@ Workflows are not a replacement for:
 
 <h3>Workflow</h3>
 
-A **workflow** is a versioned JSON definition that includes:
+A **workflow** is a JSON definition that includes:
 - **Nodes**: The steps in your process.
 - **Connections**: The edges between nodes that define valid paths.
 
@@ -37,7 +37,7 @@ A **workflow** is a versioned JSON definition that includes:
 
 A **node** is a single step in a workflow. In closed beta, nodes can be:
 - **Trigger nodes**: Start the workflow.
-- **Action nodes**: Invoke an external system (webhook, GitHub, GitLab, Kafka, and more).
+- **Action nodes**: Invoke an external system (webhook, GitHub, Kafka, and more).
 - **Condition nodes**: Choose a path based on runtime data.
 
 <h3>Workflow run</h3>
@@ -67,7 +67,7 @@ A **condition** is a runtime expression that decides which connection to follow.
 
 A **connection** links one node to another and defines the possible next step(s).
 
-<h2>What’s included in the closed beta</h2>
+<h2>What's included in the closed beta</h2>
 
 :::warning Closed beta expectations
 During closed beta:

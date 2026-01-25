@@ -16,7 +16,7 @@ A self-serve trigger starts from a `SELF_SERVE_TRIGGER` node. You typically use 
 - You want a user to explicitly start the workflow.
 - You want user inputs validated against a schema before the run starts.
 
-If your workflow includes a `SELF_SERVE_TRIGGER` node, users can trigger it from Port’s UI.
+If your workflow includes a `SELF_SERVE_TRIGGER` node, users can trigger it from Port's UI.
 
 If you want a dedicated self-service experience with additional UI capabilities, you can also trigger a workflow run through a self-service action that calls the workflows API.
 

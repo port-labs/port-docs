@@ -6,7 +6,7 @@ sidebar_label: "Nodes"
 
 # Workflow nodes
 
-In Port workflows, a **node** is a single step in your workflow’s execution path.
+In Port workflows, a **node** is a single step in your workflow's execution path.
 
 You define nodes under `nodes[]`, then connect them using `connections[]`. At runtime, each executed node writes its output into the workflow run variables (see [data flow](/workflows/data-flow)).
 
@@ -25,11 +25,11 @@ Use a `WEBHOOK` node to call an HTTP endpoint.
 
 <h3>Webhook (agent mode)</h3>
 
-If you set `agent: true` on a `WEBHOOK` node, the workflow engine sends the request details to your organization’s dedicated Kafka topic (`<ORG_ID>.runs`). Your agent is expected to perform the request and then update the node run in Port.
+If you set `agent: true` on a `WEBHOOK` node, the workflow engine sends the request details to your organization's dedicated Kafka topic (`<ORG_ID>.runs`). Your agent is expected to perform the request and then update the node run in Port.
 
 <h3>Kafka</h3>
 
-Use a `KAFKA` node to publish a payload to your organization’s dedicated Kafka topic (`<ORG_ID>.runs`).
+Use a `KAFKA` node to publish a payload to your organization's dedicated Kafka topic (`<ORG_ID>.runs`).
 
 <h3>Upsert entity</h3>
 
