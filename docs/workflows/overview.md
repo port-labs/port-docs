@@ -86,4 +86,5 @@ If you want to go deeper, start here:
 - Understand how outputs flow between nodes in [data flow](/workflows/data-flow).
 - Configure who can execute and who can view runs in [permissions and access control](/workflows/permissions).
 - Learn how to debug and complete asynchronous nodes in [run and inspect workflows](/workflows/running-and-inspecting).
+- Use organization secrets safely in [use secrets in workflows](/workflows/secrets).
 
