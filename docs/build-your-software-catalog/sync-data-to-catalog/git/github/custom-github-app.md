@@ -205,7 +205,7 @@ GitHub only allows installing a given GitHub App once per GitHub organization. T
 
 - In your Production instance install the [Port Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) or [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 - In your other (Staging or Dev) instance install [GitHub Ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) with a custom GitHub App.
-- Once completed, you should see the same GitHub organization listed in the Github integration for each Port organization.
+- Once completed you should see the same Github organization listed in the GitHub integration for each Port organization.
 
 ## Troubleshooting
 
