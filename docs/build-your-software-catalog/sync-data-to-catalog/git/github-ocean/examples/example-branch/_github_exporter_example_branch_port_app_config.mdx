@@ -53,4 +53,18 @@ Use `branchNames` to ingest only specific branches. When you set it, the integra
 
 </TabItem>
 
+<TabItem label="defaultBranchOnly" value="default-branch-only">
+
+Use `defaultBranchOnly` to ingest only the repository's default branch. When you set it, it takes precedence and `branchNames` will be ignored.
+
+```yaml showLineNumbers
+- kind: branch
+  selector:
+    query: "true"
+    # highlight-next-line
+    defaultBranchOnly: true
+```
+
+</TabItem>
+
 </Tabs>
