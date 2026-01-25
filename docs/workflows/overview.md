@@ -4,15 +4,13 @@ title: Workflows
 sidebar_label: "Overview"
 ---
 
-import Admonition from "@theme/Admonition"
-
 # Workflows (closed beta)
 
 Workflows let you define and run multi-step processes in Port using a JSON definition. A workflow is built from **nodes** connected by **connections**, and every execution creates a **workflow run** you can inspect in Port.
 
-<Admonition type="warning" title="Closed beta notice">
+:::warning Closed beta notice
 Workflows are in **closed beta**, which means behavior, limits, and APIs can change without notice.
-</Admonition>
+:::
 
 <h2>What this is (and what it isn’t)</h2>
 
@@ -71,13 +69,13 @@ A **connection** links one node to another and defines the possible next step(s)
 
 <h2>What’s included in the closed beta</h2>
 
-<Admonition type="warning" title="Closed beta expectations">
+:::warning Closed beta expectations
 During closed beta:
 - **No SLA is provided** for workflows.
 - **Breaking changes can happen** without notice.
 - **We may delete workflows, versions, or runs** as part of beta iteration, incident response, or internal migrations.
 - **Support is best-effort** and scoped to your beta agreement.
-</Admonition>
+:::
 
 <h2>Next steps</h2>
 

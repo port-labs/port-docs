@@ -25,7 +25,8 @@ When a node is about to run, its config is evaluated using the current `workflow
 - Kafka payloads.
 - Upsert mappings.
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "identifier": "send_webhook",
   "title": "Send webhook",
   "config": {
@@ -43,7 +44,8 @@ When a node is about to run, its config is evaluated using the current `workflow
   "variables": {
     "request_id": "{{ .response.data.requestId }}"
   }
-}`}</CodeBlock>
+}
+```
 
 <h2>Runtime evaluation</h2>
 
@@ -71,10 +73,12 @@ Common examples include:
 
 Port secrets are referenced using the same template syntax used elsewhere in Port:
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "headers": {
     "Authorization": "Bearer {{ .secrets.MY_SECRET_NAME }}"
   }
-}`}</CodeBlock>
+}
+```
 
 

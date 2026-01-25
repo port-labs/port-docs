@@ -44,9 +44,9 @@ In practice, this means:
 - Your workflow run may stay **in progress** until the external system reports completion.
 - You should validate your integration connectivity (and permissions) before sharing the workflow with end users.
 
-<Admonition type="caution" title="Validate execution before publishing">
+:::caution Validate execution before publishing
 If your workflow includes asynchronous nodes (for example agent-mode webhooks or third-party actions), make sure you have a corresponding worker/integration that updates node runs. Otherwise, runs can remain stuck in `IN_PROGRESS`.
-</Admonition>
+:::
 
 <h2>Condition nodes</h2>
 
@@ -58,7 +58,8 @@ A `CONDITION` node selects the next connection based on runtime data.
 
 Condition expressions are evaluated against the workflow run variables (see [data flow](/workflows/data-flow)).
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "identifier": "decide_path",
   "title": "Choose a path",
   "config": {
@@ -72,6 +73,7 @@ Condition expressions are evaluated against the workflow run variables (see [dat
     ],
     "defaultConnectionIdentifier": "default_path"
   }
-}`}</CodeBlock>
+}
+```
 
 

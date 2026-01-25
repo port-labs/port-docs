@@ -15,18 +15,20 @@ You can trigger a run in two common ways:
 - **From Port UI** using a self-serve trigger node.
 - **From the API** by calling the workflow runs endpoint.
 
-<CodeBlock language="bash" showLineNumbers>{`curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_IDENTIFIER>/runs' \\
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' \\
-  --header 'Content-Type: application/json' \\
+```bash showLineNumbers
+curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_IDENTIFIER>/runs' \
+  --header 'Authorization: Bearer <ACCESS_TOKEN>' \
+  --header 'Content-Type: application/json' \
   --data-raw '{
     "inputs": {
       "message": "hello from a workflow run"
     }
-  }'`}</CodeBlock>
+  }'
+```
 
-<Admonition type="info" title="API regions">
+:::info API regions
 If you use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
-</Admonition>
+:::
 
 <h2>List runs</h2>
 

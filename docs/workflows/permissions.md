@@ -23,9 +23,9 @@ Execution permissions are evaluated on the `SELF_SERVE_TRIGGER` node using a **p
 
 Permissions can only be set on `SELF_SERVE_TRIGGER` nodes.
 
-<Admonition type="info" title="Self-serve triggers only">
+:::info Self-serve triggers only
 In the current implementation, workflow permissions can only be configured on the self-serve trigger node, not on every node type.
-</Admonition>
+:::
 
 <h3>Permissions API</h3>
 
@@ -40,7 +40,8 @@ You can manage trigger permissions using these endpoints:
 
 The permission query supports policy-based evaluation (similar to self-service action RBAC). This is useful when your “who can execute” logic depends on catalog data and user inputs.
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "policy": {
     "queries": {
       "service": {
@@ -63,7 +64,8 @@ The permission query supports policy-based evaluation (similar to self-service a
       ".results.service.entities | length == 1"
     ]
   }
-}`}</CodeBlock>
+}
+```
 
 If you already use policy-based permissions for actions, you can reuse the same mental model here. For more details about policy structure, see [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions).
 
@@ -78,8 +80,8 @@ In the workflow-service, a user is allowed to view a workflow run if at least on
 - `allowAnyoneToViewRuns` is set to `true`.
 - The requester is an **Admin** in Port.
 
-<Admonition type="tip" title="Make runs visible for debugging">
+:::tip Make runs visible for debugging
 If you want more users to be able to help debug runs, set `allowAnyoneToViewRuns` to `true` in the workflow definition.
-</Admonition>
+:::
 
 

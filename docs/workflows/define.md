@@ -15,15 +15,12 @@ Workflows are defined as JSON. At a minimum, you define:
 
 A workflow definition is identified by its `identifier`. When you update a workflow, Port stores a new version and future runs use the latest version.
 
-<Admonition type="info" title="Video walkthrough">
-During closed beta, your Port contact can share a short walkthrough video for defining and running workflows.
-</Admonition>
-
 <h2>Minimal example</h2>
 
 The workflow below starts from a self-serve trigger, collects a `message`, sends a webhook, and stores a `request_id` that can be referenced later.
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "identifier": "notify_on_demand",
   "title": "Notify on demand",
   "description": "Send a notification based on user input",
@@ -73,11 +70,12 @@ The workflow below starts from a self-serve trigger, collects a `message`, sends
       "targetIdentifier": "send_webhook"
     }
   ]
-}`}</CodeBlock>
+}
+```
 
-<Admonition type="caution" title="Trigger node wiring">
+:::caution Trigger node wiring
 Trigger nodes cannot have incoming connections. A trigger is always a start point.
-</Admonition>
+:::
 
 <h2>Related topics</h2>
 

@@ -20,18 +20,20 @@ If your workflow includes a `SELF_SERVE_TRIGGER` node, users can trigger it from
 
 If you want a dedicated self-service experience with additional UI capabilities, you can also trigger a workflow run through a self-service action that calls the workflows API.
 
-<CodeBlock language="bash" showLineNumbers>{`curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_IDENTIFIER>/runs' \\
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' \\
-  --header 'Content-Type: application/json' \\
+```bash showLineNumbers
+curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_IDENTIFIER>/runs' \
+  --header 'Authorization: Bearer <ACCESS_TOKEN>' \
+  --header 'Content-Type: application/json' \
   --data-raw '{
     "inputs": {
       "message": "hello from a self-service action"
     }
-  }'`}</CodeBlock>
+  }'
+```
 
-<Admonition type="info" title="API regions">
+:::info API regions
 If you use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
-</Admonition>
+:::
 
 <h3>Event triggers</h3>
 
@@ -50,7 +52,8 @@ To use `TIMER_EXPIRED`, set your trigger to include both the blueprint identifie
 
 Event triggers can include a JQ condition. This is useful when you only want to trigger on a subset of events, for example when a property is set to a specific value.
 
-<CodeBlock language="json" showLineNumbers>{`{
+```json showLineNumbers
+{
   "identifier": "event_trigger",
   "config": {
     "type": "EVENT_TRIGGER",
@@ -61,12 +64,13 @@ Event triggers can include a JQ condition. This is useful when you only want to 
     "condition": {
       "type": "JQ",
       "expressions": [
-        ".diff.after.properties.tier == \\"tier_1\\""
+        ".diff.after.properties.tier == \"tier_1\""
       ],
       "combinator": "and"
     }
   }
-}`}</CodeBlock>
+}
+```
 
 <h2>Using trigger outputs in later nodes</h2>
 
