@@ -434,6 +434,32 @@ Port service accounts are treated like any other users and extend the same RBAC 
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
 Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
 
+
+## View as a different user
+
+You can define dynamic filters or permission rules based on the currently logged-in user. To test your dynamic configurations, Port allows you to view your portal from a different user's perspective within your organization. 
+
+In a "view as" session, you can see what pages the user has access to, what entities they can create or delete, what actions they can execute or approve, and more.
+
+To use this feature, click the **View as** button in the options menu in the top navbar, or access it directly from the actions menu of a user entity.
+
+### Limitations
+
+1. This feature is available only for admin users.
+2. You cannot view as disabled users.
+
+:::info Session lifecycle
+When you are viewing Port as a different user, this session is bound to your current browser tab. This is useful for maintaining two different tabs - one as your own user where you can modify your environment configuration (dynamic filters, permissions, etc.) and one as a member user to see the impact of those changes.
+:::
+
+### Audit logs
+
+:::warning Data modification
+When you are in a "view as" session, you can still perform updates or deletes on your data.
+:::
+
+Any update or delete operation you perform when viewing as a different user will be recorded in the audit log under your own user, with an indication that you performed this operation while viewing the portal as a different user.
+
 ## Support user permissions
 
 <SupportUserPermissions/>
