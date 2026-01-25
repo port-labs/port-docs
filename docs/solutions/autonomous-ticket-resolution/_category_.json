@@ -2,7 +2,7 @@
     "label": "Autonomous ticket resolution",
     "collapsible": true,
     "collapsed": true,
-    "position": 1,
+    "position": 2,
     "customProps": {
       "description": "Autonomous ticket resolution"
     }
