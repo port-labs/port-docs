@@ -114,7 +114,7 @@ This table summarizes the available parameters for the installation.
 | `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.config.baseUrl`             | The root URL of your API (e.g., `https://api.yourcompany.com`)                                                                                                                                                                                                                                 | https://api.yourcompany.com       | ✅        |
-| `integration.config.authType`            | Authentication type: `bearer_token`, `api_key`, `basic_auth`, or `none`                                                                                                                                                                                                                       | bearer_token                      | ✅        |
+| `integration.config.authType`            | Authentication type: `bearer_token`, `api_key`, `basic_auth`, `custom`, or `none`. | bearer_token                      | ✅        |
 | `integration.secrets.apiToken`           | Bearer token for authentication (required when `authType` is `bearer_token`)                                                                                                                                                                                                                  |                                  | ❌        |
 | `integration.config.paginationType`      | Pagination type: `offset`, `page`, `cursor`, or `none`                                                                                                                                                                                                                                        | page                              | ❌        |
 | `integration.config.pageSize`            | Number of items per page (for offset/page pagination)                                                                                                                                                                                                                                        | 100                               | ❌        |
@@ -124,6 +124,16 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration) | 60                                | ❌        |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping.        | true                              | ❌        |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | true                              | ❌        |
+
+## Authentication
+
+The integration supports several authentication types:
+
+- **Bearer token**: Use `authType: "bearer_token"` with an API token
+- **API key**: Use `authType: "api_key"` with an API key and optional custom header name
+- **Basic auth**: Use `authType: "basic_auth"` with username and password
+<!-- - **Custom authentication**: Use `authType: "custom"` for OAuth2, JWT, and other dynamic token-based flows. See [custom authentication](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/custom-authentication) for details. -->
+- **None**: Use `authType: "none"` for public APIs without authentication
 
 ## Ready to build?
 
