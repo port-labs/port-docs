@@ -35,7 +35,7 @@ Port's action model is designed to be flexible and can be used to cover a wide r
 - **Rollback** a running service.
 - **Change** a deployment's replica count.
 
-In our [live demo](https://showcase.port.io/self-serve), you can see examples for self-service experiences. 🎬
+In our [live demo](https://demo.port.io/self-serve), you can see examples for self-service experiences. 🎬
 
 ## How does it work?
 
