@@ -10,6 +10,10 @@ Workflows let you define and run multi-step processes in Port using a JSON defin
 
 :::warning Closed beta notice
 Workflows are in **closed beta**, which means behavior, limits, and APIs can change without notice. We might also perform maintenance operations without notice.
+
+**To join the waitlist**: Contact [Port support](https://www.getport.io/contact-us) to request access to the workflows closed beta.
+
+**Feedback welcome**: If you're already using workflows, we'd love to hear from you! Share your feedback, questions, or suggestions with the Port team.
 :::
 
 ## What this is (and what it isn't)
