@@ -1664,7 +1664,14 @@ export const availableGuides = [
         tags: ["Security", "Claude Code", "GitHub"],
         logos: ["Claude Code", "GitHub"],
         link: "/guides/all/ingest-claude-code-security-reviews",
-    }
+    },
+    {
+        title: "Auto-assign bugs to owners with ai",
+        description: "Automatically assign Jira bugs to owning teams and services with Port automations and AI",
+        tags: ["Agentic Work Management", "Jira", "AI", "Automations"],
+        logos: ["Jira", "AI"],
+        link: "/guides/all/auto-assign-bugs-to-owners",
+    },
 ]
 
 // Enhance guides with metadata (isNew property)
