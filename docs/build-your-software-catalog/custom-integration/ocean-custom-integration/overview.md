@@ -29,6 +29,7 @@ How does your API verify requests?
 - **Bearer Token:** OAuth2 tokens, personal access tokens (most modern APIs).
 - **API Key:** Custom header like `X-API-Key` or `Authorization`.
 - **Basic Auth:** Username and password (legacy systems).
+<!-- - **Custom Authentication:** OAuth2, JWT, and other dynamic token-based flows (self-hosted only). See [custom authentication](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/custom-authentication) for details. -->
 - **None:** Public APIs.
 
 **Where to find it:** Check your API's documentation or settings page. Look for sections titled "API Keys," "Access Tokens," or "Authentication."
