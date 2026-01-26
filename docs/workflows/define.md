@@ -65,17 +65,12 @@ The workflow below starts from a self-serve trigger, collects a `message`, sends
   ],
   "connections": [
     {
-      "identifier": "trigger_to_webhook",
       "sourceIdentifier": "trigger",
       "targetIdentifier": "send_webhook"
     }
   ]
 }
 ```
-
-:::caution Trigger node wiring
-Trigger nodes cannot have incoming connections. A trigger is always a start point.
-:::
 
 ## Related topics
 

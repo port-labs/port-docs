@@ -54,7 +54,7 @@ Each workflow run includes the node runs that were executed, including logs that
 
 ## Complete asynchronous nodes
 
-Some node types are designed to be completed by an external system (for example agent-mode webhooks, or third-party actions).
+Some node types are designed to be completed by an external system (for example integration actions or unsynchronized webhooks).
 
 In those cases, the external component should update the node run using:
 

@@ -48,29 +48,52 @@ Supported events include:
 
 To use `TIMER_EXPIRED`, set your trigger to include both the blueprint identifier and the timer property identifier.
 
-### Filter with trigger conditions
+### Filter events with condition nodes
 
-Event triggers can include a JQ condition. This is useful when you only want to trigger on a subset of events, for example when a property is set to a specific value.
+When you want to filter or branch based on trigger data, use a `CONDITION` node after your trigger. This allows you to route the workflow differently based on the event data.
+
+For example, to handle services differently based on their tier:
 
 ```json showLineNumbers
 {
-  "identifier": "event_trigger",
-  "config": {
-    "type": "EVENT_TRIGGER",
-    "event": {
-      "type": "ENTITY_CREATED",
-      "blueprintIdentifier": "service"
+  "identifier": "notify_on_service_change",
+  "title": "Handle service updates",
+  "nodes": [
+    {
+      "identifier": "event_trigger",
+      "config": {
+        "type": "EVENT_TRIGGER",
+        "event": {
+          "type": "ENTITY_UPDATED",
+          "blueprintIdentifier": "service"
+        }
+      }
     },
-    "condition": {
-      "type": "JQ",
-      "expressions": [
-        ".diff.after.properties.tier == \"tier_1\""
-      ],
-      "combinator": "and"
+    {
+      "identifier": "check_tier",
+      "title": "Check service tier",
+      "config": {
+        "type": "CONDITION",
+        "options": [
+          {
+            "identifier": "tier_1_option",
+            "title": "Tier 1 service",
+            "expression": ".outputs.event_trigger.diff.after.properties.tier == \"tier_1\""
+          }
+        ]
+      }
     }
-  }
+  ],
+  "connections": [
+    {
+      "sourceIdentifier": "event_trigger",
+      "targetIdentifier": "check_tier"
+    }
+  ]
 }
 ```
+
+See [condition nodes](/workflows/nodes#condition-nodes) for more details on routing logic.
 
 ## Use trigger outputs in later nodes
 
