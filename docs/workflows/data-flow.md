@@ -14,7 +14,7 @@ During a workflow run, node outputs accumulate under:
 
 - `workflowRun.variables.outputs[<nodeIdentifier>]`.
 
-For example, after a `trigger` node runs, you can reference its data under `workflowRun.variables.outputs.trigger`.
+For example, after a node with identifier `trigger` runs, you can reference its data under `workflowRun.variables.outputs.trigger`.
 
 ## Use outputs in later nodes
 

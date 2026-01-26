@@ -12,7 +12,7 @@ You define nodes under `nodes[]`, then connect them using `connections[]`. At ru
 
 ## Action nodes
 
-Action nodes are nodes whose `config.type` is one of the supported **invocation types** (for example `WEBHOOK`, `KAFKA`, `UPSERT_ENTITY`, `GITHUB`, `GITLAB`, `AZURE_DEVOPS`, or `INTEGRATION_ACTION`).
+Action nodes are nodes whose `config.type` is one of the supported **invocation types** (for example `WEBHOOK`, `KAFKA`, `UPSERT_ENTITY`).
 
 Action nodes can be either **synchronous** (the node completes in the workflow engine) or **asynchronous** (the node is completed by an external worker/integration that updates the node run).
 

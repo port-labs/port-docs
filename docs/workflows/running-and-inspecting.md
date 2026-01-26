@@ -65,13 +65,4 @@ This endpoint is the mechanism used to:
 - Set the node run `result` (`SUCCESS`, `FAILED`, or `CANCELLED`).
 - Attach `output` payloads that can be transformed into stored outputs (see [data flow](/workflows/data-flow)).
 
-### Claim and acknowledge pending node runs
-
-Integration workers can also use a claim/ack flow:
-
-- `POST /v1/org/:org_id/workflows/runs/claim-pending`.
-- `PATCH /v1/org/:org_id/workflows/runs/ack`.
-
-This flow is intended for workers that poll for pending work by `installationId`, process it, and then acknowledge completion.
-
 
