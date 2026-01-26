@@ -360,6 +360,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/promote-scorecards.svg');
 }
 
+.sidebar-menu-workflows > div .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/relation.svg');
+}
+
 .sidebar-menu-pages-and-dashboards > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/pages-and-dashboards.svg');
 }
