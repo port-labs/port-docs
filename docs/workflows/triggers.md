@@ -6,11 +6,11 @@ sidebar_label: "Triggers"
 
 # Triggers
 
-<h2>Triggering a workflow</h2>
+## Trigger a workflow
 
 Workflows can be triggered manually (self-serve) or automatically (events). Both trigger types create a workflow run and store the trigger output under `workflowRun.variables.outputs[<triggerNodeIdentifier>]`.
 
-<h3>Self-serve triggers</h3>
+### Self-serve triggers
 
 A self-serve trigger starts from a `SELF_SERVE_TRIGGER` node. You typically use it when:
 - You want a user to explicitly start the workflow.
@@ -18,7 +18,7 @@ A self-serve trigger starts from a `SELF_SERVE_TRIGGER` node. You typically use 
 
 If your workflow includes a `SELF_SERVE_TRIGGER` node, users can trigger it from Port's UI.
 
-If you want a dedicated self-service experience with additional UI capabilities, you can also trigger a workflow run through a self-service action that calls the workflows API.
+If you want a dedicated self-service experience with additional UI capabilities, you can also trigger a workflow run through a [self-service action](/actions-and-automations/create-self-service-experiences/) that calls the workflows API.
 
 ```bash showLineNumbers
 curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_IDENTIFIER>/runs' \
@@ -35,7 +35,7 @@ curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_ID
 If you use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
 :::
 
-<h3>Event triggers</h3>
+### Event triggers
 
 Event triggers start from an `EVENT_TRIGGER` node. You use them when you want workflows to run automatically based on entity changes.
 
@@ -48,7 +48,7 @@ Supported events include:
 
 To use `TIMER_EXPIRED`, set your trigger to include both the blueprint identifier and the timer property identifier.
 
-<h3>Filtering with trigger conditions</h3>
+### Filter with trigger conditions
 
 Event triggers can include a JQ condition. This is useful when you only want to trigger on a subset of events, for example when a property is set to a specific value.
 
@@ -72,7 +72,7 @@ Event triggers can include a JQ condition. This is useful when you only want to 
 }
 ```
 
-<h2>Using trigger outputs in later nodes</h2>
+## Use trigger outputs in later nodes
 
 Both trigger types store their output under `workflowRun.variables.outputs[<triggerNodeIdentifier>]`.
 

@@ -8,7 +8,7 @@ sidebar_label: "Run and inspect"
 
 Every execution of a workflow creates a **workflow run**. A run contains node runs (one per executed node), their outputs, and logs.
 
-<h2>Trigger a run</h2>
+## Trigger a run
 
 You can trigger a run in two common ways:
 
@@ -30,7 +30,7 @@ curl --location --request POST 'https://api.getport.io/v1/workflows/<WORKFLOW_ID
 If you use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
 :::
 
-<h2>List runs</h2>
+## List runs
 
 To list runs (for example for your runs history UI), call:
 
@@ -38,13 +38,13 @@ To list runs (for example for your runs history UI), call:
 
 Runs that you cannot view are filtered out based on the rules described in [permissions and access control](/workflows/permissions).
 
-<h2>Get a run</h2>
+## Get a run
 
 To retrieve a single run by identifier, call:
 
 - `GET /v1/workflows/runs/:identifier`.
 
-<h2>Inspect node runs and logs</h2>
+## Inspect node runs and logs
 
 Each workflow run includes the node runs that were executed, including logs that help you understand:
 
@@ -52,7 +52,7 @@ Each workflow run includes the node runs that were executed, including logs that
 - What data it produced.
 - What failed (and why).
 
-<h2>Completing asynchronous nodes</h2>
+## Complete asynchronous nodes
 
 Some node types are designed to be completed by an external system (for example agent-mode webhooks, or third-party actions).
 
@@ -65,7 +65,7 @@ This endpoint is the mechanism used to:
 - Set the node run `result` (`SUCCESS`, `FAILED`, or `CANCELLED`).
 - Attach `output` payloads that can be transformed into stored outputs (see [data flow](/workflows/data-flow)).
 
-<h3>Claiming and acknowledging pending node runs</h3>
+### Claim and acknowledge pending node runs
 
 Integration workers can also use a claim/ack flow:
 

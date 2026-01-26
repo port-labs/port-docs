@@ -12,7 +12,7 @@ Workflows let you define and run multi-step processes in Port using a JSON defin
 Workflows are in **closed beta**, which means behavior, limits, and APIs can change without notice. We might also perform maintenance operations without notice.
 :::
 
-<h2>What this is (and what it isn't)</h2>
+## What this is (and what it isn't)
 
 Workflows are best when you want a **single run** to represent a multi-step process with an explicit execution path. Instead of managing several independent runs across systems, you get one timeline of what happened: which node ran, what it produced, what failed, and why the workflow took a certain branch.
 
@@ -25,49 +25,49 @@ Workflows are not a replacement for:
 - **Self-service actions**: Use actions when you want a single “unit of work” with a mature execution and audit model (including approvals). See [create actions](https://docs.port.io/actions-and-automations/create-self-service-experiences/).
 - **Automations**: Use automations when you want event-driven execution that is optimized for “fire-and-forget” patterns and reactive behavior. See [define automations](https://docs.port.io/actions-and-automations/define-automations/).
 
-<h2>Core concepts</h2>
+## Core concepts
 
-<h3>Workflow</h3>
+### Workflow
 
 A **workflow** is a JSON definition that includes:
 - **Nodes**: The steps in your process.
 - **Connections**: The edges between nodes that define valid paths.
 
-<h3>Node</h3>
+### Node
 
 A **node** is a single step in a workflow. In closed beta, nodes can be:
 - **Trigger nodes**: Start the workflow.
 - **Action nodes**: Invoke an external system (webhook, GitHub, Kafka, and more).
 - **Condition nodes**: Choose a path based on runtime data.
 
-<h3>Workflow run</h3>
+### Workflow run
 
 A **workflow run** is a single execution of a workflow. A workflow run contains:
 - **Node runs**: The executions of each node along the selected path.
 - **Variables**: Accumulated outputs from completed nodes, available to later nodes.
 
-<h3>Node run</h3>
+### Node run
 
 A **node run** is a single execution of a node inside a workflow run. Node runs have:
 - **Status**: `IN_PROGRESS` or `COMPLETED`.
 - **Result** (when completed): `SUCCESS`, `FAILED`, or `CANCELLED`.
 - **Logs**: Node run logs that help you debug what happened.
 
-<h3>Trigger</h3>
+### Trigger
 
 A **trigger** defines how a workflow starts:
 - **Self-serve triggers**: A user triggers a run from Port, optionally providing inputs.
 - **Event triggers**: Port triggers a run automatically on entity events.
 
-<h3>Condition</h3>
+### Condition
 
 A **condition** is a runtime expression that decides which connection to follow.
 
-<h3>Connection</h3>
+### Connection
 
 A **connection** links one node to another and defines the possible next step(s).
 
-<h2>What's included in the closed beta</h2>
+## What's included in the closed beta
 
 :::warning Closed beta expectations
 During closed beta:
@@ -77,7 +77,7 @@ During closed beta:
 - **Support is best-effort** and scoped to your beta agreement.
 :::
 
-<h2>Next steps</h2>
+## Next steps
 
 If you want to go deeper, start here:
 

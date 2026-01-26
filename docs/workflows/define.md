@@ -6,7 +6,7 @@ sidebar_label: "Define"
 
 # Define workflows
 
-<h2>Defining a workflow (JSON-first)</h2>
+## Define a workflow (JSON-first)
 
 Workflows are defined as JSON. At a minimum, you define:
 - A **trigger node** (the start of the workflow).
@@ -15,7 +15,7 @@ Workflows are defined as JSON. At a minimum, you define:
 
 A workflow definition is identified by its `identifier`. When you update a workflow, Port stores a new version and future runs use the latest version.
 
-<h2>Minimal example</h2>
+## Minimal example
 
 The workflow below starts from a self-serve trigger, collects a `message`, sends a webhook, and stores a `request_id` that can be referenced later.
 
@@ -77,7 +77,7 @@ The workflow below starts from a self-serve trigger, collects a `message`, sends
 Trigger nodes cannot have incoming connections. A trigger is always a start point.
 :::
 
-<h2>Related topics</h2>
+## Related topics
 
 If you are building workflows beyond the minimal example, these pages help you model and debug real runs:
 

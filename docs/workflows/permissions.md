@@ -11,7 +11,7 @@ Workflows support access control in two main areas:
 - **Who can execute a workflow's self-serve trigger**.
 - **Who can view workflow runs**.
 
-<h2>Execution permissions for self-serve triggers</h2>
+## Execution permissions for self-serve triggers
 
 Execution permissions are evaluated on the `SELF_SERVE_TRIGGER` node using a **permission query**. The workflow-service evaluates this query at runtime for:
 
@@ -19,7 +19,7 @@ Execution permissions are evaluated on the `SELF_SERVE_TRIGGER` node using a **p
 - Fetching a specific workflow.
 - Triggering a self-serve workflow run.
 
-<h3>Where you can set permissions</h3>
+### Where you can set permissions
 
 Permissions can only be set on `SELF_SERVE_TRIGGER` nodes.
 
@@ -27,7 +27,7 @@ Permissions can only be set on `SELF_SERVE_TRIGGER` nodes.
 In the current implementation, workflow permissions can only be configured on the self-serve trigger node, not on every node type.
 :::
 
-<h3>Permissions API</h3>
+### Permissions API
 
 You can manage trigger permissions using these endpoints:
 
@@ -36,9 +36,9 @@ You can manage trigger permissions using these endpoints:
 - `GET /v1/workflows/:workflow_identifier/nodes/:node_identifier/permissions`.
 - `DELETE /v1/workflows/:workflow_identifier/nodes/:node_identifier/permissions`.
 
-<h3>Policy-based permissions</h3>
+### Policy-based permissions
 
-The permission query supports policy-based evaluation (similar to self-service action RBAC). This is useful when your “who can execute” logic depends on catalog data and user inputs.
+The permission query supports policy-based evaluation (similar to [self-service action RBAC](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/)). This is useful when your "who can execute" logic depends on catalog data and user inputs.
 
 ```json showLineNumbers
 {
@@ -69,7 +69,7 @@ The permission query supports policy-based evaluation (similar to self-service a
 
 If you already use policy-based permissions for actions, you can reuse the same mental model here. For more details about policy structure, see [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions).
 
-<h2>Run visibility</h2>
+## Run visibility
 
 Run visibility is controlled by the workflow's `allowAnyoneToViewRuns` field and the run creator.
 

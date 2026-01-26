@@ -8,7 +8,7 @@ sidebar_label: "Data flow"
 
 Workflows are **data-driven**: each node can produce an output, and later nodes can reference that output at runtime.
 
-<h2>Where outputs are stored</h2>
+## Where outputs are stored
 
 During a workflow run, node outputs accumulate under:
 
@@ -16,7 +16,7 @@ During a workflow run, node outputs accumulate under:
 
 For example, after a `trigger` node runs, you can reference its data under `workflowRun.variables.outputs.trigger`.
 
-<h2>Using outputs in later nodes</h2>
+## Use outputs in later nodes
 
 When a node is about to run, its config is evaluated using the current `workflowRun.variables`. This allows you to use values from earlier nodes in:
 
@@ -47,7 +47,7 @@ When a node is about to run, its config is evaluated using the current `workflow
 }
 ```
 
-<h2>Runtime evaluation</h2>
+## Runtime evaluation
 
 Workflows evaluate data in two phases:
 
@@ -56,11 +56,11 @@ Workflows evaluate data in two phases:
 
 This means values are always computed **at runtime**, using the data available in the run at that moment.
 
-<h2>Branching and path-dependent outputs</h2>
+## Branching and path-dependent outputs
 
 Outputs are only created for nodes that actually ran. If your workflow branches, nodes that were not executed will not have outputs under `workflowRun.variables.outputs`.
 
-<h2>Trigger outputs you can reference</h2>
+## Trigger outputs you can reference
 
 Both trigger types store their output under `workflowRun.variables.outputs[<triggerNodeIdentifier>]` (see [triggers](/workflows/triggers)).
 
@@ -69,7 +69,7 @@ Common examples include:
 - **Self-serve trigger**: user inputs are available under the trigger output (for example `{{ .outputs.trigger.message }}`).
 - **Event trigger**: event payload data is available under the trigger output (for example `.outputs.event_trigger.diff.after.properties` when using entity change events).
 
-<h2>Using secrets</h2>
+## Use secrets
 
 Port secrets are referenced using the same template syntax used elsewhere in Port:
 

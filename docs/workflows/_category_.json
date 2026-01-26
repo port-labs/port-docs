@@ -1,6 +1,7 @@
 {
   "label": "Workflows",
-  "position": 7
+  "position": 7,
+  "className": "custom-sidebar-item sidebar-menu-workflows"
 }
 
 
