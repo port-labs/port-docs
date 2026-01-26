@@ -655,6 +655,20 @@ resources:
 ```
 </details>
 
+### How syncing works
+
+The GitHub integration supports three sync mechanisms:
+
+| Method | Description | When it runs |
+|--------|-------------|--------------|
+| **Live events (webhooks)** | Real-time updates when changes occur in GitHub. | Automatically on each GitHub event (push, PR, etc.). Requires [`liveEvents.baseUrl`](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#enabling-live-events) to be configured. |
+| **Scheduled resync** | Full resync of all data at a configured interval. | Automatically based on [`scheduledResyncInterval`](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) (in minutes). |
+| **Manual resync** | Full resync triggered from Port's UI. | On-demand via the [data sources](https://app.getport.io/settings/data-sources) page. |
+
+:::tip Recommended setup
+For the most up-to-date catalog, configure **live events** for real-time updates. Use **scheduled resync** as a fallback to catch any missed events or drift. Without live events, the integration only syncs data when a scheduled or manual resync occurs.
+:::
+
 ### Limitations
 
 - Currently only files up to 1MB in size are supported.
