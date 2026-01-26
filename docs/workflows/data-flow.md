@@ -121,6 +121,20 @@ Output structure depends on the integration's response format. Check your integr
 When you define custom variables on a node, they completely replace the default output. The default fields (like `response`) are **not preserved** unless you explicitly include them in your variables.
 :::
 
+:::tip Reduce payload size with null
+If you don't need the default output (for example a large webhook response), you can override it with `null` to reduce payload size:
+
+```json
+{
+  "variables": {
+    "response": null
+  }
+}
+```
+
+This completely removes the response data from the node output, keeping only what you explicitly need.
+:::
+
 **Example - Without custom variables:**
 
 ```json
