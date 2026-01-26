@@ -1657,6 +1657,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "Dashboards", "Claude Code"],
         logos: ["Claude Code"],
         link: "/guides/all/visualize-claude-metrics",
+    },
+    {
+        title: "Ingest Claude Code security reviews",
+        description: "Ingest Claude Code security reviews into Port using Port's GitHub file ingesting feature",
+        tags: ["Security", "Claude Code", "GitHub"],
+        logos: ["Claude Code", "GitHub"],
+        link: "/guides/all/ingest-claude-code-security-reviews",
     }
 ]
 
