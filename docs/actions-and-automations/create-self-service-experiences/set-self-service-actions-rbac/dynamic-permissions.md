@@ -169,57 +169,68 @@ This condition returns an array of user emails who are on the same team as the e
 :::
 
 
-### Using a policy object
+### Understanding queries and conditions
 
-Here is an example of using the policy key in a permissions JSON:
-<details>
-<summary><b>Example snippet (click to expand)</b></summary>
+The `policy` object uses two keys that work together:
+
+**`queries`** - Fetch data from your software catalog using [Port's search syntax](/search-and-query/structure-and-syntax). Each query:
+- Has a name (e.g., `executingUser`, `serviceOwners`) that you choose.
+- Contains `rules` that filter entities (similar to catalog search).
+- Supports `{{ .inputs.fieldName }}` and `{{ .trigger.user.email }}` templating.
+- Results are stored in `.results.<query_name>.entities` for use in conditions.
+
+**`conditions`** - Evaluate the fetched data using JQ expressions to make the final decision. Each condition:
+- Has access to query results via `.results.<query_name>.entities`.
+- Has access to metadata like `.trigger.user`, `.inputs`, `.entity`, etc.
+- Must return a boolean (for execute) or array of email strings (for approve).
+- Multiple conditions have an implicit OR between them.
+
+**How they work together:**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  1. QUERIES run first                                               │
+│     → Fetch entities from catalog based on rules                    │
+│     → Results stored in .results.<query_name>.entities              │
+├─────────────────────────────────────────────────────────────────────┤
+│  2. CONDITIONS evaluate the results                                 │
+│     → JQ expressions process .results + metadata                    │
+│     → Return boolean (execute) or email array (approve)             │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Example breakdown:**
 
 ```json showLineNumbers
-{
-  "execute": {
-    #highlight-start
-    "policy": {
-      "queries": {
-        "query_name": {
-          "rules": [
-              // Your rule/s logic here
-            ],
-            "combinator": "and"
+"policy": {
+  "queries": {
+    // highlight-next-line
+    "serviceOwners": {                    // Query name (you choose this)
+      "rules": [
+        {
+          "property": "$blueprint",
+          "operator": "=",
+          "value": "_user"                // Fetch from _user blueprint
+        },
+        {
+          "property": "teams",
+          "operator": "contains",
+          "value": "{{ .entity.relations.owning_team }}"  // Template: team from entity
         }
-      },
-      "conditions": [
-        // A jq query resulting in a boolean value (allowed/not-allowed to execute)
-      ]
+      ],
+      "combinator": "and"
     }
-    #highlight-end
   },
-  "approve": {
-    "roles": [
-      "Admin"
-    ],
-    "users": [],
-    "teams": [],
-    #highlight-start
-    "policy": {
-      "queries": {
-        "query_name": {
-          "rules": [
-              // Your rule/s logic here
-            ],
-            "combinator": "and"
-        }
-      },
-      "conditions": [
-        // A jq query resulting in an array of strings (a list of users who can approve the action)
-      ]
-    }
-    #highlight-end
-  }
+  // highlight-next-line
+  "conditions": [                         // JQ expressions using query results
+    ".trigger.user.email as $user | .results.serviceOwners.entities | map(.identifier) | any(. == $user)"
+  ]
 }
 ```
 
-</details>
+This example:
+1. **Query** fetches all users who belong to the entity's owning team.
+2. **Condition** checks if the executing user's email is in that list (returns `true`/`false`).
 
 ## Examples
 
@@ -424,7 +435,7 @@ This is particularly important for sensitive operations like production deployme
 }
 ```
 
-#### Explanation
+<h4> Explanation </h4>
 
 This configuration implements a "four-eyes principle", which requires that sensitive actions be verified by a second person before being executed.
 
@@ -447,3 +458,61 @@ Here's what's happening in each part:
 
 The result is a dynamic list of all users who are authorized to approve the action, excluding the original executor.  
 This ensures that no single person can both initiate and approve a sensitive change, reducing the risk of unauthorized or accidental changes.
+
+---
+
+### Only service owners can execute
+
+In this example, we restrict action execution to users who are members of the team that owns the service (for day-2 actions).
+
+```json showLineNumbers
+{
+  "execute": {
+    "roles": ["Member", "Admin"],
+    "users": [],
+    "teams": [],
+    "policy": {
+      "queries": {
+        "owningTeamMembers": {
+          "rules": [
+            {
+              "property": "$blueprint",
+              "operator": "=",
+              "value": "_user"
+            },
+            {
+              "property": "teams",
+              "operator": "contains",
+              "value": "{{ .entity.relations.owning_team }}"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        ".trigger.user.email as $user | [.results.owningTeamMembers.entities[].identifier] | any(. == $user)"
+      ]
+    }
+  },
+  "approve": {
+    "roles": ["Admin"],
+    "users": [],
+    "teams": []
+  }
+}
+```
+
+<h4> Explanation </h4>
+
+This configuration ensures only team members who own the service can perform day-2 actions on it.
+
+1. **Query**: Fetches all users from the `_user` blueprint whose `teams` property contains the owning team of the entity (accessed via `.entity.relations.owning_team`).
+
+2. **Condition**: Checks if the executing user's email exists in the list of team member identifiers:
+   - `.trigger.user.email as $user` - stores the executor's email.
+   - `.results.owningTeamMembers.entities[].identifier` - gets all user emails from the query.
+   - `any(. == $user)` - returns `true` if the executor is in the list.
+
+:::tip Using entity data in queries
+For day-2 actions, you can access the entity's properties and relations using `{{ .entity.properties.X }}` and `{{ .entity.relations.X }}` in your query rules. This allows you to create ownership-based permissions.
+:::
