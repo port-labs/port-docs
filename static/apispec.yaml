@@ -29178,7 +29178,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  /v1/ai/memory:
+  /v1/memory:
     get:
       summary: List user memory records
       tags:
@@ -29303,7 +29303,7 @@ paths:
                   - ok
                   - error
                 additionalProperties: false
-  /v1/ai/memory/users:
+  /v1/memory/users:
     delete:
       summary: Delete users memory records
       tags:
@@ -29369,7 +29369,7 @@ paths:
                   - ok
                   - error
                 additionalProperties: false
-  /v1/ai/memory/settings:
+  /v1/memory/settings:
     get:
       summary: Get memory settings
       tags:
