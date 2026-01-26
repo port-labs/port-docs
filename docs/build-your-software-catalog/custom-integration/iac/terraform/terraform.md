@@ -583,3 +583,43 @@ Before using `terraform import` to bring data from your Port account into your T
 See [this](/guides/all/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
 :::
 
+## Limitations
+
+### Mixed static and dynamic values in dataset rules
+
+When defining `dataset` rules in self-service actions that mix static values with `jq_query` values, the Terraform provider may not handle them correctly. 
+
+To work around this, use `jsonencode()` for the entire dataset object:
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  user_properties = {
+    string_props = {
+      "myEntityInput" = {
+        format    = "entity"
+        blueprint = "myBlueprint"
+        # highlight-start
+        dataset = jsonencode({
+          combinator = "and"
+          rules = [
+            {
+              property = "$identifier"
+              operator = "in"
+              value = {
+                jqQuery = ".user.relations.teams[].identifier"
+              }
+            },
+            {
+              property = "status"
+              operator = "="
+              value = "active"
+            }
+          ]
+        })
+        # highlight-end
+      }
+    }
+  }
+}
+```
