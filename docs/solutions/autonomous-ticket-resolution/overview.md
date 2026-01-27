@@ -31,12 +31,13 @@ That's because the loss doesn't happen while engineers are coding. **It happens 
 
 Even with the greatest coding tools, the handoffs stay manual, the context stays fragmented, and the overall lifecycle stays slow.
 
-## How Port's ATR solves this
+## How Port solves this
 
 Port's ATR provides end-to-end orchestration for the complete work item lifecycle while keeping humans in control of key decisions:
 
-- **Intelligent work items triage** - AI agents analyze incoming work items, automatically categorize and prioritize them, then enrich each with relevant context from your software catalog including ownership, dependencies, related services, recent changes, and compliance requirements.
-- **Autonomous implementation** - Delegate routine work to AI agents that generate implementation plans, write code following your organization's standards, create tests, and submit pull requests while humans focus on creative problem-solving and architectural decisions.
+- **Intelligent work items triage and prep** - AI agents analyze incoming work items, automatically categorize and prioritize them, then enrich each with relevant context from your software catalog including ownership, dependencies, related services, recent changes, and compliance requirements.
+- **Intelligent planning** - AI agents help you generate product requirement documents, technical specifications and implementation plans based on your team's standards and the assembled context, ensuring requirements are clear, complete, and actionable before work begins.
+- **Autonomous implementation** - Delegate routine work to AI agents that generate code following your organization's standards, create tests, and submit pull requests while humans focus on creative problem-solving and architectural decisions.
 - **Safe, staged deployment** - Every deployment follows your governance policies automatically, with agents handling routine checks and routing critical decisions to the right approvers based on your RBAC policies.
 - **Human oversight at every stage** - Your team maintains control through approval gates, real-time visibility, and the ability to intervene at any point, with Port surfacing only the decisions that require human judgment.
 
@@ -45,7 +46,7 @@ Port's ATR provides end-to-end orchestration for the complete work item lifecycl
 At each stage, Port:
 - **Enriches context** from your software catalog (blueprints, entities, relations)
 - **Applies standards** via scorecards and policies
-- **Triggers automations** through actions and workflows  
+- **Automate work** through actions and workflows  
 - **Routes decisions** based on RBAC and approval policies
 - **Maintains visibility** with real-time status and audit trails
 
