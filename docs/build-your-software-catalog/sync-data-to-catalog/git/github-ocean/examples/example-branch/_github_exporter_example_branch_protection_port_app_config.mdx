@@ -23,6 +23,8 @@ resources:
     selector:
       query: "true"
       branchNames: ["main", "develop"]
+      # Alternatively, sync only the repository's default branch (takes precedence over branchNames):
+      # defaultBranchOnly: true
       protectionRules: true
     port:
       entity:

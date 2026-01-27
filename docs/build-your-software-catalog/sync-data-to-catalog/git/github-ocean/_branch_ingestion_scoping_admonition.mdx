@@ -1,0 +1,6 @@
+:::tip Reduce API usage (branch ingestion scoping)
+You can reduce API usage by scoping branch ingestion using one of the following selector options:
+
+- `defaultBranchOnly: true`: Optional[Recommended]. Sync only the repository's default branch. When set, it takes precedence and `branchNames` will be ignored.
+- `branchNames`: Optional. Use to ingest only specific branches by name (for example, only the default branch). When set, the integration fetches those branches explicitly instead of listing all branches using pagination.
+:::

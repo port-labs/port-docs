@@ -47,6 +47,7 @@ import BranchBlueprint from './examples/example-branch/\_git_exporter_example_br
 import PortBrAppConfig from './examples/example-branch/\_github_exporter_example_branch_port_app_config.mdx'
 import BranchProtectionBlueprint from './examples/example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
 import PortBranchProtectionAppConfig from './examples/example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
+import BranchIngestionScopingAdmonition from './_branch_ingestion_scoping_admonition.mdx'
 
 import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
@@ -196,36 +197,34 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 ## Repositories and last contributor
 
-The following example demonstrates how to ingest your GitHub repositories and their last contributor to Port.  
-You can use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <LastContributorBranchBlueprint/>
 <LastContributorBlueprint/>
 <LastContributorAppConfig/>
 
-
-:::info supported last contributor
 The last contributor is the author of the last commit in the default branch of the repository.  
 This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity. By default, `detailed` is set to `false`, which returns a lighter branch payload. It should only be set to `true` when you need access to commit-level fields.
-:::
+
+<BranchIngestionScopingAdmonition />
+
 
 ## Repositories and branch protection rules
 
-The following example demonstrates how to ingest your GitHub repositories and branch protection rules to Port. The example uses the following selector options:
+The following example demonstrates how to ingest your GitHub repositories and their branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-- `protectionRules: true`: Required. Enables fetching branch protection rules, which are needed for the `branchProtection` mapping. If your integration user lacks branch protection permissions, the field `.__protection_rules` will be empty.
-
-- `detailed: true`: Optional. Fetches detailed commit data for the branch (such as the last commit and author). If you only need branch protection data, you can omit this for improved performance.
-
-- `branchNames`: Optional[Recommended]. Use to ingest only specific branches by name. When set, the integration fetches those branches explicitly instead of listing all branches using pagination. This reduces API usage and helps avoid performance and memory issues when syncing branch protection rules across many branches.
-
-You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <BranchProtectionBlueprint/>
 
 <PortBranchProtectionAppConfig/>
+
+To enable protection rules ingestion, set:
+
+- `protectionRules: true`: Required. Enables fetching branch protection rules, which are needed for the `branchProtection` mapping. If your integration user lacks branch protection permissions, the field `.__protection_rules` will be empty.
+
+<BranchIngestionScopingAdmonition />
 
 ## Files and file contents
 
