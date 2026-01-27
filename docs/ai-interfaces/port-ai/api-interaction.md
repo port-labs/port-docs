@@ -54,7 +54,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt":"What services are failing health checks?",
-    "tools": ["^(list|search|track|describe)_.*"],
+    "tools": ["^(list|search|describe)_.*"],
     "labels": {
       "source": "monitoring_system",
       "environment": "production",
@@ -448,7 +448,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt": "What services are failing health checks?",
-    "tools": ["^(list|search|track|describe)_.*"],
+    "tools": ["^(list|search|describe)_.*"],
     "labels": {
       "source": "monitoring_system",
       "check_type": "health_analysis"
@@ -476,7 +476,7 @@ async function checkServiceHealth(serviceName) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt: `Analyze the health of service ${serviceName}`,
-      tools: ['^(list|search|track|describe)_.*'],
+      tools: ['^(list|search|describe)_.*'],
       labels: {
         source: 'monitoring_dashboard',
         service: serviceName,
@@ -531,7 +531,7 @@ Automatically trigger Port AI based on catalog events using Port's automation sy
     },
     "body": {
       "prompt": "Infrastructure component {{ .event.diff.after.title }} is unhealthy. Analyze the issue and suggest remediation steps based on current state and recent changes.",
-      "tools": ["^(list|search|track|describe)_.*", "run_.*incident.*", "run_.*notification.*"],
+      "tools": ["^(list|search|describe)_.*", "run_.*incident.*", "run_.*notification.*"],
       "labels": {
         "source": "automation",
         "entity_type": "{{ .event.diff.after.blueprint }}",
@@ -571,7 +571,7 @@ Create actions that invoke Port AI for on-demand analysis:
     },
     "body": {
       "prompt": "Analyze the health of service {{ .entity.title }}. Check metrics, recent deployments, incidents, and provide actionable recommendations.",
-      "tools": ["^(list|search|track|describe)_.*", "run_.*incident.*"],
+      "tools": ["^(list|search|describe)_.*", "run_.*incident.*"],
       "labels": {
         "source": "self_service",
         "service_name": "{{ .entity.identifier }}",
