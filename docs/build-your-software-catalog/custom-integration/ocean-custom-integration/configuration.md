@@ -80,10 +80,25 @@ resources:
 
 - **`kind`**: The API endpoint path (combined with your base URL).
 - **`selector.query`**: JQ filter to include/exclude entities (use `'true'` to sync all).
-- **`selector.data_path`**: JQ expression pointing to the array of items in the response.
+- **`selector.data_path`**: JQ expression pointing to the array of items in the response (see [Data path extraction](#data-path-extraction) below).
 - **`selector.query_params`**: (Optional) Query parameters added to the URL.
 - **`selector.method`**: (Optional) HTTP method, defaults to `GET`.
 - **`port.entity.mappings`**: How to map API fields to Port entity properties.
+
+### Data path extraction
+
+The `data_path` field tells the integration where to find the array of items in your API response. Use a [JQ expression](https://jqlang.org/manual/) to point to the data array.
+
+| Response structure | Example response | `data_path` value |
+|--------------------|------------------|-------------------|
+| Direct array | `[{"id": 1}, {"id": 2}]` | _(omit - not needed)_ |
+| Single nested | `{"data": [{"id": 1}], "meta": {...}}` | `.data` |
+| Deeply nested | `{"response": {"users": {"items": [...]}}}` | `.response.users.items` |
+| Array flattening | `{"groups": [{"rules": [...]}, {"rules": [...]}]}` | `.groups[].rules[]` |
+
+:::tip Array flattening
+Use JQ's `[]` operator to flatten nested arrays. For example, `.groups[].rules[]` extracts all rules from all groups into a single flat array.
+:::
 
 
 ## Advanced configurations
@@ -94,28 +109,31 @@ Once you have the basics working, these features handle more complex scenarios.
 
 Fetch data from dynamic endpoints that depend on other resources.
 
-**Use case:** Get all tickets, then fetch comments for each ticket.
+:::info Accessing path parameters in mappings
+Use `.__<parameter_name>` to access path parameter values in your entity mappings. For example, with endpoint `/api/tickets/{ticket_id}/comments`, access the ticket ID using `.__ticket_id`.
+:::
 
-**How it works**
-
-**Step 1 - Define parent endpoint:**
+**Example: Tickets and comments**
 
 ```yaml showLineNumbers
 resources:
+  # Parent endpoint
   - kind: /api/tickets
+    selector:
+      query: 'true'
+      data_path: '.tickets'
     port:
       entity:
         mappings:
           identifier: .id | tostring
+          title: .subject
           blueprint: '"ticket"'
-```
 
-**Step 2 - Define nested endpoint:**
-
-```yaml showLineNumbers
-resources:
+  # Nested endpoint - fetches comments for each ticket
   - kind: /api/tickets/{ticket_id}/comments
     selector:
+      query: 'true'
+      data_path: '.comments'
       path_parameters:
         ticket_id:
           endpoint: /api/tickets
@@ -126,19 +144,21 @@ resources:
         mappings:
           identifier: .id | tostring
           blueprint: '"comment"'
+          properties:
+            content: .body
+            ticketId: .__ticket_id | tostring   # Access path parameter value
           relations:
-            ticket: .ticket_id | tostring
+            ticket: .__ticket_id | tostring     # Use for parent relation
 ```
 
 The integration will:
 1. Call `/api/tickets` → Get ticket IDs [101, 102, 103].
-2. Call `/api/tickets/101/comments`, `/api/tickets/102/comments`, `/api/tickets/103/comments`.
+2. Call `/api/tickets/101/comments`, `/api/tickets/102/comments`, etc.
 3. Sync all comments with relations to their parent tickets.
 
-**Real-world examples:**
-- `/projects/{project_id}/tasks` - Tasks within projects.
-- `/repositories/{repo_id}/pull-requests` - PRs in repositories.
-- `/customers/{customer_id}/orders` - Orders for customers.
+**More examples:**
+- `/projects/{project_id}/tasks` → Access `.__project_id` in task mappings.
+- `/repositories/{repo_id}/pull-requests` → Access `.__repo_id` in PR mappings.
 
 ### Pagination
 
