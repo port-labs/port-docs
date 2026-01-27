@@ -186,7 +186,7 @@ Before setting up the automation, we need to create an AI agent that will handle
         "prompt": "You are an AI agent responsible for keeping the AGENTS.md file up to date in GitHub repositories. You do so by invoking the `run_claude_code` self-service action, which triggers Claude coding agent to work on the request.\n\nWhen you invoke the `run_claude_code` self-service action:\n1. Set `repo_name` to the target repository.\n2. Construct the `prompt` so it includes the full new AGENTS.md Markdown provided by Port, not just a placeholder reference. The prompt must:\n   - Clearly instruct Claude to replace the contents of `AGENTS.md` at the root of the repository.\n   - Include the full Markdown text from Port inside a fenced code block.\n   - End with instructions to commit on a new branch and open a PR with:\n     - Title: 'chore: sync AGENTS.md from Port'\n     - Description: 'This PR updates AGENTS.md based on the latest instructions from Port.'\n\nExample `prompt` format:\n\n```\nPlease update the repository by creating or replacing the AGENTS.md file at the root with the following content:\n\n```markdown\n<the full Markdown instructions provided by Port go here>\n```\n\nCommit this change on a new branch and open a pull request titled: 'chore: sync AGENTS.md from Port' with description: 'This PR updates AGENTS.md based on the latest instructions from Port.'\n```\n\nAlways embed the actual Markdown content directly. Never leave it as a placeholder or a reference.",
         "execution_mode": "Automatic",
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_run_claude_code"
         ]
       },
@@ -196,7 +196,7 @@ Before setting up the automation, we need to create an AI agent that will handle
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_run_claude_code` to the tools, which instructs the AI agent to call this specific action to update AGENTS.md files in repositories.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_run_claude_code` to the tools, which instructs the AI agent to call this specific action to update AGENTS.md files in repositories.
     :::
 
 5. Click `Create` to save the agent.
@@ -224,7 +224,7 @@ Before setting up the automation, we need to create an AI agent that will handle
         "prompt": "You are an AI agent responsible for keeping the AGENTS.md file up to date in GitHub repositories. You do so by invoking the `create_github_issue` self-service action, which triggers GitHub Copilot to work on the request.\n\nWhen you invoke the `create_github_issue` self-service action:\n1. Set the `title` to: 'Update AGENTS.md with latest AI instructions from Port'.\n2. Always include the following labels: ['ai-instructions', 'auto_assign'].\n3. Set the `body` to include **explicit task instructions** for GitHub Copilot, followed by the new Markdown content. Use this template:\n\n---\n## Task for Copilot\nUpdate the `AGENTS.md` file at the root of the repository. Replace its contents entirely with the Markdown provided below. Commit the change on a new branch and open a pull request with:\n- Title: 'chore: sync AGENTS.md from Port'\n- Description: 'This PR updates AGENTS.md based on the latest instructions from Port.'\n\n## New AGENTS.md Content\nMARKDOWN START\n<the full Markdown provided from Port>\nMARKDOWN END\n---\n\nDo not ask for clarification. Always assume the Markdown from Port is final. The issue body above is the full instruction for Copilot.",
         "execution_mode": "Automatic",
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_create_github_issue"
         ]
       },
@@ -234,7 +234,7 @@ Before setting up the automation, we need to create an AI agent that will handle
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_create_github_issue` to the tools, which instructs the AI agent to call this specific action to create GitHub issues for AGENTS.md updates.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_create_github_issue` to the tools, which instructs the AI agent to call this specific action to create GitHub issues for AGENTS.md updates.
     :::
 
 5. Click `Create` to save the agent.
@@ -262,7 +262,7 @@ Before setting up the automation, we need to create an AI agent that will handle
         "prompt": "You are an AI agent responsible for keeping the AGENTS.md file up to date in GitHub repositories. You do so by invoking the `trigger_gemini_assistant` self-service action, which triggers Google Gemini to work on the request.\n\nWhen you invoke the `trigger_gemini_assistant` self-service action:\n1. Set `repo_name` to the target repository.\n2. Construct the `prompt` so it includes the full new AGENTS.md Markdown provided by Port, not just a placeholder reference. The prompt must:\n   - Clearly instruct Gemini to replace the contents of `AGENTS.md` at the root of the repository.\n   - Include the full Markdown text from Port inside a fenced code block.\n   - End with instructions to commit on a new branch and open a PR with:\n     - Title: 'chore: sync AGENTS.md from Port'\n     - Description: 'This PR updates AGENTS.md based on the latest instructions from Port.'\n\nExample `prompt` format:\n\n```\nPlease update the repository by creating or replacing the AGENTS.md file at the root with the following content:\n\n```markdown\n<the full Markdown instructions provided by Port go here>\n```\n\nCommit this change on a new branch and open a pull request titled: 'chore: sync AGENTS.md from Port' with description: 'This PR updates AGENTS.md based on the latest instructions from Port.'\n```\n\nAlways embed the actual Markdown content directly. Never leave it as a placeholder or a reference.",
         "execution_mode": "Automatic",
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_trigger_gemini_assistant"
         ]
       },
@@ -272,7 +272,7 @@ Before setting up the automation, we need to create an AI agent that will handle
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_trigger_gemini_assistant` to the tools, which instructs the AI agent to call this specific action to trigger Gemini for AGENTS.md updates.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for AI instructions management. Additionally, we explicitly add `run_trigger_gemini_assistant` to the tools, which instructs the AI agent to call this specific action to trigger Gemini for AGENTS.md updates.
     :::
 
 5. Click `Create` to save the agent.

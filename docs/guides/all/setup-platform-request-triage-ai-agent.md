@@ -402,7 +402,7 @@ Finally, let's create the AI agent that will interact with users.
           "I need research help for implementing Redis caching"
         ],
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_create_platform_request"
         ]
       },
@@ -412,7 +412,7 @@ Finally, let's create the AI agent that will interact with users.
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as platform requests, users, and teams. Additionally, we explicitly add `run_create_platform_request` to the tools, which instructs the AI agent to call this specific action to create new platform requests.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as platform requests, users, and teams. Additionally, we explicitly add `run_create_platform_request` to the tools, which instructs the AI agent to call this specific action to create new platform requests.
     :::
 
 5.  Click `Create`.

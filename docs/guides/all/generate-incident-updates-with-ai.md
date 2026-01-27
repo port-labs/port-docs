@@ -277,7 +277,7 @@ Next, we will create an AI agent that generates helpful incident updates with co
           "What's the latest on the database outage incident?"
         ],
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_update_incident_with_ai_update"
         ]
       },
@@ -287,7 +287,7 @@ Next, we will create an AI agent that generates helpful incident updates with co
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog such as incidents, services, deployment etc., providing richer context for incident analysis. Additionally, we explicitly add `run_update_incident_with_ai_update` to the tools, which instructs the AI agent to call this specific action to update incident records with AI-generated summaries.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog such as incidents, services, deployment etc., providing richer context for incident analysis. Additionally, we explicitly add `run_update_incident_with_ai_update` to the tools, which instructs the AI agent to call this specific action to update incident records with AI-generated summaries.
     :::
 
 5. Click `Create` to save the agent.

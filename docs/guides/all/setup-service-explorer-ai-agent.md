@@ -78,7 +78,7 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
         "Which services are failing their production readiness scorecard?"
       ],
       "tools": [
-        "^(list|get|search|track|describe)_.*"
+        "^(list|search|track|describe)_.*"
       ]
     }
    }
@@ -86,7 +86,7 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
    </details>
 
    :::tip MCP Enhanced Capabilities
-   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including services, repositories, teams, users, incidents, deployments, monitoring data, and more. This automatic discovery means you don't need to manually configure which blueprints the agent can access - it intelligently finds and uses relevant data to answer questions about your services.
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including services, repositories, teams, users, incidents, deployments, monitoring data, and more. This automatic discovery means you don't need to manually configure which blueprints the agent can access - it intelligently finds and uses relevant data to answer questions about your services.
    :::
 
 5. Click on `Create` to save the agent.

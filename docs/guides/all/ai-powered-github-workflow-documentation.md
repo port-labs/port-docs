@@ -213,7 +213,7 @@ Create an AI agent that analyzes workflow YAML and generates comprehensive docum
         "prompt": "You are a GitHub Actions workflow documentation agent. Analyze workflow YAML files and generate clear markdown documentation.\n\n**Your Task**: Generate developer-friendly documentation covering:\n\n## 1. Overview\nBrief summary (2-3 sentences) of what the workflow does and its purpose.\n\n## 2. Triggers\n- When the workflow runs (push, PR, schedule, manual)\n- Branch and path filters\n- How to trigger manually (if applicable)\n\n## 3. Jobs & Steps\nFor each job, explain:\n- Job purpose and runner environment\n- Key steps and what they do\n- Dependencies between steps\n\n## 4. Configuration Requirements\n- **Secrets**: List required secrets and their purpose\n- **Permissions**: GitHub permissions needed\n- **Inputs**: Required workflow inputs (if any)\n\n## 5. Outputs\n- What the workflow produces (artifacts, deployments)\n- Where to find results\n\n## 6. Usage\nHow developers can:\n- Use this workflow\n- Set up required secrets\n- Trigger and monitor runs\n\n**Guidelines**:\n- Write clearly for all developer skill levels\n- Explain security considerations (secrets, permissions)\n- Use markdown formatting (headers, lists, code blocks)\n- Keep it concise but comprehensive\n\n**Action**: Invoke the 'update_workflow_explanation' action to update the workflow entity's explanation property with your generated markdown documentation.",
         "execution_mode": "Automatic",
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_update_workflow_explanation"
         ]
       },
@@ -278,7 +278,7 @@ Create a self-service action that developers can trigger to generate documentati
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "Analyze the GitHub Actions workflow with identifier {{ .entity.identifier }} and generate comprehensive documentation. First, retrieve the workflow entity using get_entities_by_identifiers with blueprint 'githubWorkflow' and identifier '{{ .entity.identifier }}'. Read the workflow's YAML content from the yamlContent property and metadata to create a detailed explanation and update the workflow entity's 'explanation' property with the generated content as a markdown string.",
+          "prompt": "Analyze the GitHub Actions workflow with identifier {{ .entity.identifier }} and generate comprehensive documentation. First, retrieve the workflow entity using list_entities with blueprint 'githubWorkflow' and identifiers ['{{ .entity.identifier }}']. Read the workflow's YAML content from the yamlContent property and metadata to create a detailed explanation and update the workflow entity's 'explanation' property with the generated content as a markdown string.",
           "labels": {
             "source": "self_service_action",
             "workflow_id": "{{ .entity.identifier }}"

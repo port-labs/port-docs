@@ -513,7 +513,7 @@ After importing the workflow, you need to update several parameters to match you
 
 3. **Update Port AI prompt** (optional):
    - In the **Extract issue context** node, you can customize the `userPrompt` to adjust how Port queries your catalog and formats the GitHub issue.
-   - The prompt uses Port's MCP tools (`^(list|get|search|track|describe)_.*`) to query your software catalog for relevant context.
+   - The prompt uses Port's MCP tools (`^(list|search|track|describe)_.*`) to query your software catalog for relevant context.
 
 :::tip Customizing the workflow
 You can customize the workflow to match your specific needs:

@@ -136,7 +136,7 @@ Next, we will create an AI agent that generates GitHub issues from Jira tickets 
         "execution_mode": "Automatic",
         "conversation_starters": [],
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_create_github_issue"
         ]
       },
@@ -146,7 +146,7 @@ Next, we will create an AI agent that generates GitHub issues from Jira tickets 
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for GitHub issue creation. Additionally, we explicitly add `run_create_github_issue` to the tools, which instructs the AI agent to call this specific action to create GitHub issues from Jira tickets.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for GitHub issue creation. Additionally, we explicitly add `run_create_github_issue` to the tools, which instructs the AI agent to call this specific action to create GitHub issues from Jira tickets.
     :::
 
 5. Click `Create` to save the agent.

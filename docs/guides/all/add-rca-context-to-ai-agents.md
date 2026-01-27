@@ -597,7 +597,7 @@ For a more comprehensive knowledge base, consider adding 5-10 RCA documents cove
 
 ## Update AI agent configuration
 
-The Incident Manager AI agent uses the MCP tools pattern (`^(list|get|search|track|describe)_.*`), which automatically provides access to all blueprints in your catalog - including the RCA blueprint you just created. This means the agent can already search and reference RCA documents without any configuration changes.
+The Incident Manager AI agent uses the MCP tools pattern (`^(list|search|track|describe)_.*`), which automatically provides access to all blueprints in your catalog - including the RCA blueprint you just created. This means the agent can already search and reference RCA documents without any configuration changes.
 
 :::tip Automatic blueprint discovery
 With the MCP tools pattern, AI agents automatically discover new blueprints you create. You don't need to manually add `"rootCauseAnalysis"` to any configuration - the agent already has access to query and reference these documents.

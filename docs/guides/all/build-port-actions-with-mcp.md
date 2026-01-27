@@ -28,7 +28,7 @@ This guide assumes you have:
 
 ## Create actions with AI
 
-The Port MCP server provides tools like `create_action`, `list_actions`, and `update_action` that enable AI agents to build your actions through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
+The Port MCP server provides tools like `list_actions` and `upsert_action` that enable AI agents to build your actions through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
 <h3>Start with a simple description</h3>
 
@@ -38,7 +38,7 @@ Describe the action you want to create in natural language. The AI will interpre
 
 *"Create a self-service action called 'Deploy to Staging' for the service blueprint. It should trigger a GitHub workflow that accepts an optional version parameter and deployment environment."*
 
-The AI will use the MCP `create_action` tool to generate and create the action:
+The AI will use the MCP `upsert_action` tool to generate and create the action:
 
 <Tabs groupId="mcp-output" queryString>
 <TabItem value="mcp" label="MCP server input">

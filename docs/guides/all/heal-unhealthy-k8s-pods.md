@@ -1118,7 +1118,7 @@ Next, we will create an AI agent that analyzes pod health issues and creates com
           "Why are my pods stuck in Pending state?"
         ],
         "tools": [
-          "^(list|get|search|track|describe)_.*",
+          "^(list|search|track|describe)_.*",
           "run_get_k8s_pod_logs",
           "run_restart_k8s_workload",
           "run_scale_k8s_workload",
@@ -1132,7 +1132,7 @@ Next, we will create an AI agent that analyzes pod health issues and creates com
     </details>
 
     :::tip MCP Enhanced Capabilities
-    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including Kubernetes resources, recent deployments, code changes, runbooks, and history logs. This gives the agent rich SDLC context to make intelligent healing decisions. Additionally, we explicitly add the remediation action tools (`run_get_k8s_pod_logs`, `run_restart_k8s_workload`, etc.), which the agent calls sequentially to diagnose and fix unhealthy workloads.
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including Kubernetes resources, recent deployments, code changes, runbooks, and history logs. This gives the agent rich SDLC context to make intelligent healing decisions. Additionally, we explicitly add the remediation action tools (`run_get_k8s_pod_logs`, `run_restart_k8s_workload`, etc.), which the agent calls sequentially to diagnose and fix unhealthy workloads.
     :::
 
 5. Click `Create` to save the agent.
