@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,16 +9,24 @@ import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templ
 
 # Dashboard page
 
-Dashboards are collections of widgets that allow you to display entity data using graphic elements:
+Dashboards are collections of widgets that allow you to display entity data using graphic elements.
 
-![dashboardExample](../../../static/img/software-catalog/pages/dashboardExample.png)
+<iframe 
+  src="https://demo.port.io/plan_my_day" 
+  width="100%" 
+  height="600rem" 
+  style={{ border: '1px solid', borderRadius: '8px' }}
+  allow="fullscreen"
+  title="Port.io Plan My Day Demo"
+/>
+> *⬆ The `Plan my day` dashboard as displayed in [Port's demo portal](https://demo.port.io/plan_my_day).  
+> It tracks the logged-in user's open tasks, PRs, and issues, as well as quick actions to perform routine tasks*.
 
+<br/>
 Similar to [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page), dashboards reside in the panel on the left-hand side of the software catalog.  
-Dashboards are a great way to display aggregated data and track the information that is relevant and/or interesting to you and your developers.
+Dashboards are a great way to display aggregated data and track information that is relevant and/or interesting to you and your developers.
 
-## Creating a dashboard page
-
-You can create as many dashboards as you'd like.
+## Create a dashboard page
 
 <Tabs groupId="create-dashboard-page" queryString values={[
 {label: "From the UI", value: "ui"},
@@ -27,13 +35,11 @@ You can create as many dashboards as you'd like.
 
 <TabItem value="ui">
 
-To create a dashboard, click on `New` and select `New dashboard`:
+1. Go to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
 
-![newDashboard](/img/software-catalog/pages/newDashboard.png)
+2. In the left sidebar, click on `+`, then select `New dashboard`.
 
-</TabItem>
-
-<TabItem value="api">
+3. Name your dashboard and click `Create`.
 
 </TabItem>
 
@@ -661,39 +667,61 @@ export const microserviceDashboardPage = new port.Page(
 
 </Tabs>
 
-### Description
+### Properties
 
-You can provide additional context to your developers by using the `Description` field when creating a dashboard page.  
-This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+When creating a dashboard page, you can set the following properties:
 
-<img src='/img/software-catalog/pages/dashboardPageDescriptionForm.png' width='40%' border='1px' />
+| Field           | Description            | Required |
+| ----------  | --------------------- | -------- |
+| `Title`    | Dashboard page title   | `true`   |
+| `Identifier` | The dashboard identifier. This is used to reference the page in various places within your portal and is automatically generated when you create the page. | `true`  |
+| `Description` | A description of the dashboard.<br/>Supports markdown links (`[link text](https://www.link.com)`) | `false`  |
+| `Icon`     | The page icon  | `false`  |
 
-<br/><br/>
-
-The description will be displayed at the top of the page, under the page title:
-
-<img src='/img/software-catalog/pages/dashboardPageDescription.png' width='80%' border='1px' />
-
-## Adding new widgets
+## Add new widgets
 
 A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/overview).
 
-To add a new widget, click `Add` and choose your desired visualization type:
+To add a new widget, click on the `+ Widget` button in the top right corner of the dashboard page and choose your desired type.
 
-![dashboardPageAddVisualization](../../../static/img/software-catalog/pages/dashboardPageAddVisualization.png)
+## Reorder and resize widgets
 
-## Reordering and resizing widgets
+Widgets can be expanded and/or moved within a dashboard page:
 
-Widgets can be expanded and/or moved within a dashboard page.
+- To **move** a widget, drag it from the top to your desired position.
 
-To move a widget, drag it from the top-left corner to your desired position:
-
-<img src='/img/software-catalog/pages/widgetReorderExample.png' width='70%' />
-
-<br/><br/>
-
-To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
-
-<img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
+- To **resize** a widget, hover over one of its sides, then click and drag it to expand/shrink it.
 
 <DashboardFilters/>
+
+## "Experience" dashboards
+
+When creating a dashboard, you can choose to create a **new experience** - a predefined dashboard with ready-made widgets designed to visualize and track specific use cases.
+
+Some of the experiences will automatically expand your data model by creating new <PortTooltip id="blueprint">blueprints</PortTooltip> and/or <PortTooltip id="action">self-service actions</PortTooltip> in your portal. 
+
+To create an experience dashboard:
+
+1. Go to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+2. In the left sidebar, click on `+`, then select `New experience`.
+3. Choose from the available experience types.
+
+### Available experiences
+
+Experiences are divided into two categories:
+
+#### 1. Engineering Intelligence
+
+| Experience | Description |
+|------------|-------------|
+| **DORA metrics** | Optimize your development performance with DORA metrics in your portal. Includes widgets to track deployment frequency, lead time, change failure rate, and mean time to recovery. |
+| **Portal feedback** | Create a portal feedback system to gather and manage user feedback. Helps you collect insights from developers using your portal. |
+| **Survey** | Run a survey in Port and see results in your catalog. Useful for gathering team input and tracking responses. |
+
+#### 2. Standards
+
+| Experience | Description |
+|------------|-------------|
+| **Scorecard** | Track and visualize standards compliance across your software catalog using [scorecards](/scorecards/overview). |
+| **Initiative** | Monitor and manage engineering initiatives with dedicated tracking widgets. |
+
