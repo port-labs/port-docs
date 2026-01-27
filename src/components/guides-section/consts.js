@@ -1138,6 +1138,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-identity-and-access-management",
     },
     {
+        title: "Visualize Microsoft Entra ID security insights",
+        description: "Create a security analytics dashboard to monitor identity risks, sign-in activity, and application security in Microsoft Entra ID",
+        tags: ["Security", "Azure", "Dashboards"],
+        logos: ["Azure"],
+        link: "/guides/all/visualize-entra-id-security-insights",
+    },
+    {
         title: "Visualize Okta security insights",
         description: "Build a security analytics dashboard for Okta identity and access management",
         tags: ["Security", "Okta", "Dashboards"],
