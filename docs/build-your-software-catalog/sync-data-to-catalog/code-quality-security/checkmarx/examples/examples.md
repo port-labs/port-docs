@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 ---
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 import ProjectBlueprint from './example-project/_checkmarx_exporter_example_project_blueprint.mdx'
 import ProjectConfig from './example-project/_checkmarx_exporter_example_project_port_app_config.mdx'
@@ -24,6 +26,9 @@ import ContainerSecurityConfig from './example-container-security/_checkmarx_exp
 
 import ApiSecurityBlueprint from './example-api-security/_checkmarx_exporter_example_api_security_blueprint.mdx'
 import ApiSecurityConfig from './example-api-security/_checkmarx_exporter_example_api_security_port_app_config.mdx'
+
+import ApplicationBlueprint from './example-application/_checkmarx_exporter_example_application_blueprint.mdx'
+import ApplicationConfig from './example-application/_checkmarx_exporter_example_application_port_app_config.mdx'
 
 # Resource mapping examples
 
@@ -139,3 +144,57 @@ The following example demonstrates how to ingest Checkmarx API Security findings
 - The state field indicates the verification and remediation status.
 
 :::
+
+## Map Checkmarx applications
+
+The following example demonstrates how to ingest your Checkmarx applications to Port:
+
+<ApplicationBlueprint/>
+
+<ApplicationConfig/>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Name" value="includeName">
+
+The `name` optional selector is used to filter applications based on a partial matching on your application name property.
+
+```yaml
+  - kind: application
+    selector:
+      query: 'true'
+      # highlight-next-line
+      name: 'port'
+```
+
+</TabItem>
+
+<TabItem label="Tag Keys" value="includeTagKeys">
+
+The `tagKeys` optional selector is used to filter applications based on specific tag keys associated with your applications.
+
+```yaml
+  - kind: application
+    selector:
+      query: 'true'
+      # highlight-next-line
+      tagKeys: ['env', 'scope']
+```
+
+</TabItem>
+
+<TabItem label="Tag Values" value="includeTagValues">
+
+The `tagValues` optional selector is used to filter applications based on specific tag values associated with your applications.
+
+```yaml
+  - kind: application
+    selector:
+      query: 'true'
+      # highlight-next-line
+      tagValues: ['dev', 'frontend']
+```
+
+</TabItem>
+
+</Tabs>

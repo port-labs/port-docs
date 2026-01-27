@@ -1,0 +1,62 @@
+<details>
+<summary><b>Application blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxApplication",
+  "title": "Checkmarx Application",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Application Name",
+        "description": "The name of the Checkmarx application."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "The date and time when the application was created."
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Updated At",
+        "description": "The date and time when the application was last updated."
+      },
+      "tags": {
+        "type": "object",
+        "title": "Tags",
+        "description": "A set of tags associated with the application."
+      },
+      "rules": {
+        "type": "object",
+        "title": "Rules",
+        "description": "A set of rules associated with the application."
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the application."
+      },
+      "criticality": {
+        "type": "number",
+        "title": "Criticality",
+        "description": "The criticality level of the project."
+      }
+    },
+    "required": ["name"]
+  },
+  "relations": {
+    "projects": {
+      "target": "checkmarxProject",
+      "title": "Projects",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>

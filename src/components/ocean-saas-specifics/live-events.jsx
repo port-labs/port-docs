@@ -294,7 +294,8 @@ export const liveEvents = {
     \n - validated \
     \n - resolved",
   CheckmarxOne:
-    "\n- scan_completed_successfully \
+    "\n- project_created \
+    \n- scan_completed_successfully \
     \n- scan_failed \
     \n- scan_partial",
   Okta:

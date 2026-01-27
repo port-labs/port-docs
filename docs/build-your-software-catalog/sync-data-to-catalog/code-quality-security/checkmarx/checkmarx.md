@@ -24,6 +24,7 @@ The resources that can be ingested from Checkmarx One into Port are listed below
 - [`KICS`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Infrastructure as Code Security results
 - [`Container Security`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Container security scan results
 - [`API Security`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - API security risks and vulnerabilities
+- [`Application`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/0b920aabeb464-retrieve-applications-info) - Application information and metadata
 
 ## Setup
 
@@ -687,6 +688,13 @@ API security results can be configured with:
 
 - **Scan Filter**: Apply the same scan filtering options as above
 
+#### Application Resources
+
+Applications can be filtered using the following filter options:
+
+- **Name**: Filter results by the name of the application
+- **Tag Keys**: Filter results by the tag keys of the application
+- **Tag Values**: Filter results by the tag values of the application
 
 ## Troubleshooting
 
