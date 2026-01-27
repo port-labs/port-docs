@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
