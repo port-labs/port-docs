@@ -72,7 +72,7 @@ h6::first-letter {
 /* If you have a different syntax highlighting theme for dark mode. */
 [data-theme="dark"] {
   /* Color which works with dark mode syntax highlighting theme */
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --docusaurus-highlighted-code-line-bg: rgba(62, 208, 221, 0.25);
 }
 
 .hidden {
@@ -739,6 +739,11 @@ html[data-theme="dark"] .openapi-explorer__request-btn {
 
 .theme-code-block-highlighted-line {
   display: table-row !important;
+}
+
+/* Highlight code lines on hover */
+.prism-code .token-line:hover {
+  background-color: var(--docusaurus-highlighted-code-line-bg);
 }
 
 .openapi-tabs__response-code-item:not(.active) {

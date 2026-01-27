@@ -15,7 +15,7 @@ Dashboards are collections of widgets that allow you to display entity data usin
   src="https://demo.port.io/plan_my_day" 
   width="100%" 
   height="600rem" 
-  style={{ border: 'none', borderRadius: '8px' }}
+  style={{ border: '1px solid', borderRadius: '8px' }}
   allow="fullscreen"
   title="Port.io Plan My Day Demo"
 />
