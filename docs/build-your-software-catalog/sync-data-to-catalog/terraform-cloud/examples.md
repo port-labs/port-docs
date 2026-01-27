@@ -473,3 +473,102 @@ To view and test the integration's mapping against examples of the third-party A
 ```
 
 </details>
+
+## State file
+
+<details>
+<summary>State file blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "terraformCloudStateFile",
+  "description": "This blueprint represents a Terraform state file summary",
+  "title": "Terraform Cloud State File",
+  "icon": "Terraform",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "number",
+        "title": "State Version",
+        "description": "The version of the state file format"
+      },
+      "terraformVersion": {
+        "type": "string",
+        "title": "Terraform Version",
+        "description": "The version of Terraform used to create this state"
+      },
+      "serial": {
+        "type": "number",
+        "title": "Serial Number",
+        "description": "A unique serial number that increments with each state change"
+      },
+      "lineage": {
+        "type": "string",
+        "title": "Lineage UUID",
+        "description": "A unique identifier for the state lineage"
+      },
+      "resourceCount": {
+        "type": "number",
+        "title": "Total Resources",
+        "description": "The total number of resources in the state"
+      },
+      "resourceTypes": {
+        "type": "array",
+        "title": "Resource Types",
+        "description": "List of unique resource types in the state",
+        "items": {
+          "type": "string"
+        }
+      },
+      "providers": {
+        "type": "array",
+        "title": "Providers Used",
+        "description": "List of providers used in this state",
+        "items": {
+          "type": "string"
+        }
+      },
+      "outputKeys": {
+        "type": "array",
+        "title": "Output Keys",
+        "description": "List of output variable names defined in the state",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: state-file
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .lineage + "-" + (.serial | tostring)
+        title: '"State v" + (.serial | tostring)'
+        blueprint: '"terraformCloudStateFile"'
+        properties:
+          version: .version
+          terraformVersion: .terraform_version
+          serial: .serial
+          lineage: .lineage
+          resourceCount: .resources | length
+          resourceTypes: .resources | map(.type) | unique | sort
+          providers: .resources | map(.provider) | unique | sort
+          outputKeys: .outputs | keys
+```
+
+</details>
