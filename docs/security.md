@@ -125,12 +125,11 @@ Every part of the Port service uses properly-provisioned, redundant servers (e.g
 
 Port has a formal business continuity plan for extended service outages caused by unforeseen or unavoidable disasters in an effort to restore services to the widest extent possible in a reasonable time frame. Port has documented a set of disaster recovery policies and procedures to enable the recovery or continuation of vital technology infrastructure and systems following a disaster.
 
-Port maintains encrypted backups of data in multiple regions on AWS in accordance with Port's recovery point objectives. While never expected, in the case of production data loss (i.e., primary data stores lost), we will restore organizational data from these backups.
-
 Port's BCP policy is available upon request.
 
 ### Disaster recovery
 
+Port maintains encrypted backups of data in multiple regions on AWS in accordance with Port's recovery point objectives.  
 In the event of a region-wide outage, Port has a documented protocol outlining the steps to deploy a duplicate environment of Port in a different AWS region. The Port operations team undergoes an annual DR simulation to ensure the process is up to date and aligns with the latest innovations in Port.
 
 ## Data flow

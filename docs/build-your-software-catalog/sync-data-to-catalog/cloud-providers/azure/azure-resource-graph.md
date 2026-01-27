@@ -74,7 +74,8 @@ resources:
         | where type =~'microsoft.resources/subscriptions/resourcegroups' 
         | project id, type, name, location, tags, subscriptionId, resourceGroup 
         | extend resourceGroup=tolower(resourceGroup) 
-        | extend type=tolower(type)"
+        | extend type=tolower(type)
+        | order by id"
     port:
       entity:
         mappings:
@@ -101,7 +102,8 @@ resources:
             | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
         ) on $left.subscriptionId == $right.rgSubscriptionId and
         $left.resourceGroup == $right.rgName 
-        | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags"
+        | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags
+        | order by id"
     port:
       entity:
         mappings:
@@ -136,12 +138,17 @@ It is highly recommended to optimize your `graphQuery` to fetch only the data yo
 For example, instead of fetching all resources and then filtering them in the mapping, you can use the `where` clause in your query to filter the resources at the source.
 :::
 
+:::warning Required: Add order by id to all queries
+Due to [known limitations](#known-limitations) in the Azure Resource Graph API, you should include `| order by id` at the end of all your `graphQuery` selectors. This ensures stable pagination and prevents data inconsistencies. See the [known limitations](#known-limitations) section for details.
+:::
+
 Here is an example of a broad query versus an optimized query:
 
 **Broad Query:**
 ```kusto showLineNumbers
 resources
 | project id, type, name, location, tags, subscriptionId, resourceGroup
+| order by id
 ```
 
 **Optimized Query:**
@@ -149,9 +156,38 @@ resources
 resources
 | where type in~ ('microsoft.compute/virtualmachines', 'microsoft.storage/storageaccounts') and tags.environment == 'production'
 | project id, type, name, location, tags, subscriptionId, resourceGroup
+| order by id
 ```
 
 The optimized query fetches only virtual machines and storage accounts that have the `environment` tag set to `production`, which is much more efficient.
+
+### Known limitations
+
+The Azure Resource Graph API has undocumented behavior that can cause data inconsistencies when querying large datasets. We have identified two specific issues:
+
+1. **Data inconsistency with multi-subscription queries** - When querying multiple Azure subscriptions simultaneously, subscriptions with a large number of resources may return inconsistent or incomplete data.
+2. **Data drift during pagination** - If resources are created or deleted in Azure while the integration is paginating through results, the API may return newly created resources instead of existing ones on subsequent pages. This can cause entities to appear as "deleted" in Port when they still exist in Azure.
+
+#### Workaround
+
+To prevent these issues, **adding `| order by id` at the end of all your `graphQuery` selectors**. This ensures stable ordering during pagination and significantly reduces data inconsistencies.
+
+**Before (problematic):**
+
+```kusto showLineNumbers
+resources
+| where type in~ ('microsoft.compute/virtualmachines')
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+```
+
+**After (recommended):**
+
+```kusto showLineNumbers
+resources
+| where type in~ ('microsoft.compute/virtualmachines')
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+| order by id
+```
 
 ## Setup
 
@@ -640,7 +676,8 @@ You can use the following Port blueprint definitions and integration configurati
           | where type in~ ('microsoft.insights/datacollectionendpoints', 'microsoft.compute/virtualmachines')
           | project id, type, name, location, tags, subscriptionId, resourceGroup 
           | extend resourceGroup=tolower(resourceGroup) 
-          | extend type=tolower(type) 
+          | extend type=tolower(type)
+          | order by id"
       port:
         entity:
           mappings:
@@ -742,7 +779,8 @@ resources:
           | where (tostring(tags['environment']) =~ 'prod')
           | project id, type, name, location, tags, subscriptionId, resourceGroup 
           | extend resourceGroup=tolower(resourceGroup) 
-          | extend type=tolower(type)"
+          | extend type=tolower(type)
+          | order by id"
     port:
       entity:
         mappings:
@@ -767,7 +805,8 @@ resources:
               | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
           ) on $left.subscriptionId == $right.rgSubscriptionId and $left.resourceGroup == $right.rgName 
            | where (tostring(rgTags['environment']) =~ 'prod') and not (tostring(rgTags['environment']) =~ 'staging')
-           | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags "
+           | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags
+           | order by id"
     port:
       entity:
         mappings:
