@@ -1,0 +1,64 @@
+---
+id: list-user-memory-records
+title: "List user memory records"
+description: "This route allows you to fetch all memory records associated with your user account. Memory records contain learned preferences that Port AI uses to personalize responses."
+sidebar_label: "List user memory records"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVEtv2zAM/iuCzlkew0659TAMxVagQFvsUOTA2HSs1pZUik6XGvnvI22nea7DjsvBkS3y4+P7yNYyrJKdP9obrANt7GJkc0wZucgueDu396VLhkLDaKCqwmsym9AYDqZAzkr9ZurO1RBmgfJkIKWQOWDMzavjUu3JNAnJQJaFxvPY3Bx7ZMEzOG8qBPLiFgkLJPQZJsMlsLkNxObqWlGSxo5IKXio3BsKSIrBy8XYjmzCrCHHG6motUuBQ5LjYitlvdvZeWs/T6f6d1zqXZNJxFQ0VaW5MTlcSzbH5UkQTRc9KwDEWLkMFGDylBSltSkrsQY98Sai4IblE2YsjpGCZM6uzyE861PAkkAxNbgd2S7WcD94AxFsxNkx1unvqC4/sElSg1/ZU04fvHtp0LhcqnCFE2aKQNJpPK7Vbo9q/RjzXrwHYxOKA7AOhVD1cHURR2LXIDc2F5tP7Go8A/9Zoj/M7xVEND2m3epP6X1pHMm7aFk6e9DKRW/wZTo7p/zBQ8Ol2L2J5z8w+wGTBVRJqUSiQOf1diSnBCu8cHepjh5HBAx57jQdqG4Povfh+hJrlFrE066wEwZwKS+T9WwyUKEDQmsZnm4+GqrkumSOaT6ZQHTjKHM2dkGSvHTbpL3BYj9rd9qVvhG7iduLN7rvqHE91Pp+NXS766uKWkkoEXLx0gqcL0Ln7rhS+37wb6/FVNPuSZuNp9rGGBLX0BEzoP9wiftNczazR7S3e6L/s/02tJXxF09iJZjaiI6pdqD70a5nO/V367wMqspH27ZLSPhA1Xarn2UBkK5JOa6BHCy137IpRzs6VCHPwp2QJmsxqqDWUDU9qyezoXJ4F9+3r/diq3N1LITnTgjDQdF3V35zgH2qkD4FfaooL7q0bS8zKWxn31/90WMocWetbdQt8Ru4Bnba
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List user memory records"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/memory"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all memory records associated with your user account. Memory records contain learned preferences that Port AI uses to personalize responses.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Successfully retrieved memory records","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"const":true},"memories":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","description":"Unique identifier for the memory record"},"content":{"type":"string","description":"The content of the memory"},"createdAt":{"type":"string","format":"date-time","description":"When the memory was created"}}}}},"required":["ok","memories"]}}}},"401":{"description":"Unauthorized","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
