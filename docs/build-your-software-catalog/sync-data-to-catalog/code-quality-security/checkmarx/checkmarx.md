@@ -89,6 +89,52 @@ Checkmarx One provides different URLs based on your region:
 Store your API key securely and never share it. The API key provides access to your Checkmarx One data.
 :::
 
+### Setting up webhooks for live events
+
+To enable real-time updates from Checkmarx One to your Ocean integration, configure a webhook in your Checkmarx One instance. This allows Port to receive notifications when projects are created or scans complete, keeping your software catalog synchronized. Live events are supported for projects, scans, and all scan result types (SAST, SCA, KICS, Container Security, and API Security).
+
+You can configure webhooks at two levels: **tenant-level** for organization-wide monitoring, or **project-level** for specific projects.
+
+<Tabs groupId="webhook-level" queryString="webhook-level">
+
+<TabItem value="tenant" label="Tenant-level (recommended)" default>
+
+Tenant-level webhooks receive events from all projects and support project creation events. For more details, see the [Checkmarx tenant-level webhooks documentation](https://docs.checkmarx.com/en/34965-378162-tenant-level-webhooks.html).
+
+1. Log in to your Checkmarx One account with admin permissions.
+2. Click the **gear icon** and select **Global Settings**.
+3. Select **Webhooks** from the menu, then click **Add Webhook**.
+4. Fill in the webhook details:
+   - **Name**: Enter a descriptive name (e.g., `Port Integration Webhook`).
+   - **Payload URL**: Enter the URL where your integration is accessible, following the pattern `https://<YOUR_INTEGRATION_HOST>/integration/webhook` (replace `<YOUR_INTEGRATION_HOST>` with your integration's host address).
+   - **Secret** (optional): Enter a secret to secure webhook deliveries. If configured, set the same value in the `webhookSecret` parameter of your integration.
+   - **Events**: Select `Project Created`, `Completed Scan`, `Failed Scan`, and `Partial Scan`.
+5. Click **Add Webhook** to save.
+
+</TabItem>
+
+<TabItem value="project" label="Project-level">
+
+Project-level webhooks receive events only from a specific project. Use this for targeted monitoring of critical applications. For more details, see the [Checkmarx project webhooks documentation](https://docs.checkmarx.com/en/34965-68538-configuring-projects.html#UUID-1a1413d4-5d19-ddc0-aa35-51ff05ef0ade_UUID-a11c3b46-abfa-c26f-026b-0a9c04a79a46).
+
+1. Navigate to the project you want to monitor.
+2. Click the **three dots** menu on the project and select **Project Settings**.
+3. Select **Webhooks** from the menu, then click **Add Webhook**.
+4. Fill in the webhook details:
+   - **Name**: Enter a descriptive name (e.g., `Port Integration Webhook`).
+   - **Payload URL**: Enter the URL where your integration is accessible, following the pattern `https://<YOUR_INTEGRATION_HOST>/integration/webhook` (replace `<YOUR_INTEGRATION_HOST>` with your integration's host address).
+   - **Secret** (optional): Enter a secret to secure webhook deliveries. If configured, set the same value in the `webhookSecret` parameter of your integration.
+   - **Events**: Select `Completed Scan`, `Failed Scan`, and `Partial Scan`.
+5. Click **Add Webhook** to save.
+
+</TabItem>
+
+</Tabs>
+
+:::tip Webhook security
+For added security, configure a webhook secret in Checkmarx One and set the same secret in your integration configuration using the `webhookSecret` parameter. This ensures that the integration only accepts legitimate events from Checkmarx One.
+:::
+
 Choose one of the following installation methods:  
 Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
