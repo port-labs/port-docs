@@ -716,6 +716,42 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Memory",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/list-user-memory-records",
+          label: "List user memory records",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-user-memory-records",
+          label: "Delete user memory records",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-users-memory-records",
+          label: "Delete users memory records (Admin)",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-memory-settings",
+          label: "Get memory settings (Admin)",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-memory-settings",
+          label: "Update memory settings (Admin)",
+          className: "api-method put",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Catalog auto discovery",
       items: [
         {

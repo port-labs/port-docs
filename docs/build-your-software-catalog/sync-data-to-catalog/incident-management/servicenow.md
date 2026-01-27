@@ -68,7 +68,7 @@ You can configure the authentication method by providing the appropriate credent
 The integration will automatically detect and use OAuth authentication if client credentials are provided.
 
 <details>
-<summary><b>Setting up OAuth in ServiceNow (Click to expand)</b></summary>
+<summary><b>Setting up OAuth in ServiceNow (click to expand)</b></summary>
 
 To use OAuth authentication, you need to create an OAuth application endpoint in ServiceNow:
 
@@ -98,7 +98,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Servicenow"/>
 
 </TabItem>
 
@@ -680,7 +680,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration for this integration:
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 
 ```yaml showLineNumbers
@@ -783,7 +783,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Group
 
 <details>
-<summary>Group blueprint</summary>
+<summary><b>Group blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -822,7 +822,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -852,7 +852,7 @@ resources:
 ### Service Catalog
 
 <details>
-<summary>Service catalog blueprint</summary>
+<summary><b>Service catalog blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -891,7 +891,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -921,7 +921,7 @@ resources:
 ### Incident
 
 <details>
-<summary>Incident blueprint</summary>
+<summary><b>Incident blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -985,7 +985,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1045,7 +1045,7 @@ resources:
 ### Vulnerability
 
 <details>
-<summary>Vulnerability blueprint</summary>
+<summary><b>Vulnerability blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1107,7 +1107,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1144,7 +1144,7 @@ resources:
 ### Release Management
 
 <details>
-<summary>Release Management blueprint</summary>
+<summary><b>Release Management blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1222,7 +1222,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1295,7 +1295,7 @@ This section includes a sample response data from ServiceNow. In addition, it in
 Here is an example of the payload structure from ServiceNow:
 
 <details>
-<summary> Group response data</summary>
+<summary><b>Group response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1325,7 +1325,7 @@ Here is an example of the payload structure from ServiceNow:
 </details>
 
 <details>
-<summary> Service Catalog response data</summary>
+<summary><b>Service Catalog response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1366,7 +1366,7 @@ Here is an example of the payload structure from ServiceNow:
 </details>
 
 <details>
-<summary> Incident response data</summary>
+<summary><b>Incident response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1498,7 +1498,7 @@ Here is an example of the payload structure from ServiceNow:
 </details>
 
 <details>
-<summary> Release Management response data</summary>
+<summary><b>Release Management response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1536,7 +1536,7 @@ Here is an example of the payload structure from ServiceNow:
 
 <details>
 
-<summary> Vulnerability response data</summary>
+<summary><b>Vulnerability response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1562,7 +1562,7 @@ Here is an example of the payload structure from ServiceNow:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Group entity in Port</summary>
+<summary><b>Group entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1588,7 +1588,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Service catalog entity in Port</summary>
+<summary><b>Service catalog entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1614,7 +1614,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Incident entity in Port</summary>
+<summary><b>Incident entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1646,7 +1646,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Release Management entity in Port</summary>
+<summary><b>Release Management entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1681,7 +1681,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 <details>
-<summary> Vulnerability entity in Port</summary>
+<summary><b>Vulnerability entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1734,7 +1734,7 @@ In this example you are going to create a webhook integration between [ServiceNo
 Create the blueprint definition:
 
 <details>
-<summary>Servicenow change request blueprint</summary>
+<summary><b>Servicenow change request blueprint (click to expand)</b></summary>
 
 <ServiceNowChangeRequestBlueprint/>
 
@@ -1744,7 +1744,7 @@ Create the blueprint definition:
 Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
-<summary>Servicenow webhook configuration</summary>
+<summary><b>Servicenow webhook configuration (click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Servicenow Mapper`;
@@ -1774,7 +1774,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 5. In the **Advanced** tab, add the following script:
 
 <details>
-<summary>ServiceNow configuration code (click to expand)</summary>
+<summary><b>ServiceNow configuration code (click to expand)</b></summary>
 
 ```javascript
 (function executeRule(current, previous /*null when async*/) {
@@ -1849,7 +1849,7 @@ This section includes a sample webhook event sent from ServiceNow when a change 
 Here is an example of the payload structure sent to the webhook URL when a ServiceNow change request is created or updated:
 
 <details>
-<summary>Webhook event payload</summary>
+<summary><b>Webhook event payload (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
