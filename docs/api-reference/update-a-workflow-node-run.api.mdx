@@ -1,0 +1,72 @@
+---
+id: update-a-workflow-node-run
+title: "Update a workflow node run"
+description: "Update the status, result, logs, or output of a workflow node run."
+sidebar_label: "Update a workflow node run"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVm1v2zYQ/isEsQ8t4LcE3YDmm+u4XbCsNpwEBRa4AS2dbTayyJGUXVfQf98dKdmyrbQpUHQDlg+RLB559zz33PFyHoONjNROqpRf8DsdCwfMLYFZJ1xmW8yAzRLXYola4C9lmMqczhxTcybYRpnHeaI2LFUxMJOlHd7iTiwsv7jnH8pFy6ctbiHKjHRbXMj5DIQBg6/TApcM/J2BdW9UjKs5j1TqIHX0KrROZCQouO4nSxHm3EZLWAl6c1sNGLOafYLIoV9tlAbjJFhv5+Ov2VlnZLpAu0PIt4g1hU2Jl2AR+joeSLMV4RmM/hxfD2+Hl/jt6v3DeDJ6Nxne3PBpQRiIped5C7bHntgL6Cw6LXZzNxjgqS32tn91Pbx8SRGkWZKIWYLnOpMBuqNk1JwJY8T2xNe1WjAk0iAhzCkm4pgex+ikg5X9Np3o8RrWkDwPokVTyjZLaE8FNSkD2tZZvRy+uXvnGX07wseH/uQ9PoaTyWjimcVN5DOGufAMc1LYNwMgVyuwViyAlYLq8KLSZu24vGidID887g/YttciyYBpIY1lc6wB1CQslJFf0P8OFjJFwJBnSVtFMj5g8DDooiiC8qWBmHjYETyllVBk3xnpKFQmlrBgmL04iyBms+1Jyp+IsAh/mHlhxAocGOur9aTidrxr4dCKXH/czFPzcC/aX/rtv3rt19P87LfiF2Jc0jIaLknHeCz+olgeMJYHGSNvci6xFzQlMUsldga2t6qE1Nh29mT6IvGNxWqV2kD/ea8X6Kx7uQzksklpicf8oPajHms2M6USECk/zjkaTZ9Kx1wkFkI+XvVe/fuhY8Uao0yDklu8rLQmlZ8Ars55FvDz8/8n8F//C2L9+cD9wW6p4tAyomXoMUv82V2fdauyt12qe9vFwrfdvKGbFJwGDrOuOlhm8N7iS+e0veh2hZYdrYzrSIVQmlYzuzeozS43RGdgrJpg9lewlnhR7HtcP0MceEH4hPCyDS5BxLiLcFKKJvvBZ/hZrHQC9cHlYN6o5ot97w0jwH39Zt7dpf7O5LtRDDv7tHalFL4rz5WPXjryyscIl/XHV7iHWAuCO+v0KNdaWbcSXlAluHJMbJj/jvt4bZz7QcNloNvBZ9fViZBepz6DeSmVe74+Q8OdWCgnJBdiEQWDj4umCwgZWiJQ2p/nM2HhziRFQZ8xSYbmVnxdCyPDIIbEx9LSe1wK+CvIX0zKinjJvv9ea0RcqS4lyfnpJCT8ETXYfMEWNEyVAqTog+UgxNi+pfP2J500E6qTsKMfRaDdV22ntTIe928Hv6P1rJzuVxgafjZiQ/nA/z5s5UnzleW/oapFush8h+HhUFKtyCjB9Zp79DVXvhCsRmKOizEgof+Eq3FLnoeKLoqdfVh6ckfJbWVNecJRrvgHf72ayQ==
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a workflow node run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/workflows/nodes/runs/{node_run_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update the status, result, logs, or output of a workflow node run.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","pattern":"^wfnr_[a-zA-Z0-9]{16}$"},"in":"path","name":"node_run_identifier","description":"The unique identifier of the workflow node run.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","description":"The new status of the node run.","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","description":"The result of the node run (e.g., SUCCESS, FAILED).","nullable":true},"logs":{"type":"array","description":"Log entries to add to the node run.","items":{"type":"object","properties":{"logLevel":{"type":"string","description":"The severity level of the log entry.","enum":["DEBUG","INFO","WARN","ERROR"]},"log":{"default":"","type":"string","description":"The log message content."},"tags":{"default":{},"type":"object","description":"Key-value pairs for categorizing log entries.","additionalProperties":{"type":"string"}}},"required":["logLevel"]}},"output":{"default":{},"type":"object","description":"Output data produced by the node run.","additionalProperties":{}}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"}},"required":["ok"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"422":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,72 @@
+---
+id: trigger-a-workflow-run
+title: "Trigger a workflow run"
+description: "Start a new execution of a workflow with optional input parameters."
+sidebar_label: "Trigger a workflow run"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlWFFv4jgQ/iuRdQ+3Ulug6t6KvtGWW1XX2yLK3kqHuMokA3ibxDnbgbJR/vvO2IEEGihdVdVK2wcw9sx4vm9mbE8zFoD2lUiMkDE7Z3eGK+NxL4aFB4/gpzTvyQlOLaR6mIRy4S2EmXnSavDQE3GSGi/hikdgQOkTdsQMn2p2PmRfChXNRkdMozUlzBIXMjYGrkDhcJTjkoL/U9DmQga4mjFfxgZiQ0OeJKHwOe3V+KrJxYxpfwYRp5FZJoBOy/FX8A3umyiZgDICNK1az+wogAlPQzKYHz1R2iTgeguOZyT+0vbbzKBkYc0OAeZBIBwfvaoLuftDx9b2LPonCLRRIp4ylBTkRMLNDK3GqIO/VlveiwBZEROBxG27PUDX0lggjV4pRXHb8JkwKDGdgiKniXWhIGDnRqXg4qATGWtH32mz5bir7nPlmPT6hSSaeaVoyYeKzFjKEHhMhKyc76fxASEvGXpCLkXBYAgIxn+Libof8uNvneN/m8ftUdb6I/+NdjPChFCnG6dhyMe0ZsnCQPkyPkgwlgGg85uJOBytE5ErxZeoKAxE+lUhxvUYyaHBwThJ+volWC9lPBHTgRU9QEWmBivu2SrdWWF4sBhuUl23GcRpROfQ5e3fvZvuoHuFc9ef7nv924/97t0dG+U2592mz7vqK+AGgk6t9ESqiOMKC1Dm2AgsXVRJk+ClKr6MkhB2Ku3Krxs5fa0UC+X0BuYQ7qP0qnvx+aOl889b/PrS6X/Cr26/f9u3tKKNDW8YO3p62Ll74sciv23tjeKTV8/NYUmVQ1xAqrpS3WO0C82EhxrybeMb531RJ+t037XHZkI8t+NbVs8L8/ptqm3OlaBtDygLF4FawS3n8/2sl5faP/giQKHroGJU4HU6tSGPRCwiikETx/zRjdvN5odWu336/uzDWbPdbpVMXSxrXxQvPpP3ZeH6MjsgD0tq6wBX3X4+S6sO4Uth81nwbFmhgbPm2c/wmgGlZM3FjSsRaM2nNfGphe/sHAT89PTXBP6+2fwVgVvDZiYD6iOkNu5ROMNfjXmrsSob3chq2oq8oYraBjVfNSupwocAmxmT6PNGgyfiJJHKnAiJGOpWU10KVNq+O+LRUbVq/ta4Ue0vWJYdTydFAEp8s5FgRVM0Ax6gFgGk2PTLnrH7yOlq2ej5cttLTaTdxT12WQ/d8jq9azqb3DmEk62TJgWDqIq4jXjhxMB1StXOF9nZ7rwq3eprNc+OEwOPppGEXNgssjRnRSSHbN6qHIEUsPP6JtGGE4Mwo0RAvSwbcw2fVZjnNI0MqqV7Ka4OaxvyQGgaB0Va7YH8e7/I03fej7SgtVhXSREv7SUSpuCejw+YIvXdcE5PkSI/yH8neem8PLbXXmnpSZFTGjuNju9DYvbKjirl1bu9G6DwuPi3RYR3I84qviDm8dN67WJt897O4fOax9PUFj5zNu17IaXIViviwVZEMSBUtbxsl4oDQp8Eq1Yly1y9YQ6s5N3STo2C2pU0hWmEXn8Hh6lQxA==
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Trigger a workflow run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/workflows/{workflow_identifier}/runs"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Start a new execution of a workflow with optional input parameters.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"workflow_identifier","description":"The unique identifier of the workflow to trigger.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"inputs":{"default":{},"type":"object","description":"Input parameters to pass to the workflow execution.","additionalProperties":{}}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"workflowRun":{"type":"object","properties":{"identifier":{"type":"string","pattern":"^wfr_[a-zA-Z0-9]{16}$"},"title":{"type":"string","nullable":true},"icon":{"type":"string","nullable":true},"nodeRuns":{"default":[],"type":"array","items":{"type":"object","properties":{"identifier":{"type":"string","pattern":"^wfnr_[a-zA-Z0-9]{16}$"},"nodeTitle":{"type":"string","nullable":true},"nodeIcon":{"type":"string","nullable":true},"nodeConfigType":{"type":"string","nullable":true},"output":{"default":{},"type":"object","additionalProperties":{}},"status":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","nullable":true},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"completedAt":{"type":"string","nullable":true},"nodeRunLogs":{"default":[],"type":"array","items":{"type":"object","properties":{"logLevel":{"type":"string","enum":["DEBUG","INFO","WARN","ERROR"]},"log":{"default":"","type":"string"},"tags":{"default":{},"type":"object","additionalProperties":{"type":"string"}},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["logLevel","log","tags","createdAt","updatedAt"],"additionalProperties":false}}},"required":["identifier","output","status","createdAt","updatedAt","nodeRunLogs"],"additionalProperties":false}},"status":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","nullable":true},"completedAt":{"type":"string","nullable":true},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"variables":{"type":"object","properties":{"outputs":{"type":"object","nullable":true}},"additionalProperties":false},"workflowVersionId":{"type":"integer","minimum":0,"maximum":9007199254740991},"createdBy":{"type":"string"},"nodeConfigType":{"type":"string","nullable":true}},"required":["identifier","nodeRuns","status","createdAt","updatedAt","variables","workflowVersionId","createdBy"],"additionalProperties":false}},"required":["ok","workflowRun"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"422":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
