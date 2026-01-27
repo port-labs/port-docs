@@ -1227,36 +1227,8 @@ Here is an example of the payload structure from Azure DevOps:
   "truncatedSecret": "…iMF-XM",
   "confidence": "high",
   "hasTrustedSourceOrigin": true,
-  "__repository": {
-    "id": "864e1b4d-d163-47f5-87fb-22f2d4046fa6",
-    "name": "fabrikam",
-    "url": "[REDACTED]/ac5aaba6-a66a-4e1d-b508-b060ec624fa9/_apis/git/repositories/864e1b4d-d163-47f5-87fb-22f2d4046fa6",
-    "project": {
-      "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
-      "name": "fabrikam",
-      "url": "[REDACTED]/_apis/projects/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
-      "state": "wellFormed",
-      "revision": 11,
-      "visibility": "private",
-      "lastUpdateTime": "2025-08-27T22:17:21.613Z"
-    },
-    "defaultBranch": "refs/heads/main",
-    "size": 14885587,
-    "remoteUrl": "https://fabrikam@dev.azure.com/fabrikam/fabrikam/_git/fabrikam",
-    "sshUrl": "git@ssh.dev.azure.com:v3/fabrikam/fabrikam/fabrikam",
-    "webUrl": "[REDACTED]/fabrikam/_git/fabrikam",
-    "isDisabled": false,
-    "isInMaintenance": false
-  },
-  "__project": {
-    "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
-    "name": "fabrikam",
-    "url": "[REDACTED]/_apis/projects/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
-    "state": "wellFormed",
-    "revision": 11,
-    "visibility": "private",
-    "lastUpdateTime": "2025-08-27T22:17:21.613Z"
-  }
+  "__repositoryId": "864e1b4d-d163-47f5-87fb-22f2d4046fa6",
+  "__projectId": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9"
 }
 ```
 
