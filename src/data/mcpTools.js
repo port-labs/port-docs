@@ -200,5 +200,13 @@ export const mcpTools = [
     description: 'Describe the user, which organization he is connected to and what teams he is a member of and more information regarding the user. Can be useful for questions that relate to the user or when looking up for related entities to the user',
     apiReference: '/api-reference/get-organization-details',
     roles: ['developer', 'builder']
+  },
+
+  // Skill tools
+  {
+    name: 'load_skill',
+    description: 'Load specialized guidance for a domain-specific task. Skills provide step-by-step instructions for common workflows like troubleshooting integrations. Load a skill before starting a specialized task to ensure consistent, thorough handling.',
+    docsReference: '/ai-interfaces/port-mcp-server/skills',
+    roles: ['developer', 'builder']
   }
 ];
