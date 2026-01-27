@@ -179,7 +179,18 @@ export const liveEvents = {
     "**Code Events:** \
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
-    \n- git.push",
+    \n- git.push \
+    \n\n**Repository:** \
+    \n- git.repo.created \
+    \n\n**Work Item:** \
+    \n- workitem.created \
+    \n- workitem.updated \
+    \n- workitem.commented \
+    \n- workitem.deleted \
+    \n\n**Advanced Security Alerts:** \
+    \n- ms.vss-alerts.alert-created-event \
+    \n- ms.vss-alerts.alert-state-changed-event \
+    \n- ms.vss-alerts.alert-updated-event",
   BitbucketServer:
     "**Pull Request:** \
     \n- pr:modified \

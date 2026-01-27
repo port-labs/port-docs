@@ -1,0 +1,116 @@
+<details>
+<summary><b>Advanced Security Alert blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+
+  {
+    "identifier": "azureDevopsAdvancedSecurity",
+    "title": "Azure DevOps Advanced Security",
+    "icon": "AzureDevops",
+    "schema": {
+      "properties": {
+        "severity": {
+          "title": "Severity",
+          "type": "string",
+          "description": "The severity level of the security alert",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical",
+            "note",
+            "warning",
+            "error"
+          ],
+          "enumColors": {
+            "low": "blue",
+            "medium": "yellow",
+            "high": "orange",
+            "critical": "red",
+            "note": "blue",
+            "warning": "yellow",
+            "error": "red"
+          }
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "description": "The current state of the security alert",
+          "enum": [
+            "active",
+            "dismissed",
+            "fixed",
+            "autoDismissed"
+          ],
+          "enumColors": {
+            "active": "red",
+            "dismissed": "darkGray",
+            "fixed": "green",
+            "autoDismissed": "darkGray"
+          }
+        },
+        "alertType": {
+          "title": "Alert Type",
+          "type": "string",
+          "description": "The type of security alert",
+          "enum" : [
+            "dependency",
+            "secret",
+            "code"
+          ],
+          "enumColors": {
+            "dependency": "blue",
+            "secret": "yellow",
+            "code": "orange"
+          }
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "string",
+          "description": "The confidence level of the security alert",
+          "enum" : [
+            "other",
+            "high"
+          ],
+          "enumColors": {
+            "other": "yellow",
+            "high": "green"
+          }
+        },
+        "link": {
+          "title": "Link",
+          "type": "string",
+          "format": "url",
+          "icon": "AzureDevops",
+          "description": "The URL of the security alert in Azure DevOps"
+        },
+        "introducedDate": {
+          "title": "Introduced Date",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date when the security alert was introduced"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "repository": {
+        "title": "Repository",
+        "target": "azureDevopsRepository",
+        "required": true,
+        "many": false
+      },
+      "project": {
+        "title": "Project",
+        "target": "azureDevopsProject",
+        "required": true,
+        "many": false
+      }
+    }
+  }
+```
+
+</details>

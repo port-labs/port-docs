@@ -19,6 +19,9 @@ import ProjectBlueprint from './example-project/\_azuredevops_exporter_example_p
 import WorkItemBlueprint from './example-project/\_azuredevops_exporter_example_work_item_blueprint.mdx'
 import PortWorkItemAppConfig from './example-project/\_azuredevops_exporter_example_work_item_port_app_config.mdx'
 
+import PortAdvancedSecurityAppConfig from './example-advanced-security-alerts/\_azuredevops_exporter_example_advsec_port_app_config.mdx'
+import AdvancedSecurityBlueprint from './example-advanced-security-alerts/\_azuredevops_exporter_example_advsec_blueprint.mdx'
+
 import BoardBlueprint from './example-board/\_azuredevops_exporter_example_board_blueprint.mdx'
 import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_board_port_app_config.mdx'
 
@@ -498,6 +501,96 @@ The following example demonstrates how to ingest Azure DevOps pipeline deploymen
 <PipelineDeploymentBlueprint/>
 
 <PortPipelineDeploymentAppConfig/>
+
+## Mapping advanced security alerts
+
+The following example demonstrates how to ingest your Azure Devops advanced security alerts to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<AdvancedSecurityBlueprint/>
+
+<PortAdvancedSecurityAppConfig/>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="States criteria" value="statesCriteria">
+
+The `states` filter under the `criteria` selector controls which states of the advanced security alerts are ingested per repository. By default, no states are provided, so all alerts are ingested.
+
+The supported values for `states` are:
+- `active`
+- `dismissed`
+- `fixed`
+- `autoDismissed`
+
+```yaml showLineNumbers
+- kind: advanced-security-alert
+  selector:
+    query: 'true'
+    # highlight-next-line
+    criteria:
+      # highlight-next-line
+      states:
+        - active
+        - dismissed
+```
+
+</TabItem>
+
+<TabItem label="Severities criteria" value="severitiesCriteria">
+
+The `severities` filter under the `criteria` selector controls which severities of the advanced security alerts are ingested per repository. By default, no severities are provided, so all alerts are ingested.
+
+The supported values for `severities` are:
+- `low`
+- `medium`
+- `high`
+- `critical`
+- `note`
+- `warning`
+- `error`
+
+```yaml showLineNumbers
+- kind: advanced-security-alert
+  selector:
+    query: 'true'
+    # highlight-next-line
+    criteria:
+      # highlight-next-line
+      severities:
+        - high
+        - critical
+```
+
+</TabItem>
+
+<TabItem label="Alert Type criteria" value="alertTypeCriteria">
+
+The `alertType` filter under the `criteria` selector controls which alert types of the advanced security alerts are ingested per repository. By default, no alert types are provided, so all alerts are ingested.
+
+The supported values for `alertType` are:
+- `code`
+- `dependency`
+- `secret`
+
+```yaml showLineNumbers
+- kind: advanced-security-alert
+  selector:
+    query: 'true'
+    # highlight-next-line
+    criteria:
+      # highlight-next-line
+      alertType: 'secret'
+```
+
+</TabItem>
+
+</Tabs>
+
+:::tip To Learn more
+
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/advancedsecurity/alerts/list?view=azure-devops-rest-7.2&tabs=HTTP) for the Azure Devops advanced security alert object structure.
+:::
 
 ## Mapping supported resources
 
