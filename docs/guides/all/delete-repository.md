@@ -4,23 +4,40 @@ displayed_sidebar: null
 description: Learn how to delete a repository in Port with this guide, ensuring secure and proper removal of unnecessary resources.
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Delete GitHub Repository
 
 In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to [delete a GitHub repository](https://docs.github.com/en/rest/repos/repos#delete-a-repository).
 
-:::tip Use Cases
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
+
+## Use cases
 
 - **Declutter Development**: Clean up outdated, unused, or test repositories to streamline your GitHub environment.
 - **Project Sunset**: Offboard completed projects by gracefully deleting their repositories.
 - **Enhanced Control**: Manage repository lifecycles without needing in-depth GitHub permissions.
-:::
 
 ## Prerequisites
+<Tabs groupId="github-repo-delete" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 1. **Port's GitHub Integration**: Install it by clicking [here](https://github.com/apps/getport-io/installations/new). This is essential for Port to interact with your GitHub repositories.
 2. **GitHub Data in Port**: Ensure your repositories are synced with Port. If you haven't set this up yet, follow this quick [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests).
 3. **Workflow Repository**: Decide on an existing repository where you'll store your GitHub workflow file, or create a dedicated repository for your Port actions.
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+1. **Port's GitHub Integration**: Install it by clicking [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation). This is essential for Port to interact with your GitHub repositories.
+2. **GitHub Data in Port**: Ensure your repositories are synced with Port. If you haven't set this up yet, follow this quick [guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/examples#repositories-and-pull-requests).
+3. **Workflow Repository**: Decide on an existing repository where you'll store your GitHub workflow file, or create a dedicated repository for your Port actions.
+
+</TabItem>
+</Tabs>
 
 
 ## Guide
