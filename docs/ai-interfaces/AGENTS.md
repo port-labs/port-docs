@@ -24,6 +24,11 @@ To add, update, or remove MCP tools:
 2. **Ask for clarification**: Determine if the tool is for `builder` only or for both `developer` and `builder` roles
 3. The `ToolsList` component automatically reads from this file and displays tools in the documentation
 
+**Tool naming conventions:**
+- List tools (`list_blueprints`, `list_entities`, etc.): Support optional `identifiers` parameter to get detailed info for specific items
+- Upsert tools (`upsert_blueprint`, `upsert_entity`, etc.): Create or update resources (creates if not exists, updates if exists)
+- Delete tools: Remove resources
+
 ### Set Feature Beta Status
 
 When asked to mark a feature as **open beta** or **closed beta**, use the appropriate component:

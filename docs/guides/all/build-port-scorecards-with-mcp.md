@@ -28,7 +28,7 @@ This guide assumes you have:
 
 ## Create scorecards with AI
 
-The Port MCP server provides tools like `create_scorecard`, `get_scorecards`, and `update_scorecard` that enable AI agents to build your scorecards through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
+The Port MCP server provides tools like `list_scorecards` and `upsert_scorecard` that enable AI agents to build your scorecards through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
 <h3>Start with a simple description</h3>
 
@@ -38,7 +38,7 @@ Describe the scorecard you want to create in natural language. The AI will inter
 
 *"Create a security maturity scorecard for the service blueprint with levels Basic, Bronze, Silver, and Gold. Add a rule at Bronze level that checks services have no critical vulnerabilities."*
 
-The AI will use the MCP `create_scorecard` tool to generate and create the scorecard:
+The AI will use the MCP `upsert_scorecard` tool to generate and create the scorecard:
 
 <Tabs groupId="mcp-output" queryString>
 <TabItem value="mcp" label="MCP server input">
@@ -138,7 +138,7 @@ Ask your AI assistant:
 <h3>What happens</h3>
 
 The agent will:
-1. **Find the service** - Locate the entity via `list_entities` or `get_entities_by_identifiers`.
+1. **Find the service** - Locate the entity via `list_entities` with the service identifier.
 2. **Query scorecard results** - Include `security-maturity` in the entity request.
 3. **Analyze rule results** - Identify which rules have `status: FAILURE`.
 4. **Provide recommendations** - Explain what needs to be fixed to improve the level.

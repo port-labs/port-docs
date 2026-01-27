@@ -4,135 +4,83 @@
 export const mcpTools = [
   // Blueprint tools
   {
-    name: 'create_blueprint',
-    description: 'Create blueprints (basic building blocks in Port)',
-    apiReference: '/api-reference/create-a-blueprint',
-    roles: ['builder']
-  },
-  {
     name: 'list_blueprints',
-    description: 'Retrieve all blueprints in your organization. Blueprints are the building blocks that define your data model. The response is compacted, use get_blueprint with specific blueprint for full details, if needed.',
+    description: 'List blueprints in your organization. Without identifiers, returns a summary list. With identifiers, returns full blueprint details including property definitions, schemas, and enum values.',
     apiReference: '/api-reference/get-all-blueprints',
     roles: ['developer', 'builder']
   },
   {
-    name: 'get_blueprint',
-    description: 'Get a specific blueprint by its identifier. Returns the complete blueprint configuration.',
-    apiReference: '/api-reference/get-a-blueprint',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'update_blueprint',
-    description: 'Update existing blueprint configuration',
-    apiReference: '/api-reference/update-a-blueprint',
+    name: 'upsert_blueprint',
+    description: 'Create or update a blueprint. Updates if the blueprint exists, creates if it does not.',
+    apiReference: '/api-reference/create-a-blueprint',
     roles: ['builder']
   },
   {
     name: 'delete_blueprint',
-    description: 'Delete blueprint and all its entities',
+    description: 'Delete blueprint and all its entities.',
     apiReference: '/api-reference/delete-a-blueprint',
     roles: ['builder']
   },
 
   // Entity tools
   {
-    name: 'create_entity',
-    description: 'Create new entity for blueprint',
+    name: 'list_entities',
+    description: 'Query entities from a blueprint with filtering, sorting, and pagination. Supports identifiers for specific entities, groupBy for value distribution, and countOnly for counting without retrieving data.',
+    apiReference: '/api-reference/get-all-entities-of-a-blueprint',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'upsert_entity',
+    description: 'Create or update an entity. Updates if the entity exists, creates if it does not. Uses merge by default to preserve existing fields.',
     apiReference: '/api-reference/create-an-entity',
     roles: ['builder']
   },
   {
-    name: 'list_entities',
-    description: 'Search and retrieve entities for a blueprint with advanced filtering, sorting, and pagination options',
-    apiReference: '/api-reference/get-all-entities-of-a-blueprint',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'get_entities_by_identifiers',
-    description: 'Get specific entities by their identifiers within a blueprint',
-    apiReference: '/api-reference/get-an-entity',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'count_entities',
-    description: 'Count entities matching specified filters without retrieving entity data. Returns only the count number for efficient queries like "how many services are in production?"',
-    apiReference: '/api-reference/get-all-entities-of-a-blueprint',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'update_entity',
-    description: 'Update an existing entity. Only the fields provided will be updated.',
-    apiReference: '/api-reference/update-an-entity',
-    roles: ['builder']
-  },
-  {
     name: 'delete_entity',
-    description: 'Delete entity with optional dependents',
+    description: 'Delete entity with optional dependents.',
     apiReference: '/api-reference/delete-an-entity',
     roles: ['builder']
   },
 
   // Scorecard tools
   {
-    name: 'create_scorecard',
-    description: 'Create new scorecard for blueprint',
-    apiReference: '/api-reference/create-a-scorecard',
-    roles: ['builder']
-  },
-  {
-    name: 'get_scorecards',
-    description: 'Retrieve all scorecards. The response is compacted, use get_scorecard with specific scorecard for full details, if needed.',
+    name: 'list_scorecards',
+    description: 'List scorecards in your organization. Without identifiers, returns a summary list. With identifiers, returns full scorecard details including complete rule configurations.',
     apiReference: '/api-reference/get-all-scorecards',
     roles: ['developer', 'builder']
   },
   {
-    name: 'get_scorecard',
-    description: 'Get specific scorecard by identifier',
-    apiReference: '/api-reference/get-a-scorecard',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'update_scorecard',
-    description: 'Update existing scorecard',
-    apiReference: '/api-reference/change-scorecards',
+    name: 'upsert_scorecard',
+    description: 'Create or update a scorecard. Updates if the scorecard exists, creates if it does not.',
+    apiReference: '/api-reference/create-a-scorecard',
     roles: ['builder']
   },
   {
     name: 'delete_scorecard',
-    description: 'Delete scorecard by identifiers',
+    description: 'Delete scorecard by identifiers.',
     apiReference: '/api-reference/delete-a-scorecard',
     roles: ['builder']
   },
 
   // Action tools
   {
-    name: 'create_action',
-    description: 'Create new action',
-    roles: ['builder']
-  },
-  {
     name: 'list_actions',
-    description: 'Get all actions. The response is compacted, use get_action with specific action for full details, if needed.',
+    description: 'List actions in your organization. Without identifiers, returns a summary list. With identifiers, returns full action details including complete input schemas.',
     roles: ['developer', 'builder']
   },
   {
-    name: 'get_action',
-    description: 'Get specific action details and input schema',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'update_action',
-    description: 'Update existing action',
+    name: 'upsert_action',
+    description: 'Create or update an action. Updates if the action exists, creates if it does not.',
     roles: ['builder']
   },
   {
     name: 'delete_action',
-    description: 'Delete action by identifier',
+    description: 'Delete action by identifier.',
     roles: ['builder']
   },
   {
     name: 'track_action_run',
-    description: 'Track action execution status',
+    description: 'Track action execution status.',
     roles: ['developer', 'builder']
   },
   {
@@ -144,26 +92,20 @@ export const mcpTools = [
   },
   {
     name: 'get_action_permissions',
-    description: 'Get permissions/approval config for actions',
+    description: 'Get permissions/approval config for actions.',
     roles: ['developer', 'builder']
   },
   {
     name: 'update_action_permissions',
-    description: 'Update action permissions configuration',
+    description: 'Update action permissions configuration.',
     roles: ['builder']
   },
 
   // Integration tools
   {
     name: 'list_integrations',
-    description: 'Retrieve all integrations in your organization. Returns basic details including identifier, integration type, title, version, and resync state. To get the full integration details including config, use get_integration.',
+    description: 'List integrations in your organization. Without identifiers, returns a summary list. With identifiers, returns full integration details including complete config with mapping configuration.',
     apiReference: '/api-reference/get-all-integrations',
-    roles: ['builder']
-  },
-  {
-    name: 'get_integration',
-    description: 'Get a single integration by its identifier. Returns the full integration details including the complete config with mapping configuration.',
-    apiReference: '/api-reference/get-an-integration',
     roles: ['builder']
   },
   {
@@ -191,7 +133,7 @@ export const mcpTools = [
 
   // Documentation and user tools
   {
-    name: 'search_port_sources',
+    name: 'search_port_knowledge_sources',
     description: 'Search the official Port documentation and return the most relevant sections from it for a user query. Each returned section includes the url and its actual content in markdown. Use this tool for all queries that require Port knowledge.',
     roles: ['developer', 'builder']
   },

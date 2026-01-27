@@ -73,7 +73,7 @@ For example, Opsgenie or Firehydrant.
         "What is our average incident resolution time?"
       ],
       "tools": [
-        "^(list|get|search|track|describe)_.*",
+        "^(list|search|track|describe)_.*",
         "run__triggerPagerdutyIncident",
         "run__acknowledgePagerdutyIncident"
       ]
@@ -83,7 +83,7 @@ For example, Opsgenie or Firehydrant.
    </details>
 
    :::tip MCP Enhanced Capabilities
-   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as PagerDuty incidents, services, schedules, and on-call rotations. Additionally, we explicitly add `run__triggerPagerdutyIncident` and `run__acknowledgePagerdutyIncident` to the tools, which instructs the AI agent to call these specific actions when needed to manage incidents.
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as PagerDuty incidents, services, schedules, and on-call rotations. Additionally, we explicitly add `run__triggerPagerdutyIncident` and `run__acknowledgePagerdutyIncident` to the tools, which instructs the AI agent to call these specific actions when needed to manage incidents.
    :::
 
 5. Click on `Create` to save the agent.

@@ -33,7 +33,7 @@ MCP operations use the permissions of the authenticated user. Only users with ap
 
 ## Create blueprints with AI
 
-Port's MCP server provides tools like `create_blueprint`, `list_blueprints`, and `update_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
+Port's MCP server provides tools like `list_blueprints` and `upsert_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
 
 <h3>Start with a simple description</h3>
 
@@ -43,7 +43,7 @@ Describe the blueprint you want to create in natural language. The AI will inter
 
 *"Create a microservice blueprint with properties for programming language, repository URL, and deployment status"*
 
-The AI will use the MCP `create_blueprint` tool to generate and create the blueprint:
+The AI will use the MCP `upsert_blueprint` tool to generate and create the blueprint:
 
 <details>
 <summary><b>Screenshot example (click to expand)</b></summary>
@@ -113,7 +113,7 @@ The AI will add the appropriate `aggregationProperties` or `calculationPropertie
 
 ## Populate entities with AI
 
-Once you have blueprints, use AI to create entities. The MCP server provides `create_entity` and `update_entity` tools that work through natural language.
+Once you have blueprints, use AI to create entities. The MCP server provides the `upsert_entity` tool that works through natural language to create or update entities.
 
 <h3>Create individual entities</h3>
 
@@ -194,7 +194,7 @@ Add new relations by describing them:
 
 *"Update the service blueprint to include a relation to databases. Services should be able to connect to multiple databases."*
 
-The AI will use `update_blueprint` to add the relation configuration.
+The AI will use `upsert_blueprint` to add the relation configuration.
 
 <img src="/img/guides/MCPUpdateBlueprintRelations.png" border="1px" />
 

@@ -74,7 +74,7 @@ Install the following integration to have access to these data sources:
        "prompt": "# Task\nUse the \"comment_on_jira_issue\" action, automatically send a greeting using their first name and explain this is an automatic message. Then share three sections with emojis for helpful context.\n\n## Message Format\nHey there [First Name], it's Clarity :crystal_ball: - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere's some context to help you get started :blobdance:\n\n:male-technologist: Devs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\n:jira: Similar Tasks:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it's relevant. If none, explain why.\n\n:github_on_fire: Similar Pull Requests:\nList up to 3 pull requests in statuses \"open\" or \"merged\", mention the creator and why it's relevant. If none, explain why.\n\n## Guidelines\n- Each section can have fewer than 3 items. Always explain\n",
        "execution_mode": "Automatic",
        "tools": [
-         "^(list|get|search|track|describe)_.*",
+         "^(list|search|track|describe)_.*",
          "run_comment_on_jira_issue"
        ]
      },
@@ -84,7 +84,7 @@ Install the following integration to have access to these data sources:
    </details>
 
    :::tip MCP Enhanced Capabilities
-   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for task enrichment. Additionally, we explicitly add `run_comment_on_jira_issue` to the tools, which instructs the AI agent to call this specific action to comment on Jira issues with contextual information.
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for task enrichment. Additionally, we explicitly add `run_comment_on_jira_issue` to the tools, which instructs the AI agent to call this specific action to comment on Jira issues with contextual information.
    :::
 
 5. Click on `Create` to save the agent.

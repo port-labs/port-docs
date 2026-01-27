@@ -243,7 +243,7 @@ Now we'll create an AI agent that monitors for new PRs, intelligently gathers co
         "execution_mode": "Automatic",
         "conversation_starters": [],
         "tools": [
-          "^(list|get|search)_.*",
+          "^(list|search|track|describe)_.*",
           "run_trigger_claude_code",
           "run_assign_to_copilot",
           "run_trigger_gemini_assistant"

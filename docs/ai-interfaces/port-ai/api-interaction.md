@@ -54,7 +54,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt":"What services are failing health checks?",
-    "tools": ["^(list|get|search|count)_.*"],
+    "tools": ["^(list|search|track|describe)_.*"],
     "labels": {
       "source": "monitoring_system",
       "environment": "production",
@@ -79,7 +79,7 @@ Note the blank line after `data: ...` which separates events.
 
 ```text
 event: tool_call
-data: { "id": "call_0", "name": "get_entities", "arguments": "{\"blueprint\":\"service\"}" }
+data: { "id": "call_0", "name": "list_entities", "arguments": "{\"blueprintIdentifier\":\"service\"}" }
 
 event: tool_result
 data: { "id": "call_0", "content": "Found 15 services in your catalog..." }
@@ -121,8 +121,8 @@ Indicates that Port AI is about to execute a tool. This event provides details a
 ```json
 {
   "id": "call_0",
-  "name": "get_entities", 
-  "arguments": "{\"blueprint\":\"service\",\"limit\":10}",
+  "name": "list_entities",
+  "arguments": "{\"blueprintIdentifier\":\"service\",\"limit\":10}",
   "lastChunk": true
 }
 ```
@@ -296,7 +296,7 @@ Port AI allows you to control which specific tools from the [Port MCP server](/a
 Selected tools will be available based on your regex patterns **but won't include tools that are not within your permission scope**. This means:
 
 - If you request an action to **create a Jira ticket** but this action is not available to you as a user, it won't be available to Port AI.
-- Members trying to use builder tools like "Create_blueprint" will not have access to these tools through Port AI if they lack the necessary permissions.
+- Members trying to use builder tools like `upsert_blueprint` will not have access to these tools through Port AI if they lack the necessary permissions.
 - Tool availability is determined by the intersection of your regex selection AND your user permissions.
 
 Port AI respects your individual user permissions and cannot access tools or perform actions that you don't have permission to use.
@@ -322,15 +322,14 @@ Include a `tools` parameter in your API request with an array of regex patterns.
 Perfect for monitoring dashboards and reporting systems where no modifications should be made.
 
 ```json
-["^(list|get|search|count|track|describe)_.*"]
+["^(list|search|track|describe)_.*"]
 ```
 
 **What this matches:**
-- `get_entities`, `get_blueprint`, `get_scorecard`.
-- `list_entities`, `search_entities`.
-- `count_entities`.
+- `list_entities`, `list_blueprints`, `list_scorecards`.
+- `list_actions`, `list_integrations`.
 - `describe_user_details`.
-- `search_port_sources`.
+- `search_port_knowledge_sources`.
 
 </details>
 
@@ -372,12 +371,11 @@ Target specific third-party service integrations.
 Enables entity operations while preventing accidental deletions.
 
 ```json
-["(?!delete_)\\w+_entity$", "get_.*", "list_.*", "count_.*"]
+["(?!delete_)\\w+_entity$", "list_.*"]
 ```
 
 **What this matches:**
-- `get_entity`, `list_entities`, `create_entity`, `update_entity`.
-- `count_entities`.
+- `list_entities`, `upsert_entity`.
 - **Excludes:** `delete_entity`.
 
 </details>
@@ -388,11 +386,11 @@ Enables entity operations while preventing accidental deletions.
 Focus on documentation search and help functionality.
 
 ```json
-[".*docs.*", "search_.*", "ask_.*", "describe_.*"]
+[".*docs.*", "search_.*", "describe_.*"]
 ```
 
 **What this matches:**
-- `search_port_sources`.
+- `search_port_knowledge_sources`.
 - `describe_user_details`.
 
 </details>
@@ -403,13 +401,13 @@ Focus on documentation search and help functionality.
 Focus on catalog structure and quality metrics without action execution.
 
 ```json
-[".*blueprint.*", ".*scorecard.*", "^(get|list|count)_.*"]
+[".*blueprint.*", ".*scorecard.*", "^list_.*"]
 ```
 
 **What this matches:**
-- `get_blueprints`, `get_blueprint`.
-- `get_scorecards`, `get_scorecard`.
-- All get/list/count operations.
+- `list_blueprints`, `upsert_blueprint`.
+- `list_scorecards`, `upsert_scorecard`.
+- All list operations.
 
 </details>
 
@@ -450,7 +448,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt": "What services are failing health checks?",
-    "tools": ["^(list|get|search|count)_.*"],
+    "tools": ["^(list|search|track|describe)_.*"],
     "labels": {
       "source": "monitoring_system",
       "check_type": "health_analysis"
@@ -478,7 +476,7 @@ async function checkServiceHealth(serviceName) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt: `Analyze the health of service ${serviceName}`,
-      tools: ['^(list|get|search|count)_.*'],
+      tools: ['^(list|search|track|describe)_.*'],
       labels: {
         source: 'monitoring_dashboard',
         service: serviceName,
@@ -533,7 +531,7 @@ Automatically trigger Port AI based on catalog events using Port's automation sy
     },
     "body": {
       "prompt": "Infrastructure component {{ .event.diff.after.title }} is unhealthy. Analyze the issue and suggest remediation steps based on current state and recent changes.",
-      "tools": ["^(list|get|search|count)_.*", "run_.*incident.*", "run_.*notification.*"],
+      "tools": ["^(list|search|track|describe)_.*", "run_.*incident.*", "run_.*notification.*"],
       "labels": {
         "source": "automation",
         "entity_type": "{{ .event.diff.after.blueprint }}",
@@ -573,7 +571,7 @@ Create actions that invoke Port AI for on-demand analysis:
     },
     "body": {
       "prompt": "Analyze the health of service {{ .entity.title }}. Check metrics, recent deployments, incidents, and provide actionable recommendations.",
-      "tools": ["^(list|get|search|count)_.*", "run_.*incident.*"],
+      "tools": ["^(list|search|track|describe)_.*", "run_.*incident.*"],
       "labels": {
         "source": "self_service",
         "service_name": "{{ .entity.identifier }}",
