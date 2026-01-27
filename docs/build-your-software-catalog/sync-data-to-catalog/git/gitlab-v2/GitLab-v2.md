@@ -64,7 +64,8 @@ resources:
         properties:
           url: .web_url
           readme: file://README.md
-          language: .__languages | to_entries | max_by(.value) | .key
+          codeowners: file://CODEOWNERS
+          language: .__languages // {} | to_entries | max_by(.value) | .key
 - kind: member
   selector:
     query: 'true'
@@ -113,7 +114,7 @@ resources:
           leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
           reviewers: .reviewers | map(.name)
         relations:
-          project: .references.full | gsub("!.+"; "")
+          project: .references.full // "" | gsub("!.+"; "")
 ```
 
 </details>
