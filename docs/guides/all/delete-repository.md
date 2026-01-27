@@ -15,7 +15,7 @@ In the following guide, you are going to create a self-service action in Port th
 
 <IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
-## Use cases
+## Common use cases
 
 - **Declutter Development**: Clean up outdated, unused, or test repositories to streamline your GitHub environment.
 - **Project Sunset**: Offboard completed projects by gracefully deleting their repositories.
