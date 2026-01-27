@@ -10,7 +10,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository.id + "/" + (.alertId | tostring)
+          identifier: .__repositoryId + "/" + (.alertId | tostring)
           title: .title
           blueprint: '"azureDevopsAdvancedSecurity"'
           properties:
