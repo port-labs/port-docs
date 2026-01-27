@@ -6,6 +6,7 @@ description: Learn how developers can enrich repositories using GitOps in Port, 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
@@ -14,7 +15,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 This guide will walk you through the process of enriching a service in Port using Gitops.   
 In practice, this can be used by developers to independently add additional valuable data to their services in Port.
 
-
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
 ## Common use cases
 
@@ -227,7 +228,19 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
+<Tabs groupId="github-integration" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 Note that you will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).  
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+Note that you will need to have [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) installed in your Github organization (the one that contains the repository you'll work with).  
+
+</TabItem>
+</Tabs>
+
 Follow these steps to setup the backend:
 
 1. Select `Run Github Workflow` as the invocation type.
