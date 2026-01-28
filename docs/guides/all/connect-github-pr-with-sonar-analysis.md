@@ -7,6 +7,7 @@ description: Learn how to connect GitHub PRs with Sonar analysis in Port, ensuri
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub PR to SonarQube analysis
@@ -14,12 +15,29 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 ## Overview
 This guide aims to cover how to connect a GitHub pull request with a SonarQube analysis to understand the scan results of your PR.
 
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
+
 ## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Install Port's [SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+
+<Tabs groupId="github-pr-sonar" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 - Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+- Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+
+</TabItem>
+</Tabs>
+
 ## Set up data model
+
+<Tabs groupId="github-pr-sonar" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
 
 We highly recommend you install both the GitHub app and SonarQube integration to have pull requests and analyses automatically ingested into Port in real-time.
 However, if you haven't installed [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) and [SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube), you'll need to create blueprints for GitHub pull requests and SonarQube analyses in Port. Skip this section if you have already installed the GitHub app and SonarQube integration.
@@ -137,6 +155,128 @@ However, if you haven't installed [Port's GitHub app](https://docs.port.io/build
 
 3. Click `Save & Resync` to apply the mapping.
 
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+We highly recommend you install both GitHub ocean and SonarQube integration to have pull requests and analyses automatically ingested into Port in real-time.
+However, if you haven't installed [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) and [SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube), you'll need to create blueprints for GitHub pull requests and SonarQube analyses in Port. Skip this section if you have already installed GitHub ocean and SonarQube integration.
+
+### Add the pull request blueprint
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>GitHub Pull Request Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+        "identifier": "githubPullRequest",
+        "title": "Pull Request",
+        "icon": "Github",
+        "schema": {
+            "properties": {
+                "creator": {
+                    "title": "Creator",
+                    "type": "string"
+                },
+                "assignees": {
+                    "title": "Assignees",
+                    "type": "array"
+                },
+                "reviewers": {
+                    "title": "Reviewers",
+                    "type": "array"
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "merged",
+                        "open",
+                        "closed"
+                    ],
+                    "enumColors": {
+                        "merged": "purple",
+                        "open": "green",
+                        "closed": "red"
+                    }
+                },
+                "closedAt": {
+                    "title": "Closed At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "title": "Updated At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "mergedAt": {
+                    "title": "Merged At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "link": {
+                    "type": "string",
+                    "format": "url"
+                }
+            },
+            "required": []
+        },
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {},
+        "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the blueprint.
+
+### Add pull request mapping config
+
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub ocean integration.
+
+    <img src='/img/guides/githubOceanIntegration.png' border='1px' />
+
+2. Add the following YAML block into the editor to map the pull request data:
+
+    <details>
+    <summary><b>Relation mapping (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: pull-request
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .head.repo.name + '-' + (.number|tostring)
+              title: .title
+              blueprint: '"githubPullRequest"'
+              properties:
+                creator: .user.login
+                assignees: "[.assignees[].login]"
+                reviewers: "[.requested_reviewers[].login]"
+                status: .state
+                closedAt: .closed_at
+                updatedAt: .updated_at
+                mergedAt: .merged_at
+                prNumber: .number
+                link: .html_url
+    ```
+    </details>
+
+3. Click `Save & Resync` to apply the mapping.
+
+</TabItem>
+</Tabs>
+
 
 ### Add the SonarQube analysis blueprint
 
@@ -253,7 +393,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
     <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests.   
-This can be done by adding some mapping logic using a[search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries), which allow us to match PRs with SonarQube analyses based on the knowledge of the value of one of the entity's properties.
+This can be done by adding some mapping logic using a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries), which allow us to match PRs with SonarQube analyses based on the knowledge of the value of one of the entity's properties.
 
 The following steps demonstrate how to match PRs with SonarQube analyses using search queries.
 
@@ -261,7 +401,11 @@ The following steps demonstrate how to match PRs with SonarQube analyses using s
 <TabItem value="title_branch_matching" label="Match by Title & Branch" default>
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
-2. Click on your Github integration:
+2. Click on your GitHub integration.
+
+<Tabs groupId="github-pr-sonar" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
     <img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
     <br/><br/>
@@ -309,6 +453,59 @@ The following steps demonstrate how to match PRs with SonarQube analyses using s
 
 5. Click `Save & Resync` to apply the changes
 
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+    <img src='/img/guides/githubOceanIntegrationWithBlueprints.png' border='1px' />
+
+    <br/><br/>
+
+3. Under the `resources` key, locate the Pull Request block
+4. Replace it with the following YAML block to map the pull request entities with SonarQube analyses:
+
+    <details>
+    <summary><b>Relation mapping (click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: pull-request
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .head.repo.name + '-' + (.number|tostring)
+              title: .title
+              blueprint: '"githubPullRequest"'
+              properties:
+                creator: .user.login
+                assignees: "[.assignees[].login]"
+                reviewers: "[.requested_reviewers[].login]"
+                status: .state
+                closedAt: .closed_at
+                updatedAt: .updated_at
+                mergedAt: .merged_at
+                prNumber: .number
+                link: .html_url
+              relations:
+                sonarAnalysis:
+                  combinator: '"and"'
+                  rules:
+                    - property: '"$title"'
+                      operator: '"="'
+                      value: .title
+                    - property: '"branch"'
+                      operator: '"="'
+                      value: .head.ref
+    ```
+
+    </details>
+
+5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+</Tabs>
+
 :::tip Mapping explanation
 This configuration uses the `title` and `branch` properties to establish a relationship with SonarQube analysis based on matching properties. The `title` property is common to both GitHub pull requests and SonarQube analyses, making it a reliable identifier for matching related entities. The `branch` property gives information about the source and destination of the code changes.
 :::
@@ -318,7 +515,11 @@ This configuration uses the `title` and `branch` properties to establish a relat
 <TabItem value="commit_sha_matching" label="Match by Commit SHA">
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
-2. Click on your Github integration:
+2. Click on your GitHub integration.
+
+<Tabs groupId="github-pr-sonar" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
     <img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
     <br/><br/>
@@ -362,6 +563,52 @@ This configuration uses the `title` and `branch` properties to establish a relat
     </details>
 
 5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+3. Under the `resources` key, locate the Pull Request block
+4. Replace it with the following YAML block to map the pull request entities with SonarQube analyses using commit SHA:
+
+    <details>
+    <summary><b>Search query mapping (click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: pull-request
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .head.repo.name + '-' + (.number|tostring)
+              title: .title
+              blueprint: '"githubPullRequest"'
+              properties:
+                creator: .user.login
+                assignees: "[.assignees[].login]"
+                reviewers: "[.requested_reviewers[].login]"
+                status: .state
+                closedAt: .closed_at
+                updatedAt: .updated_at
+                mergedAt: .merged_at
+                prNumber: .number
+                link: .html_url
+              relations:
+                sonarAnalysis:
+                  combinator: '"and"'
+                  rules:
+                    - property: '"commitSha"'
+                      operator: '"="'
+                      value: .head.sha
+    ```
+
+    </details>
+
+5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+</Tabs>
 
 :::tip Mapping explanation
 This configuration uses the `commitSha` property to establish a relationship with SonarQube analysis. This is a reliable way to match PRs with their corresponding SonarQube analyses since each commit has a unique SHA.
