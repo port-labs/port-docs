@@ -268,7 +268,7 @@ This table summarizes the available parameters for the installation.
 <br/>
 
 :::warning Performance considerations
-`enableTablesLiveEventsWebhooks` is a heavy operation that creates Business Rules for All/specified tables by `liveEventTables`. Use this to limit which tables trigger live events.
+Enabling webhooks for tables is a heavy operation that creates Business Rules for All/specified tables by `liveEventTables`. Use this to limit which tables trigger live events.
 :::
 
 <br/>
