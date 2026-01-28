@@ -49,6 +49,13 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
       ...
   ```
 
+:::info Processing order
+Resources are processed **sequentially from top to bottom**. This means:
+- The first `kind` in your configuration is fetched and ingested before the second one starts.
+- If you have relations between entities (e.g., pull requests → repositories), ensure the **target blueprint is listed first** so those entities exist before the relation is created.
+- For large datasets, the order can affect sync duration since each kind must complete before the next begins.
+:::
+
 <br/>
 
 - The `kind` key is a specifier for the object you wish to map from the tool's API (in this example, a Github repository).  
