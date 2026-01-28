@@ -1659,6 +1659,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-claude-metrics",
     },
     {
+        title: "Ingest Claude Code security reviews",
+        description: "Ingest Claude Code security reviews into Port using Port's GitHub file ingesting feature",
+        tags: ["Security", "Claude Code", "GitHub"],
+        logos: ["Claude Code", "GitHub"],
+        link: "/guides/all/ingest-claude-code-security-reviews",
+    },
+    {
         title: "Auto-assign bugs to owners with ai",
         description: "Automatically assign Jira bugs to owning teams and services with Port automations and AI",
         tags: ["Agentic Work Management", "Jira", "AI", "Automations"],
