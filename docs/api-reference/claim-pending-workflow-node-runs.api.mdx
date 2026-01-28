@@ -1,0 +1,72 @@
+---
+id: claim-pending-workflow-node-runs
+title: "Claim pending workflow node runs"
+description: "Claim pending workflow node runs for processing. Claimed runs will not appear from this endpoint until their visibility timeout expires."
+sidebar_label: "Claim pending workflow node runs"
+hide_title: true
+hide_table_of_contents: true
+api: eJzNV1Fv2zgM/iuCcA8b0CTOYTdgfcva3FBcuwZpigFX5ArFphOttuST5KRdkP9+pOQkTuq26XAYuodGk0iR/PiRopc8ARsbWTipFT/mJ5mQOStAJVJN2UKbuzTTC6Z0AsyUyrJUG1YYHYO1KNFmXgGScLiQWYayjomiAGFYanTO3ExahhcWWirHSuVkhnsgDZtLKycyk+6BObxEl47BfSEN2DY/4k5MLT++4d8qJywfH3ELcWlQAQ+WfII2wOByvMIjA/+WYN1nneDpksdaOVCOluhNJmNBIXa+W4pzyW08g1zQyj0UgJHryXeIHdrF6AowToKlU6msE1nmlc+Smrx1BgFA+V0ARzPAGCW6wmSC9mUqwTCdUsisfhmLCTlCmU4IvjZfHfEM91zNDGIGUwxy386FuJd5mTNV5pNgYJsjp8Pl7F231Y2i94QmWiJ5ftzFddDFdRShyW0aRiELF/YAB0gWA2I55lxiWrRKLJsA8gOC9TUpJniGot5KBkxMBWrJNPAkvlN6kUEyhWTXyyiKao5+jOjfahWyjAxJiBl7uRmvdgWcKQE3CmFEDg6M9aR5lPgqkSgpKa5CuBl6olCHWGGmtzJ5XZZRRyj5w7tFQe155KlqC61sYNjvUUQ/uwZOIRVl5tiwksRr/idC67uazETrDISi4Ik+Q8xX7VQYIx7wAukgtweUygaJpjJBXDEHFNs/i1SZ2xvR+tFr/R21Po2X3Y+r39Y+jKTLoOkCVWKqJ3RWJZakz+IQ/UHCJ1qlcjryogeoYCUUpQu58dnAJW7vgyCSRFImRDaow0FcRHq60jYZA0W0vuEnlxeD8/6of4p7Z19vB8PLL8P+1RVy2bMkGH3Z1diAcJD0GqWxJHOBJzxBmRZ1WsK6LJLXqmAdFxk8qdSIOVLqXE/tDoo346OfpFimp+cwh+w5SE/7n6+/eDj/vMSfb73hV/zpD4eXQw8r3rHjDedHj1tBeHx+LvP7t/2i/Ow1xw1UIeIqpLordRvjp6JJRWaB7q5mgv49vsChST3qIk3EDC/BNb36B3Hm5fd2T2X/Tdg2oU0Fbwrxqeh3qfoSFnsWsaHWuueLyqj9IfrwFjo+GKMbWjWe5DjdiWlDl2yMPdxzSOB/vI2n7lcH7i92M53QeKGtC6/hDP/XmXc7OC50lmHOWHXWE7ft0OzU8eXTqkqPeAxmvh5kSoMVxWfOFfa40xGFbBfauLbUGEjTaWm3ArVJ+orADHit5+ntAFDIv+BhOw31SozCVKMNrwamGYgEtShKStBwO4b37wU9GE1j9Lacq4E3emIOjXxPSLX3KowGfIBhsN7gDLUJjUCjbjuiDBK+ufA0qZx+6ZNmf7irfTq8qc+hkBIH965ToBXPZJ/lZcWmGz7vUtMzBOvxZnLdUIpG0RDvLq2QDDNiJV6wXE6EhWuTrVa0jZk0D+G9ngsjQ9dF6iXS0jqpOP4MgO+GVdG8Z6+amRujXbNSESXnIishvN53yNHNqL6iN77iJPkaDk+CRy0//G2VH3UXKp2g0YtjKNyzsuNaXQ8ur0YoPKm+PnNkCO4asSDU8a93VHuEfK35PRxohJqWvuPwcCeVkSgpnfUqvPNVWC0oqkYo9sszBEJ/KaxGleUy1Djmey0fjp7UqKBdS1Nm6MPrP8KnpZM=
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Claim pending workflow node runs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/org/{org_id}/workflows/runs/claim-pending"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Claim pending workflow node runs for processing. Claimed runs will not appear from this endpoint until their visibility timeout expires.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"org_id","description":"The unique identifier of the organization.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"installationId":{"type":"string","description":"The unique identifier of the installation claiming the runs."},"limit":{"type":"integer","description":"Maximum number of node runs to claim (1-100).","minimum":1,"maximum":100},"visibilityTimeoutMs":{"type":"integer","description":"Time in milliseconds before claimed runs become visible again if not acknowledged.","minimum":1000,"maximum":600000}},"required":["installationId"]}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"nodeRuns":{"type":"array","items":{"type":"object","properties":{"identifier":{"type":"string","pattern":"^wfnr_[a-zA-Z0-9]{16}$"},"nodeTitle":{"type":"string","nullable":true},"nodeIcon":{"type":"string","nullable":true},"nodeConfigType":{"type":"string","nullable":true},"output":{"default":{},"type":"object","additionalProperties":{}},"status":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","nullable":true},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"completedAt":{"type":"string","nullable":true},"nodeRunLogs":{"default":[],"type":"array","items":{"type":"object","properties":{"logLevel":{"type":"string","enum":["DEBUG","INFO","WARN","ERROR"]},"log":{"default":"","type":"string"},"tags":{"default":{},"type":"object","additionalProperties":{"type":"string"}},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["logLevel","log","tags","createdAt","updatedAt"],"additionalProperties":false}},"pendingExecution":{"type":"boolean","nullable":true},"claimedUntil":{"type":"string","nullable":true},"installationId":{"type":"string","nullable":true}},"required":["identifier","output","status","createdAt","updatedAt","nodeRunLogs"],"additionalProperties":false}}},"required":["ok","nodeRuns"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

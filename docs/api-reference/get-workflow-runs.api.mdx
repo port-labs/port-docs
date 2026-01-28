@@ -1,0 +1,72 @@
+---
+id: get-workflow-runs
+title: "Get workflow runs"
+description: "Retrieve a list of workflow runs with optional filtering by status, result, workflow, and more."
+sidebar_label: "Get workflow runs"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlWF9P4zgQ/yqRdY+Bphx7q/atCwVVxwIqcCsd6q3cZNJ6SeKs7RTYqt99x3HSpG1SUuiile6lTeIZ+zf/xzMnHkhXsFgxHpEuGYISDGZgUStgUlnctx65ePAD/miJJJLWI1NTi6fkNLB8FigQLJpY42dLKqoSaVsCZBIoe8loWzTyrJALOCQ2UXQiSfeefMlWJRnZRIKbCKaecWFOxkAFCHwcLXAppoKGgKfIdFG6Uwgp6c6Jeo4BEbNIwQTJbQJPbpBINoPPLGJhEpKuY5OQPpnntuM4CxvJked7AuIZOSLcGV8DFjKFr6uq+Gw4rSgJxyA2NaE4SqoSEWmpBHxPmACPdH0aSFjYW5GGVQA7jvOx3ekcfTj+eOx0Ou0asNz3JWyivaxHKR9YbPlcWDGdsIhqhqaQqRBUn80UhLL0XSptdKKto9A0GsB/j774ek8PfvQO/nUOOqN5+6/FH2RRI0UOcphEAw8ixXymLbwu1VnqX6lzxeAikbsinsUK3j2J9BLgZmiXIPcBEJ5oGAe41LZ3dfoNn3pBun8QJ8rSSLRZRttUrlzB1QhcAVSB9+l5y9FqClYi8flxyq2MIf1Y9om9uTZEWoP35OTq8/VF/7Z/it8Gl1+vh1fnw/7NDRnVKdPkQWikRO3EOf3+kfcuT/oXFynym7uTE43aJme9gf5UC9+k78boM/Iq8CP9ScboI5DiPHIc/be67Sn4FDewhhkl7uNydO9IaVoaxwFz05zV+iY1Q4VC+PgbuDolxoLHIBQzx/GHEs2Y8wBopN2vlHtkA7XW7F5E9qvyIoYyUzqoN3mjJAjoWK8pkYC2kmsEf5Ew4h7kUnlGr7qM2r9exKhaRg3otrGcmnqwi6wnPPLZ5DYlbcDCExUnakU584W9oQTqecz0N9dldeh4MaH6umxhZ5HVCGqW3XqV1FjLQ4orxEOaA8UwbJElib1dWVyuC0stU51/XfDJvlws4JMLbDeDbSo97X+6O0/VeXaFf196w0v86w+HV8NUrbjHChpC7M2aY9rO11m+okV4D/ssyhn1vlCVkTgTqQylfMaoThqTmtc3L4X6Mk6W7l53xqpDvHTie0bPjn79PtE2o4LpYxuEhbFAJeEa+MV2rdvrrd3Ae9ONpGjTqhq7nXPyNi9cFrMGfliotkrgMuwd4wJ7iLWG4cUNcIdj58/fodEBIXhF6caVEKSkkwoLVcpv9mkk+NHR/1PwD79Ha/vegqcbqylHTjJJpxLYFU7xpTVrt/KwkS2RhTGIWT7HSQTWfDJVKpbdVovG7DDmQh0yTvSdZ3M1kQVBaWB0oxVmdJKPjYqGPmZ/Q+li00sQqWA/UpWT7PIzBeohl7kM+TxlNw0rucbzrN71QOcXk0vwY/vQ0eqMuVQhTW2W7X4OanX0sn6BmhfGf48xm9GBgifVigPKUvdI1TrPbHRPZu1SctN4RZbgpiidJpjPx1TCnQgWC/3ZXBS19TwmdbrNb3pbJN1pilYJ+gFtWMzoZjRINE3qJs1h7D4e24JlOYJ7JZgdp1pbkNSO0d6MrG6C1QDMr0JSHjg1gFGaZb0ZQ+PJ0xZc5QnX/pSyPkDaAqA0l9rv+aUR0Jbji7lScfqoaN3Seb+d52OdZAxbz3UhLgfbRt3Uuyyr0Hn/Vl/kEp3hypXgIa0E2YPePV+KyvZYLxEGgv7Viqpkmc9NncEUmdObpVqOTMScWutohKX0J9VpzEA=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get workflow runs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/workflows/runs"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Retrieve a list of workflow runs with optional filtering by status, result, workflow, and more.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"integer","exclusiveMinimum":0,"maximum":1000},"in":"query","name":"limit","description":"Maximum number of workflow runs to return.","required":false},{"schema":{"type":"integer","minimum":0,"maximum":9007199254740991},"in":"query","name":"offset","description":"Number of workflow runs to skip for pagination.","required":false},{"schema":{"type":"array","items":{"type":"string","pattern":"^wfr_[a-zA-Z0-9]{16}$"}},"in":"query","name":"workflowRunIdentifiers","description":"Filter by specific workflow run identifiers.","required":false},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"workflowIdentifiers","description":"Filter by workflow identifiers.","required":false},{"schema":{"type":"array","items":{"example":1,"type":"integer","exclusiveMinimum":0,"maximum":9007199254740991}},"in":"query","name":"workflowVersions","description":"Filter by workflow versions.","required":false},{"schema":{"type":"string"},"in":"query","name":"createdBy","description":"Filter by the user who created the workflow run.","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]}},"in":"query","name":"statuses","description":"Filter by workflow run statuses.","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["CANCELLED","SUCCESS","FAILED"]}},"in":"query","name":"results","description":"Filter by workflow run results.","required":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"workflowRuns":{"type":"array","items":{"type":"object","properties":{"identifier":{"type":"string","pattern":"^wfr_[a-zA-Z0-9]{16}$"},"title":{"type":"string","nullable":true},"icon":{"type":"string","nullable":true},"nodeRuns":{"default":[],"type":"array","items":{"type":"object","properties":{"identifier":{"type":"string","pattern":"^wfnr_[a-zA-Z0-9]{16}$"},"nodeTitle":{"type":"string","nullable":true},"nodeIcon":{"type":"string","nullable":true},"nodeConfigType":{"type":"string","nullable":true},"output":{"default":{},"type":"object","additionalProperties":{}},"status":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","nullable":true},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"completedAt":{"type":"string","nullable":true},"nodeRunLogs":{"default":[],"type":"array","items":{"type":"object","properties":{"logLevel":{"type":"string","enum":["DEBUG","INFO","WARN","ERROR"]},"log":{"default":"","type":"string"},"tags":{"default":{},"type":"object","additionalProperties":{"type":"string"}},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["logLevel","log","tags","createdAt","updatedAt"],"additionalProperties":false}}},"required":["identifier","output","status","createdAt","updatedAt","nodeRunLogs"],"additionalProperties":false}},"status":{"type":"string","enum":["COMPLETED","IN_PROGRESS"]},"result":{"type":"string","nullable":true},"completedAt":{"type":"string","nullable":true},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"variables":{"type":"object","properties":{"outputs":{"type":"object","nullable":true}},"additionalProperties":false},"workflowVersionId":{"type":"integer","minimum":0,"maximum":9007199254740991},"createdBy":{"type":"string"},"nodeConfigType":{"type":"string","nullable":true}},"required":["identifier","nodeRuns","status","createdAt","updatedAt","variables","workflowVersionId","createdBy"],"additionalProperties":false}}},"required":["ok","workflowRuns"],"additionalProperties":false}}}},"403":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"422":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

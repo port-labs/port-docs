@@ -308,6 +308,108 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Workflows",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-workflows",
+          label: "Get workflows",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-a-workflow",
+          label: "Create a workflow",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-workflow",
+          label: "Get a workflow",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-a-workflow",
+          label: "Change a workflow",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-a-workflow",
+          label: "Delete a workflow",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-workflows-node",
+          label: "Get a workflow's node",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-workflows-node-permissions",
+          label: "Get a workflow's node permissions",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-workflow-node-permissions",
+          label: "Create workflow node permissions",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-a-workflows-node-permissions",
+          label: "Update a workflow's node permissions",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-a-workflows-node-permissions",
+          label: "Delete a workflow's node permissions",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/trigger-a-workflow-run",
+          label: "Trigger a workflow run",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-workflow-runs",
+          label: "Get workflow runs",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-workflow-run-by-identifier",
+          label: "Get a workflow run by identifier",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-a-workflow-node-run",
+          label: "Update a workflow node run",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-workflow-node-run-acknowledgement",
+          label: "Update workflow node run acknowledgement",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/claim-pending-workflow-node-runs",
+          label: "Claim pending workflow node runs",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Teams",
       items: [
         {

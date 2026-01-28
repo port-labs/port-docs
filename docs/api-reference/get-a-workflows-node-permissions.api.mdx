@@ -1,0 +1,72 @@
+---
+id: get-a-workflows-node-permissions
+title: "Get a workflow's node permissions"
+description: "Retrieve the permissions configured for a specific node in a workflow."
+sidebar_label: "Get a workflow's node permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWW1v2zYQ/isaUWAt4MVOtn2YsRRItqAoBqxZlqEfAmOgpZPNRBIZknLmGf7vu6Mki5bkl2ZO1q79EIfiHY/38vD4cgsWgQm1UFbIjA3ZFVgtYAaBnUKgQKfCGKSYIJRZLCa5hiiIpQ54YBSEIhZhkMkIApFh14PUd3EiH45Yj1k+MWx4w96XfYaNesxAmGth50hYsDFwDRqboyWSFNc8BQvaOKIJp5ByNlwwO1eAihnUK5uwZY8J0lNxO8VZMhyDX9XEf4oIMotaodxew7JrNCjPxH2Oyq64Ahk7S33NNdznAu1kQ6tzWPY+VBnyx6MVcc58EHaKDt2h2Ih6jMLggCHdTgYD+rc+2c8Q8zyxwVXJiWIwkhanJV6uVCJCTrz9W0MDOoyV41sILQ5UWiIirCimk3cez1jKBHhGHqk0butyFqDNeh5YGcQiwVAHZD3JC8bcILBkFsy4FjJHuCFMQAtOSNqqRijTsci4lbodnx6DLE8JhTyL8At5RqihzpNibMnNteZzJOOMqevn2fxdTMNCocM84fpl4ZTBK9arqbscVH7NO3FDpF1Kn2L7q9MyYlxk5iybe18ELAnmV2l/qnvGMMHGe+EAWZLP/T7Iogb5ou5BNCOMpX2bOUfNeJIDaZjlScLHCRTI67VdsDJs1YM2jBH8Xk+Nkc2eb4jzWFfeweyTckQvi7iFb6zANbccLZf+8ripfe95urIH1w2PIkGg5MmlF7KYJwa8KTfEVUPCC0R3xNVyPQF7uTH0dXRfIPQTWo8vvFwx+gKNp4bGKnxPAA0TSg0h11EnNlbUqzyBL1nh+UNfh+cJYv+v070wF6lyKUu4ALiPvTLb/yGj7Wd91+L9FBbtftZ14vM/x+VrbL+mhPMj/Z26dGIfAMqscF5+rKWGVipoL/ytS3enVbGW6SEmIq2tPIykRjSdik76jhA+6+lln4i7VQbRtXRBHeO0CjlsJ4I2h7yd/T8gsW/Q/vb+N7pCdI5dc2HFuNP1uOHhmLA7/dUuyRV2AU/dBvmQlR+jtVnbe1pDKS+YtVMPvf/8vuf9raB2RLQCd9dttxG4g4luOMpRV+w7PNM1dpczH3fS+sSPPw2EPM8ZaBMnPZlsuYK38UHp9HxLKmoaSxMcBAbo2HBaHLJPi9Pw9q3uEXnvkDvAiKQ1xHmPJNXzx3YpuG25s9ywfA4atHPZHfPeenYtURr93eDbj+F9CrTuijdSUjCGT7oyV5fthZz9DP/hMzX85OTzNPz7j+Mp9rkNd4LtVOJIhndG0tOledafHferXGH6i47n+mWfXr6R1ng9X/a9IgSjCoKeVTWCXCcoe2qtMsN+nytxpKS2R0K63Num5qZm8IoRbjssHFmVJOrMrcQvQFm4fNs/y9E8Lf6uLqHu+X8KPKJd3ZUDYneZqLLnJc4XnF2+peSNahdAOD4aUAyUNDblLtCl9DdgvSrK16aoBqw7YA1TixpBB6zcFKZb+Mv2VYLnHlLWebPatm/Y7NjL/qTWsLsE44JK5HZRxDcLozFFb5DkxYJqAX/oZLmk7vviuH8zot1Pi+K8hbGPhKF2tNqvNvrl5VUJ51fB3iWgThdUkHAngXL7Z9i8Q4B0l6AIhodXdFuJ6BGKNyPj7kQlpMnTBddZGIKy3vhWvqIltVr9by6ukZfn64c8Je7cYiob3plpXbfmKitUoF//ULU2ZLEoliqipuIvSBtHlCZW3OQqOjj9AyD7HgU=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a workflow's node permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/workflows/{workflow_identifier}/nodes/{node_identifier}/permissions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Retrieve the permissions configured for a specific node in a workflow.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"workflow_identifier","description":"The unique identifier of the workflow.","required":true},{"schema":{"type":"string"},"in":"path","name":"node_identifier","description":"The unique identifier of the node within the workflow.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"workflow":{"description":"A query to filter entities based on various criteria","type":"object","properties":{"combinator":{"type":"string","enum":["and","or"]},"rules":{"type":"array","items":{"anyOf":["circular(schema0)",{"anyOf":[{"type":"object","properties":{"property":{"type":"string"},"operator":{"type":"string","enum":["=","!=","containsAny","contains","doesNotContains","beginsWith","doesNotBeginsWith","endsWith","doesNotEndsWith","in","notIn"]},"value":{"nullable":true,"anyOf":[{"type":"string"},{"type":"number"},{"type":"boolean"},{"type":"array","items":{"type":"string"}},{"type":"string","format":"date-time"}]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","properties":{"relation":{"type":"string"},"targetProperty":{"type":"string","enum":["$title","$identifier"]},"operator":{"type":"string","enum":["=","!=","containsAny","contains","doesNotContains","beginsWith","doesNotBeginsWith","endsWith","doesNotEndsWith","in","notIn"]},"value":{"nullable":true,"anyOf":[{"type":"string"},{"type":"number"},{"type":"boolean"},{"type":"array","items":{"type":"string"}},{"type":"string","format":"date-time"}]}},"required":["relation","operator","value"],"additionalProperties":false},{"type":"object","properties":{"scorecard":{"type":"string"},"scorecardRule":{"type":"string"},"operator":{"type":"string","enum":["=","!=","containsAny","contains","doesNotContains","beginsWith","doesNotBeginsWith","endsWith","doesNotEndsWith","in","notIn"]},"value":{"nullable":true,"anyOf":[{"type":"string"},{"type":"number"},{"type":"boolean"},{"type":"array","items":{"type":"string"}},{"type":"string","format":"date-time"}]}},"required":["scorecard","operator","value"],"additionalProperties":false},{"type":"object","properties":{"property":{"type":"string"},"operator":{"type":"string","enum":["isEmpty","isNotEmpty"]}},"required":["property","operator"],"additionalProperties":false},{"type":"object","properties":{"relation":{"type":"string"},"targetProperty":{"type":"string","enum":["$title","$identifier"]},"operator":{"type":"string","enum":["isEmpty","isNotEmpty"]}},"required":["relation","operator"],"additionalProperties":false},{"type":"object","properties":{"scorecard":{"type":"string"},"scorecardRule":{"type":"string"},"operator":{"type":"string","enum":["isEmpty","isNotEmpty"]}},"required":["scorecard","operator"],"additionalProperties":false},{"type":"object","properties":{"property":{"type":"string"},"operator":{"type":"string","enum":[">",">=","<","<=","between","notBetween"]},"value":{"anyOf":[{"type":"number"},{"type":"string","format":"date-time"},{"type":"object","properties":{"from":{"anyOf":[{"type":"number"},{"type":"string","format":"date-time"}]},"to":{"anyOf":[{"type":"number"},{"type":"string","format":"date-time"}]}},"required":["from","to"],"additionalProperties":false}]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","properties":{"operator":{"type":"string","enum":["relatedTo"]},"blueprint":{"type":"string"},"value":{"anyOf":[{"type":"string"},{"type":"array","items":{"type":"string"}},{"type":"object","properties":{"jqQuery":{"type":"string"}},"required":["jqQuery"],"additionalProperties":false}]},"direction":{"type":"string","enum":["upstream","downstream"]},"required":{"type":"boolean"}},"required":["operator","blueprint","value"],"additionalProperties":false},{"type":"object","properties":{"propertySchema":{"type":"object","properties":{"type":{"type":"string"},"format":{"type":"string"},"items":{"type":"object","properties":{"type":{"type":"string"},"format":{"type":"string"}},"required":["type","format"],"additionalProperties":false}},"required":["type"],"additionalProperties":false},"operator":{"type":"string","enum":["=","!=","contains"]},"value":{"nullable":true,"anyOf":[{"type":"string"},{"type":"number"},{"type":"boolean"},{"type":"array","items":{"type":"string"}},{"type":"string","format":"date-time"}]}},"required":["propertySchema","operator","value"],"additionalProperties":false},{"type":"object","properties":{"property":{"type":"object","properties":{"path":{"type":"array","items":{"type":"string"}},"fromBlueprint":{"type":"string"}},"required":["path"],"additionalProperties":false},"operator":{"type":"string","enum":["matchAny","=","in"]},"value":{"anyOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}]}},"required":["property","operator","value"],"additionalProperties":false}]}]}}},"required":["combinator","rules"],"additionalProperties":false,"title":"schema0"}},"required":["ok","workflow"],"additionalProperties":false}}}},"403":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"409":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"422":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

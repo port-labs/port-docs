@@ -1,0 +1,72 @@
+---
+id: update-workflow-node-run-acknowledgement
+title: "Update workflow node run acknowledgement"
+description: "Acknowledge a previously claimed workflow node run to confirm it has been processed."
+sidebar_label: "Update workflow node run acknowledgement"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVltr2zAU/itC7GGDNk5GN2jesm6wspeQtQxWsqJYJ7EaW/IkOWlq/N93juXc3bLCNgp7cRSfi873nZtLLsHFVuVeGc37fBDPtVmmIGfABMstLJQpXLpicSpUBpItjZ1PU7Nk2khgttDMGxYbPVU2Y8qzRDg2AdBoa2JwDmSHn3AvZo73b/i3xtrx8Ql3EBdW+RUKSj4BYcHicVyhyMLPApz/YCRKS47+PWhPR5HnqYoFhRvdOYq55C5OIBN08qscEIWZ3EHs8V4MIgfrFTiSUsijQl9K9KWmiq7bmDhvlZ6hyT4fVwmwQiuMhqmNGTNT5lHQyoXYMkjIc+E9WHL1YznV9vZGnD4MTr93T8/HZe999YpXVYCrLEii6DjIcbWv420BFXm2IgN07moCj0hoEKGmousxkATj0WhDDNnZrZLPg4s2QquHmnuCdhBRnTaXG+0C22+7XfrZv+AjTEWRejZqNNHNH0qume/oTIxJQWgCj/mgEI9FB7yj/VoZkQgpFYUh0uHOLVOROqjqdJx1z14COrDWtJQxSjJsPjGDFlkb8ODn94Cf/5/A372Mev7XwGvHPjEyzJA4CUMtwb/RohfhUIjKME2qaD0QXYTD0EXYTZzGvF2sh1RhU7RLvM9dP4pErjq5sb6jDMbfJi3cVmFnY3wlDgNN672xwYxmX2C1nXSDAoO3zdjizTBMQEi0InCUl9F23Xy6F1mewiPrYm+oTk19rfKkzocYJxsML/EKghvKo9fpkm5unM9Enf4mqutcCt+2QXbWR0ZVdDChd3bhX9vVgUcP9z7K0VNddXVqyibxN3zRQ0XMOj77m1WyyT7tBsx/mKdUYgniJ7OynAgH1zatKnqNpFva/nhcCKvEhIjEKpHK0Vk2VfgEBa9HTVm/Yc9aXa0Y1wWkqXoWIi3oHx7nWE6bjVmNUbMpH4o1CC9CRKdX5GJrfNT/VOXBYhDHkPsndcc7nTccXF18Ru1J80WUYUbxtRVLIhufdaSmpqjui/pdyVOhZ0U9FHhwSiUvCsribsfM645pDgSrlYvDVgpI6Em4Wk3KMvQjJnytH0SPWjTcrrUpNfQB9AsyFrNv
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update workflow node run acknowledgement"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/org/{org_id}/workflows/runs/ack"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Acknowledge a previously claimed workflow node run to confirm it has been processed.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"org_id","description":"The unique identifier of the organization.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"nodeRunIdentifier":{"type":"string","description":"The unique identifier of the workflow node run to acknowledge.","pattern":"^wfnr_[a-zA-Z0-9]{16}$"}},"required":["nodeRunIdentifier"]}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"acked":{"type":"boolean"}},"required":["ok","acked"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"409":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
