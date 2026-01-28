@@ -131,7 +131,7 @@ When `synchronized` is `false`, the workflow continues immediately without waiti
 }
 ```
 
-:::note
+:::note Asynchronous webhook behavior
 With asynchronous webhooks, the external service is responsible for updating the workflow run status via Port's API.
 :::
 
@@ -231,6 +231,6 @@ For creating or updating entities, consider using the [Upsert entity](/workflows
 
 ## Limitations
 
-:::caution Not yet supported
+:::caution Execution Agent not yet available
 Port Execution Agent is not yet available in Workflows
 :::

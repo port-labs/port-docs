@@ -137,11 +137,11 @@ Workflows can fetch entities from Port's catalog using webhook nodes. This is us
 
 - Getting related entities based on relations
 - Looking up additional data not available in the trigger
+- Building notifications with rich context
 
 :::info Automatic authentication
 When calling Port's API, you don't need to include an access token. Port automatically authenticates the request using your organization's credentials.
 :::
-- Building notifications with rich context
 
 ### Port's entity search API
 

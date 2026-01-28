@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Interact with runs
 ---
 
@@ -220,7 +220,7 @@ def update_node_run(workflow_run_id, node_run_id, data):
 
 ## Limitations
 
-:::caution Not yet supported
+:::caution Run features not yet supported
 The following run features are not yet available in Workflows (Beta):
 - **Re-run workflow**: Ability to re-run a workflow from the UI
 - **Partial re-run**: Re-run from a specific node

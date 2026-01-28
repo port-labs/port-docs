@@ -3,53 +3,51 @@ sidebar_position: 1
 title: Overview
 ---
 
-import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
-
 # Workflows (Beta)
 
-<ClosedBetaFeatureNotice id="workflows" />
-
 :::warning Closed Beta Notice
-As a closed beta feature, workflows may undergo breaking changes and occasional downtime without prior notice. There is no SLA or guaranteed issue-resolution timeline during this period. Support is provided directly by the Workflows team.
+This feature is currently in closed beta with limited availability. Workflows may undergo breaking changes and occasional downtime without prior notice. There is no SLA or guaranteed issue-resolution timeline during this period. Support is provided directly by the Workflows team.
 :::
 
 Workflows provide a visual, node-based way to build automations and self-service experiences in Port. Unlike traditional actions and automations, workflows allow you to chain multiple operations together, add conditional logic, and create complex automation flows with an intuitive graph-based interface.
 
-## Main concepts
+Workflows can be triggered in two ways: manually by users for on-demand operations, or automatically in response to events in your software catalog.
 
-A workflow consists of the following components:
+## 1. Self-service workflows
 
-### Nodes
+Self-service workflows are triggered manually by users through Port's UI or API. Users provide inputs through a form, making these ideal for on-demand operations that require human input or decision-making. Self-service workflows drive developer productivity by providing controlled, repeatable ways to perform tasks with guardrails.
 
-Nodes are the building blocks of a workflow. There are three types of nodes:
+Common use cases include:
+- Provisioning cloud resources.
+- Scaffolding new microservices.
+- Deploying services to environments.
 
-| Node type | Description |
-| --------- | ----------- |
-| **Trigger** | The entry point that initiates the workflow. Can be a self-service trigger (manual execution) or an event trigger (automated based on entity changes). |
-| **Action** | Performs an operation such as sending a webhook, upserting an entity, publishing to Kafka, or triggering an integration action. |
-| **Condition** | Evaluates expressions and routes the workflow to different branches based on the results. |
+For more information and instructions for creating self-service workflows, see [self-service trigger](/workflows/build-workflows/self-service-trigger/).
 
-### Connections
+## 2. Event-driven workflows
 
-Connections define the flow between nodes. Each connection links a source node to a target node, determining the order of execution. Condition nodes can have multiple outgoing connections, one for each branch.
+Event-driven workflows run automatically in response to changes in your software catalog. Use events in your infrastructure as triggers to run custom automation flows. Event-driven workflows enforce policies, send notifications, or perform any logic you need without manual intervention. They free up your team to focus on other priorities by handling routine and repetitive tasks automatically.
 
-### Conditions
+Common use cases include:
+- Auto-assigning teams to new entities.
+- Triggering cleanup when resources are deleted.
+- Sending notifications when critical services change status.
 
-Condition nodes allow you to add branching logic to your workflows. Each condition has one or more options with JQ expressions that are evaluated at runtime. The workflow follows the path of the first matching expression, or a fallback path if none match.
+For more information and instructions for defining event-driven workflows, see [event trigger](/workflows/build-workflows/event-trigger).
 
-### Outputs
+For more information about workflow components and structure, see [concepts and structure](/workflows/concepts).
 
-Nodes can produce outputs that are available to subsequent nodes in the workflow. Use JQ expressions to reference outputs from previous nodes when configuring action payloads.
+## When to use workflows
 
-### Base information
+Use workflows when you need to:
 
-Each workflow has base metadata:
-- **Identifier** - A unique identifier for the workflow
-- **Title** - A human-readable name
-- **Description** - An optional description of what the workflow does
-- **Icon** - An optional icon to display in the UI
+- **Chain multiple operations together** - Execute a sequence of actions where each step depends on the previous one.
+- **Add conditional logic** - Create different execution paths based on runtime data or entity properties.
+- **Visualize complex flows** - See the entire automation logic in a visual graph for easier understanding and maintenance.
+- **Combine self-service and automation** - Use the same action types for both manual and automated workflows.
+- **Pass data between steps** - Reference outputs from previous nodes to build dynamic payloads and make decisions.
 
-## Comparison with Actions & Automations
+## Comparison with actions & automations
 
 Workflows are the next evolution of Port's [Actions & Automations](/actions-and-automations/overview). While they share many concepts, there are some key differences:
 
@@ -69,62 +67,9 @@ Workflows are the next evolution of Port's [Actions & Automations](/actions-and-
 | Custom widget button text | Yes | Not yet supported |
 | Terraform / Pulumi resources | Yes | Not yet supported |
 
-:::tip When to use Workflows
-Use Workflows when you need to:
-
-- Chain multiple operations together
-- Add conditional logic to your automations
-- Visualize complex flows
-- Combine self-service actions with automated responses
-:::
-
-## Workflow JSON structure
-
-The basic structure of a workflow looks like this:
-
-```json showLineNumbers
-{
-  "identifier": "my-workflow",
-  "title": "My Workflow",
-  "icon": "Workflow",
-  "description": "An example workflow",
-  "nodes": [
-    {
-      "identifier": "trigger",
-      "title": "Self-Service Trigger",
-      "config": {
-        "type": "SELF_SERVE_TRIGGER",
-        "userInputs": {
-          "properties": {},
-          "required": []
-        }
-      }
-    },
-    {
-      "identifier": "action1",
-      "title": "Send Webhook",
-      "config": {
-        "type": "WEBHOOK",
-        "url": "https://example.com/webhook",
-        "method": "POST",
-        "body": {
-          "message": "Workflow executed"
-        }
-      }
-    }
-  ],
-  "connections": [
-    {
-      "sourceIdentifier": "trigger",
-      "targetIdentifier": "action1"
-    }
-  ]
-}
-```
-
 ## Next steps
 
-- [Quickstart and build with AI](/workflows/build-workflows/quickstart) - Get started building your first workflow
-- [Self-service trigger](/workflows/build-workflows/self-service-trigger/) - Create workflows triggered by users
-- [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows triggered by entity changes
-- [Action nodes](/workflows/build-workflows/action-nodes/) - Learn about available action types
+- [Concepts and structure](/workflows/concepts) - Learn about workflow components and structure.
+- [Quickstart and build with AI](/workflows/build-workflows/quickstart) - Get started building your first workflow.
+- [Interact with runs](/workflows/runs) - Monitor and manage workflow executions.
+- [Examples](/workflows/examples) - See real-world workflow examples.
