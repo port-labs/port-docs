@@ -17,7 +17,7 @@ The custom authentication feature enables you to configure OAuth2, JWT, and othe
 When `authType` is set to `"custom"`, you configure two parts:
 
 1. **How to authenticate** (`customAuthRequest`) - defines the authentication endpoint, HTTP method, headers, and body.
-2. **How to use the token** (`customAuthResponse`) - defines where to inject authentication values in subsequent requests using template syntax.
+2. **How to use the token** (`customAuthRequestTemplate`) - defines where to inject authentication values in subsequent requests using template syntax.
 
 The integration automatically:
 - Authenticates on startup
@@ -45,7 +45,7 @@ Defines how to make the authentication request. This is configured as a JSON obj
 You cannot specify both `body` and `bodyForm` in `customAuthRequest`. Use `body` for JSON payloads and `bodyForm` for form-encoded payloads.
 :::
 
-### customAuthResponse
+### customAuthRequestTemplate
 
 Defines how to use the authentication response in subsequent API requests. Use template syntax `{{.jq_path}}` to extract values from the auth response. At least one field must be provided.
 
@@ -69,7 +69,7 @@ The template syntax is validated at configuration time, so errors fail fast befo
 
 ### Using Helm
 
-When using Helm, pass the custom authentication configuration as a JSON string in the `integration.config.customAuthRequest` and `integration.config.customAuthResponse` parameters:
+When using Helm, pass the custom authentication configuration as a JSON string in the `integration.config.customAuthRequest` and `integration.config.customAuthRequestTemplate` parameters:
 
 ```bash showLineNumbers
 helm install ocean-custom port-labs/port-ocean \
@@ -82,7 +82,7 @@ helm install ocean-custom port-labs/port-ocean \
   --set integration.config.baseUrl="https://api.yourcompany.com" \
   --set integration.config.authType="custom" \
   --set-json integration.config.customAuthRequest='{"endpoint":"/oauth/token","method":"POST","headers":{"Content-Type":"application/x-www-form-urlencoded"},"bodyForm":"grant_type=client_credentials&client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>","reauthenticateIntervalSeconds":3600}' \
-  --set-json integration.config.customAuthResponse='{"headers":{"Authorization":"Bearer {{.access_token}}"}}'
+  --set-json integration.config.customAuthRequestTemplate='{"headers":{"Authorization":"Bearer {{.access_token}}"}}'
 ```
 
 ### Using Docker
@@ -100,7 +100,7 @@ docker run -i --rm \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://api.yourcompany.com" \
   -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="custom" \
   -e OCEAN__INTEGRATION__CONFIG__CUSTOM_AUTH_REQUEST='{"endpoint":"/oauth/token","method":"POST","headers":{"Content-Type":"application/x-www-form-urlencoded"},"bodyForm":"grant_type=client_credentials&client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>","reauthenticateIntervalSeconds":3600}' \
-  -e OCEAN__INTEGRATION__CONFIG__CUSTOM_AUTH_RESPONSE='{"headers":{"Authorization":"Bearer {{.access_token}}"}}'
+  -e OCEAN__INTEGRATION__CONFIG__CUSTOM_AUTH_REQUEST_TEMPLATE='{"headers":{"Authorization":"Bearer {{.access_token}}"}}'
   ghcr.io/port-labs/port-ocean-custom:latest
 ```
 
@@ -121,7 +121,7 @@ Use this pattern for OAuth2 client credentials grants:
     "bodyForm": "grant_type=client_credentials&client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>",
     "reauthenticateIntervalSeconds": 3600
   },
-  "customAuthResponse": {
+  "customAuthRequestTemplate": {
     "headers": {
       "Authorization": "Bearer {{.access_token}}"
     }
@@ -155,7 +155,7 @@ For APIs that return an API key to use in query parameters:
       "password": "<PASSWORD>"
     }
   },
-  "customAuthResponse": {
+  "customAuthRequestTemplate": {
     "queryParams": {
       "api_key": "{{.apiKey}}"
     }
@@ -188,7 +188,7 @@ For JWT-based authentication systems:
       "clientSecret": "<CLIENT_SECRET>"
     }
   },
-  "customAuthResponse": {
+  "customAuthRequestTemplate": {
     "headers": {
       "Authorization": "Bearer {{.jwt}}",
       "X-API-Version": "{{.version}}"
@@ -222,7 +222,7 @@ If your authentication service returns nested data, use dot notation:
       }
     }
   },
-  "customAuthResponse": {
+  "customAuthRequestTemplate": {
     "headers": {
       "Authorization": "Bearer {{.data.token}}",
       "X-Session-ID": "{{.data.sessionId}}"
@@ -256,7 +256,7 @@ You can inject the same token into headers, query params, and body simultaneousl
       "clientSecret": "<CLIENT_SECRET>"
     }
   },
-  "customAuthResponse": {
+  "customAuthRequestTemplate": {
     "headers": {
       "Authorization": "Bearer {{.access_token}}"
     },
@@ -298,7 +298,7 @@ If authentication fails, errors are visible in the integration logs. Common fail
 
 Ensure your configuration follows these rules:
 
-- At least one of `headers`, `queryParams`, or `body` must be provided in `customAuthResponse`
+- At least one of `headers`, `queryParams`, or `body` must be provided in `customAuthRequestTemplate`
 - `body` and `bodyForm` cannot both be specified in `customAuthRequest`
 - Template paths (e.g., `{{.access_token}}`) must match fields in your auth response
 - Replace placeholders (e.g., `<CLIENT_ID>`, `<CLIENT_SECRET>`) with your actual values
