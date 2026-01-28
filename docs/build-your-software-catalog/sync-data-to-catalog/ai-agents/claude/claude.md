@@ -16,17 +16,28 @@ Port's Claude AI integration allows you to ingest Claude API usage metrics into 
 
 ## Supported metrics
 
-The Claude AI integration can ingest usage metrics from the Anthropic Admin API into Port:
+The Claude AI integration can ingest usage metrics from the [Anthropic Admin API](https://docs.anthropic.com/en/api/admin-api) into Port. The Admin API provides two distinct types of usage tracking:
 
-**Available for all Claude AI organizations:**
-- `claude_usage_record` - Organization-level usage metrics from `/v1/organizations/usage_report/messages` including token consumption (input/output/cache), request counts, and detailed breakdowns by workspace, model, service tier, context window, and API key.
+### Claude API usage (programmatic)
+
+These endpoints track usage from programmatic API calls made with API keys:
+
+- `claude_usage_record` - Daily usage metrics from `/v1/organizations/usage_report/messages` including token consumption (uncached input, output, cache read, cache creation) and web search requests.
 - `claude_cost_record` - Cost tracking from `/v1/organizations/cost_report` for monitoring organizational spending.
-- `claude_workspace_usage` - Workspace-level usage metrics when grouping by `workspace_id`.
-- `claude_model_usage` - Model-level usage metrics when grouping by `model`.
-- `claude_code_analytics` - Claude AI Code usage metrics from `/v1/organizations/usage_report/claude_code` including sessions, lines of code edited, commits, and pull requests (requires Claude AI Code access).
+- `claude_workspace_usage` - Usage metrics grouped by `workspace_id`.
+- `claude_model_usage` - Usage metrics grouped by `model`.
 
-:::info User-level metrics
-The Anthropic Admin API does not currently support grouping usage data by user (`user_id`). User-level analytics are not available through these endpoints. If you need user-level insights, consider using Claude AI Code analytics or other internal telemetry sources.
+### Claude Code usage (CLI/IDE)
+
+This endpoint tracks usage from the Claude Code CLI and IDE extensions:
+
+- `claude_code_analytics` - Claude Code usage metrics from `/v1/organizations/usage_report/claude_code` including sessions, lines of code added/removed, commits, pull requests, tool actions, and per-actor breakdowns.
+
+:::info Important distinctions
+- **API usage** tracks programmatic calls made via API keys (e.g., applications calling the Messages API).
+- **Claude Code usage** tracks developer activity through the Claude Code CLI or IDE extensions.
+- **Web console usage** (Claude.ai) is included in API usage metrics.
+- The Anthropic Admin API does not provide request counts (success/failure) - only token consumption metrics are available.
 :::
 
 
@@ -36,8 +47,23 @@ The Anthropic Admin API does not currently support grouping usage data by user (
 
 To use this integration, you need:
 
-- An [Anthropic Admin API](https://docs.anthropic.com/en/api/administration-api)  generated from the Admin section of the Anthropic Console.
+- An [Anthropic Admin API key](https://docs.anthropic.com/en/api/admin-api) generated from the Admin section of the Anthropic Console.
 - The API key should have permissions to read usage data and billing information.
+
+
+## API limitations
+
+The Anthropic Admin API has the following constraints that affect how you configure the integration:
+
+| Constraint | Details |
+|------------|---------|
+| `starting_at` required | All usage and cost endpoints require a `starting_at` date parameter. |
+| Daily bucket limit | When using `bucket_width=1d`, the maximum `limit` is 31 days per request. |
+| Date format | Messages and cost endpoints use RFC 3339 format (`2026-01-01T00:00:00Z`). Claude Code endpoint uses `YYYY-MM-DD` format. |
+| Pagination | Large datasets require handling `has_more` and `next_page` tokens for complete data retrieval. |
+| No request counts | The API does not provide request success/failure counts - only token consumption metrics. |
+| No organization info | Usage responses do not include `organization_id` or `organization_name` fields. |
+| Grouping fields | Fields like `workspace_id`, `model`, `api_key_id` are only populated when using corresponding `group_by[]` parameters. |
 
 
 ## Installation
@@ -57,7 +83,7 @@ Choose one of the following installation methods to deploy the Ocean Custom Inte
 1. Add Port's Helm repo and install the Ocean Custom Integration:
 
 :::info Replace placeholders
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_ANTHROPIC_API_KEY`.
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_ANTHROPIC_ADMIN_API_KEY`.
 :::
 
 ```bash showLineNumbers
@@ -72,9 +98,9 @@ helm upgrade --install my-ocean-claude-integration port-labs/port-ocean \
   --set integration.type="custom" \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.anthropic.com" \
-  --set integration.config.authType="bearer" \
-  --set integration.config.paginationType="none" \
-  --set integration.secrets.token="YOUR_ANTHROPIC_API_KEY"
+  --set integration.config.authType="api_key" \
+  --set integration.config.apiKeyHeader="x-api-key" \
+  --set integration.secrets.apiKey="YOUR_ANTHROPIC_ADMIN_API_KEY"
 ```
 
 <PortApiRegionTip/>
@@ -85,19 +111,19 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                          | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
 |------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                    | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
-| `port.clientSecret`                | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
-| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
-| `integration.config.baseUrl`       | The base URL of the Anthropic API instance                                                                                                                                                                           | https://api.anthropic.com | ✅        |
-| `integration.config.authType`   | The authentication type for the API (use `bearer` for Anthropic)                                                                                                                                                                         | bearer                                  | ✅        |
-| `integration.secrets.token`   | Your Anthropic Console API key                                                                                                                                                                         | sk-ant-api03-...xxxxxxxxx                                | ✅        |
-| `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, or none)                                                                                                                                                                         | none                                  | ❌        |
-| `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                                  | ✅        |
-| `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration)                                                                                                                                                                                                                                                                | custom                                  | ✅        |
-| `integration.identifier`          | Unique identifier for the integration instance                                                                                                                                                                         | my-ocean-claude-integration                                  | ✅        |
-| `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration) | 120                                  | ❌        |
-| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping.        | true                                  | ❌        |
-| `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | true                                  | ❌        |
+| `port.clientId`                    | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).                                                                                                                                                              |                                  | ✅        |
+| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US.                                                                                                                                                                                                        |                                  | ✅        |
+| `integration.config.baseUrl`       | The base URL of the Anthropic API.                                                                                                                                                                           | https://api.anthropic.com | ✅        |
+| `integration.config.authType`   | The authentication type for the API (use `api_key` for Anthropic).                                                                                                                                                                         | api_key                                  | ✅        |
+| `integration.config.apiKeyHeader`   | The header name for the API key authentication.                                                                                                                                                                         | x-api-key                                  | ✅        |
+| `integration.secrets.apiKey`   | Your Anthropic Admin API key from the Anthropic Console.                                                                                                                                                                         | sk-ant-admin01-...                                | ✅        |
+| `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener).                                                                                                                                                                         | POLLING                                  | ✅        |
+| `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration).                                                                                                                                                                                                                                                                | custom                                  | ✅        |
+| `integration.identifier`          | Unique identifier for the integration instance.                                                                                                                                                                         | my-ocean-claude-integration                                  | ✅        |
+| `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration). | 120                                  | ❌        |
+| `initializePortResources`          | Default true. When set to true the integration will create default blueprints and the port App config Mapping.        | true                                  | ❌        |
+| `sendRawDataExamples`              | Enable sending raw data examples from the third party API to Port for testing and managing the integration mapping. Default is true.                                                                                                                                                            | true                                  | ❌        |
 
 <br/>
 
@@ -110,7 +136,7 @@ This table summarizes the available parameters for the installation.
 To run the integration using Docker for a one-time sync:
 
 :::note Replace placeholders
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_ANTHROPIC_API_KEY`.
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_ANTHROPIC_ADMIN_API_KEY`.
 :::
 
 ```bash showLineNumbers
@@ -119,9 +145,9 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
   -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://api.anthropic.com" \
-  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer" \
-  -e OCEAN__INTEGRATION__CONFIG__PAGINATION_TYPE="none" \
-  -e OCEAN__INTEGRATION__SECRETS__TOKEN="YOUR_ANTHROPIC_API_KEY" \
+  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="api_key" \
+  -e OCEAN__INTEGRATION__CONFIG__API_KEY_HEADER="x-api-key" \
+  -e OCEAN__INTEGRATION__SECRETS__API_KEY="YOUR_ANTHROPIC_ADMIN_API_KEY" \
   -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
   -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
@@ -150,97 +176,62 @@ Before the integration can sync data, you need to create the required blueprints
 3. Copy and paste each blueprint JSON from the sections below.
 
     <details>
-    <summary><b>Claude AI Usage Record Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI usage record blueprint (click to expand)</b></summary>
 
-    Organization-level daily usage metrics:
+    Daily usage metrics from the Messages API:
 
     ```json showLineNumbers
     {
       "identifier": "claude_usage_record",
-      "description": "A daily summary record of Claude AI API usage for an organization",
+      "description": "Daily Claude AI API usage metrics",
       "title": "Claude AI Usage Record",
-      "icon": "Anthropic",
+      "icon": "Claude",
       "schema": {
         "properties": {
-          "record_date": { 
-            "type": "string", 
-            "format": "date-time", 
-            "title": "Record Date (UTC)" 
-            },
-          "organization_id": { 
-            "type": "string", 
-            "title": "Organization ID" 
-            },
-          "organization_name": { 
-            "type": "string", 
-            "title": "Organization Name" 
-            },
-          "total_requests": { 
-            "type": "number", 
-            "title": "Total Requests" 
-            },
-          "successful_requests": { 
-            "type": "number", 
-            "title": "Successful Requests" 
-            },
-          "failed_requests": { 
-            "type": "number", 
-            "title": "Failed Requests" 
-            },
-          "total_input_tokens": { 
-            "type": "number", 
-            "title": "Total Input Tokens" 
-            },
-          "total_output_tokens": { 
-            "type": "number", 
-            "title": "Total Output Tokens" 
-            },
-          "total_cache_read_tokens": { 
-            "type": "number", 
-            "title": "Total Cache Read Tokens" 
-            },
-          "total_cache_write_tokens": { 
-            "type": "number", 
-            "title": "Total Cache Write Tokens" 
-            },
-          "total_cost_usd": { 
-            "type": "number", 
-            "title": "Total Cost (USD)" 
-            },
-          "most_used_model": { 
-            "type": "string", 
-            "title": "Most Used Model" 
-            },
-          "model_breakdown": { 
-            "type": "object", 
-            "title": "Model Usage Breakdown" 
-            },
-          "active_api_keys": { 
-            "type": "number", 
-            "title": "Active API Keys" 
-            }
+          "record_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Record Date (UTC)"
+          },
+          "uncached_input_tokens": {
+            "type": "number",
+            "title": "Uncached Input Tokens"
+          },
+          "output_tokens": {
+            "type": "number",
+            "title": "Output Tokens"
+          },
+          "cache_read_input_tokens": {
+            "type": "number",
+            "title": "Cache Read Input Tokens"
+          },
+          "cache_creation_5m_tokens": {
+            "type": "number",
+            "title": "Cache Creation (5min) Tokens"
+          },
+          "cache_creation_1h_tokens": {
+            "type": "number",
+            "title": "Cache Creation (1hr) Tokens"
+          },
+          "web_search_requests": {
+            "type": "number",
+            "title": "Web Search Requests"
+          }
         },
-        "required": ["record_date", "organization_id"]
+        "required": ["record_date"]
       },
       "mirrorProperties": {},
       "calculationProperties": {
-        "success_rate": {
-          "title": "Success Rate",
-          "description": "Percentage of successful API requests",
-          "calculation": "if .properties.total_requests > 0 then (.properties.successful_requests / .properties.total_requests) * 100 else 0 end",
-          "type": "number",
-          "colorized": true,
-          "colors": {
-            "80": "red",
-            "90": "orange",
-            "95": "yellow",
-            "98": "green"
-          }
+        "total_input_tokens": {
+          "title": "Total Input Tokens",
+          "description": "Sum of uncached input and cache read tokens",
+          "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens",
+          "type": "number"
         },
         "total_tokens": {
           "title": "Total Tokens",
-          "description": "Sum of input and output tokens",
-          "calculation": ".properties.total_input_tokens + .properties.total_output_tokens",
+          "description": "Sum of all input and output tokens",
+          "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens + .properties.output_tokens",
           "type": "number"
         }
       },
@@ -252,7 +243,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude AI Cost Record Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI cost record blueprint (click to expand)</b></summary>
 
     Cost tracking for organizational spending:
 
@@ -261,7 +252,7 @@ Before the integration can sync data, you need to create the required blueprints
       "identifier": "claude_cost_record",
       "description": "Daily cost tracking for Claude API usage",
       "title": "Claude AI Cost Record",
-      "icon": "Anthropic",
+      "icon": "Claude",
       "schema": {
         "properties": {
           "record_date": {
@@ -269,27 +260,16 @@ Before the integration can sync data, you need to create the required blueprints
             "format": "date-time",
             "title": "Record Date (UTC)"
           },
-          "organization_id": {
-            "type": "string",
-            "title": "Organization ID"
-          },
-          "organization_name": {
-            "type": "string",
-            "title": "Organization Name"
-          },
-          "total_cost_usd": {
+          "amount": {
             "type": "number",
-            "title": "Total Cost (USD)"
+            "title": "Cost Amount"
           },
-          "cost_breakdown": {
-            "type": "object",
-            "title": "Cost Breakdown"
+          "currency": {
+            "type": "string",
+            "title": "Currency"
           }
         },
-        "required": [
-          "record_date",
-          "organization_id"
-        ]
+        "required": ["record_date"]
       },
       "mirrorProperties": {},
       "calculationProperties": {},
@@ -301,16 +281,16 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude AI Workspace Usage Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI workspace usage blueprint (click to expand)</b></summary>
 
-    Workspace-level usage metrics:
+    Usage metrics grouped by workspace:
 
     ```json showLineNumbers
     {
       "identifier": "claude_workspace_usage",
       "description": "Usage metrics broken down by workspace",
       "title": "Claude AI Workspace Usage",
-      "icon": "Anthropic",
+      "icon": "Claude",
       "schema": {
         "properties": {
           "record_date": {
@@ -318,74 +298,42 @@ Before the integration can sync data, you need to create the required blueprints
             "format": "date-time",
             "title": "Record Date (UTC)"
           },
-          "organization_id": {
-            "type": "string",
-            "title": "Organization ID"
-          },
           "workspace_id": {
             "type": "string",
             "title": "Workspace ID"
           },
-          "workspace_name": {
-            "type": "string",
-            "title": "Workspace Name"
-          },
-          "total_requests": {
+          "uncached_input_tokens": {
             "type": "number",
-            "title": "Total Requests"
-          },
-          "successful_requests": {
-            "type": "number",
-            "title": "Successful Requests"
-          },
-          "failed_requests": {
-            "type": "number",
-            "title": "Failed Requests"
-          },
-          "input_tokens": {
-            "type": "number",
-            "title": "Input Tokens"
+            "title": "Uncached Input Tokens"
           },
           "output_tokens": {
             "type": "number",
             "title": "Output Tokens"
           },
-          "cache_read_tokens": {
+          "cache_read_input_tokens": {
             "type": "number",
-            "title": "Cache Read Tokens"
+            "title": "Cache Read Input Tokens"
           },
-          "cache_write_tokens": {
+          "cache_creation_5m_tokens": {
             "type": "number",
-            "title": "Cache Write Tokens"
+            "title": "Cache Creation (5min) Tokens"
           },
-          "cost_usd": {
+          "cache_creation_1h_tokens": {
             "type": "number",
-            "title": "Cost (USD)"
+            "title": "Cache Creation (1hr) Tokens"
+          },
+          "web_search_requests": {
+            "type": "number",
+            "title": "Web Search Requests"
           }
         },
-        "required": [
-          "record_date",
-          "organization_id",
-          "workspace_id"
-        ]
+        "required": ["record_date", "workspace_id"]
       },
       "mirrorProperties": {},
       "calculationProperties": {
-        "success_rate": {
-          "title": "Success Rate",
-          "calculation": "if .properties.total_requests > 0 then (.properties.successful_requests / .properties.total_requests) * 100 else 0 end",
-          "type": "number",
-          "colorized": true,
-          "colors": {
-            "80": "red",
-            "90": "orange",
-            "95": "yellow",
-            "98": "green"
-          }
-        },
         "total_tokens": {
           "title": "Total Tokens",
-          "calculation": ".properties.input_tokens + .properties.output_tokens",
+          "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens + .properties.output_tokens",
           "type": "number"
         }
       },
@@ -397,16 +345,16 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude AI Model Usage Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI model usage blueprint (click to expand)</b></summary>
 
-    Model-level usage statistics:
+    Usage metrics grouped by model:
 
     ```json showLineNumbers
     {
       "identifier": "claude_model_usage",
       "description": "Usage metrics broken down by Claude model type",
       "title": "Claude AI Model Usage",
-      "icon": "Anthropic",
+      "icon": "Claude",
       "schema": {
         "properties": {
           "record_date": {
@@ -414,79 +362,42 @@ Before the integration can sync data, you need to create the required blueprints
             "format": "date-time",
             "title": "Record Date (UTC)"
           },
-          "organization_id": {
+          "model": {
             "type": "string",
-            "title": "Organization ID"
+            "title": "Model"
           },
-          "model_name": {
-            "type": "string",
-            "title": "Model Name"
-          },
-          "model_id": {
-            "type": "string",
-            "title": "Model ID"
-          },
-          "total_requests": {
+          "uncached_input_tokens": {
             "type": "number",
-            "title": "Total Requests"
-          },
-          "successful_requests": {
-            "type": "number",
-            "title": "Successful Requests"
-          },
-          "failed_requests": {
-            "type": "number",
-            "title": "Failed Requests"
-          },
-          "input_tokens": {
-            "type": "number",
-            "title": "Input Tokens"
+            "title": "Uncached Input Tokens"
           },
           "output_tokens": {
             "type": "number",
             "title": "Output Tokens"
           },
-          "cache_read_tokens": {
+          "cache_read_input_tokens": {
             "type": "number",
-            "title": "Cache Read Tokens"
+            "title": "Cache Read Input Tokens"
           },
-          "cache_write_tokens": {
+          "cache_creation_5m_tokens": {
             "type": "number",
-            "title": "Cache Write Tokens"
+            "title": "Cache Creation (5min) Tokens"
           },
-          "cost_usd": {
+          "cache_creation_1h_tokens": {
             "type": "number",
-            "title": "Cost (USD)"
+            "title": "Cache Creation (1hr) Tokens"
+          },
+          "web_search_requests": {
+            "type": "number",
+            "title": "Web Search Requests"
           }
         },
-        "required": [
-          "record_date",
-          "organization_id",
-          "model_name"
-        ]
+        "required": ["record_date", "model"]
       },
       "mirrorProperties": {},
       "calculationProperties": {
-        "success_rate": {
-          "title": "Success Rate",
-          "calculation": "if .properties.total_requests > 0 then (.properties.successful_requests / .properties.total_requests) * 100 else 0 end",
-          "type": "number",
-          "colorized": true,
-          "colors": {
-            "80": "red",
-            "90": "orange",
-            "95": "yellow",
-            "98": "green"
-          }
-        },
         "total_tokens": {
           "title": "Total Tokens",
-          "calculation": ".properties.input_tokens + .properties.output_tokens",
-          "type": "number"
-        },
-        "average_tokens_per_request": {
-          "title": "Avg Tokens/Request",
-          "calculation": "if .properties.total_requests > 0 then ((.properties.input_tokens + .properties.output_tokens) / .properties.total_requests) else 0 end",
+          "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens + .properties.output_tokens",
           "type": "number"
         }
       },
@@ -498,7 +409,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude AI Code analytics Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude Code analytics blueprint (click to expand)</b></summary>
 
     Claude Code usage metrics for tracking development activity:
 
@@ -506,8 +417,8 @@ Before the integration can sync data, you need to create the required blueprints
     {
       "identifier": "claude_code_analytics",
       "description": "Daily Claude Code usage metrics including sessions, lines of code, commits, and PRs",
-      "title": "Claude AI Code Analytics",
-      "icon": "Anthropic",
+      "title": "Claude Code Analytics",
+      "icon": "Claude",
       "schema": {
         "properties": {
           "record_date": {
@@ -519,50 +430,71 @@ Before the integration can sync data, you need to create the required blueprints
             "type": "string",
             "title": "Organization ID"
           },
-          "organization_name": {
+          "actor_type": {
             "type": "string",
-            "title": "Organization Name"
+            "title": "Actor Type"
           },
-          "total_sessions": {
+          "actor_name": {
+            "type": "string",
+            "title": "Actor Name"
+          },
+          "terminal_type": {
+            "type": "string",
+            "title": "Terminal Type"
+          },
+          "num_sessions": {
             "type": "number",
-            "title": "Total Sessions"
+            "title": "Sessions"
           },
-          "total_lines_edited": {
+          "lines_added": {
             "type": "number",
-            "title": "Total Lines Edited"
+            "title": "Lines Added"
           },
-          "total_commits": {
+          "lines_removed": {
             "type": "number",
-            "title": "Total Commits"
+            "title": "Lines Removed"
           },
-          "total_pull_requests": {
+          "commits": {
             "type": "number",
-            "title": "Total Pull Requests"
+            "title": "Commits by Claude Code"
           },
-          "active_users": {
+          "pull_requests": {
             "type": "number",
-            "title": "Active Users"
+            "title": "Pull Requests by Claude Code"
           },
-          "breakdown": {
-            "type": "object",
-            "title": "Usage Breakdown"
+          "edit_tool_accepted": {
+            "type": "number",
+            "title": "Edit Tool Accepted"
+          },
+          "edit_tool_rejected": {
+            "type": "number",
+            "title": "Edit Tool Rejected"
+          },
+          "write_tool_accepted": {
+            "type": "number",
+            "title": "Write Tool Accepted"
+          },
+          "write_tool_rejected": {
+            "type": "number",
+            "title": "Write Tool Rejected"
+          },
+          "model_breakdown": {
+            "type": "array",
+            "title": "Model Breakdown"
           }
         },
-        "required": [
-          "record_date",
-          "organization_id"
-        ]
+        "required": ["record_date", "organization_id"]
       },
       "mirrorProperties": {},
       "calculationProperties": {
-        "avg_lines_per_session": {
-          "title": "Avg Lines/Session",
-          "calculation": "if .properties.total_sessions > 0 then (.properties.total_lines_edited / .properties.total_sessions) else 0 end",
+        "total_lines_changed": {
+          "title": "Total Lines Changed",
+          "calculation": ".properties.lines_added + .properties.lines_removed",
           "type": "number"
         },
-        "avg_commits_per_user": {
-          "title": "Avg Commits/User",
-          "calculation": "if .properties.active_users > 0 then (.properties.total_commits / .properties.active_users) else 0 end",
+        "edit_acceptance_rate": {
+          "title": "Edit Acceptance Rate",
+          "calculation": "if (.properties.edit_tool_accepted + .properties.edit_tool_rejected) > 0 then (.properties.edit_tool_accepted / (.properties.edit_tool_accepted + .properties.edit_tool_rejected)) * 100 else 0 end",
           "type": "number"
         }
       },
@@ -592,13 +524,6 @@ For more details on how the Ocean Custom Integration works, see the [How it work
 
 **To configure the mappings:**
 
-Before adding resources, configure the following static HTTP headers on the integration so every request includes them:
-
-- `anthropic-version: 2023-06-01`
-- `anthropic-beta: admin-1`
-
-You can set headers from the Ocean integration UI (Advanced settings → Headers) or by providing them via Helm/Docker values.
-
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
 2. Find your Claude AI integration in the list.
@@ -608,51 +533,50 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
 4. Add the resource mapping configurations below.
 
     <details>
-    <summary><b>Organization usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>Organization usage metrics mapping (click to expand)</b></summary>
 
-    This endpoint provides detailed usage metrics including token consumption and request counts:
+    This endpoint provides detailed usage metrics including token consumption:
 
     ```yaml showLineNumbers
     resources:
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
-          data_path: '.data[].results[]'
+          method: GET
+          headers:
+            anthropic-version: "2023-06-01"
           query_params:
-            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
-            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            starting_at: "2025-01-01T00:00:00Z"
             bucket_width: "1d"
+          data_path: .data[]
         port:
           entity:
             mappings:
-              identifier: '((.date // .starting_at // "unknown") | tostring) + "@org"'
-              title: '"Claude Usage - " + ((.date // .starting_at // "unknown") | tostring)'
+              identifier: .starting_at[:10] + "-usage"
+              title: '"Claude Usage - " + .starting_at[:10]'
               blueprint: '"claude_usage_record"'
               properties:
-                record_date: (.date // .starting_at // "")
-                organization_id: .organization_id // ""
-                organization_name: .organization_name // ""
-                total_requests: .requests // 0
-                successful_requests: .successful_requests // 0
-                failed_requests: (.failed_requests // 0)
-                total_input_tokens: .input_tokens // 0
-                total_output_tokens: .output_tokens // 0
-                total_cache_read_tokens: .cache_read_input_tokens // 0
-                total_cache_write_tokens: .cache_write_input_tokens // 0
-                total_cost_usd: .cost_usd // 0
-                model_breakdown: .model_breakdown // {}
+                record_date: .starting_at
+                uncached_input_tokens: (.results[0].uncached_input_tokens // 0)
+                output_tokens: (.results[0].output_tokens // 0)
+                cache_read_input_tokens: (.results[0].cache_read_input_tokens // 0)
+                cache_creation_5m_tokens: (.results[0].cache_creation.ephemeral_5m_input_tokens // 0)
+                cache_creation_1h_tokens: (.results[0].cache_creation.ephemeral_1h_input_tokens // 0)
+                web_search_requests: (.results[0].server_tool_use.web_search_requests // 0)
     ```
 
     :::info Response structure
-    The API returns data in buckets. Each bucket has `starting_at`, `ending_at`, and a `results[]` array. When using `data_path: '.data[].results[]'`, you'll iterate over all results from all buckets. The actual field names in the results may vary - adjust the property mappings based on your actual API response.
+    The API returns data in daily buckets. Each bucket has `starting_at`, `ending_at`, and a `results[]` array. Days with no usage will have an empty `results` array.
     
-    **Pagination:** The API supports pagination via `has_more` and `next_page` fields. For large date ranges, you may need to handle pagination by using the `next_page` token in subsequent requests.
+    **Date range:** Replace `starting_at` with your desired start date. The API requires this parameter and returns a maximum of 31 days per request with daily buckets.
+    
+    **Pagination:** For date ranges exceeding 31 days, use the `next_page` token from the response to fetch additional data.
     :::
 
     </details>
 
     <details>
-    <summary><b>Cost report mapping (Click to expand)</b></summary>
+    <summary><b>Cost report mapping (click to expand)</b></summary>
 
     This endpoint provides cost data for monitoring organizational spending:
 
@@ -661,29 +585,33 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
       - kind: /v1/organizations/cost_report
         selector:
           query: 'true'
-          data_path: '.data[].results[]'
+          method: GET
+          headers:
+            anthropic-version: "2023-06-01"
           query_params:
-            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
-            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
-            bucket_width: "1d"  
+            starting_at: "2025-01-01T00:00:00Z"
+            bucket_width: "1d"
+          data_path: .data[]
         port:
           entity:
             mappings:
-              identifier: '((.date // .starting_at // "unknown") | tostring) + "@org"'
-              title: '"Claude Cost - " + ((.date // .starting_at // "unknown") | tostring)'
+              identifier: .starting_at[:10] + "-cost"
+              title: '"Claude Cost - " + .starting_at[:10]'
               blueprint: '"claude_cost_record"'
               properties:
-                record_date: (.starting_at // .date)
-                organization_id: .organization_id // ""
-                organization_name: .organization_name // ""
-                total_cost_usd: .cost_usd // 0
-                cost_breakdown: .cost_breakdown // {}
+                record_date: .starting_at
+                amount: ((.results[0].amount // "0") | tonumber)
+                currency: (.results[0].currency // "USD")
     ```
+
+    :::info Cost data format
+    The API returns cost amounts as strings (e.g., `"0.057"`). The mapping converts this to a number using `tonumber`.
+    :::
 
     </details>
 
     <details>
-    <summary><b>Workspace-level usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>Workspace-level usage metrics mapping (click to expand)</b></summary>
 
     Track usage metrics at the workspace level by grouping the usage report by `workspace_id`:
 
@@ -692,78 +620,90 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
+          method: GET
+          headers:
+            anthropic-version: "2023-06-01"
           query_params:
-            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
-            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            starting_at: "2025-01-01T00:00:00Z"
             bucket_width: "1d"
-            'group_by[]': "workspace_id"
-          data_path: '.data[].results[]'  
+            group_by[]: "workspace_id"
+          data_path: '.data[] | select(.results | length > 0) | . as $bucket | .results[] | . + {bucket_date: $bucket.starting_at}'
         port:
           entity:
             mappings:
-              identifier: .workspace_id + "@" + ((.date // .starting_at // "unknown") | tostring)
-              title: (.workspace_name // .workspace_id) + " - " + ((.date // .starting_at // "unknown") | tostring)
+              identifier: (.workspace_id // "default") + "-" + .bucket_date[:10]
+              title: (.workspace_id // "default") + " - " + .bucket_date[:10]
               blueprint: '"claude_workspace_usage"'
               properties:
-                record_date: (.starting_at // .date)
-                organization_id: .organization_id // ""
-                workspace_id: .workspace_id
-                workspace_name: .workspace_name // ""
-                total_requests: .requests // 0
-                successful_requests: .successful_requests // 0
-                failed_requests: .failed_requests // 0
-                input_tokens: .input_tokens // 0
-                output_tokens: .output_tokens // 0
-                cache_read_tokens: .cache_read_input_tokens // 0
-                cache_write_tokens: .cache_write_input_tokens // 0
-                cost_usd: .cost_usd // 0
+                record_date: .bucket_date
+                workspace_id: (.workspace_id // "default")
+                uncached_input_tokens: (.uncached_input_tokens // 0)
+                output_tokens: (.output_tokens // 0)
+                cache_read_input_tokens: (.cache_read_input_tokens // 0)
+                cache_creation_5m_tokens: (.cache_creation.ephemeral_5m_input_tokens // 0)
+                cache_creation_1h_tokens: (.cache_creation.ephemeral_1h_input_tokens // 0)
+                web_search_requests: (.server_tool_use.web_search_requests // 0)
     ```
+
+    :::info Workspace grouping
+    When using `group_by[]=workspace_id`, results are broken down per workspace within each daily bucket. The `data_path` uses JQ to:
+    - Filter out buckets with empty results using `select(.results | length > 0)`.
+    - Store the bucket in a variable `$bucket` to preserve the date.
+    - Flatten results and inject `bucket_date` from the parent bucket.
+    
+    Usage not associated with a workspace will have `workspace_id: null`.
+    :::
 
     </details>
 
     <details>
-    <summary><b>Model-level usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>Model-level usage metrics mapping (click to expand)</b></summary>
 
-    Track usage metrics at the model level by grouping the usage report by `model_id`:
+    Track usage metrics at the model level by grouping the usage report by `model`:
 
     ```yaml showLineNumbers
     resources:
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
+          method: GET
+          headers:
+            anthropic-version: "2023-06-01"
           query_params:
-            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
-            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            starting_at: "2025-01-01T00:00:00Z"
             bucket_width: "1d"
-            'group_by[]': "model"
-          data_path: '.data[].results[]'  
+            group_by[]: "model"
+          data_path: '.data[] | select(.results | length > 0) | . as $bucket | .results[] | . + {bucket_date: $bucket.starting_at}'
         port:
           entity:
             mappings:
-              identifier: .model + "@" + ((.date // .starting_at // "unknown") | tostring)
-              title: .model + " usage - " + ((.date // .starting_at // "unknown") | tostring)
+              identifier: .model + "-" + .bucket_date[:10]
+              title: .model + " - " + .bucket_date[:10]
               blueprint: '"claude_model_usage"'
               properties:
-                record_date: (.starting_at // .date)
-                organization_id: .organization_id // ""
-                model_name: .model
-                model_id: .model
-                total_requests: .requests // 0
-                successful_requests: .successful_requests // 0
-                failed_requests: .failed_requests // 0
-                input_tokens: .input_tokens // 0
-                output_tokens: .output_tokens // 0
-                cache_read_tokens: .cache_read_input_tokens // 0
-                cache_write_tokens: .cache_write_input_tokens // 0
-                cost_usd: .cost_usd // 0
+                record_date: .bucket_date
+                model: .model
+                uncached_input_tokens: (.uncached_input_tokens // 0)
+                output_tokens: (.output_tokens // 0)
+                cache_read_input_tokens: (.cache_read_input_tokens // 0)
+                cache_creation_5m_tokens: (.cache_creation.ephemeral_5m_input_tokens // 0)
+                cache_creation_1h_tokens: (.cache_creation.ephemeral_1h_input_tokens // 0)
+                web_search_requests: (.server_tool_use.web_search_requests // 0)
     ```
+
+    :::info Model grouping
+    When using `group_by[]=model`, results show token usage per model (e.g., `claude-opus-4-5-20251101`, `claude-haiku-4-5-20251001`). The `data_path` uses JQ to:
+    - Filter out buckets with empty results using `select(.results | length > 0)`.
+    - Store the bucket in a variable `$bucket` to preserve the date.
+    - Flatten results and inject `bucket_date` from the parent bucket.
+    :::
 
     </details>
 
     <details>
-    <summary><b>Claude Code analytics mapping (Click to expand)</b></summary>
+    <summary><b>Claude Code analytics mapping (click to expand)</b></summary>
 
-    Track Claude AI Code usage metrics including sessions, lines of code, commits, and pull requests:
+    Track Claude Code usage metrics including sessions, lines of code, commits, and pull requests:
 
     :::info Requires Claude Code access
     This endpoint requires access to Claude Code. You'll receive an error if your organization doesn't have Claude Code enabled.
@@ -774,26 +714,45 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
       - kind: /v1/organizations/usage_report/claude_code
         selector:
           query: 'true'
-          data_path: '.data[]'
+          method: GET
+          headers:
+            anthropic-version: "2023-06-01"
           query_params:
-            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d")'  
+            starting_at: "2025-01-01"
+          data_path: .data[]
         port:
           entity:
             mappings:
-              identifier: .organization_id + "@code@" + (.date // .starting_at)
-              title: "Claude Code Analytics - " + (.date // .starting_at)
+              identifier: .organization_id + "-" + (.actor.api_key_name // .actor.email // "unknown") + "-" + .date[:10]
+              title: (.actor.api_key_name // .actor.email // "unknown") + " - " + .date[:10]
               blueprint: '"claude_code_analytics"'
               properties:
-                record_date: (.date // .starting_at)
-                organization_id: .organization_id // ""
-                organization_name: .organization_name // ""
-                total_sessions: .sessions // 0
-                total_lines_edited: .lines_of_code_edited // 0
-                total_commits: .commits // 0
-                total_pull_requests: .pull_requests // 0
-                active_users: .active_users // 0
-                breakdown: .breakdown // {}
+                record_date: .date
+                organization_id: .organization_id
+                actor_type: .actor.type
+                actor_name: (.actor.api_key_name // .actor.email // "unknown")
+                terminal_type: .terminal_type
+                num_sessions: (.core_metrics.num_sessions // 0)
+                lines_added: (.core_metrics.lines_of_code.added // 0)
+                lines_removed: (.core_metrics.lines_of_code.removed // 0)
+                commits: (.core_metrics.commits_by_claude_code // 0)
+                pull_requests: (.core_metrics.pull_requests_by_claude_code // 0)
+                edit_tool_accepted: (.tool_actions.edit_tool.accepted // 0)
+                edit_tool_rejected: (.tool_actions.edit_tool.rejected // 0)
+                write_tool_accepted: (.tool_actions.write_tool.accepted // 0)
+                write_tool_rejected: (.tool_actions.write_tool.rejected // 0)
+                model_breakdown: .model_breakdown
     ```
+
+    :::info Claude Code response structure
+    The Claude Code endpoint returns per-actor records. Each record includes:
+    - **Actor**: Either a user (with email) or an API key (with name).
+    - **Core metrics**: Sessions, lines of code, commits, and pull requests.
+    - **Tool actions**: Acceptance/rejection counts for edit and write tools.
+    - **Model breakdown**: Token usage and estimated cost per model.
+    
+    **Date format:** This endpoint uses `YYYY-MM-DD` format (not RFC 3339).
+    :::
 
     </details>
 
