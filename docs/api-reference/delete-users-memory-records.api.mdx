@@ -1,0 +1,72 @@
+---
+id: delete-users-memory-records
+title: "Delete users memory records"
+description: "This route allows organization administrators to delete memory records for specific users.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. If deletion fails for some users, the response will indicate which deletions failed."
+sidebar_label: "Delete users memory records"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVUtv2zAM/iuCjkWWtNtOwTAgWzug2APF1p2CHBiLibXKlifKbVPD/32k5DRp2hUYsMuwiy2b748fqU5HWJOezvVnrHzY6MVIG6Qi2CZaX+upviwtqeDbiAqc8zekfFhDbe9AFBSYytaWYoDoA6nolUGHrFwlfypg4YMhtfJBUYOFXdlCtYSBxm+WYfI2PY6OvviI06MjdSrG4peDAm3qogy+9i1/1EZVsFERrlBFW6GEKnzVSLCxOl/luGK6AuuGgJ71UrCRiiVyMtT4mlDdWOeUrY0tgFO9KW1R3ttTcoBmrEeasGiDjRsGqNNLhICBj4ueUQr4s0WK77xhaZc+bUCjpzG0ONKFryPWUUTQNE4Cse/JDxJQO01FiRXIKW4aZJj98gcWkUM2wTcYokUSqSR/bmhPEUKADevZiNX+f26Brde6P+zfTPSVXyUc1Pkpcbmehv5wFEWlb51RSxw6Z3Tfj/bqmd8nsej7LMoopugvj4/l9TDmt7YokGjVOrdhmG20DLO5R1j/NXj8lTzZGcUM/GHqrDBk/fr45HGi32toY8k43LH6H2T1TBYrcIQcD0Pw4cn+VAwNrPEJ2ePkt36YcGCMlXTAXexFz+GGCl89rvCDD0trDNbqhZrJrCo2rSxRYvp9tH+79uSY+8iWOpNYmAKx5O/J9ckk76JJ2gRpqsO1nGSo2+BYqYyxoelkAo0dNz7EsfWc7VPSlnYKi92C+CbwZES2a2I3sY39iDKyNVTyPRsoB8MsWOlTiWDYSkoRyL/utsvZLciWe7AN5lvYFr3Yr3wKZ6Oo6QvOT80uztm1lJl5cDI+FvwbT7GC1NEhm9O8rhM2B0tbH+ySbkeS//taGBob8TZOGgfcQIY2caUbaDfX1ydaWJku1ZHO1GPC8O6NIu66JRB+D67v5Td3O8gtw8drCBaW0sm5dHcghnD1ilk01e9zD15cShKi7trMsoOhFf5mixlv4yY+q7vYm6DTs09nl2esvhzutsobsQpwwz/lOdV88IkVifLpX6cd1Os2TbfOXoXNsmAfDsNVGobhIHVtRfVmL8fDKcmlyFMKe9Kk6/KoMaRb/Sz6rcUA7lZbGinXxS9eNC3k
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete users memory records"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/memory/users"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows organization administrators to delete memory records for specific users.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. If deletion fails for some users, the response will indicate which deletions failed.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"required":true,"content":{"application/json":{"schema":{"type":"object","properties":{"userIds":{"type":"array","items":{"type":"string"},"description":"Array of user IDs whose memories should be deleted"}},"required":["userIds"]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Successfully initiated deletion","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"const":true}},"required":["ok"]}}}},"401":{"description":"Unauthorized","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"403":{"description":"Forbidden - Admin permissions required","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

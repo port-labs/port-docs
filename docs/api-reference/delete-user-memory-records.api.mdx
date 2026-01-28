@@ -1,0 +1,72 @@
+---
+id: delete-user-memory-records
+title: "Delete user memory records"
+description: "This route allows you to delete your own memory records. You can either delete all memories at once or specify individual record IDs to delete.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. Deleted records might still appear in list requests briefly. If deletion fails for some records, the response will indicate which deletions failed."
+sidebar_label: "Delete user memory records"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVk1v2zgQ/SsEj4FrJ0VPxqKA2+RgbLsN2vRQBD6MpZHFhiK1JGVXFfTfO0NKsexkCywKLFBgL7IozsebmTcz7mSAnZfLe/keK+tauZnJHH3mVB2UNXIp70rlhbNNQAFa24MXrW1EsCJHjfSRTk7YgxFVNCAcZtblfi6+kFgGRqAKJbpRnGwkSYVeQBDWZCisE77GTBWtUCZXe5U3oAdLYn3tj+7mf2zd4nV8XFz8ZQMuLy7ENV8RWkFIwbcmK501tqGDyUUFrQjwgCKoCtlQZqs6mkp6mI+QRaV2ZRA+KMIIdY3gCI7QygcS+btBH7zYEvBCt3OxLhIk9luA0l4UHIYlJ4O9maDA6eBrazyKA5vl8DKgPBxKlZWPFnw0gflczqTHrHEqtFSUTm4JBDp63fRUmQHFG5vTbRePymEul8E1OJOZNQFN4CuCr9kR2V589VzITvqsxAr4LbQ1Umnt9itmgVxagx+K6K92tkYXqDgsl3K+0nqitLVWIxgZ3fkw+j4lzScMnGq+mlDlsfaPLJF9P5uEcT/xuOln53CS0jr3EzjgHLQERgWspt99cMrsZH+ObMXywhanQE5J9gTV0TGVoe/TdSpr9Pny8jKl6yQHTZah90WjNdNaBQVMtrHk8hfqdZoW+8DPSTXO4ZPAgPrVc0DXZg9a5SPHxQtRNfRDTqgR8bR/qTLcrceE/IsofoK6AO2R8KFz1j1bxYpSCTt85u5psKMd6hjIc8VwQN9OvCd3Q0aunmbks4EmlDSjvpPN3zvCaJhiIc2huZg/EEo6L/ZXi9QGcey4PTofp0DjqONlGULtl4sF1GpeWxfmykpuyqe3jT8KbI4T7BMnJuVinGPHvq3Vn8h+DVR8Xg0Jh6E3FNehRMhJi4PgZH88jr+bb8BT/GxIRfKzbmGjKxVYRN4SNrG6XZNZDjHV+Gp+yVmvrQ8VxDoOSNJWEA0l5HxanQ2T7siM/9fkf70mBx4F/BYWtQbiC1UzUrMb+H0v91eS6T/+sSktd+K97LotePzsdN/zZ4LseNvS6x6cgi2ThhbubOQft8QDkXUp36Z6v7hj5yyum0Tms6nAbZI0VrQE6vBT2c2kRa9v3t3c3ZD4dtjxlc1Zy8GBPvJzKXlhRwampcjfOqnB7Jo4PmSyyk3DU+y05x5izw0vHNd4ZdoJxvNmTKHwkwN7VqXrUkdTSkf5dPWPGkNyR2kuIG+pHyPbtPU=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete user memory records"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/memory"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete your own memory records. You can either delete all memories at once or specify individual record IDs to delete.<br/><br/>**Note:** Deletion is asynchronous and may take time to complete. Deleted records might still appear in list requests briefly. If deletion fails for some records, the response will indicate which deletions failed.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"required":true,"content":{"application/json":{"schema":{"type":"object","oneOf":[{"properties":{"deleteAll":{"type":"boolean","const":true,"description":"Set to true to delete all memory records"}},"required":["deleteAll"]},{"properties":{"recordIds":{"type":"array","items":{"type":"string"},"description":"Array of memory record IDs to delete"}},"required":["recordIds"]}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Successfully initiated deletion","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"const":true}},"required":["ok"]}}}},"400":{"description":"Invalid request - must provide either deleteAll or recordIds","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"401":{"description":"Unauthorized","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
