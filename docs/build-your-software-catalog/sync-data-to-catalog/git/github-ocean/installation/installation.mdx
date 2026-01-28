@@ -8,6 +8,7 @@ import InstallMethods from "./_install_methods.mdx";
 import GithubAppManualSetupContent from "./_custom_github_app_content.mdx";
 import OceanHostedByPortViaPortUi from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_hosted_by_port_via_port_ui.mdx";
 import GithubAppViaPortRedirectContent from "./_github_app_via_port_redirect_content.mdx";
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 # Installation
 
@@ -22,7 +23,7 @@ This page helps you choose an authentication method and then deploy the integrat
 
 ## Choose authentication method
 
-<Tabs groupId="github-ocean-auth" queryString="auth">
+<Tabs groupId="github-ocean-auth" queryString="auth" defaultValue="github-app-wizard">
 
 <TabItem value="github-app-wizard" label="GitHub App (via Port)" default>
 
@@ -33,6 +34,24 @@ The **GitHub App (via Port)** setup is available **only** as a **Hosted by Port*
 
 **Hosted by Port** means Port runs and manages the integration for you (no Kubernetes/Docker/CI deployment on your side).
 :::
+
+<h2>Live event support</h2>
+
+<OceanSaasLiveEventsDescription id="GithubOcean" />
+
+<details>
+<summary><b>Supported live event triggers (Click to expand)</b></summary>
+
+<OceanSaasLiveEventsTriggersManual id="GithubOcean" />
+
+</details>
+
+:::tip Self-hosted installation
+Alternatively, you can install the integration using any of the self-hosted installation methods to update Port in real time using webhooks.
+
+For self-hosted live events, use either [Custom GitHub App](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=custom-github-app&installation-methods=real-time-self-hosted&deploy=helm) or [Personal access token (PAT)](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=pat&installation-methods=real-time-self-hosted&deploy=helm).
+:::
+
 
 <OceanHostedByPortViaPortUi
   dataSourceName="Github"
@@ -45,10 +64,10 @@ The **GitHub App (via Port)** setup is available **only** as a **Hosted by Port*
 
 A Personal Access Token (PAT) is suitable if you are the only one managing the integration and you do not need frequent credential rotation.
 
-::::info PAT authentication support
+:::info PAT authentication support
 The GitHub integration supports authenticating with both **fine-grained** and **classic** PATs.
 If you need **multi-organization** support (v3.0.0-beta+), use a **classic PAT** (fine-grained PATs do not support multi-org).
-::::
+:::
 
 To create a PAT, see GitHub’s [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
