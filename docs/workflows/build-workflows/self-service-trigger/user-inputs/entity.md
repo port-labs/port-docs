@@ -24,7 +24,7 @@ The entity input type can be used for:
 
 <Tabs groupId="definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "With Dataset Filter", value: "dataset"},
+{label: "With dataset filter", value: "dataset"},
 {label: "Array", value: "array"}
 ]}>
 

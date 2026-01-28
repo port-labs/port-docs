@@ -3,6 +3,8 @@ sidebar_position: 3
 title: Advanced input configurations
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
 
 # Advanced input configurations
@@ -52,7 +54,12 @@ In this example, the `cluster` input filters its available entities based on the
 
 Control when inputs are visible using the `visible` property.
 
-### Static visibility
+<Tabs groupId="visibility" queryString defaultValue="static" values={[
+{label: "Static", value: "static"},
+{label: "Dynamic with JQ", value: "dynamic"}
+]}>
+
+<TabItem value="static">
 
 ```json showLineNumbers
 {
@@ -64,7 +71,8 @@ Control when inputs are visible using the `visible` property.
 }
 ```
 
-### Dynamic visibility with JQ
+</TabItem>
+<TabItem value="dynamic">
 
 ```json showLineNumbers
 {
@@ -90,11 +98,20 @@ Control when inputs are visible using the `visible` property.
 
 The `canaryPercentage` input only appears when `deploymentType` is set to "canary".
 
+</TabItem>
+</Tabs>
+
 ## Dynamic defaults
 
 Set default values dynamically using JQ expressions.
 
-### Based on other inputs
+<Tabs groupId="defaults" queryString defaultValue="inputs" values={[
+{label: "Based on other inputs", value: "inputs"},
+{label: "Based on context", value: "context"},
+{label: "Conditional defaults", value: "conditional"}
+]}>
+
+<TabItem value="inputs">
 
 ```json showLineNumbers
 {
@@ -115,7 +132,8 @@ Set default values dynamically using JQ expressions.
 }
 ```
 
-### Based on context
+</TabItem>
+<TabItem value="context">
 
 ```json showLineNumbers
 {
@@ -131,7 +149,8 @@ Set default values dynamically using JQ expressions.
 }
 ```
 
-### Conditional defaults
+</TabItem>
+<TabItem value="conditional">
 
 ```json showLineNumbers
 {
@@ -152,6 +171,9 @@ Set default values dynamically using JQ expressions.
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Read-only inputs
 
@@ -185,9 +207,9 @@ Control the display order of inputs using the `order` property:
 }
 ```
 
-## Combining configurations
+## Example
 
-Here's an example combining multiple advanced features:
+This example shows a userInputs configuration that combines input dependencies, conditional defaults, and visibility controls for a deployment form.
 
 ```json showLineNumbers
 {

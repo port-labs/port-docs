@@ -25,8 +25,8 @@ The number input type can be used for:
 
 <Tabs groupId="definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "With Range", value: "range"},
-{label: "Select (Enum)", value: "enum"}
+{label: "With range", value: "range"},
+{label: "Select (enum)", value: "enum"}
 ]}>
 
 <TabItem value="basic">

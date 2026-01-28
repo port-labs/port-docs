@@ -3,6 +3,8 @@ sidebar_position: 3
 title: Event trigger
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
 
 # Event trigger
@@ -12,6 +14,8 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 Event triggers allow workflows to run automatically in response to changes in your software catalog. When an entity is created, updated, or deleted, the workflow can be triggered to perform automated actions.
 
 ## Trigger types
+
+You can configure the following event types:
 
 | Event type | Description |
 | ---------- | ----------- |
@@ -23,7 +27,17 @@ Event triggers allow workflows to run automatically in response to changes in yo
 
 ## Configuration
 
-### Entity created trigger
+Here's how to configure each event trigger type:
+
+<Tabs groupId="trigger-type" queryString defaultValue="created" values={[
+{label: "Entity created", value: "created"},
+{label: "Entity updated", value: "updated"},
+{label: "Entity deleted", value: "deleted"},
+{label: "Any entity change", value: "any"},
+{label: "Timer expired", value: "timer"}
+]}>
+
+<TabItem value="created">
 
 ```json showLineNumbers
 {
@@ -39,7 +53,8 @@ Event triggers allow workflows to run automatically in response to changes in yo
 }
 ```
 
-### Entity updated trigger
+</TabItem>
+<TabItem value="updated">
 
 ```json showLineNumbers
 {
@@ -55,7 +70,8 @@ Event triggers allow workflows to run automatically in response to changes in yo
 }
 ```
 
-### Entity deleted trigger
+</TabItem>
+<TabItem value="deleted">
 
 ```json showLineNumbers
 {
@@ -71,7 +87,8 @@ Event triggers allow workflows to run automatically in response to changes in yo
 }
 ```
 
-### Any entity change trigger
+</TabItem>
+<TabItem value="any">
 
 ```json showLineNumbers
 {
@@ -87,7 +104,8 @@ Event triggers allow workflows to run automatically in response to changes in yo
 }
 ```
 
-### Timer expired trigger
+</TabItem>
+<TabItem value="timer">
 
 Triggered when a timer property on an entity expires:
 
@@ -105,6 +123,9 @@ Triggered when a timer property on an entity expires:
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Conditions
 
@@ -141,7 +162,17 @@ Add conditions to filter which events trigger the workflow using JQ expressions:
 
 ### Common condition patterns
 
-**Property changed:**
+<Tabs groupId="condition-patterns" queryString defaultValue="changed" values={[
+{label: "Property changed", value: "changed"},
+{label: "Property equals value", value: "equals"},
+{label: "Property changed to value", value: "changed-to"},
+{label: "Has relation", value: "relation"}
+]}>
+
+<TabItem value="changed">
+
+Check if a property value has changed:
+
 ```json
 {
   "expressions": [
@@ -150,7 +181,11 @@ Add conditions to filter which events trigger the workflow using JQ expressions:
 }
 ```
 
-**Property equals specific value:**
+</TabItem>
+<TabItem value="equals">
+
+Filter for entities with a specific property value:
+
 ```json
 {
   "expressions": [
@@ -159,7 +194,11 @@ Add conditions to filter which events trigger the workflow using JQ expressions:
 }
 ```
 
-**Property changed to specific value:**
+</TabItem>
+<TabItem value="changed-to">
+
+Check if a property changed from any value to a specific value:
+
 ```json
 {
   "expressions": [
@@ -170,7 +209,11 @@ Add conditions to filter which events trigger the workflow using JQ expressions:
 }
 ```
 
-**Entity has specific relation:**
+</TabItem>
+<TabItem value="relation">
+
+Check if an entity has a specific relation set:
+
 ```json
 {
   "expressions": [
@@ -178,6 +221,9 @@ Add conditions to filter which events trigger the workflow using JQ expressions:
   ]
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Outputs
 
@@ -195,7 +241,7 @@ Event triggers store the full event object as outputs that can be referenced in 
 
 The `diff.before` and `diff.after` objects have the following structure:
 
-```json
+```json showLineNumbers
 {
   "identifier": "my-service",
   "title": "My Service",
@@ -214,7 +260,7 @@ The `diff.before` and `diff.after` objects have the following structure:
 
 ### Using outputs in action nodes
 
-The trigger node identifier in the examples below is `trigger`:
+This example shows how to reference event trigger outputs in an action node. Since the trigger node's identifier is `trigger`, outputs are accessed via `.outputs.trigger`:
 
 ```json showLineNumbers
 {
@@ -235,6 +281,11 @@ The trigger node identifier in the examples below is `trigger`:
 ## Examples
 
 ### Notify on critical service status change
+
+This workflow monitors critical services and sends a Slack notification when their status changes. It uses conditions to trigger only for services with `tier` set to critical.
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -282,7 +333,14 @@ The trigger node identifier in the examples below is `trigger`:
 }
 ```
 
+</details>
+
 ### Clean up resources on environment deletion
+
+This workflow triggers when an environment entity is deleted and calls an external API to clean up the associated cloud resources.
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -324,7 +382,14 @@ The trigger node identifier in the examples below is `trigger`:
 }
 ```
 
+</details>
+
 ### Auto-expire TTL environments
+
+This workflow uses a timer trigger to automatically mark environments as expired when their TTL property expires, then notifies the owner.
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -382,3 +447,5 @@ The trigger node identifier in the examples below is `trigger`:
   ]
 }
 ```
+
+</details>

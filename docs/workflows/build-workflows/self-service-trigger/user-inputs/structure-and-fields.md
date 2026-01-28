@@ -43,7 +43,7 @@ All input types share these common fields:
 | `default` | A default value for the input |
 | `dependsOn` | An array of input names that this input depends on |
 | `readOnly` | Whether the input is read-only |
-| `visible` | Whether the input is visible (can be a boolean or JQ expression) |
+| `visible` | Whether the input is visible (can be a boolean or JQ expression). See [advanced input configurations](/workflows/build-workflows/self-service-trigger/advanced-input-configurations#visibility-controls) for more details. |
 
 :::tip Property structure
 The name of the input is the key of the input object. For example, in the code block above, the name of the input is `myInput`.

@@ -23,9 +23,9 @@ The array input type can be used for:
 ## Definition
 
 <Tabs groupId="definition" queryString defaultValue="strings" values={[
-{label: "String Array", value: "strings"},
-{label: "Number Array", value: "numbers"},
-{label: "Entity Array", value: "entities"}
+{label: "String array", value: "strings"},
+{label: "Number array", value: "numbers"},
+{label: "Entity array", value: "entities"}
 ]}>
 
 <TabItem value="strings">

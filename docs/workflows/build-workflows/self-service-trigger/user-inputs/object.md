@@ -24,7 +24,7 @@ The object input type can be used for:
 
 <Tabs groupId="definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "With Schema", value: "schema"},
+{label: "With schema", value: "schema"},
 {label: "Labeled URL", value: "labeledUrl"}
 ]}>
 

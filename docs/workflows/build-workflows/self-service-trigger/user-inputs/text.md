@@ -25,7 +25,7 @@ The text input type can be used for:
 
 <Tabs groupId="definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Select (Enum)", value: "enum"},
+{label: "Select (enum)", value: "enum"},
 {label: "Multi-line", value: "multiline"}
 ]}>
 
