@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # User inputs overview
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 User inputs define the data that users must provide when executing a self-service workflow. They are configured in the trigger node's `userInputs` section.
 

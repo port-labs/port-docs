@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Integration actions overview
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 Integration actions allow workflows to trigger operations in connected platforms like GitHub. These actions leverage Port's existing integrations to perform operations directly, without requiring you to set up separate webhook authentication.
 

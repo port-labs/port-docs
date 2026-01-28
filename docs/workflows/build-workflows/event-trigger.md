@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Event trigger
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 Event triggers allow workflows to run automatically in response to changes in your software catalog. When an entity is created, updated, or deleted, the workflow can be triggered to perform automated actions.
 

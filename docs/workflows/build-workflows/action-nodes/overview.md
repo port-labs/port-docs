@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Action nodes overview
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 Action nodes perform operations in your workflow. They execute after trigger nodes and can be chained together to create complex automation flows.
 

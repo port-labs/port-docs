@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # GitHub integration action
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 The GitHub integration action allows workflows to trigger GitHub Actions workflows directly using your installed GitHub integration.
 

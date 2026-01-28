@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Advanced input configurations
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 This page covers advanced configuration options for workflow user inputs, including dependencies, visibility controls, and dynamic defaults.
 

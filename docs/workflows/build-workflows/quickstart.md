@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Quickstart
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 This guide will help you create your first workflow in Port. You'll learn how to build a simple self-service workflow that sends a webhook notification.
 
@@ -107,7 +107,7 @@ Port's AI assistant can help you build workflows using natural language. In the 
 
 Now that you've created your first workflow, explore these topics:
 
-- [Self-service trigger](/workflows-beta/build-workflows/self-service-trigger/) - Learn how to configure user inputs and triggers
-- [Event trigger](/workflows-beta/build-workflows/event-trigger) - Create workflows that respond to entity changes
-- [Action nodes](/workflows-beta/build-workflows/action-nodes/) - Explore all available action types
-- [Examples](/workflows-beta/examples) - See real-world workflow examples
+- [Self-service trigger](/workflows/build-workflows/self-service-trigger/) - Learn how to configure user inputs and triggers
+- [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows that respond to entity changes
+- [Action nodes](/workflows/build-workflows/action-nodes/) - Explore all available action types
+- [Examples](/workflows/examples) - See real-world workflow examples

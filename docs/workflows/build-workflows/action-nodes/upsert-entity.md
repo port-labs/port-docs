@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Upsert entity
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 The upsert entity action node creates or updates entities in your Port software catalog. If an entity with the specified identifier exists, it will be updated; otherwise, a new entity will be created.
 

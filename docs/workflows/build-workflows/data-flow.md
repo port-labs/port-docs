@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Data flow
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 Workflows pass data between nodes using **outputs** and **variables**. Understanding how data flows through your workflow is essential for building effective automations.
 

@@ -8,7 +8,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Self-service trigger
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 A self-service trigger allows users to manually execute a workflow from Port's UI and API. This is useful for creating on-demand operations like provisioning resources, deploying services, or running maintenance tasks.
 

@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Self-service trigger overview
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 A self-service trigger allows users to manually execute a workflow from Port's UI and API. This is useful for creating on-demand operations like provisioning resources, deploying services, or running maintenance tasks.
 
@@ -77,18 +77,18 @@ Use JQ expressions wrapped in double curly brackets to reference trigger outputs
 
 | Type | Description |
 | ---- | ----------- |
-| [Text](/workflows-beta/build-workflows/self-service-trigger/user-inputs/text) | Basic text input |
-| [Number](/workflows-beta/build-workflows/self-service-trigger/user-inputs/number) | Numeric input |
-| [Toggle](/workflows-beta/build-workflows/self-service-trigger/user-inputs/toggle) | Boolean true/false |
-| [Entity](/workflows-beta/build-workflows/self-service-trigger/user-inputs/entity) | Select an entity from a blueprint |
-| [User](/workflows-beta/build-workflows/self-service-trigger/user-inputs/user) | Select a Port user |
-| [Team](/workflows-beta/build-workflows/self-service-trigger/user-inputs/team) | Select a Port team |
-| [Datetime](/workflows-beta/build-workflows/self-service-trigger/user-inputs/datetime) | Date and time picker |
-| [URL](/workflows-beta/build-workflows/self-service-trigger/user-inputs/url) | URL input with validation |
-| [Email](/workflows-beta/build-workflows/self-service-trigger/user-inputs/email) | Email input with validation |
-| [Array](/workflows-beta/build-workflows/self-service-trigger/user-inputs/array) | List of values |
-| [Object](/workflows-beta/build-workflows/self-service-trigger/user-inputs/object) | JSON object input |
-| [YAML](/workflows-beta/build-workflows/self-service-trigger/user-inputs/yaml) | YAML formatted input |
+| [Text](/workflows/build-workflows/self-service-trigger/user-inputs/text) | Basic text input |
+| [Number](/workflows/build-workflows/self-service-trigger/user-inputs/number) | Numeric input |
+| [Toggle](/workflows/build-workflows/self-service-trigger/user-inputs/toggle) | Boolean true/false |
+| [Entity](/workflows/build-workflows/self-service-trigger/user-inputs/entity) | Select an entity from a blueprint |
+| [User](/workflows/build-workflows/self-service-trigger/user-inputs/user) | Select a Port user |
+| [Team](/workflows/build-workflows/self-service-trigger/user-inputs/team) | Select a Port team |
+| [Datetime](/workflows/build-workflows/self-service-trigger/user-inputs/datetime) | Date and time picker |
+| [URL](/workflows/build-workflows/self-service-trigger/user-inputs/url) | URL input with validation |
+| [Email](/workflows/build-workflows/self-service-trigger/user-inputs/email) | Email input with validation |
+| [Array](/workflows/build-workflows/self-service-trigger/user-inputs/array) | List of values |
+| [Object](/workflows/build-workflows/self-service-trigger/user-inputs/object) | JSON object input |
+| [YAML](/workflows/build-workflows/self-service-trigger/user-inputs/yaml) | YAML formatted input |
 
 ## Example: Service deployment workflow
 

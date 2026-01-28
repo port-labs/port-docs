@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Workflows (Beta)
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 :::warning Closed Beta Notice
 As a closed beta feature, workflows may undergo breaking changes and occasional downtime without prior notice. There is no SLA or guaranteed issue-resolution timeline during this period. Support is provided directly by the Workflows team.
@@ -124,7 +124,7 @@ The basic structure of a workflow looks like this:
 
 ## Next steps
 
-- [Quickstart and build with AI](/workflows-beta/build-workflows/quickstart) - Get started building your first workflow
-- [Self-service trigger](/workflows-beta/build-workflows/self-service-trigger/) - Create workflows triggered by users
-- [Event trigger](/workflows-beta/build-workflows/event-trigger) - Create workflows triggered by entity changes
-- [Action nodes](/workflows-beta/build-workflows/action-nodes/) - Learn about available action types
+- [Quickstart and build with AI](/workflows/build-workflows/quickstart) - Get started building your first workflow
+- [Self-service trigger](/workflows/build-workflows/self-service-trigger/) - Create workflows triggered by users
+- [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows triggered by entity changes
+- [Action nodes](/workflows/build-workflows/action-nodes/) - Learn about available action types

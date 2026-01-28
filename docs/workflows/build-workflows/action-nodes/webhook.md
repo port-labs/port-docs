@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Webhook
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 The webhook action node sends HTTP requests to external endpoints. This is the most versatile action type, allowing you to integrate with any system that exposes an HTTP API.
 
@@ -220,13 +220,13 @@ When calling Port's API (`https://api.getport.io`), you don't need to include an
 ```
 
 This is useful when you want to:
-- Fetch entities from the catalog (see [Data flow](/workflows-beta/build-workflows/data-flow#fetching-data-from-the-catalog))
+- Fetch entities from the catalog (see [Data flow](/workflows/build-workflows/data-flow#fetching-data-from-the-catalog))
 - Create or update entities
 - Trigger other self-service actions
 - Perform any operation available in Port's API
 
 :::tip
-For creating or updating entities, consider using the [Upsert entity](/workflows-beta/build-workflows/action-nodes/upsert-entity) action node instead, which provides a simpler configuration.
+For creating or updating entities, consider using the [Upsert entity](/workflows/build-workflows/action-nodes/upsert-entity) action node instead, which provides a simpler configuration.
 :::
 
 ## Limitations

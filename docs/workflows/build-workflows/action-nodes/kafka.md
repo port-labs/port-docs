@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Kafka
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 The Kafka action node publishes messages to Port's dedicated Kafka topic for your organization. This allows you to process workflow events using your own consumers.
 

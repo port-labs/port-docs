@@ -7,7 +7,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 # Interact with workflow runs
 
-<ClosedBetaFeatureNotice id="workflows-beta" />
+<ClosedBetaFeatureNotice id="workflows" />
 
 When a workflow is executed, it creates a **workflow run** that tracks the execution progress. Each node in the workflow creates a **node run** that captures its status, logs, and output.
 
