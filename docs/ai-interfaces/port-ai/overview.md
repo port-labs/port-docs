@@ -98,6 +98,16 @@ Port includes built-in skills for common workflows (such as troubleshooting inte
 
 **[Learn more about Skills →](/ai-interfaces/port-mcp-server/skills)**
 
+## Memory
+
+Memory allows Port AI to learn and remember your preferences across conversations. Over time, the AI adapts to your working style - remembering things like your preferred output formats, coding styles, and common workflows.
+
+In each conversation, Port AI selects the most relevant preferences based on your current input, providing more personalized responses without requiring you to repeat yourself.
+
+Memory is enabled by default and can be managed via API. Organization administrators can disable memory for their entire organization if needed.
+
+**[Learn more about Memory →](/ai-interfaces/port-ai/memory)**
+
 ## Available Interfaces
 
 Port AI can be accessed through several interfaces, each designed for different use cases:

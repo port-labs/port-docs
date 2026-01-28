@@ -13,6 +13,10 @@ import TabItem from "@theme/TabItem"
 
 Labeled URL is an object type used to store URLs with custom display labels. This property allows you to associate a human-readable label with a URL, making it easier to display meaningful link text in the UI instead of showing icons only.
 
+:::tip Creating via UI
+When creating a [URL property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/url) in the UI, enabling the **Custom display text** toggle creates a labeled URL property. Note that this toggle cannot be changed after the property is saved.
+:::
+
 ## Common labeled URL usage
 
 The labeled URL property type can be used to store links with descriptive labels, for example:
