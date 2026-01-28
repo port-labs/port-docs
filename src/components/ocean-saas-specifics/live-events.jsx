@@ -319,7 +319,28 @@ export const liveEvents = {
     \n- resolved \
     \n- ignored \
     \n- unresolved \
-    \n- assigned"
+    \n- assigned",
+  Servicenow:
+    "**Incident:** \
+    \n- insert \
+    \n- update \
+    \n- delete \
+    \n\n **Group:** \
+    \n- insert \
+    \n- update \
+    \n- delete \
+    \n\n **Vulnerability:** \
+    \n- insert \
+    \n- update \
+    \n- delete \
+    \n\n **Service Catalog:** \
+    \n- insert \
+    \n- update \
+    \n- delete \
+    \n\n **Release Management:** \
+    \n- insert \
+    \n- update \
+    \n- delete"
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
