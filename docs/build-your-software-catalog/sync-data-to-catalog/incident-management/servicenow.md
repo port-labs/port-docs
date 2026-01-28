@@ -257,11 +257,19 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.servicenowPassword`       | The ServiceNow account password (for basic authentication)                                                                                                                                                                                                                                     | ❌*       |
 | `integration.config.servicenowClientId`        | The ServiceNow OAuth client ID (for OAuth authentication)                                                                                                                                                                                                                                      | ❌*       |
 | `integration.secrets.servicenowClientSecret`   | The ServiceNow OAuth client secret (for OAuth authentication)                                                                                                                                                                                                                                  | ❌*       |
+| `integration.config.enableTablesLiveEventsWebhooks`   | Enable automatic creation of Business Rules in ServiceNow for real-time events forwarding to Port.                                                                                                                                                                                                                                  | ❌       |
+| `integration.config.liveEventTables`   | Optional list of specific table names to configure for live events. If not specified but `enableTablesLiveEventsWebhooks` is true, all supported tables will be configured. Use this to limit which tables trigger live events.                                                                                                                                                                                                                                  | ❌       |
 | `integration.eventListener.type`               | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | ✅        |
 | `integration.type`                             | The integration to be installed                                                                                                                                                                                                                                                                | ✅        |
 | `scheduledResyncInterval`                      | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.port.io/developing-an-integration/trigger-your-integration) | ❌        |
 | `initializePortResources`                      | Default true, When set to true the integration will create default blueprints and the port App config Mapping.        | ❌        |
 | `sendRawDataExamples`                          | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | ❌        |
+
+<br/>
+
+:::warning Performance considerations
+`enableTablesLiveEventsWebhooks` is a heavy operation that creates Business Rules for All/specified tables by `liveEventTables`. Use this to limit which tables trigger live events.
+:::
 
 <br/>
 
