@@ -9,7 +9,14 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 # Overview
 
-Port's AWS Hosted by Port integration allows you to import your AWS resources into Port with **zero maintenance required**. The integration is fully hosted and managed by Port, providing a seamless experience for discovering and managing your AWS infrastructure.
+Port's AWS integration allows you to import your AWS resources into Port, with flexible deployment options to match your needs.
+
+## Deployment options
+
+We offer two ways to deploy the AWS integration:
+
+- **[Hosted by Port](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/hosted-by-port/hosted-by-port.md)**: Fully managed by Port with zero maintenance required. Simply create IAM roles via CloudFormation, and Port handles the rest.
+- **[Self-hosted](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/)**: Deploy the integration in your own infrastructure using Helm or Docker for complete control.
 
 The integration periodically syncs your AWS resources to ensure your Port catalog stays up-to-date with your AWS infrastructure.
 
@@ -33,9 +40,12 @@ AWS Hosted by Port provides several advantages over the [AWS on-premise integrat
 
 ## Getting started
 
-Continue to the [installation](./installations.md) guide to learn how to install AWS Hosted by Port.
+Choose your deployment method:
 
-For detailed information about the IAM role architecture and security model, see the [IAM Role Architecture](./iam-role-architecture.md) guide.
+- **[Hosted by Port installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/hosted-by-port/hosted-by-port.md)**: For a fully managed, zero-maintenance experience.
+- **[Self-hosted installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted/)**: For deployments in your own infrastructure.
+
+For detailed information about the IAM role architecture for the hosted version, see the [IAM Role Architecture](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/hosted-by-port/iam-role-architecture.md) guide.
 
 ## Configuration
 

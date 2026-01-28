@@ -1,4 +1,8 @@
 {
-  "label": "AWS Hosted by Port",
-  "position": 12
+  "label": "AWS (new)",
+  "position": 12,
+  "link": {
+    "type": "doc",
+    "id": "build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/Overview"
+  }
 }

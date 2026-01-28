@@ -4,6 +4,7 @@ sidebar_position: 3
 
 # IAM role architecture
 
+
 AWS Hosted by Port uses a strategically designed IAM role that provides comprehensive read-only access to all AWS services. The role is created automatically by the CloudFormation template and uses the AWS managed `ReadOnlyAccess` policy for future-proofing and operational simplicity.
 
 :::warning Role modifications
