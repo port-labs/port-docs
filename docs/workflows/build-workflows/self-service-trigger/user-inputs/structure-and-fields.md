@@ -1,17 +1,17 @@
 ---
 sidebar_position: 1
-title: Overview
+title: Structure and fields
 ---
 
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
 
-# User inputs overview
+# Structure and fields
 
 <ClosedBetaFeatureNotice id="workflows" />
 
-User inputs define the data that users must provide when executing a self-service workflow. They are configured in the trigger node's `userInputs` section.
+Each self-service workflow trigger has a `userInputs` section in its configuration. In this section, you can define all of the user inputs you want your developers and users to fill when executing the workflow.
 
-## Structure
+## Input structure
 
 ```json showLineNumbers
 {
@@ -44,6 +44,12 @@ All input types share these common fields:
 | `dependsOn` | An array of input names that this input depends on |
 | `readOnly` | Whether the input is read-only |
 | `visible` | Whether the input is visible (can be a boolean or JQ expression) |
+
+:::tip Property structure
+The name of the input is the key of the input object. For example, in the code block above, the name of the input is `myInput`.
+
+Note that all of the [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#supported-properties) available for Port blueprints can also be used as user inputs, which is why they follow the same structure.
+:::
 
 ## Dynamic defaults with JQ
 

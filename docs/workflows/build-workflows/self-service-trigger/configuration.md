@@ -1,25 +1,23 @@
 ---
 sidebar_position: 1
-title: Overview
+title: Configuration
 ---
 
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
 
-# Self-service trigger overview
+# Configuration
 
 <ClosedBetaFeatureNotice id="workflows" />
 
 A self-service trigger allows users to manually execute a workflow from Port's UI and API. This is useful for creating on-demand operations like provisioning resources, deploying services, or running maintenance tasks.
 
-## Configuration
+When configuring a self-service trigger node, you define the user inputs that users must provide when executing the workflow. These inputs are configured in the `userInputs` section and can include various types like text, numbers, entity selectors, and more.
 
-When configuring a self-service trigger node, you can define:
-
-| Field | Description |
-| ----- | ----------- |
-| `userInputs` | The inputs that users must provide when executing the workflow |
+For more information about configuring user inputs, see [user inputs](/workflows/build-workflows/self-service-trigger/user-inputs/).
 
 ## JSON structure
+
+Here's an example of a self-service trigger node configuration:
 
 ```json showLineNumbers
 {
@@ -75,22 +73,27 @@ Use JQ expressions wrapped in double curly brackets to reference trigger outputs
 
 ## Supported input types
 
-| Type | Description |
-| ---- | ----------- |
-| [Text](/workflows/build-workflows/self-service-trigger/user-inputs/text) | Basic text input |
-| [Number](/workflows/build-workflows/self-service-trigger/user-inputs/number) | Numeric input |
-| [Toggle](/workflows/build-workflows/self-service-trigger/user-inputs/toggle) | Boolean true/false |
-| [Entity](/workflows/build-workflows/self-service-trigger/user-inputs/entity) | Select an entity from a blueprint |
-| [User](/workflows/build-workflows/self-service-trigger/user-inputs/user) | Select a Port user |
-| [Team](/workflows/build-workflows/self-service-trigger/user-inputs/team) | Select a Port team |
-| [Datetime](/workflows/build-workflows/self-service-trigger/user-inputs/datetime) | Date and time picker |
-| [URL](/workflows/build-workflows/self-service-trigger/user-inputs/url) | URL input with validation |
-| [Email](/workflows/build-workflows/self-service-trigger/user-inputs/email) | Email input with validation |
-| [Array](/workflows/build-workflows/self-service-trigger/user-inputs/array) | List of values |
-| [Object](/workflows/build-workflows/self-service-trigger/user-inputs/object) | JSON object input |
-| [YAML](/workflows/build-workflows/self-service-trigger/user-inputs/yaml) | YAML formatted input |
+- [**Text**](/workflows/build-workflows/self-service-trigger/user-inputs/text) - Basic text input.
+- [**Number**](/workflows/build-workflows/self-service-trigger/user-inputs/number) - Numeric input.
+- [**Toggle**](/workflows/build-workflows/self-service-trigger/user-inputs/toggle) - Boolean true/false.
+- [**Entity**](/workflows/build-workflows/self-service-trigger/user-inputs/entity) - Select an entity from a blueprint.
+- [**User**](/workflows/build-workflows/self-service-trigger/user-inputs/user) - Select a Port user.
+- [**Team**](/workflows/build-workflows/self-service-trigger/user-inputs/team) - Select a Port team.
+- [**Datetime**](/workflows/build-workflows/self-service-trigger/user-inputs/datetime) - Date and time picker.
+- [**URL**](/workflows/build-workflows/self-service-trigger/user-inputs/url) - URL input with validation.
+- [**Email**](/workflows/build-workflows/self-service-trigger/user-inputs/email) - Email input with validation.
+- [**Array**](/workflows/build-workflows/self-service-trigger/user-inputs/array) - List of values.
+- [**Object**](/workflows/build-workflows/self-service-trigger/user-inputs/object) - JSON object input.
+- [**YAML**](/workflows/build-workflows/self-service-trigger/user-inputs/yaml) - YAML formatted input.
 
-## Example: Service deployment workflow
+## Example
+
+**Service deployment workflow**
+
+This example demostrates how to create a self-service workflow where users select a service, specify a version, and choose a target environment. The workflow then sends a deployment request with these inputs to an external API.
+
+<details>
+<summary><b>Service deployment workflow (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -153,3 +156,5 @@ Use JQ expressions wrapped in double curly brackets to reference trigger outputs
   ]
 }
 ```
+
+</details>

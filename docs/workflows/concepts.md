@@ -19,7 +19,7 @@ Nodes are the building blocks of a workflow. There are three types of nodes:
 | --------- | ----------- |
 | **Trigger** | The entry point that initiates the workflow. Can be a [self-service trigger](/workflows/build-workflows/self-service-trigger/) (manual execution) or an [event trigger](/workflows/build-workflows/event-trigger) (automated based on entity changes). |
 | **Action** | Performs an operation such as sending a webhook, upserting an entity, publishing to Kafka, or triggering an integration action. See [action nodes](/workflows/build-workflows/action-nodes/) for more information. |
-| **Condition** | Evaluates expressions and routes the workflow to different branches based on the results. See [action nodes overview](/workflows/build-workflows/action-nodes/overview#condition-nodes) for more information. |
+| **Condition** | Evaluates expressions and routes the workflow to different branches based on the results. See [action nodes overview](/workflows/build-workflows/action-nodes/configuration-and-outputs#condition-nodes) for more information. |
 
 ## Connections
 
@@ -31,7 +31,7 @@ When you connect nodes together, data flows from one to the next, allowing you t
 
 Condition nodes allow you to add branching logic to your workflows. Each condition has one or more options with JQ expressions that are evaluated at runtime. The workflow follows the path of the first matching expression, or a fallback path if none match.
 
-For more information, see [condition nodes](/workflows/build-workflows/action-nodes/overview#condition-nodes).
+For more information, see [condition nodes](/workflows/build-workflows/action-nodes/configuration-and-outputs#condition-nodes).
 
 ## Outputs
 

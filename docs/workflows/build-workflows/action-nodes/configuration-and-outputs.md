@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
-title: Overview
+title: Configuration and outputs
 ---
 
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md';
 
-# Action nodes overview
+# Configuration and outputs
 
 <ClosedBetaFeatureNotice id="workflows" />
 
