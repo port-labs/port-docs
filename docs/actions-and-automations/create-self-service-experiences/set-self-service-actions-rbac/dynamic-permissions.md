@@ -33,7 +33,7 @@ Both keys must be present in the policy object.
 
 ### Evaluation order
 
-Dynamic permissions are evaluated **after** [blueprint permissions](/sso-rbac/rbac/). This means:
+Dynamic permissions are evaluated **after** [blueprint permissions](/sso-rbac/rbac-overview/). This means:
 
 1. Port first checks if the user has the required permissions on the underlying blueprint.
 2. Only if the blueprint permissions allow access, the dynamic permission policy is evaluated.
