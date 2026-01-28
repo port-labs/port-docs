@@ -119,7 +119,7 @@ Port's AI assistant can help you build workflows using natural language:
 
 Now that you've created your first workflow, explore these topics:
 
-- [Self-service trigger](/workflows/build-workflows/self-service-trigger/) - Learn how to configure user inputs and triggers.
+- [Self-service trigger](/workflows/build-workflows/self-service-trigger/configuration) - Learn how to configure user inputs and triggers.
 - [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows that respond to entity changes.
 - [Action nodes](/workflows/build-workflows/action-nodes/) - Explore all available action types.
 - [Examples](/workflows/examples) - See real-world workflow examples.

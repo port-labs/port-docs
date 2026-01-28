@@ -11,7 +11,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 A self-service trigger allows users to manually execute a workflow from Port's UI and API. This is useful for creating on-demand operations like provisioning resources, deploying services, or running maintenance tasks.
 
-To configure a self-service trigger node, you define user inputs in the `userInputs` section. These inputs can include text, numbers, entity selectors, and more. For detailed information about input types and configuration options, see [user inputs](/workflows/build-workflows/self-service-trigger/user-inputs/).
+To configure a self-service trigger node, you define user inputs in the `userInputs` section. These inputs can include text, numbers, entity selectors, and more. For detailed information about input types and configuration options, see [user inputs](/workflows/build-workflows/self-service-trigger/user-inputs/structure-and-fields).
 
 ## JSON structure
 

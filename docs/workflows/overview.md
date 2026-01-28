@@ -22,7 +22,7 @@ Common use cases include:
 - Scaffolding new microservices.
 - Deploying services to environments.
 
-For more information and instructions for creating self-service workflows, see [self-service trigger](/workflows/build-workflows/self-service-trigger/).
+For more information and instructions for creating self-service workflows, see [self-service trigger](/workflows/build-workflows/self-service-trigger/configuration).
 
 ## 2. Event-driven workflows
 
