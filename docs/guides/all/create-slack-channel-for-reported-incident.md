@@ -12,10 +12,15 @@ description: Learn how to automatically create a Slack channel and GitHub issue 
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 
 # Auto-create Slack channel & GitHub issue for PagerDuty incidents
 
 This guide demonstrates how to set up an automated incident management system that creates a dedicated Slack channel and GitHub issue whenever a PagerDuty incident is reported.
+
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
 Once implemented:
 - A new Slack channel will be automatically created for each incident, providing a dedicated space for team communication.
@@ -33,9 +38,21 @@ Once implemented:
 
 ## Prerequisites
 
-- Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
+- <Tabs groupId="github-incident" queryString="integration">
+  <TabItem value="github" label="GitHub (Legacy)">
+
+    - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
+    - [Ingest GitHub issues](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-and-issues) using Port's GitHub app.
+
+  </TabItem>
+  <TabItem value="github-ocean" label="GitHub (Ocean)">
+
+    - Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+    - Ingest GitHub issues using GitHub ocean (see [GitHub ocean examples](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/examples)).
+
+  </TabItem>
+  </Tabs>
 - Install Port's [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md) for real-time incident ingestion.
-- [Ingest GitHub issues](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-and-issues) using Port's GitHub app.
 - Prepare your Port organization's `Client ID` and `Client Secret` ([find your credentials here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 - Configure a Slack app:
   - [Create a Slack app](https://api.slack.com/start/quickstart#creating) and install it in a workspace.
