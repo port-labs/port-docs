@@ -1666,12 +1666,19 @@ export const availableGuides = [
         link: "/guides/all/ingest-claude-code-security-reviews",
     },
     {
-        title: "Auto-assign bugs to owners with ai",
+        title: "Auto-assign bugs to owners with AI",
         description: "Automatically assign Jira bugs to owning teams and services with Port automations and AI",
-        tags: ["Agentic Work Management", "Jira", "AI", "Automations"],
+        tags: ["Autonomous Ticket Resolution", "Jira", "AI", "Automations"],
         logos: ["Jira", "AI"],
         link: "/guides/all/auto-assign-bugs-to-owners",
     },
+    {
+        title: "Centralize AI Coding Rules with Port",
+        description: "Centralize AI coding rules with Port to ensure consistent coding standards and best practices across your organization using AGENTS.md",
+        tags: ["Security", "GitHub", "AI",  "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/centralize-ai-coding-rules-with-port",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
