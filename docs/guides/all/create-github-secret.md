@@ -5,12 +5,17 @@ description: Learn how to create GitHub secrets in Port with this guide, enhanci
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 
 # Create GitHub Secret
 
 This guide demonstrates how to implement a self-service action in Port that allows you to create [GitHub Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) in your GitHub repository directly from Port.
 
 In this example we are using a pre-defined GitHub Action from GitHub Marketplace called [Create GitHub Secret Action](https://github.com/marketplace/actions/create-github-secret-action).
+
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
 
 ## Common use cases
 
@@ -22,7 +27,20 @@ In this example we are using a pre-defined GitHub Action from GitHub Marketplace
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
+
+<Tabs groupId="github-secret" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 - [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed in your GitHub organization.
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+- Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+
+</TabItem>
+</Tabs>
+
 - A [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes:
   - `repo` (Full control of private repositories).
   - `admin:org` (Full control of orgs and teams, read and write org projects).
