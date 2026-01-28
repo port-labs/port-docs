@@ -13,28 +13,33 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 
-## Deploy the integration
-
-
-To deploy the integration, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
-
-<FindCredentials/>
-
-___
-
 Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
+{props.setupName !== "app" && (
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="GithubOcean" />
+<OceanSaasInstallation
+  integration="GithubOcean"
+  showSelfHostedTip={false}
+  dataSourceName="Github"
+  showUseCustomSettingsStep={props.showUseCustomSettingsStep}
+/>
+
 
 </TabItem>
+)}
 
-<TabItem value="real-time-self-hosted" label="Kubernetes">
+<TabItem value="real-time-self-hosted" label="Kubernetes" default={props.setupName === "app"}>
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+<h3>Port credentials</h3>
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
 
 <h2>Prerequisites</h2>
 
@@ -137,7 +142,7 @@ To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
-:::info Placeholder Replacement Required
+:::info Placeholder replacement required
 Be sure to replace the `<GITHUB_TOKEN>` and `<GITHUB_ORGANIZATION>` placeholders with your actual values. If you are using a self-hosted GitHub instance, update the `githubHost` value to point to your instance.
 
 For multi-organization support, use a **classic PAT token** and specify multiple organizations in the port mapping
@@ -242,7 +247,7 @@ kubectl apply -f my-ocean-github-integration.yaml
 {props.setupName == "app" && <Base64Tip />}
 
 
-### Enabling live-events
+<h3>Enabling live-events</h3>
 :::tip Live events
 The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
 For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
@@ -270,13 +275,24 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="docker" label="Docker">
-    <DockerInstallMethod showingApp={props.setupName == "app"} />
+<h3>Port credentials</h3>
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
+
+<DockerInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 
-{props.setupName != "app" && 
 <TabItem value="one-time-ci" label="CI">
-<CiInstallMethod />
-</TabItem>}
+<h3>Port credentials</h3>
+
+If you deploy the integration outside Port, you need your Port `CLIENT_ID` and `CLIENT_SECRET`:
+
+<FindCredentials/>
+
+<CiInstallMethod showingApp={props.setupName == "app"} />
+</TabItem>
 </Tabs>
 
 

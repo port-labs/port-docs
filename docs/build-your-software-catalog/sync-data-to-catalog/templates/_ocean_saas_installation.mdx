@@ -1,4 +1,6 @@
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
+import Admonition from '@theme/Admonition';
+import Link from "@docusaurus/Link";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
@@ -20,9 +22,11 @@ Using this installation option means that the integration will be hosted by Port
   }
 </details>
 
-:::tip Self-hosted installation
-Alternatively, you can install the integration using the [Self-hosted](?installation-methods=real-time-self-hosted#setup) method to update Port in real time using webhooks.
-:::
+{props.showSelfHostedTip !== false && (
+  <Admonition type="tip" title="Self-hosted installation">
+    Alternatively, you can install the integration using the <Link to="?installation-methods=real-time-self-hosted#setup">Self-hosted</Link> method to update Port in real time using webhooks.
+  </Admonition>
+)}
 
 <h3>Installation</h3>
 
@@ -32,11 +36,13 @@ To install, follow these steps:
 
 2. Click on the `+ Data source` button in the top-right corner.
 
-3. Click on the relevant integration in the list.
+3. Click on {props.dataSourceName ? <code>{props.dataSourceName}</code> : "the relevant integration"} in the list.
 
 4. Under `Select your installation method`, choose `Hosted by Port`.
 
-5. Configure the `integration settings` and `application settings` as you wish (see below for details).
+5. {props.showUseCustomSettingsStep && (
+     <>Toggle on <code>Use Custom Settings</code> and </>
+   )}Configure the `integration settings` and `application settings` as you wish (see below for details).
 
 <h3>Application settings</h3>
 

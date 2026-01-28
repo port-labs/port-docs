@@ -43,8 +43,13 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>integration.config.githubOrganization</code></td>
-          <td>Single GitHub organization name to sync data from (for GitHub App or Fine-grained PAT). Required for single-org authentication.</td>
-          <td>❌</td>
+          <td>
+            The GitHub organization to sync.
+            {!showingApp && (
+              <> Required when you use a single-organization setup, and not required when you use multi-organization support.</>
+            )}
+          </td>
+          <td>{showingApp ? "✅" : "⚠️"}</td>
         </tr>
         {/* Multi-organization is configured in Port App Config (organizations) via the mapping, not integration.config */}
         <tr>
@@ -52,11 +57,28 @@ export default function ParametersTable({ showingApp }) {
           <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://api.&lt;SUBDOMAIN&gt;.ghe.com</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
           <td>❌</td>
         </tr>
-        {!showingApp && <tr>
-          <td><code>integration.secrets.githubToken</code></td>
-          <td>A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a <a href="../github-app.mdx">Github app</a></td>
-          <td>✅</td>
-        </tr>}
+        {!showingApp && (
+          <tr>
+            <td><code>integration.secrets.githubToken</code></td>
+            <td>A GitHub Personal Access Token (PAT) to authenticate with GitHub.</td>
+            <td>✅</td>
+          </tr>
+        )}
+        {showingApp && (
+          <>
+            <tr>
+              <td><code>integration.config.githubAppId</code></td>
+              <td>The app id or client id of your Custom GitHub App.</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>integration.secrets.githubAppPrivateKey</code></td>
+              <td>The base64 encoded private key of your Custom GitHub App.</td>
+              <td>✅</td>
+            </tr>
+          </>
+        )}
+
         <tr>
           <td><code>scheduledResyncInterval</code></td>
           <td>The number of minutes between each resync.</td>
@@ -79,7 +101,7 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>actionsProcessor.enabled</code></td>
-          <td>when set to true, the integration will be able to process actions and automations.</td>
+          <td>When set to <code>true</code>, the integration will be able to process actions and automations.</td>
           <td>❌</td>
         </tr>
         <tr>
@@ -87,18 +109,6 @@ export default function ParametersTable({ showingApp }) {
           <td>A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.</td>
           <td>❌</td>
         </tr>
-        {showingApp && <>
-          <tr>
-            <td><code>integration.config.githubAppId</code></td>
-            <td>The app id or client id of your GitHub App. Required if you are authenticating as a <a href="../github-app.mdx">GitHub App</a> instead of using a PAT.</td>
-            <td>❌</td>
-          </tr>
-          <tr>
-            <td><code>integration.secrets.githubAppPrivateKey</code></td>
-            <td>The base64 encoded private key of your GitHub App. Required if you are authenticating as a GitHub App.</td>
-            <td>❌</td>
-          </tr>
-        </>}
       </tbody>
     </table>
   );

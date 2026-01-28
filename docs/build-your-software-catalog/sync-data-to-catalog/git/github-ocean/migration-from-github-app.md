@@ -56,7 +56,7 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app).
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is documented in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=custom-github-app) under the Custom GitHub App tab.
 
 :::caution Single organization limitation
 GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization using `githubOrganization`.
@@ -105,9 +105,9 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 
-::::info Organization field in file selectors
+:::info Organization field in file selectors
 The `organization` field is optional when `githubOrganization` is set in the environment variables and it is required when not provided there.
-::::
+:::
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
@@ -416,9 +416,9 @@ resources:
 
 ### Folders
 
-::::info Organization field in folder selectors
+:::info Organization field in folder selectors
 The `organization` field is optional when `githubOrganization` is set in the environment variables and is required when not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
-::::
+:::
 
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
@@ -480,8 +480,19 @@ To improve performance when fetching team members, we now use GitHub's GraphQL A
 
 This change has two main consequences:
 
-1. The ID for a team may differ depending on whether you are fetching its members. This is due to differences between GitHub's REST and GraphQL APIs.
+1. The team ID you see may differ depending on whether you are fetching team members. This is due to differences between GitHub's REST and GraphQL APIs.
 2. Team members are now located in a `nodes` subarray within the team object.
+
+:::info Team IDs in REST and GraphQL
+The `members` selector defaults to `true` when omitted.
+
+When `members: true`, the integration fetches teams using the GitHub GraphQL API.
+
+- In GraphQL, `id` is a global node ID (string).
+- In GraphQL, `databaseId` is the numeric ID that matches the team `id` returned by the GitHub REST API.
+
+If you need the numeric team ID (for example, to match an existing REST-based identifier), use `databaseId` in your mappings.
+:::
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
@@ -518,7 +529,7 @@ This change has two main consequences:
   port:
     entity:
       mappings:
-        identifier: .id # toString is not neccesary, graphql id is a string
+        identifier: .databaseId | tostring
         title: .name
         blueprint: '"githubTeam"'
         properties:
@@ -607,19 +618,19 @@ Before migrating, you need to identify both installation IDs:
    - **Personal installations**: `https://github.com/settings/installations`
    - **Organization installations**: `https://github.com/organizations/YOUR-ORG/settings/installations`
 
-2. Click on Port's GitHub App installation from the list
+2. Click on Port's GitHub App installation from the list.
 
-3. Look at the **URL in your browser address bar** — it contains the installation ID at the end
+3. Look at the **URL in your browser address bar** — it contains the installation ID at the end.
 
 **Visual guide:**
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/githubAppInstallationId.png"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/githubAppInstallationId.png" alt="GitHub App installation ID in the URL bar" width="85%" border="1px" />
 
 The installation ID is the numeric value circled in the URL bar (e.g., `97269548` in the example above).
 
 **For the new GitHub Ocean integration:**
 
-- The installation ID is the **name you gave to the new GitHub Ocean integration** when you created it
+- The installation ID is the **name you gave to the new GitHub Ocean integration** when you created it.
 
 #### Install the migrator tool
 
@@ -629,19 +640,19 @@ curl -sL https://raw.githubusercontent.com/port-labs/port-github-migrator/main/i
 
 Gather your Port API credentials:
 
-- Port API client ID
-- Port API client secret
-- Your Port instance URL
+- Port API client ID.
+- Port API client secret.
+- Your Port instance URL.
 
 For detailed command reference and usage examples, refer to the [port-github-migrator GitHub repository](https://github.com/port-labs/port-github-migrator#commands-reference). The repository contains complete documentation for all available commands.
 
 ### Set up the new integration
 
-1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)
+1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 
-2. **Keep new integration mappings minimal** — For now, configure only the `organization` kind in the new GitHub Ocean integration. You'll add additional kinds one at a time during Phase 2.
+2. **Keep new integration mappings minimal** — For now, configure only the `organization` kind in the new GitHub Ocean integration. You will add additional kinds one at a time during Phase 2.
 
-3. **Verify legacy integration** — Trigger a resync of the legacy GitHub App integration to confirm the current entities structure
+3. **Verify legacy integration** — Trigger a resync of the legacy GitHub App integration to confirm the current entities structure.
 
 ### Migrate each blueprint (entity ownership transfer)
 
@@ -651,7 +662,7 @@ For each blueprint, repeat these steps:
 
 **Step 1:** Create temporary blueprint
 
-- Duplicate your existing blueprint and rename to `<blueprint>-ocean-temp` (choose whatever name you want)
+- Duplicate your existing blueprint and rename to `<blueprint>-ocean-temp` (choose whatever name you want).
 
 **Step 2:** Map the new integration to the temporary blueprint
 
@@ -678,7 +689,7 @@ port-github-migrator get-diff githubRepository githubRepository-ocean-temp \
 
 **Step 4:** Adjust mappings if needed
 
-- Review the [Kind mapping changes](#kind-mapping-changes) section and update your configuration if there are differences
+- Review the [Kind mapping changes](#kind-mapping-changes) section and update your configuration if there are differences.
 
 **Step 5:** Transfer ownership (critical step)
 
@@ -695,8 +706,8 @@ port-github-migrator migrate githubRepository \
 
 **Step 6:** Update mapping and clean up
 
-- Point the new integration back to the original blueprint
-- Delete the temporary blueprint
+- Point the new integration back to the original blueprint.
+- Delete the temporary blueprint.
 
 **Step 7:** Repeat for each remaining blueprint
 
@@ -706,10 +717,10 @@ If you have self-service actions or automations that use the legacy GitHub App b
 
 For each action that uses GitHub workflows:
 
-1. Navigate to the action's configuration in Port
-2. Update the backend type from the legacy GitHub App backend to `GitHub Ocean`
-3. Set the `installationId` field to the name of your GitHub Ocean integration installation
-4. Configure the organization, repository, and workflow details as needed
+1. Navigate to the action's configuration in Port.
+2. Update the backend type from the legacy GitHub App backend to `GitHub Ocean`.
+3. Set the `installationId` field to the name of your GitHub Ocean integration installation.
+4. Configure the organization, repository, and workflow details as needed.
 
 For detailed configuration instructions, refer to the [GitHub Ocean backend documentation](/docs/actions-and-automations/setup-backend/github-ocean/github-ocean.md).
 
@@ -717,16 +728,16 @@ For detailed configuration instructions, refer to the [GitHub Ocean backend docu
 
 Only uninstall the legacy GitHub App **after:**
 
-- ✅ All blueprints are migrated
-- ✅ Ownership is transferred for each blueprint (using the `migrate` command)
-- ✅ The new integration is syncing correctly
-- ✅ All actions are migrated to use the GitHub Ocean backend
+- ✅ All blueprints are migrated.
+- ✅ Ownership is transferred for each blueprint (using the `migrate` command).
+- ✅ The new integration is syncing correctly.
+- ✅ All actions are migrated to use the GitHub Ocean backend.
 
 ### Best practices
 
-- **Start with non-critical blueprints** — Build confidence before migrating critical data
-- **One blueprint at a time** — Easier to debug if issues arise
-- **Use `get-diff` before migrating** — Verify entities match before transferring ownership
-- **Keep legacy app active** — Don't remove until all migrations complete, removing it early will leave orphaned entities that can only be deleted manually
-- **Check Port logs** — Monitor for any sync issues after migration
-- **Ownership is reversible** — If issues arise, you can revert by deleting the migrated entities and resyncing the old integration, this will recreate those entities under the old integration ownership
+- **Start with non-critical blueprints** — Build confidence before migrating critical data.
+- **One blueprint at a time** — Easier to debug if issues arise.
+- **Use `get-diff` before migrating** — Verify entities match before transferring ownership.
+- **Keep legacy app active** — Don't remove until all migrations complete. Removing it early will leave orphaned entities that can only be deleted manually.
+- **Check Port logs** — Monitor for any sync issues after migration.
+- **Ownership is reversible** — If issues arise, you can revert by deleting the migrated entities and resyncing the old integration. This will recreate those entities under the old integration ownership.

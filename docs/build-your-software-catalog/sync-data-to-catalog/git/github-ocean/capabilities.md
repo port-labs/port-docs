@@ -6,6 +6,43 @@ sidebar_position: 3
 
 This page describes the data ingestion capabilities of Port's GitHub integration.
 
+
+## Configure parallel processing
+
+Configure multiple workers to handle GitHub webhook events in parallel groups, preventing race conditions while maintaining event ordering for related resources.
+
+Starting with Ocean 0.27, a new parameter was added to the configuration, which adjusts the number of async workers spawned for webhook events.
+
+Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
+
+When `event_workers_count > 1`, related GitHub events get grouped together:
+
+- All PR events (opened, review, status) for PR #123 → same processing group.
+- All issue events for issue #456 → same processing group.
+- Push events grouped by commit SHA.
+
+<details>
+<summary><b>Event grouping behavior (click to expand)</b></summary>
+  
+**Supported event types:**
+- **Pull requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`).
+- **Issues**: Grouped by issue number (`issues`, `issue_comment`).
+- **Pushes**: Grouped by commit SHA (`push`).
+- **Releases**: Grouped by release ID (`release`).
+- **Workflow runs**: Grouped by run ID (`workflow_run`).
+- **Status checks**: Grouped by commit SHA (`status`).
+  
+**Fallback**: If the event type is not recognized, the payload will be scanned for the first `number`, `id`, or `sha` field.
+
+:::note Processing guarantees
+Events within the same group are processed sequentially to maintain order and prevent conflicts.
+Different groups can be processed in parallel across workers.
+With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
+:::
+
+</details>
+
+
 ## Ingest Git objects
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
@@ -716,13 +753,11 @@ resources:
 
 </details>
 
-The repository search feature supports all resource kinds except `team`, `user`, `file`, and `folder`. To learn more about repository search, see the [GitHub documentation](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories).
+The repository search feature supports all resource kinds except `team`, `user`, `file`, and `folder`.
+It helps you apply **granular filtering** so you can control which repositories are ingested.
+To learn how repository search works (including query syntax), see GitHub’s [repository search documentation](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories).
 
-### Benefits
-
-- **Granular filtering**: Precisely control which repositories are ingested.
-
-#### Limitations
+### Limitations
 
 The repository search feature is subject to the limitations of the GitHub Search API:
 

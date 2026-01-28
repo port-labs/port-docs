@@ -4,160 +4,145 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx";
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_saas_installation.mdx";
-import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx";
-import {
-  OceanSaasLiveEventsDescription,
-  OceanSaasLiveEventsTriggersManual,
-  liveEvents,
-} from "/src/components/ocean-saas-specifics/live-events.jsx";
-import InstallMethods from "./\_install_methods.mdx";
+import InstallMethods from "./_install_methods.mdx";
+import GithubAppManualSetupContent from "./_custom_github_app_content.mdx";
+import OceanHostedByPortViaPortUi from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_hosted_by_port_via_port_ui.mdx";
+import GithubAppViaPortRedirectContent from "./_github_app_via_port_redirect_content.mdx";
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 # Installation
 
 This page details how to install Port's GitHub integration (powered by the Ocean framework).
 
-This page outlines the following steps:
-
-1. How to [create](#create-access-token) an access token to give the integration permissions to query your GitHub organization.
-2. How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
+This page helps you choose an authentication method and then deploy the integration using the installation method that fits your setup.
 
 ## Prerequisites
 
 - A GitHub account with permissions to create access tokens.
 - Your Port user role is set to `Admin`.
 
-## Setup
+## Choose authentication method
 
-### Create access token
+<Tabs groupId="github-ocean-auth" queryString="auth" defaultValue="github-app-wizard">
 
-To allow Port to fetch data from your GitHub Organization(s), you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
+<TabItem value="github-app-wizard" label="GitHub App (via Port)" default>
 
-<Tabs>
-<TabItem value="pat" label="Personal Access Token (PAT)">
+You can create and install a GitHub App directly from Port’s UI using OAuth. This is the recommended approach as it streamlines the entire setup process.
 
-A Personal Access Token (PAT) is suitable if you are the only one managing the integration and don't need frequent credential rotation.  
-To create a personal access token see GitHub's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+:::info Hosted by Port only
+The **GitHub App (via Port)** setup is available **only** as a **Hosted by Port** installation.
+
+**Hosted by Port** means Port runs and manages the integration for you (no Kubernetes/Docker/CI deployment on your side).
+:::
+
+<h2>Live event support</h2>
+
+<OceanSaasLiveEventsDescription id="GithubOcean" />
+
+<details>
+<summary><b>Supported live event triggers (Click to expand)</b></summary>
+
+<OceanSaasLiveEventsTriggersManual id="GithubOcean" />
+
+</details>
+
+:::tip Self-hosted installation
+Alternatively, you can install the integration using any of the self-hosted installation methods to update Port in real time using webhooks.
+
+For self-hosted live events, use either [Custom GitHub App](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=custom-github-app&installation-methods=real-time-self-hosted&deploy=helm) or [Personal access token (PAT)](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation?auth=pat&installation-methods=real-time-self-hosted&deploy=helm).
+:::
+
+
+<OceanHostedByPortViaPortUi
+  dataSourceName="Github"
+  redirectContent={<GithubAppViaPortRedirectContent />}
+/>
+
+</TabItem>
+
+<TabItem value="pat" label="Personal access token (PAT)">
+
+A Personal Access Token (PAT) is suitable if you are the only one managing the integration and you do not need frequent credential rotation.
+
+:::info PAT authentication support
+The GitHub integration supports authenticating with both **fine-grained** and **classic** PATs.
+If you need **multi-organization** support (v3.0.0-beta+), use a **classic PAT** (fine-grained PATs do not support multi-org).
+:::
+
+To create a PAT, see GitHub’s [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
 The token must belong to a user with access to the relevant GitHub resources (e.g., repositories, teams) across all organizations you want to sync.
 
-You will use this token as the `githubToken` parameter when [deploying the integration](#deploy-the-integration) below.
-
+You will use this token as the `githubToken` parameter when deploying the integration below.
 
 <details>
 <summary><b>Required permissions (click to expand)</b></summary>
   
-  These are the necessary permissions if you're creating a fine-grained PAT.
-  
-  **Repository permissions:**
-  - **Content**: Readonly (For reading files)
-  - **Metadata**: Readonly
-  - **Administration:** Readonly (for syncing repository teams and collaborators)
-  - **Pull Requests**: Readonly
-  - **Issues**: Readonly
-  - **Actions**: Readonly
-  - **Code scanning alerts**: Readonly
-  - **Dependabot alerts**: Readonly
-  - **Deployments**: Readonly
-  - **Environments**: Readonly
-  
-  **Organization permissions:**
-  - **Members**: Readonly(for syncing users and teams)
-  - **Administration**: Readonly(for syncing external identities)
-  - **Webhooks**: Read and Write (for managing webhook)
+This section focuses on the permissions you need to grant (fine-grained PAT vs classic PAT).
 
-:::note Default permissions
-You will be prompted to confirm the above listed permissions when creating a personal access token.
+<h3>Fine-grained PAT</h3>
 
-Permissions can be given to selected repositories in your organization, or to all repositories.  
-You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
+To configure permissions for a fine-grained PAT:
 
-:::
+- Choose the **resource owner** (organization/user).
+  <img src="/img/integrations/github-ocean/FineGrainedResourceOwnerSelection.png" alt="Selecting a resource owner when creating a fine-grained PAT" width="100%" border="1px" />
 
-</details>
+- Under **Repository access**, choose **All repositories** or **Only select repositories** (and select the relevant repositories).
+- **Repositories permissions**:
+    - **Actions**: Read-only.
+    - **Administration**: Read-only (for syncing repository teams and collaborators).
+    - **Code scanning alerts**: Read-only.
+    - **Contents**: Read-only (for reading files).
+    - **Dependabot alerts**: Read-only.
+    - **Deployments**: Read-only.
+    - **Environments**: Read-only.
+    - **Issues**: Read-only.
+    - **Metadata**: Read-only.
+    - **Pull requests**: Read-only.
+    - **Secret scanning alerts**: Read-only.
+    - **Webhooks**: Read and write *(personal accounts only — required to create repository webhooks).*
+    <img src="/img/integrations/github-ocean/FineGrainedPATOrganizationRepositories.png" alt="Choosing organization repositories when configuring a fine-grained PAT" width="100%" border="1px" />
+    <img src="/img/integrations/github-ocean/FineGrainedPATPersonalAccountRepositories.png" alt="Choosing personal account repositories when configuring a fine-grained PAT" width="100%" border="1px" />
 
-</TabItem>
-<TabItem value="github-app" label="GitHub App">
+- **Organization permissions** (when the resource owner is an organization):
+  - **Members**: Read-only (for syncing users and teams).
+  - **Administration**: Read-only (for syncing external identities).
+  - **Webhooks**: Read and write *(organizations only — required to create organization webhooks).*
+    <img src="/img/integrations/github-ocean/FineGrainedPATOrganizationPermissions.png" alt="Choosing organization permissions when configuring a fine-grained PAT" width="100%" border="1px" />
 
-A GitHub App provides automatic access token rotation and is a good alternative to PATs.
+- **Account permissions** (when the resource owner is a personal account):
+  to grant the permissions below.
+  - **Email addresses**: Read-only (only if you want to ingest user email addresses).
+    <img src="/img/integrations/github-ocean/FineGrainedPATPersonalAccount.png" alt="Choosing account permissions when configuring a fine-grained PAT" width="100%" border="1px" />
 
-<h4>Quick setup with OAuth (recommended)</h4>
+<h3>Classic PAT</h3>
 
-You can create and install a custom GitHub App directly from Port's UI using OAuth. This is the recommended approach as it streamlines the entire setup process:
-
-1. Navigate to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-
-2. Click on `+ Data source` and select `Github-ocean`.
-
-3. Click on the `Connect` button.
-
-4. Select the GitHub organization where you want to install the integration.
-
-5. Enter a custom app name and create it.
-
-6. Install your custom app.
-
-7. Your integration will be ready to use immediately.
-
-<h4>Manual setup</h4>
-
-For advanced configurations or if you prefer to manually create the GitHub App, see the [GitHub App installation guide](./github-app).
-
-:::caution Single organization limitation
-GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
-:::
-
-</TabItem>
-</Tabs>
-
-### Configure parallel processing
-
-Configure multiple workers to handle GitHub webhook events in parallel groups, preventing race conditions while maintaining event ordering for related resources.
-
-Starting with Ocean 0.27, a new parameter was added to the configuration, which adjusts the number of async workers spawned for webhook events.
-
-Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
-
-When `event_workers_count > 1`, related GitHub events get grouped together:
-
-- All PR events (opened, review, status) for PR #123 → same processing group.
-- All issue events for issue #456 → same processing group.
-- Push events grouped by commit SHA.
-
-<details>
-<summary><b>Event grouping behavior (click to expand)</b></summary>
-  
-  **Supported event types:**
-  - **Pull Requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`)
-  - **Issues**: Grouped by issue number (`issues`, `issue_comment`)
-  - **Pushes**: Grouped by commit SHA (`push`)
-  - **Releases**: Grouped by release ID (`release`)
-  - **Workflow Runs**: Grouped by run ID (`workflow_run`)
-  - **Status Checks**: Grouped by commit SHA (`status`)
-  
-  **Fallback**: If the event type isn't recognized, the payload will be scanned for the first `number`, `id`, or `sha` field.
-
-:::note Processing guarantees
-Events within the same group are processed sequentially to maintain order and prevent conflicts.
-Different groups can be processed in parallel across workers.
-With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
-:::
+Select the following scopes for classic PAT:
+   - `repo`
+   - `repo_deployment`
+   - `public_repo`
+   - `security_events`
+   - `workflow`
+   - `read:org`
+   - `admin:repo_hook` *(required if you intend syncing a personal account — used to create repository webhooks).*
+   - `admin:org_hook`
+   - `read:user`
+   - `user:email`
+  <img src="/img/integrations/github-ocean/ClassicPATPermissionScopes.png" alt="Classic PAT permission scopes for personal accounts" width="100%" border="1px" />
+   
 
 </details>
 
-<InstallMethods setupName="classic" />
+<InstallMethods setupName="classic" showUseCustomSettingsStep />
 
-## Multi GitHub organization support
+<h2>Multi GitHub organization support</h2>
 
-Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
+Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations when you use a classic PAT.
 
-**Configuration:**
 
-- **GitHub App or fine-grained PAT**: Use `githubOrganization` to specify a single organization.
-- **Classic PAT**: 
-  - Specify organizations in your port mapping using `organizations: ["org1", "org2", "org3"]`.
-  - If `organizations` is not specified, the integration syncs all organizations the classic PAT has access to.
+- **Supported authentication method**: Multi-organization support is available only when you authenticate using a **classic PAT**. Multi-organization syncing is **not supported** when authenticating via a **GitHub App** (including **GitHub App (via Port)** / self-hosted setups).
+- **Multi-organization setup**: Set `organizations: ["org1", "org2", "org3"]` in your mapping.
+- **All organizations setup**: If `organizations` is not specified, the integration syncs all organizations the classic PAT has access to.
 
 <details>
 <summary><b>Multi-organization mapping example (click to expand)</b></summary>
@@ -176,12 +161,127 @@ organizations:
 
 **Precedence:**
 
-If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in the port mapping, the integration prioritizes single-organization behavior and syncs only the `githubOrganization`.
+If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in the Port mapping, the integration prioritizes single-organization behavior and syncs only the `githubOrganization`.
 
 **Performance considerations:**
 
 Syncing multiple organizations increases the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption.
 
-**Default mapping behavior:**
+</TabItem>
 
-First-time installs may sync more data than intended if organizations are not scoped. After installation, review your mapping configuration to ensure only the required organizations are included.
+<TabItem value="custom-github-app" label="Custom GitHub App">
+
+Use this option if you want GitHub App authentication but you prefer to create and install your own GitHub App (for example, for advanced setups or self-hosted deployments).
+
+<GithubAppManualSetupContent />
+
+<InstallMethods setupName="app" />
+
+</TabItem>
+
+</Tabs>
+
+## Configuration
+
+This section describes common configuration options you can use across installation methods.
+
+### Repository type
+
+The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
+
+<details>
+<summary><b>Possible values (Click to expand)</b></summary>
+
+- `all` (default): All repositories accessible to the provided token.
+- `public`: Public repositories only.
+- `private`: Private repositories only.
+- `forks`: Forked repositories only.
+- `sources`: Non-forked repositories only.
+
+</details>
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+repositoryType: "all"
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: organization
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubOrganization"'
+          properties:
+            login: .login
+            id: .id
+            nodeId: .node_id
+            url: .url
+            reposUrl: .repos_url
+            eventsUrl: .events_url
+            hooksUrl: .hooks_url
+            issuesUrl: .issues_url
+            membersUrl: .members_url
+            publicMembersUrl: .public_members_url
+            avatarUrl: .avatar_url
+            description: if .description then .description else "" end
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            description: if .description then .description else "" end
+            visibility: if .private then "private" else "public" end
+            defaultBranch: .default_branch
+            readme: file://README.md
+            url: .html_url
+            language: if .language then .language else "" end
+          relations:
+            organization: .owner.login
+  - kind: pull-request
+    selector:
+      query: "true"
+      state: "open"
+    port:
+      entity:
+        mappings:
+          identifier: ".head.repo.name + (.id|tostring)"
+          title: ".title"
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: ".user.login"
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: ".state"
+            closedAt: ".closed_at"
+            updatedAt: ".updated_at"
+            mergedAt: ".merged_at"
+            createdAt: ".created_at"
+            prNumber: ".id"
+            link: ".html_url"
+            leadTimeHours: >-
+              (.created_at as $createdAt | .merged_at as $mergedAt |
+              ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
+              ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") |
+              strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp |
+              if $mergedTimestamp == null then null else
+              (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+          relations:
+            repository: .__repository
+```
+
+</details>
