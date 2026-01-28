@@ -7,6 +7,7 @@ description: Effortlessly connect GitHub PRs with Jira issues in Port, enhancing
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import IntegrationTabsIntro from "/docs/guides/templates/github/_github_integration_tabs_intro.mdx"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub Pull Request with Jira Issue
@@ -14,14 +15,31 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 ## Overview
 This guide aims to cover how to connect a GitHub pull request with a Jira Issue to understand the scan results of your pull request.
 
+<IntegrationTabsIntro tabs={["GitHub (Legacy)", "GitHub (Ocean)"]} queryString="integration" />
+
 ## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Install Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/).
+
+<Tabs groupId="github-pr-jira" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 - Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+- Install [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
+
+</TabItem>
+</Tabs>
 
 
 
 ## Set up data model
+
+<Tabs groupId="github-pr-jira" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
 
 We highly recommend you install both the GitHub app and Jira integration to have pull requests and issues automatically ingested into Port in real-time.
 However, if you haven't installed [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) and [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you'll need to create blueprints for GitHub pull requests and Jira issues in Port. Skip this section if you have already installed the GitHub app and Jira integration.
@@ -141,6 +159,131 @@ However, if you haven't installed [Port's GitHub app](https://docs.port.io/build
 3. Click `Save & Resync` to apply the mapping.
 
 Great! Now that the mapping is configured, you will need to manually ingest your pull requests data into Port
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+We highly recommend you install both GitHub ocean and Jira integration to have pull requests and issues automatically ingested into Port in real-time.
+However, if you haven't installed [GitHub ocean](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) and [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you'll need to create blueprints for GitHub pull requests and Jira issues in Port. Skip this section if you have already installed GitHub ocean and Jira integration.
+
+### Add the pull request blueprint
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>GitHub Pull Request Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+        "identifier": "githubPullRequest",
+        "title": "Pull Request",
+        "icon": "Github",
+        "schema": {
+            "properties": {
+                "creator": {
+                    "title": "Creator",
+                    "type": "string"
+                },
+                "assignees": {
+                    "title": "Assignees",
+                    "type": "array"
+                },
+                "reviewers": {
+                    "title": "Reviewers",
+                    "type": "array"
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "merged",
+                        "open",
+                        "closed"
+                    ],
+                    "enumColors": {
+                        "merged": "purple",
+                        "open": "green",
+                        "closed": "red"
+                    }
+                },
+                "closedAt": {
+                    "title": "Closed At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "title": "Updated At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "mergedAt": {
+                    "title": "Merged At",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "link": {
+                    "type": "string",
+                    "format": "url"
+                }
+            },
+            "required": []
+        },
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {},
+        "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the blueprint.
+
+### Add pull request mapping config
+
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub ocean integration.
+
+    <img src='/img/guides/githubOceanIntegration.png' border='1px' />
+
+2. Add the following YAML block into the editor to map the pull request data:
+
+    <details>
+    <summary><b>Relation mapping (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: pull-request
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .head.repo.name + '-' + (.number|tostring)
+              title: .title
+              blueprint: '"githubPullRequest"'
+              properties:
+                creator: .user.login
+                assignees: "[.assignees[].login]"
+                reviewers: "[.requested_reviewers[].login]"
+                status: .state
+                closedAt: .closed_at
+                updatedAt: .updated_at
+                mergedAt: .merged_at
+                prNumber: .number
+                link: .html_url
+    ```
+
+    </details>
+
+3. Click `Save & Resync` to apply the mapping.
+
+Great! Now that the mapping is configured, you will need to manually ingest your pull requests data into Port
+
+</TabItem>
+</Tabs>
 
 
 ### Add Jira issue blueprint
@@ -301,6 +444,10 @@ Follow the steps below to map pull request entities with Jira issues using direc
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
 
 2. Click on your Github integration:
+
+<Tabs groupId="github-pr-jira" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
     <img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
     <br/><br/>
@@ -341,6 +488,53 @@ Follow the steps below to map pull request entities with Jira issues using direc
 
 5. Click `Save & Resync` to apply the changes
 
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+    <img src='/img/guides/githubOceanIntegrationWithBlueprints.png' border='1px' />
+
+    <br/><br/>
+
+
+3. Under the `resources` key, find the Pull Request block
+
+4. Replace it with the following YAML configuration to map pull request entities with Jira issues:
+
+    <details>
+    <summary><b>Relation mapping (click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+        - kind: pull-request
+        selector:
+            query: "true"
+        port:
+            entity:
+            mappings:
+            identifier: .head.repo.name + (.id|tostring)
+            title: .title
+            blueprint: '"githubPullRequest"'
+            properties:
+              creator: .user.login
+              assignees: "[.assignees[].login]"
+              reviewers: "[.requested_reviewers[].login]"
+              status: .state
+              closedAt: .closed_at
+              updatedAt: .updated_at
+              mergedAt: .merged_at
+              prNumber: .number
+              link: .html_url
+            relations:
+              repository: .__repository
+              jiraIssue: .title | match("^[A-Za-z]+-[0-9]+") .string
+    ```
+
+    </details>
+
+5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+</Tabs>
+
 :::tip Mapping explanation
 The configuration mapping above ingests all pull requests from Github. It then goes ahead to establish a relation between the `githubPullRequest` entities and the `jiraIssue` entities &nbsp;🎉.
 
@@ -372,6 +566,10 @@ You can customize these matching rules based on your team's conventions and requ
     <img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
     <br/><br/>
+
+<Tabs groupId="github-pr-jira" queryString="integration">
+<TabItem value="github" label="GitHub (Legacy)">
+
 3. Under the `resources` key, locate the Pull Request block
 4. Replace it with the following YAML block to map the pull request entities with Jira issues using search queries:
 
@@ -421,6 +619,62 @@ You can customize these matching rules based on your team's conventions and requ
     </details>
 
 5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+<TabItem value="github-ocean" label="GitHub (Ocean)">
+
+3. Under the `resources` key, locate the Pull Request block
+4. Replace it with the following YAML block to map the pull request entities with Jira issues using search queries:
+
+    <details>
+    <summary><b>Search query mapping (click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+      - kind: pull-request
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .head.repo.name + (.id|tostring)
+              title: .title
+              blueprint: '"githubPullRequest"'
+              properties:
+                creator: .user.login
+                assignees: "[.assignees[].login]"
+                reviewers: "[.requested_reviewers[].login]"
+                status: .state
+                closedAt: .closed_at
+                updatedAt: .updated_at
+                mergedAt: .merged_at
+                prNumber: .number
+                link: .html_url
+              relations:
+                jiraIssue:
+                  combinator: '"or"'
+                  rules:
+                    # Match Jira issue key in PR title
+                    - property: '"$identifier"'
+                      operator: '"="'
+                      value: (.title // "") | match("^[A-Za-z]+-[0-9]+") .string
+
+                    # Match Jira issue key in PR description
+                    - property: '"$identifier"'
+                      operator: '"="'
+                      value: (.body // "") | match("[A-Za-z]+-[0-9]+") .string
+                    
+                    # Match Jira issue key in PR branch name
+                    - property: '"$identifier"'
+                      operator: '"="'
+                      value: (.head.ref // "") | match("[A-Za-z]+-[0-9]+") .string
+    ```
+
+    </details>
+
+5. Click `Save & Resync` to apply the changes
+
+</TabItem>
+</Tabs>
 
 </TabItem>
 </Tabs>
