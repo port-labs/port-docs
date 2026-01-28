@@ -198,3 +198,11 @@ The `tagValues` optional selector is used to filter applications based on specif
 </TabItem>
 
 </Tabs>
+
+:::tip learn more
+
+- Applications in Checkmarx are one logical entity used to group related projects.
+- Each application can have multiple projects associated with it and having rules that define how projects are grouped.
+- For more information, see [Applications](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/szojm2v0j748d-applications-service-rest-api) section in the Checkmarx One API Reference Guide.
+
+:::
