@@ -24,6 +24,8 @@ To use Kafka as an action type, you need a dedicated Kafka topic from Port. Cont
 
 ## Basic example
 
+Publish a deployment event with service details and timestamp to your Kafka topic:
+
 ```json showLineNumbers
 {
   "identifier": "publish-event",
@@ -49,7 +51,7 @@ The Kafka action publishes messages to your organization's topic (`{orgId}.runs`
 
 ### Event-driven architecture
 
-Publish workflow events for downstream processing:
+Publish structured workflow events with metadata for downstream consumers:
 
 ```json showLineNumbers
 {

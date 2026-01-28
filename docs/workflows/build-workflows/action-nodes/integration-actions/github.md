@@ -38,6 +38,8 @@ The GitHub integration action allows workflows to trigger GitHub Actions workflo
 
 ## Basic example
 
+Trigger a GitHub Actions deployment workflow, passing environment and version from the trigger inputs:
+
 ```json showLineNumbers
 {
   "identifier": "trigger-github-workflow",
@@ -77,7 +79,7 @@ Pass inputs to your GitHub Actions workflow:
 }
 ```
 
-:::note
+:::info String inputs
 GitHub Actions workflow inputs are always strings. Use JQ functions like `tostring` to convert non-string values.
 :::
 
@@ -101,6 +103,11 @@ Enable `reportStatus` to have the GitHub workflow report its status back to Port
 When enabled, Port will monitor the GitHub workflow run and update the node status when it completes.
 
 ## Complete workflow example
+
+A self-service deployment workflow that triggers GitHub Actions, waits for completion, and updates the service entity with deployment details:
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -185,6 +192,8 @@ When enabled, Port will monitor the GitHub workflow run and update the node stat
   ]
 }
 ```
+
+</details>
 
 ## GitHub workflow configuration
 

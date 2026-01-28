@@ -22,7 +22,7 @@ Integration actions allow workflows to trigger operations in connected platforms
 | Jenkins | Trigger Jenkins jobs | Coming soon |
 
 :::note Expanding integration support
-We're actively working on adding more integration actions. If you need a specific integration, please reach out to [Port's support team](mailto:support@getport.io).
+We're actively adding more integration actions. If you need a specific integration, please reach out to [Port's support team](mailto:support@getport.io).
 :::
 
 ## Sections

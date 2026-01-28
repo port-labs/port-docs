@@ -37,7 +37,14 @@ For self-service triggers, the user inputs are stored directly at `.outputs.<tri
 
 For event triggers, the event data is stored at `.outputs.<trigger_node_identifier>.diff.after`, `.outputs.<trigger_node_identifier>.action`, etc.
 
-### Example: Chaining node outputs
+### Example
+
+**Chaining node outputs**
+
+This example demonstrates how to pass data between nodes. A self-service trigger collects a resource name from the user, passes it to a webhook that creates the resource, and then sends a Slack notification with the newly created resource ID.
+
+<details>
+<summary><b>Chaining node outputs (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -91,6 +98,8 @@ For event triggers, the event data is stored at `.outputs.<trigger_node_identifi
   ]
 }
 ```
+
+</details>
 
 ## Condition nodes
 

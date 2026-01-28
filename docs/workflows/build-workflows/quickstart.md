@@ -121,5 +121,5 @@ Now that you've created your first workflow, explore these topics:
 
 - [Self-service trigger](/workflows/build-workflows/self-service-trigger/configuration) - Learn how to configure user inputs and triggers.
 - [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows that respond to entity changes.
-- [Action nodes](/workflows/build-workflows/action-nodes/) - Explore all available action types.
+- [Action nodes](/workflows/build-workflows/action-nodes/configuration-and-outputs) - Explore all available action types.
 - [Examples](/workflows/examples) - See real-world workflow examples.

@@ -18,7 +18,7 @@ Nodes are the building blocks of a workflow. There are three types of nodes:
 | Node type | Description |
 | --------- | ----------- |
 | **Trigger** | The entry point that initiates the workflow. Can be a [self-service trigger](/workflows/build-workflows/self-service-trigger/configuration) (manual execution) or an [event trigger](/workflows/build-workflows/event-trigger) (automated based on entity changes). |
-| **Action** | Performs an operation such as sending a webhook, upserting an entity, publishing to Kafka, or triggering an integration action. See [action nodes](/workflows/build-workflows/action-nodes/) for more information. |
+| **Action** | Performs an operation such as sending a webhook, upserting an entity, publishing to Kafka, or triggering an integration action. See [action nodes](/workflows/build-workflows/action-nodes/configuration-and-outputs) for more information. |
 | **Condition** | Evaluates expressions and routes the workflow to different branches based on the results. See [action nodes overview](/workflows/build-workflows/action-nodes/configuration-and-outputs#condition-nodes) for more information. |
 
 ## Connections
@@ -96,4 +96,4 @@ The basic structure of a workflow looks like this:
 - [Quickstart and build with AI](/workflows/build-workflows/quickstart) - Get started building your first workflow
 - [Self-service trigger](/workflows/build-workflows/self-service-trigger/configuration) - Create workflows triggered by users
 - [Event trigger](/workflows/build-workflows/event-trigger) - Create workflows triggered by entity changes
-- [Action nodes](/workflows/build-workflows/action-nodes/) - Learn about available action types
+- [Action nodes](/workflows/build-workflows/action-nodes/configuration-and-outputs) - Learn about available action types

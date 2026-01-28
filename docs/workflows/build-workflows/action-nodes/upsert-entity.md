@@ -32,6 +32,8 @@ The upsert entity action node creates or updates entities in your Port software 
 
 ## Basic example
 
+Create a deployment entity with properties from the trigger inputs and a timestamp:
+
 ```json showLineNumbers
 {
   "identifier": "create-deployment",
@@ -57,7 +59,7 @@ The upsert entity action node creates or updates entities in your Port software 
 
 ## Update existing entity
 
-When the identifier matches an existing entity, only the specified fields are updated:
+When the identifier matches an existing entity, only the specified fields are updated. This example updates a service's status and deployment timestamp:
 
 ```json showLineNumbers
 {
@@ -79,7 +81,7 @@ When the identifier matches an existing entity, only the specified fields are up
 
 ## Using with event triggers
 
-Update the triggering entity based on workflow logic:
+Update the triggering entity based on workflow logic. This example marks an entity as reviewed when an event trigger fires:
 
 ```json showLineNumbers
 {
@@ -169,6 +171,11 @@ Update the triggering entity based on workflow logic:
 
 ### Create environment on request
 
+A complete workflow that creates a new environment entity when a user submits a self-service request with environment details and TTL:
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
   "identifier": "create-env-workflow",
@@ -229,7 +236,14 @@ Update the triggering entity based on workflow logic:
 }
 ```
 
+</details>
+
 ### Update status after external action
+
+Chain a webhook call with an entity update to record external API results in Port:
+
+<details>
+<summary><b>Workflow example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -270,3 +284,5 @@ Update the triggering entity based on workflow logic:
   ]
 }
 ```
+
+</details>

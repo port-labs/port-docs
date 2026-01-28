@@ -24,6 +24,8 @@ The webhook action node sends HTTP requests to external endpoints. This is the m
 
 ## Basic example
 
+Send a POST request to an external API, passing service deployment details from the trigger inputs:
+
 ```json showLineNumbers
 {
   "identifier": "send-webhook",
@@ -43,7 +45,7 @@ The webhook action node sends HTTP requests to external endpoints. This is the m
 
 ## Custom headers
 
-Include custom headers in your request:
+Include custom headers in your request, such as content type, custom values, or authentication tokens from secrets:
 
 ```json showLineNumbers
 {
@@ -139,6 +141,11 @@ With asynchronous webhooks, the external service is responsible for updating the
 
 ### Send Slack notification
 
+Post a formatted message to a Slack channel using an incoming webhook URL:
+
+<details>
+<summary><b>Node example (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
   "identifier": "slack-notify",
@@ -163,7 +170,14 @@ With asynchronous webhooks, the external service is responsible for updating the
 }
 ```
 
+</details>
+
 ### Trigger GitHub workflow
+
+Dispatch a GitHub Actions workflow using the GitHub API with token authentication:
+
+<details>
+<summary><b>Node example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -188,6 +202,8 @@ With asynchronous webhooks, the external service is responsible for updating the
 }
 ```
 
+</details>
+
 ### Call Port API
 
 You can use webhook nodes to call [Port's API](/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.
@@ -195,6 +211,9 @@ You can use webhook nodes to call [Port's API](/api-reference/port-api), allowin
 :::info No access token required
 When calling Port's API (`https://api.getport.io`), you don't need to include an access token in the request headers. Port automatically authenticates the request using your organization's credentials.
 :::
+
+<details>
+<summary><b>Node example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -219,18 +238,19 @@ When calling Port's API (`https://api.getport.io`), you don't need to include an
 }
 ```
 
+</details>
+
 This is useful when you want to:
 - Fetch entities from the catalog (see [Data flow](/workflows/build-workflows/data-flow#fetching-data-from-the-catalog))
 - Create or update entities
 - Trigger other self-service actions
 - Perform any operation available in Port's API
 
-:::tip
+:::tip Simpler alternative for entities
 For creating or updating entities, consider using the [Upsert entity](/workflows/build-workflows/action-nodes/upsert-entity) action node instead, which provides a simpler configuration.
 :::
 
 ## Limitations
 
-:::caution Execution Agent not yet available
-Port Execution Agent is not yet available in Workflows
-:::
+Port Execution Agent is not yet available in Workflows.
+
