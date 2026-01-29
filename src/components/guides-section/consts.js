@@ -1678,6 +1678,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/centralize-ai-coding-rules-with-port",
+    },
+    {
+        title: "Implement the work item blueprint pattern",
+        description: "Learn how to build agentic workflows with a dedicated workflow blueprint",
+        tags: ["Agentic Work Management", "AI", "Scorecards", "Actions", "Jira"],
+        logos: ["AI", "Jira"],
+        link: "/guides/all/work-item-blueprint",
     }
 ]
 
