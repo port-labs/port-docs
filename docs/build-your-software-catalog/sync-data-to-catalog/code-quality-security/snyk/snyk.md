@@ -30,7 +30,7 @@ The resources that can be ingested from Snyk into Port are listed below. It is p
 - [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
 - [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
 - [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
-- [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
+- [`Vulnerability`](https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/issues)
 
 ## Setup
 
@@ -645,11 +645,11 @@ resources:
       entity:
         mappings:
           identifier: .id
-          title: .name
+          title: .attributes.name
           blueprint: '"snykOrganization"'
           properties:
-            slug: .slug
-            url: ("https://app.snyk.io/org/" + .slug | tostring)
+            slug: .attributes.slug
+            url: ("https://app.snyk.io/org/" + .attributes.slug | tostring)
 ```
 </details>
 
@@ -665,26 +665,6 @@ resources:
   "icon": "Snyk",
   "schema": {
     "properties": {
-      "criticalOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Critical Vulnerabilities"
-      },
-      "highOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open High Vulnerabilities"
-      },
-      "mediumOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Medium Vulnerabilities"
-      },
-      "lowOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Low Vulnerabilities"
-      },
       "origin": {
         "title": "Target Origin",
         "type": "string",
@@ -726,6 +706,49 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {
+    "open_critical_vulnerabilities": {
+      "title": "Open Critical Vulnerabilities",
+      "type": "number",
+      "target": "snykProject",
+      "calculationSpec": {
+        "func": "sum",
+        "property": "criticalOpenVulnerabilities",
+        "calculationBy": "property"
+      }
+    },
+    "open_high_vulnerabilities": {
+      "title": "Open High Vulnerabilities",
+      "type": "number",
+      "target": "snykProject",
+      "calculationSpec": {
+        "func": "sum",
+        "property": "highOpenVulnerabilities",
+        "calculationBy": "property"
+      }
+    },
+    "open_medium_vulnerabilities": {
+      "title": "Open Medium Vulnerabilities",
+      "type": "number",
+      "target": "snykProject",
+      "calculationSpec": {
+        "func": "sum",
+        "property": "mediumOpenVulnerabilities",
+        "calculationBy": "property"
+      }
+    },
+    "open_low_vulnerabilities": {
+      "title": "Open Low Vulnerabilities",
+      "icon": "DefaultProperty",
+      "type": "number",
+      "target": "snykProject",
+      "calculationSpec": {
+        "func": "sum",
+        "property": "lowOpenVulnerabilities",
+        "calculationBy": "property"
+      }
+    }
+  },
   "relations": {
     "snyk_organization": {
       "title": "Snyk Organization",
@@ -757,10 +780,6 @@ resources:
           blueprint: '"snykTarget"'
           properties:
             origin: .relationships.integration.data.attributes.integration_type
-            highOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.high] | add'
-            mediumOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.medium] | add'
-            lowOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.low] | add'
-            criticalOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.critical] | add'
           relations:
             snyk_organization: '.relationships.organization.data.id'
 ```
@@ -830,6 +849,11 @@ resources:
           ]
         },
         "icon": "DefaultProperty"
+      },
+      "criticalOpenVulnerabilities": {
+        "icon": "Vulnerability",
+        "type": "number",
+        "title": "Open Critical Vulnerabilities"
       },
       "highOpenVulnerabilities": {
         "icon": "Vulnerability",
@@ -912,7 +936,7 @@ resources:
 <details>
 <summary><b>Vulnerability blueprint (click to expand)</b></summary>
 
-```yaml showLineNumbers
+```json showLineNumbers
 {
   "identifier": "snykVulnerability",
   "title": "Snyk Vulnerability",
@@ -924,25 +948,36 @@ resources:
         "type": "number",
         "title": "Score"
       },
-      "packageName": {
-        "type": "string",
-        "title": "Package Name",
+      "packageNames": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "title": "Package Names",
         "icon": "DefaultProperty"
       },
       "packageVersions": {
         "icon": "Package",
         "title": "Package Versions",
+        "items": {
+          "type": "string"
+        },
         "type": "array"
       },
       "type": {
-        "type": "string",
+        "icon": "DefaultProperty",
         "title": "Type",
+        "type": "string",
         "enum": [
           "vuln",
           "license",
-          "configuration"
-        ],
-        "icon": "DefaultProperty"
+          "configuration",
+          "config",
+          "custom",
+          "code",
+          "cloud",
+          "package_vulnerability"
+        ]
       },
       "severity": {
         "icon": "Alert",
@@ -962,21 +997,20 @@ resources:
         "title": "Issue URL",
         "format": "url"
       },
-      "language": {
-        "type": "string",
-        "title": "Language",
-        "icon": "DefaultProperty"
-      },
       "publicationTime": {
         "type": "string",
         "format": "date-time",
         "title": "Publication Time",
         "icon": "DefaultProperty"
       },
-      "isPatched": {
-        "type": "boolean",
-        "title": "Is Patched",
-        "icon": "DefaultProperty"
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": ["open", "resolved"],
+        "enumColors": {
+          "open": "red",
+          "resolved": "green"
+        }
       }
     },
     "required": []
@@ -1003,27 +1037,26 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: issue
+  - kind: vulnerability
     selector:
-      query: '.issueType == "vuln"'
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: .issueData.id
-          title: .issueData.title
+          identifier: .id
+          title: .attributes.title
           blueprint: '"snykVulnerability"'
           properties:
-            score: .priorityScore
-            packageName: .pkgName
-            packageVersions: .pkgVersions
-            type: .issueType
-            severity: .issueData.severity
-            url: .issueData.url
-            language: .issueData.language // .issueType
-            publicationTime: .issueData.publicationTime
-            isPatched: .isPatched
+            score: .attributes.risk.score.value
+            packageNames: '[.attributes.coordinates[].representations[].dependency?.package_name | select(. != null)]'
+            packageVersions: '[.attributes.coordinates[].representations[].dependency?.package_version | select(. != null)]'
+            severity: .attributes.effective_severity_level
+            url: ("https://app.snyk.io/org/" + .__organization.slug + "/project/" + .relationships.scan_item.data.id + "#issue-" + .attributes.key | tostring)
+            publicationTime: .attributes.created_at
+            status: .attributes.status
+            type: .attributes.type
           relations:
-            project: '.links.paths | split("/") | .[8]'
+            project: .relationships.scan_item.data.id
 ```
 
 </details>
